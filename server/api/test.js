@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const { User } = require('../db/models')
+const scrape = require('./parse/tpb')
 module.exports = router
-
-const parse = require('./parse/tpb')()
 
 router.get('/', (req, res, next) => {
   if (req.user && req.user.isAdmin) {
-    res.json(parse)
+    scrape()
+      .then(data => res.json(data))
+      .catch(next)
   } else {
     next()
   }

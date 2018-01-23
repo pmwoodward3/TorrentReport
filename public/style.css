@@ -53,6 +53,7 @@ body {
   align-items: center;
   justify-content: space-between;
   height: 6em;
+  background-color: grey;
   color: #2d2d29;
 }
 

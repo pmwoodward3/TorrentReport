@@ -1,26 +1,20 @@
-var request = require('request'),
-  cheerio = require('cheerio'),
-  url =
-    'http://www.wunderground.com/cgi-bin/findweather/getForecast?&query=' +
-    02888,
-  result
+const puppeteer = require('puppeteer')
 
-request(url, function(error, response, body) {
-  if (!error) {
-    var $ = cheerio.load(body),
-      temperature = $("[data-variable='temperature'] .wx-value").html()
-    result = temperature
-    console.log('It’s ' + temperature + ' degrees Fahrenheit.')
-  } else {
-    result = error
-    console.log('We’ve encountered an error: ' + error)
-  }
-})
-
-const tpb = function() {
-  return {
-    wedid: result
-  }
+let scrape = async () => {
+  const browser = await puppeteer.launch({ headless: true })
+  const page = await browser.newPage()
+  await page.goto(
+    'https://www.wunderground.com/weather/us/ny/new-york-city/10036'
+  )
+  await page.waitFor(3000)
+  const result = await page.evaluate(() => {
+    let title = document.querySelector(
+      '#inner-content > div.city-body > div.row.current-forecast > div > div:nth-child(1) > div.small-12.medium-6.columns.city-conditions-column > div > city-current-conditions > div > div.conditions-circle-wrap.small-4.medium-7.columns.text-center > div > div > div.current-temp > display-unit > span > span.wu-value.wu-value-to'
+    ).innerText
+    return title
+  })
+  browser.close()
+  return result
 }
 
-module.exports = tpb
+module.exports = scrape

@@ -21,6 +21,7 @@ const Main = props => {
         </div>
         <div className="nav">
           <Link to="/home">Home</Link>
+          <Link to="/test">Test</Link>
         </div>
       </div>
       <div className="content">{children}</div>
