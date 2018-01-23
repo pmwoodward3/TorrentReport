@@ -1,15 +1,19 @@
 const puppeteer = require('puppeteer')
 
 let scrape = async () => {
+  const userAgent =
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A'
+  var browser
   if (process.env.NODE_ENV !== 'production') {
-    const browser = await puppeteer.launch({ headless: true })
+    browser = await puppeteer.launch({ headless: true })
   } else {
-    const browser = await puppeteer.launch({
+    browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
     })
   }
   const page = await browser.newPage()
+  page.setUserAgent(userAgent)
   await page.goto(
     'https://www.wunderground.com/weather/us/ny/new-york-city/10036'
   )
