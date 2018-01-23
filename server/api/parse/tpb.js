@@ -1,7 +1,14 @@
 const puppeteer = require('puppeteer')
 
 let scrape = async () => {
-  const browser = await puppeteer.launch({ headless: true })
+  if (process.env.NODE_ENV !== 'production') {
+    const browser = await puppeteer.launch({ headless: true })
+  } else {
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
+  }
   const page = await browser.newPage()
   await page.goto(
     'https://www.wunderground.com/weather/us/ny/new-york-city/10036'
