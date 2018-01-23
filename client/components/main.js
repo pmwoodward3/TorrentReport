@@ -15,12 +15,19 @@ const Main = props => {
 
   return (
     <div>
-      <h1>Torrent Report</h1>
-      <nav>
+      <div className="header">
+        <div className="logo">
+          <Link to="/">Torrent Report</Link>
+        </div>
+        <div className="nav">
+          <Link to="/home">Home</Link>
+        </div>
+      </div>
+      <div className="content">{children}</div>
+      <div className="footer">
+        <div>Built By estepanov.io</div>
         {isLoggedIn ? (
           <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/home">Home</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -32,9 +39,7 @@ const Main = props => {
             <Link to="/signup">Sign Up</Link>
           </div>
         )}
-      </nav>
-      <hr />
-      {children}
+      </div>
     </div>
   )
 }
