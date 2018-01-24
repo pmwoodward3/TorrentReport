@@ -1,7 +1,10 @@
 const puppeteer = require('puppeteer')
+var STORE_ARR
 
-let scrape = async () => {
+const scrape = async ({ resourceDomain, webPage, selectors }) => {
   console.log('entering scrape...')
+  STORE_ARR = selectors
+
   var browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -15,7 +18,7 @@ let scrape = async () => {
   await page.setRequestInterception(true)
   page.on('request', interceptedRequest => {
     if (
-      !interceptedRequest.url().includes('rarbg.to') ||
+      !interceptedRequest.url().includes(resourceDomain) ||
       interceptedRequest.url().endsWith('.png') ||
       interceptedRequest.url().endsWith('.jpg') ||
       interceptedRequest.url().endsWith('.mp3') ||
@@ -30,24 +33,31 @@ let scrape = async () => {
       interceptedRequest.continue()
     }
   })
-  await page.goto(
-    'https://rarbg.to/top100.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=50&category%5B%5D=51&category%5B%5D=52&category%5B%5D=42&category%5B%5D=46&category%5B%5D=49',
-    {
-      timeout: 100000
-    }
-  )
+  await page.goto(webPage, {
+    timeout: 100000
+  })
   console.log('start wait')
   await page.waitFor(3000)
   console.log('end wait')
-  const result = await page.evaluate(() => {
-    console.log('hello from evaluate')
-    let title = document.querySelectorAll(
+  const result = await page.evaluate(selectors => {
+    // console.log('selector --->', selectors)
+    // console.log('hello from evaluate')
+    var results = document.querySelectorAll(
       'body > table:nth-child(6) > tbody > tr > td:nth-child(2) > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > a:nth-child(1)'
     )
-    return Array.from(title).map(elem => {
-      return elem.outerText
+    results = Array.from(results).map(result => {
+      return result.outerText
     })
-  })
+    return results
+    // selectors.forEach(selector => {
+    // results.push(document.querySelectorAll(selector))
+    // // })
+    // return Array.from(results).map(elem => {
+    //   return elem.outerText
+    // })
+  }, selectors)
+  console.log('selectors -->', selectors)
+  console.log('results ==>', result)
   browser.close()
   return result
 }
