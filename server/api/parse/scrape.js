@@ -1,9 +1,8 @@
 const puppeteer = require('puppeteer')
 var STORE_ARR
 
-const scrape = async ({ resourceDomain, webPage, selectors }) => {
+const scrape = async ({ resourceDomain, webPage, selectors, evalFunc }) => {
   console.log('entering scrape...')
-  STORE_ARR = selectors
 
   var browser = await puppeteer.launch({
     headless: true,
@@ -16,50 +15,34 @@ const scrape = async ({ resourceDomain, webPage, selectors }) => {
   )
   await page.setViewport({ width: 1300, height: 1300 })
   await page.setRequestInterception(true)
-  page.on('request', interceptedRequest => {
-    if (
-      !interceptedRequest.url().includes(resourceDomain) ||
-      interceptedRequest.url().endsWith('.png') ||
-      interceptedRequest.url().endsWith('.jpg') ||
-      interceptedRequest.url().endsWith('.mp3') ||
-      interceptedRequest.url().endsWith('.css') ||
-      interceptedRequest.url().endsWith('.mp4') ||
-      interceptedRequest.url().endsWith('.gif')
-    ) {
-      console.log('blocking resource ->', interceptedRequest.url())
-      interceptedRequest.abort()
-    } else {
-      console.log('ALLOWING resource ->', interceptedRequest.url())
-      interceptedRequest.continue()
-    }
-  })
+  page.on('request', filterRequests)
   await page.goto(webPage, {
     timeout: 100000
   })
-  console.log('start wait')
   await page.waitFor(3000)
-  console.log('end wait')
-  const result = await page.evaluate(selectors => {
-    // console.log('selector --->', selectors)
-    // console.log('hello from evaluate')
-    var results = document.querySelectorAll(
-      'body > table:nth-child(6) > tbody > tr > td:nth-child(2) > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > a:nth-child(1)'
-    )
-    results = Array.from(results).map(result => {
-      return result.outerText
-    })
-    return results
-    // selectors.forEach(selector => {
-    // results.push(document.querySelectorAll(selector))
-    // // })
-    // return Array.from(results).map(elem => {
-    //   return elem.outerText
-    // })
-  }, selectors)
-  console.log('selectors -->', selectors)
-  console.log('results ==>', result)
+  let result = await page.evaluate(evalFunc, selectors)
   browser.close()
   return result
+}
+
+const filterRequests = interceptedRequest => {
+  if (
+    !interceptedRequest.url().includes(resourceDomain) ||
+    interceptedRequest.url().endsWith('.ico') ||
+    interceptedRequest.url().endsWith('.png') ||
+    interceptedRequest.url().endsWith('.jpg') ||
+    interceptedRequest.url().endsWith('.mp3') ||
+    interceptedRequest.url().endsWith('.css') ||
+    interceptedRequest.url().endsWith('.swf') ||
+    interceptedRequest.url().endsWith('.mp4') ||
+    interceptedRequest.url().endsWith('.gif')
+  ) {
+    // console.log('blocking resource ->', interceptedRequest.url())
+    interceptedRequest.abort()
+  } else {
+    // console.log('ALLOWING resource ->', interceptedRequest.url())
+    interceptedRequest.continue()
+  }
 }
 
 module.exports = scrape
