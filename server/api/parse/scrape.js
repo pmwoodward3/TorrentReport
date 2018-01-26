@@ -16,7 +16,7 @@ const scrape = async ({
   console.log('--selectors count', selectors.length)
 
   var browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   })
 
