@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const TorrentSite = db.define('torrentSite', {
+const TorrentGroup = db.define('torrentGroup', {
   name: {
     type: Sequelize.STRING,
     unique: true,
@@ -18,4 +18,4 @@ const TorrentSite = db.define('torrentSite', {
   }
 })
 
-module.exports = TorrentSite
+module.exports = TorrentGroup

@@ -1,5 +1,16 @@
 const User = require('./user')
 const TorrentSite = require('./torrentSite')
+const TorrentListing = require('./torrentListing')
+const TorrentSnapshot = require('./torrentSnapshot')
+const TorrentGroup = require('./torrentGroup')
+
+TorrentListing.belongsToMany(TorrentSite, { through: 'SiteListing' })
+TorrentSite.belongsToMany(TorrentListing, { through: 'SiteListing' })
+
+TorrentSnapshot.belongsTo(TorrentSite)
+TorrentSnapshot.belongsTo(TorrentListing)
+TorrentSnapshot.belongsToMany(TorrentGroup, { through: 'SnapshotGroup' })
+TorrentGroup.belongsToMany(TorrentSnapshot, { through: 'SnapshotGroup' })
 
 /**
  * If we had any associations to make, this would be a great place to put them!

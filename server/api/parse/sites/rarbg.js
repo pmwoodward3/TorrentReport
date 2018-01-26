@@ -1,6 +1,6 @@
 const rarbg = [
   {
-    name: 'rarbg',
+    name: 'RARBG',
     group: 'top100movies',
     resourceDomain: 'rarbg.to',
     webPage:
@@ -60,6 +60,8 @@ const rarbg = [
           if (index === 0) {
             newObj['name'] = originalValue.name
             newObj['url'] = originalValue.url
+          } else if (index === 1) {
+            newObj['uploaded'] = new Date(originalValue)
           } else {
             newObj[selector.label] = originalValue
           }

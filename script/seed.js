@@ -33,102 +33,102 @@ async function seed() {
       name: 'RARBG',
       short: 'RARBG',
       url: 'https://rarbg.to'
-    }),
-    TorrentSite.create({
-      name: '1337X',
-      short: '1337X',
-      url: 'http://1337x.to/'
-    }),
-    TorrentSite.create({
-      name: 'ExtraTorrent',
-      short: 'ET',
-      url: 'https://extratorrent.cd/'
-    }),
-    TorrentSite.create({
-      name: 'LimeTorrents',
-      short: 'LT',
-      url: 'https://www.limetorrents.cc/'
-    }),
-    TorrentSite.create({
-      name: 'TorrentDownloads',
-      short: 'TD',
-      url: 'https://www.torrentdownloads.me/'
-    }),
-    TorrentSite.create({
-      name: 'IsoHunt',
-      short: 'IH',
-      url: 'https://isohunts.to/'
-    }),
-    TorrentSite.create({
-      name: 'Torrentz2',
-      short: 'Tz2',
-      url: 'https://torrentz2.eu/'
-    }),
-    TorrentSite.create({
-      name: 'YTS/YIFY',
-      short: 'YTS',
-      url: 'https://yts.ag/'
-    }),
-    TorrentSite.create({
-      name: 'KickAssTorrents',
-      short: 'KAT',
-      url: 'https://katcr.co/'
-    }),
-    TorrentSite.create({
-      name: 'TorrentFunk',
-      short: 'TF',
-      url: 'https://www.torrentfunk.com/'
-    }),
-    TorrentSite.create({
-      name: 'Torlock',
-      short: 'TLock',
-      url: 'https://www.torlock.com/'
-    }),
-    TorrentSite.create({
-      name: 'EZTV',
-      short: 'EZTV',
-      url: 'https://eztv.ag/'
-    }),
-    TorrentSite.create({
-      name: 'Sky Torrents',
-      short: 'SkyT',
-      url: 'https://www.skytorrents.in/'
-    }),
-    TorrentSite.create({
-      name: 'Demonoid',
-      short: 'DEMON',
-      url: 'https://www.demonoid.pw/'
-    }),
-    TorrentSite.create({
-      name: 'BTScene',
-      short: 'BTS',
-      url: 'https://bt-scene.cc/'
-    }),
-    TorrentSite.create({
-      name: 'Torrents.me',
-      short: 'T.ME',
-      url: 'https://torrents.me/'
-    }),
-    TorrentSite.create({
-      name: 'iDope',
-      short: 'iDope',
-      url: 'https://idope.se/'
-    }),
-    TorrentSite.create({
-      name: 'YourBittorrent',
-      short: 'YB',
-      url: 'https://yourbittorrent.com/'
-    }),
-    TorrentSite.create({
-      name: 'Monova',
-      short: 'MONO',
-      url: 'https://monova.org/'
-    }),
-    TorrentSite.create({
-      name: 'Seedpeer',
-      short: 'SP',
-      url: 'https://www.seedpeer.eu/'
     })
+    // TorrentSite.create({
+    //   name: '1337X',
+    //   short: '1337X',
+    //   url: 'http://1337x.to/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'ExtraTorrent',
+    //   short: 'ET',
+    //   url: 'https://extratorrent.cd/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'LimeTorrents',
+    //   short: 'LT',
+    //   url: 'https://www.limetorrents.cc/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'TorrentDownloads',
+    //   short: 'TD',
+    //   url: 'https://www.torrentdownloads.me/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'IsoHunt',
+    //   short: 'IH',
+    //   url: 'https://isohunts.to/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Torrentz2',
+    //   short: 'Tz2',
+    //   url: 'https://torrentz2.eu/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'YTS/YIFY',
+    //   short: 'YTS',
+    //   url: 'https://yts.ag/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'KickAssTorrents',
+    //   short: 'KAT',
+    //   url: 'https://katcr.co/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'TorrentFunk',
+    //   short: 'TF',
+    //   url: 'https://www.torrentfunk.com/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Torlock',
+    //   short: 'TLock',
+    //   url: 'https://www.torlock.com/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'EZTV',
+    //   short: 'EZTV',
+    //   url: 'https://eztv.ag/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Sky Torrents',
+    //   short: 'SkyT',
+    //   url: 'https://www.skytorrents.in/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Demonoid',
+    //   short: 'DEMON',
+    //   url: 'https://www.demonoid.pw/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'BTScene',
+    //   short: 'BTS',
+    //   url: 'https://bt-scene.cc/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Torrents.me',
+    //   short: 'T.ME',
+    //   url: 'https://torrents.me/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'iDope',
+    //   short: 'iDope',
+    //   url: 'https://idope.se/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'YourBittorrent',
+    //   short: 'YB',
+    //   url: 'https://yourbittorrent.com/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Monova',
+    //   short: 'MONO',
+    //   url: 'https://monova.org/'
+    // }),
+    // TorrentSite.create({
+    //   name: 'Seedpeer',
+    //   short: 'SP',
+    //   url: 'https://www.seedpeer.eu/'
+    // })
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!

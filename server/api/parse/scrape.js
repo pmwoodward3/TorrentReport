@@ -16,7 +16,7 @@ const scrape = async ({
   console.log('--selectors count', selectors.length)
 
   var browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   })
 
@@ -24,7 +24,7 @@ const scrape = async ({
   await page.setUserAgent(
     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A'
   )
-  await page.setViewport({ width: 1300, height: 1300 })
+  await page.setViewport({ width: 1300, height: 1000 })
   await page.setRequestInterception(true)
   page.on('console', pageConsole)
   page.on('request', interceptedRequest => {
@@ -50,7 +50,6 @@ const scrape = async ({
     timeout: 100000
   })
   await page.waitFor(3000)
-  // let result = await page.evaluate(evalFunc, selectors)
   const results = []
 
   // this will loop through the selectors
@@ -68,7 +67,6 @@ const scrape = async ({
     }
     results.push(selectResults)
   }
-
   browser.close()
   const finalObject = {
     name: name,
