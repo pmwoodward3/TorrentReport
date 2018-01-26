@@ -1,8 +1,19 @@
 const puppeteer = require('puppeteer')
 var STORE_ARR
 
-const scrape = async ({ resourceDomain, webPage, selectors, evalFunc }) => {
+const scrape = async ({
+  name,
+  group,
+  resourceDomain,
+  webPage,
+  selectors,
+  resultCombiner
+}) => {
   console.log('entering scrape...')
+  console.log('--name', name)
+  console.log('--group', group)
+  console.log('--resourceDomain', resourceDomain)
+  console.log('--selectors count', selectors.length)
 
   var browser = await puppeteer.launch({
     headless: true,
@@ -15,34 +26,62 @@ const scrape = async ({ resourceDomain, webPage, selectors, evalFunc }) => {
   )
   await page.setViewport({ width: 1300, height: 1300 })
   await page.setRequestInterception(true)
-  page.on('request', filterRequests)
+  page.on('console', pageConsole)
+  page.on('request', interceptedRequest => {
+    if (
+      !interceptedRequest.url().includes(resourceDomain) ||
+      interceptedRequest.url().endsWith('.ico') ||
+      interceptedRequest.url().endsWith('.png') ||
+      interceptedRequest.url().endsWith('.jpg') ||
+      interceptedRequest.url().endsWith('.mp3') ||
+      interceptedRequest.url().endsWith('.css') ||
+      interceptedRequest.url().endsWith('.swf') ||
+      interceptedRequest.url().endsWith('.mp4') ||
+      interceptedRequest.url().endsWith('.gif')
+    ) {
+      // console.log('blocking resource ->', interceptedRequest.url())
+      interceptedRequest.abort()
+    } else {
+      // console.log('ALLOWING resource ->', interceptedRequest.url())
+      interceptedRequest.continue()
+    }
+  })
   await page.goto(webPage, {
     timeout: 100000
   })
   await page.waitFor(3000)
-  let result = await page.evaluate(evalFunc, selectors)
+  // let result = await page.evaluate(evalFunc, selectors)
+  const results = []
+
+  // this will loop through the selectors
+  for (var selectorInd = 0; selectorInd < selectors.length; selectorInd++) {
+    // get ElementHandle by queryStatementAll for selector query
+    let selectResults = await page.$$(selectors[selectorInd].query)
+    selectResults = Array.from(selectResults)
+    // now loop through the results of the query (an array of ElementHandles)
+    for (var itemIndex = 0; itemIndex < selectResults.length; itemIndex++) {
+      // evaluate handle using pluck function and store value
+      selectResults[itemIndex] = await page.evaluate(
+        selectors[selectorInd].pluck,
+        selectResults[itemIndex]
+      )
+    }
+    results.push(selectResults)
+  }
+
   browser.close()
-  return result
+  const finalObject = {
+    name: name,
+    group: group,
+    webPage: webPage,
+    date: new Date(),
+    results: resultCombiner(results, selectors)
+  }
+  return finalObject
 }
 
-const filterRequests = interceptedRequest => {
-  if (
-    !interceptedRequest.url().includes(resourceDomain) ||
-    interceptedRequest.url().endsWith('.ico') ||
-    interceptedRequest.url().endsWith('.png') ||
-    interceptedRequest.url().endsWith('.jpg') ||
-    interceptedRequest.url().endsWith('.mp3') ||
-    interceptedRequest.url().endsWith('.css') ||
-    interceptedRequest.url().endsWith('.swf') ||
-    interceptedRequest.url().endsWith('.mp4') ||
-    interceptedRequest.url().endsWith('.gif')
-  ) {
-    // console.log('blocking resource ->', interceptedRequest.url())
-    interceptedRequest.abort()
-  } else {
-    // console.log('ALLOWING resource ->', interceptedRequest.url())
-    interceptedRequest.continue()
-  }
+const pageConsole = msg => {
+  console.log('PAGE LOG:', msg.text())
 }
 
 module.exports = scrape
