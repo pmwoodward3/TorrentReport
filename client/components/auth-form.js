@@ -14,18 +14,20 @@ const AuthForm = props => {
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
-            <small>Email</small>
+            <small>EMAIL</small>
           </label>
-          <input name="email" type="text" />
+          <input className="loginInput" name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password">
-            <small>Password</small>
+            <small>PASSWORD</small>
           </label>
-          <input name="password" type="password" />
+          <input className="loginInput" name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button className="loginButton" type="submit">
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
@@ -44,7 +46,7 @@ const AuthForm = props => {
 const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'Login',
+    displayName: 'LOGIN',
     error: state.user.error
   }
 }
@@ -52,7 +54,7 @@ const mapLogin = state => {
 const mapSignup = state => {
   return {
     name: 'Register',
-    displayName: 'Register',
+    displayName: 'REGISTER',
     error: state.user.error
   }
 }

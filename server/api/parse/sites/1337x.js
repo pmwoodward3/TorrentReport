@@ -1,15 +1,13 @@
 const rarbg = [
   {
-    name: 'RARBG',
+    name: '1337X',
     group: 'top100movies',
-    resourceDomain: 'rarbg.to',
-    webPage:
-      'https://rarbg.to/top100.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=50&category%5B%5D=51&category%5B%5D=52&category%5B%5D=42&category%5B%5D=46&category%5B%5D=49',
+    resourceDomain: '1337x.to',
+    webPage: 'http://1337x.to/top-100-movies',
     selectors: [
       {
         label: 'name',
-        query:
-          'body > table:nth-child(6) > tbody > tr > td:nth-child(2) > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > a:nth-child(1)',
+        query: 'div.featured-list > div > table > tbody > tr > td:nth-child(1)',
         pluck: function(data) {
           return { name: data.outerText, url: data.href }
         }

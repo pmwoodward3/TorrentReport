@@ -7,6 +7,10 @@ const TorrentGroup = require('./torrentGroup')
 TorrentListing.belongsToMany(TorrentSite, { through: 'SiteListing' })
 TorrentSite.belongsToMany(TorrentListing, { through: 'SiteListing' })
 
+// torrent sites have many categories
+// category belongs to torrent site
+//
+
 TorrentSnapshot.belongsTo(TorrentSite)
 TorrentSnapshot.belongsTo(TorrentListing)
 TorrentSnapshot.belongsToMany(TorrentGroup, { through: 'SnapshotGroup' })

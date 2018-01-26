@@ -20,13 +20,18 @@ const Main = props => {
           <Link to="/">Torrent Report</Link>
         </div>
         <div className="nav">
-          <Link to="/home">Home</Link>
-          <Link to="/test">Test</Link>
+          <Link to="/home">HOME</Link>
+          <Link to="/test">TEST</Link>
         </div>
       </div>
       <div className="content">{children}</div>
       <div className="footer">
-        <div>Built By estepanov.io</div>
+        <div className="builtBox">
+          <div className="builtby">BUILT BY</div>
+          <div className="byme">
+            <a href="http://estepanov.io">estepanov.io</a>
+          </div>
+        </div>
         {isLoggedIn ? (
           <div>
             <a href="#" onClick={handleClick}>
@@ -36,8 +41,8 @@ const Main = props => {
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">LOGIN</Link>
+            <Link to="/signup">SIGN UP</Link>
           </div>
         )}
       </div>
