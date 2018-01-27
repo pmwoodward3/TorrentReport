@@ -59,10 +59,6 @@ const tpb = [
       const groupedArr = []
       // comb through the series of arrays and pull the same index from each one.
       for (var resInd = 0; resInd < rawResults[0].length; resInd++) {
-        console.log('rawRes[0] length:', rawResults[0].length)
-        console.log('rawRes[1] length:', rawResults[1].length)
-        console.log('rawRes[2] length:', rawResults[2].length)
-        console.log('rawRes[3] length:', rawResults[3].length)
         if (!rawResults[0].length) break
         let newObj = {}
         selectors.forEach((selector, index) => {

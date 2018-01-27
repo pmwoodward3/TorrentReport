@@ -1,33 +1,28 @@
-const puppeteer = require('puppeteer')
-var STORE_ARR
+// require babel polyfill for testing purposes
+require('babel-polyfill');
+
+const puppeteer = require('puppeteer');
 
 const scrape = async ({
-  name,
-  group,
-  resourceDomain,
-  webPage,
-  selectors,
-  resultCombiner
+  name, group, resourceDomain, webPage, selectors, resultCombiner,
 }) => {
-  console.log('entering scrape...')
-  console.log('--name', name)
-  console.log('--group', group)
-  console.log('--resourceDomain', resourceDomain)
-  console.log('--selectors count', selectors.length)
+  console.log('entering scrape...');
+  console.log('--name', name);
+  console.log('--group', group);
+  console.log('--resourceDomain', resourceDomain);
+  console.log('--selectors count', selectors.length);
 
-  var browser = await puppeteer.launch({
+  const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  })
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
 
-  const page = await browser.newPage()
-  await page.setUserAgent(
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A'
-  )
-  await page.setViewport({ width: 1300, height: 1000 })
-  await page.setRequestInterception(true)
-  page.on('console', pageConsole)
-  page.on('request', interceptedRequest => {
+  const page = await browser.newPage();
+  await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A');
+  await page.setViewport({ width: 1300, height: 1000 });
+  await page.setRequestInterception(true);
+  page.on('console', pageConsole);
+  page.on('request', (interceptedRequest) => {
     if (
       !interceptedRequest.url().includes(resourceDomain) ||
       interceptedRequest.url().endsWith('.ico') ||
@@ -40,46 +35,46 @@ const scrape = async ({
       interceptedRequest.url().endsWith('.gif')
     ) {
       // console.log('blocking resource ->', interceptedRequest.url())
-      interceptedRequest.abort()
+      interceptedRequest.abort();
     } else {
       // console.log('ALLOWING resource ->', interceptedRequest.url())
-      interceptedRequest.continue()
+      interceptedRequest.continue();
     }
-  })
+  });
   await page.goto(webPage, {
-    timeout: 100000
-  })
-  await page.waitFor(3000)
-  const results = []
+    timeout: 100000,
+  });
+  await page.waitFor(3000);
+  const results = [];
 
   // this will loop through the selectors
-  for (var selectorInd = 0; selectorInd < selectors.length; selectorInd++) {
+  for (let selectorInd = 0; selectorInd < selectors.length; selectorInd++) {
     // get ElementHandle by queryStatementAll for selector query
-    let selectResults = await page.$$(selectors[selectorInd].query)
-    selectResults = Array.from(selectResults)
+    let selectResults = await page.$$(selectors[selectorInd].query);
+    selectResults = Array.from(selectResults);
     // now loop through the results of the query (an array of ElementHandles)
-    for (var itemIndex = 0; itemIndex < selectResults.length; itemIndex++) {
+    for (let itemIndex = 0; itemIndex < selectResults.length; itemIndex++) {
       // evaluate handle using pluck function and store value
       selectResults[itemIndex] = await page.evaluate(
         selectors[selectorInd].pluck,
-        selectResults[itemIndex]
-      )
+        selectResults[itemIndex],
+      );
     }
-    results.push(selectResults)
+    results.push(selectResults);
   }
-  browser.close()
+  browser.close();
   const finalObject = {
-    name: name,
-    group: group,
-    webPage: webPage,
+    name,
+    group,
+    webPage,
     date: new Date(),
-    results: resultCombiner(results, selectors)
-  }
-  return finalObject
-}
+    results: resultCombiner(results, selectors),
+  };
+  return finalObject;
+};
 
-const pageConsole = msg => {
-  console.log('PAGE LOG:', msg.text())
-}
+const pageConsole = (msg) => {
+  console.log('PAGE LOG:', msg.text());
+};
 
-module.exports = scrape
+module.exports = scrape;

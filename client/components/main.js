@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
-import { logout } from '../store'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter, Link, NavLink } from 'react-router-dom';
+import { logout } from '../store';
 
 /**
  * COMPONENT
@@ -10,8 +10,8 @@ import { logout } from '../store'
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
-const Main = props => {
-  const { children, handleClick, isLoggedIn } = props
+const Main = (props) => {
+  const { children, handleClick, isLoggedIn } = props;
 
   return (
     <div>
@@ -20,8 +20,24 @@ const Main = props => {
           <Link to="/">Torrent Report</Link>
         </div>
         <div className="nav">
-          <Link to="/home">HOME</Link>
-          <Link to="/test">TEST</Link>
+          <NavLink exact activeClassName="sNav" to="/">
+            HOME
+          </NavLink>
+          <NavLink activeClassName="sNav" to="/test">
+            TEST
+          </NavLink>
+          <NavLink exact activeClassName="sNav" to="/top">
+            TOP 100
+          </NavLink>
+          <NavLink exact activeClassName="sNav" to="/top/movies">
+            MOVIES
+          </NavLink>
+          <NavLink exact activeClassName="sNav" to="/top/music">
+            MUSIC
+          </NavLink>
+          <NavLink exact activeClassName="sNav" to="/top/other">
+            OTHER
+          </NavLink>
         </div>
       </div>
       <div className="content">{children}</div>
@@ -47,29 +63,25 @@ const Main = props => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
-  }
-}
+const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+});
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  handleClick() {
+    dispatch(logout());
+  },
+});
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Main))
+export default withRouter(connect(mapState, mapDispatch)(Main));
 
 /**
  * PROP TYPES
@@ -77,5 +89,5 @@ export default withRouter(connect(mapState, mapDispatch)(Main))
 Main.propTypes = {
   children: PropTypes.object,
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+  isLoggedIn: PropTypes.bool.isRequired,
+};

@@ -23,7 +23,7 @@ body {
   font-family: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
   text-decoration: none;
   font-weight: 700;
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
 .header {
@@ -58,7 +58,8 @@ body {
   color: #a1a1a1;
 }
 
-.footer a:link {
+.footer a:link,
+.footer a:visited {
   color: #42e82c;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.7em;
@@ -67,7 +68,8 @@ body {
   text-decoration: none;
 }
 
-.footer a:hover {
+.footer a:hover,
+.footer a:active {
   text-decoration: underline;
 }
 
@@ -115,8 +117,16 @@ body {
   text-decoration: none;
   color: #cccccc;
   font-size: 0.8em;
-  padding-left: 0.6em;
-  padding-right: 0.6em;
+  padding-left: 0.9em;
+  padding-right: 0.9em;
+}
+
+.nav .sNav,
+.nav a:hover,
+.nav a:active {
+  color: white;
+  text-shadow: black 0px 3px;
+  font-weight: bold;
 }
 
 label {
@@ -144,8 +154,9 @@ label {
 .loginInput {
   background-color: #252525;
   color: whitesmoke;
-  font-size: 0.9em;
-  padding: 0.6em;
+  font-size: 0.7em;
+  width: 100%;
+  padding: 0.9em;
   border: none;
   border-radius: 0.5em;
 }
@@ -155,10 +166,55 @@ label {
   background-color: #42e82c;
   color: black;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1em;
+  font-size: 0.7em;
   letter-spacing: 2px;
   border-radius: 0.5em;
-  padding: 0.6em;
+  padding: 0.9em;
   min-width: 130px;
+  width: 100%;
+  /* font-weight: 900; */
+}
+
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  padding: 4em;
+  background-color: #dfdfdf;
+  border-radius: 2em;
+  /* border: white; */
+}
+
+.loginBox h2 {
+  font-size: 1.85 em;
+  padding: 0em 0em 1em 0em;
+  margin: 0em;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 900;
+  letter-spacing: 3px;
+  font-stretch: extra-expanded;
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.error {
+  background-color: #ffafaf;
+  padding: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #252525;
+  font-weight: bold;
 }

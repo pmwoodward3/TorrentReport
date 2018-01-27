@@ -7,31 +7,37 @@ import { auth } from '../store'
  * COMPONENT
  */
 const AuthForm = props => {
-  const { name, displayName, handleSubmit, error } = props
+  const { name, displayName, header, handleSubmit, error } = props
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="email">
-            <small>EMAIL</small>
-          </label>
-          <input className="loginInput" name="email" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>PASSWORD</small>
-          </label>
-          <input className="loginInput" name="password" type="password" />
-        </div>
-        <div>
-          <button className="loginButton" type="submit">
-            {displayName}
-          </button>
-        </div>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-      <a href="/auth/google">{displayName} with Google</a>
+    <div className="center">
+      <div className="loginBox">
+        <form className="center flexCol" onSubmit={handleSubmit} name={name}>
+          <h2>{header.toUpperCase()}</h2>
+          <div className="fullWidth">
+            <label htmlFor="email">
+              <small>EMAIL</small>
+            </label>
+            <input className="loginInput" name="email" type="text" />
+          </div>
+          <div className="fullWidth">
+            <label htmlFor="password">
+              <small>PASSWORD</small>
+            </label>
+            <input className="loginInput" name="password" type="password" />
+          </div>
+          <div>
+            <button className="loginButton" type="submit">
+              {displayName.toUpperCase()}
+            </button>
+          </div>
+          {error &&
+            error.response && (
+              <div className="error"> {error.response.data} </div>
+            )}
+          <a href="/auth/google">{displayName} with Google</a>
+        </form>
+      </div>
     </div>
   )
 }
@@ -46,7 +52,8 @@ const AuthForm = props => {
 const mapLogin = state => {
   return {
     name: 'login',
-    displayName: 'LOGIN',
+    header: 'Welcome',
+    displayName: 'Login',
     error: state.user.error
   }
 }
@@ -54,7 +61,8 @@ const mapLogin = state => {
 const mapSignup = state => {
   return {
     name: 'Register',
-    displayName: 'REGISTER',
+    header: 'Registration',
+    displayName: 'Register',
     error: state.user.error
   }
 }
