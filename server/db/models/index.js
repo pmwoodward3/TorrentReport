@@ -30,4 +30,8 @@ TorrentInfo.hasOne(TorrentGroup);
 module.exports = {
   User,
   TorrentSite,
+  TorrentInfo,
+  TorrentListing,
+  TorrentSnapshot,
+  TorrentGroup,
 };
