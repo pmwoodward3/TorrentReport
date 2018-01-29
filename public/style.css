@@ -180,7 +180,7 @@ label {
   flex-direction: column;
   width: 350px;
   padding: 4em;
-  background-color: #dfdfdf;
+  /* background-color: #f0f0f0; */
   border-radius: 2em;
   /* border: white; */
 }

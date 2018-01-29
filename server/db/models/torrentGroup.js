@@ -8,11 +8,6 @@ const TorrentGroup = db.define('torrentGroup', {
   },
   tag: {
     type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  url: {
-    type: Sequelize.STRING,
     allowNull: false,
   },
 });

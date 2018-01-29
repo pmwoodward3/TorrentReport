@@ -9,7 +9,7 @@ import { logout } from '../store';
  *  The Main component is our 'picture frame' - it displays the navbar and anything
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
- */
+ * */
 const Main = (props) => {
   const { children, handleClick, isLoggedIn } = props;
 
@@ -17,7 +17,7 @@ const Main = (props) => {
     <div>
       <div className="header">
         <div className="logo">
-          <Link to="/">Torrent Report</Link>
+          <a href="/">Torrent Report</a>
         </div>
         <div className="nav">
           <NavLink exact activeClassName="sNav" to="/">
@@ -50,15 +50,19 @@ const Main = (props) => {
         </div>
         {isLoggedIn ? (
           <div>
-            <a href="#" onClick={handleClick}>
+            <button className="loginButton" onClick={handleClick}>
               Logout
-            </a>
+            </button>
           </div>
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">LOGIN</Link>
-            <Link to="/signup">SIGN UP</Link>
+            {!isLoggedIn && (
+              <div>
+                <Link to="/login">LOGIN</Link>
+                <Link to="/signup">SIGN UP</Link>
+              </div>
+            )}
           </div>
         )}
       </div>

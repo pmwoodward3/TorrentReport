@@ -1,20 +1,18 @@
-const User = require('./user')
-const TorrentSite = require('./torrentSite')
-const TorrentListing = require('./torrentListing')
-const TorrentSnapshot = require('./torrentSnapshot')
-const TorrentGroup = require('./torrentGroup')
+const User = require('./user');
+const TorrentSite = require('./torrentSite');
+const TorrentInfo = require('./torrentInfo');
+const TorrentListing = require('./torrentListing');
+const TorrentSnapshot = require('./torrentSnapshot');
+const TorrentGroup = require('./torrentGroup');
 
-TorrentListing.belongsToMany(TorrentSite, { through: 'SiteListing' })
-TorrentSite.belongsToMany(TorrentListing, { through: 'SiteListing' })
-
-// torrent sites have many categories
-// category belongs to torrent site
-//
-
-TorrentSnapshot.belongsTo(TorrentSite)
-TorrentSnapshot.belongsTo(TorrentListing)
-TorrentSnapshot.belongsToMany(TorrentGroup, { through: 'SnapshotGroup' })
-TorrentGroup.belongsToMany(TorrentSnapshot, { through: 'SnapshotGroup' })
+TorrentListing.hasMany(TorrentInfo);
+TorrentListing.hasMany(TorrentSnapshot);
+TorrentSnapshot.belongsTo(TorrentListing);
+TorrentSnapshot.belongsTo(TorrentSite);
+TorrentSnapshot.belongsTo(TorrentGroup);
+TorrentGroup.belongsTo(TorrentSite);
+TorrentInfo.belongsTo(TorrentListing);
+TorrentInfo.hasOne(TorrentGroup);
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -31,5 +29,5 @@ TorrentGroup.belongsToMany(TorrentSnapshot, { through: 'SnapshotGroup' })
  */
 module.exports = {
   User,
-  TorrentSite
-}
+  TorrentSite,
+};
