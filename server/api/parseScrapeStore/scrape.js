@@ -4,13 +4,17 @@ require('babel-polyfill');
 const puppeteer = require('puppeteer');
 
 const scrape = async ({
-  name, group, resourceDomain, webPage, selectors, resultCombiner,
+  groupName,
+  groupTag,
+  resourceDomain,
+  webPage,
+  selectors,
+  resultCombiner,
 }) => {
   console.log('entering scrape...');
-  console.log('--name', name);
-  console.log('--group', group);
-  console.log('--resourceDomain', resourceDomain);
-  console.log('--selectors count', selectors.length);
+  console.log(' -- groupName', groupName);
+  console.log(' -- resourceDomain', resourceDomain);
+  console.log(' -- selectors count', selectors.length);
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -64,8 +68,8 @@ const scrape = async ({
   }
   browser.close();
   const finalObject = {
-    name,
-    group,
+    groupTag,
+    groupName,
     webPage,
     date: new Date(),
     results: resultCombiner(results, selectors),

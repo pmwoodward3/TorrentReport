@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { TorrentSite, TorrentListing, TorrentGroup } = require('./index');
 const db = require('../db');
 
 const TorrentInfo = db.define('torrentInfo', {
@@ -14,7 +15,6 @@ const TorrentInfo = db.define('torrentInfo', {
   },
   hash: {
     type: Sequelize.STRING,
-    unique: true,
   },
   url: {
     type: Sequelize.STRING,

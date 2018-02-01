@@ -1,0 +1,43 @@
+const {
+  TorrentSite,
+  TorrentInfo,
+  TorrentListing,
+  TorrentSnapshot,
+  TorrentGroup,
+} = require('../../db/models');
+
+const getOrMakeSite = (siteObj) => {
+  console.log(siteObj.siteName, '- working on site ');
+  return TorrentSite.findOrCreate({
+    where: {
+      name: siteObj.siteName,
+      short: siteObj.siteShortName,
+      url: siteObj.siteUrl,
+    },
+  })
+    .spread((site, created) => {
+      console.log(site.name, '- was created:', created);
+      siteObj.siteId = site.id;
+      return siteObj;
+    })
+    .then(async (site) => {
+      console.log(site.siteName, '- now creating or finding groups...');
+      const newGroups = await Promise.all(site.groups.map(group =>
+        TorrentGroup.findOrCreate({
+          where: {
+            name: group.groupName,
+            tag: group.groupTag,
+            torrentSiteId: site.siteId,
+          },
+        }).spread((groupObj, created) => {
+          console.log(site.siteName, '- group: ', groupObj.name, 'was created:', created);
+          group.groupId = groupObj.id;
+          return group;
+        })));
+      console.log(site.siteName, '- assigning new group arr with info...');
+      site.groups = newGroups;
+      return site;
+    });
+};
+
+module.exports = getOrMakeSite;

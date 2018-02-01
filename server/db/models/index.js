@@ -5,14 +5,13 @@ const TorrentListing = require('./torrentListing');
 const TorrentSnapshot = require('./torrentSnapshot');
 const TorrentGroup = require('./torrentGroup');
 
-// TorrentListing.hasMany(TorrentInfo);
-// TorrentListing.hasMany(TorrentSnapshot);
-// TorrentSnapshot.belongsTo(TorrentListing);
-// TorrentSnapshot.belongsTo(TorrentSite);
-// TorrentSnapshot.belongsTo(TorrentGroup);
-// TorrentGroup.belongsTo(TorrentSite);
-// TorrentInfo.belongsTo(TorrentListing);
-// TorrentInfo.hasOne(TorrentGroup);
+TorrentGroup.belongsTo(TorrentSite);
+TorrentInfo.belongsTo(TorrentGroup);
+
+TorrentListing.belongsToMany(TorrentInfo, { as: 'Infos', through: 'ListingInfo' });
+TorrentInfo.belongsTo(TorrentListing);
+
+TorrentSnapshot.belongsTo(TorrentInfo);
 
 module.exports = {
   User,

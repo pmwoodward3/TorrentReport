@@ -5,14 +5,14 @@ const {
   TorrentListing,
   TorrentSnapshot,
   TorrentGroup,
-} = require('../db/models');
-const pSS = require('./parseScrapeStore');
+} = require('../../db/models');
 
 module.exports = router;
 
 router.get('/', (req, res, next) => {
   // if (req.user && req.user.isAdmin) {
-  pSS()
+  TorrentGroup.scope('withSite')
+    .findAll()
     .then(data => res.json(data))
     .catch(next);
   // } else {

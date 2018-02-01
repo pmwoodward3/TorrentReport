@@ -1,21 +1,21 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const TorrentSite = db.define('torrentSite', {
   name: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
   },
   short: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
   },
   url: {
     type: Sequelize.STRING,
-    allowNull: false
-  }
-})
+    allowNull: false,
+  },
+});
 
-module.exports = TorrentSite
+module.exports = TorrentSite;
