@@ -3,18 +3,26 @@ require('babel-polyfill');
 
 const puppeteer = require('puppeteer');
 
+const pageConsole = (msg) => {
+  console.log('PAGE LOG:', msg.text());
+};
+
+const minimumArrLength = (smallest, currentVal) => {
+  const currValLen = currentVal.length;
+  const isSmaller = currValLen < smallest;
+  return isSmaller ? currValLen : smallest;
+};
+
 const scrape = async ({
+  groupId,
   groupName,
   groupTag,
   resourceDomain,
   webPage,
   selectors,
-  resultCombiner,
+  resultCleaner,
 }) => {
-  console.log('entering scrape...');
-  console.log(' -- groupName', groupName);
-  console.log(' -- resourceDomain', resourceDomain);
-  console.log(' -- selectors count', selectors.length);
+  console.log(`start scrape | groupName: ${groupName} | rD: ${resourceDomain} | selC: ${selectors.length}`);
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -38,10 +46,8 @@ const scrape = async ({
       interceptedRequest.url().endsWith('.mp4') ||
       interceptedRequest.url().endsWith('.gif')
     ) {
-      // console.log('blocking resource ->', interceptedRequest.url())
       interceptedRequest.abort();
     } else {
-      // console.log('ALLOWING resource ->', interceptedRequest.url())
       interceptedRequest.continue();
     }
   });
@@ -49,36 +55,45 @@ const scrape = async ({
     timeout: 100000,
   });
   await page.waitFor(3000);
-  const results = [];
 
-  // this will loop through the selectors
-  for (let selectorInd = 0; selectorInd < selectors.length; selectorInd++) {
-    // get ElementHandle by queryStatementAll for selector query
-    let selectResults = await page.$$(selectors[selectorInd].query);
-    selectResults = Array.from(selectResults);
-    // now loop through the results of the query (an array of ElementHandles)
-    for (let itemIndex = 0; itemIndex < selectResults.length; itemIndex++) {
-      // evaluate handle using pluck function and store value
-      selectResults[itemIndex] = await page.evaluate(
-        selectors[selectorInd].pluck,
-        selectResults[itemIndex],
-      );
-    }
-    results.push(selectResults);
-  }
+  const pageEvalFunc = (results, pluck) =>
+    results.map((result) => {
+      const resObj = {};
+      const pluckKeys = Object.keys(pluck);
+      pluckKeys.forEach((key) => {
+        resObj[key] = result[pluck[key]];
+      });
+      return resObj;
+    });
+
+  const results = await Promise.all(selectors.map(selector => page.$$eval(selector.query, pageEvalFunc, selector.pluck)));
   browser.close();
-  const finalObject = {
-    groupTag,
-    groupName,
-    webPage,
-    date: new Date(),
-    results: resultCombiner(results, selectors),
-  };
-  return finalObject;
-};
 
-const pageConsole = (msg) => {
-  console.log('PAGE LOG:', msg.text());
+  // lowest length of selector results should be used as limit
+  const selectLimit = results.reduce(minimumArrLength, results[0].length);
+
+  const groupedResults = [];
+
+  for (let i = 0; i < selectLimit; i += 1) {
+    const combinedSelector = {};
+    results.forEach((result) => {
+      // get each result at current index
+      const resKeys = Object.keys(result[i]);
+      resKeys.forEach((key) => {
+        combinedSelector[key] = result[i][key];
+      });
+    });
+    groupedResults.push(resultCleaner(combinedSelector));
+  }
+
+  return {
+    groupId,
+    groupName,
+    groupTag,
+    resourceDomain,
+    webPage,
+    results: groupedResults,
+  };
 };
 
 module.exports = scrape;

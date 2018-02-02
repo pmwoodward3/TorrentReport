@@ -1,3 +1,5 @@
+const { universalClean } = require('./utils');
+
 const rarbg = {
   siteName: 'RARBG',
   siteShortName: 'RARBG',
@@ -14,69 +16,50 @@ const rarbg = {
           label: 'name',
           query:
             'body > table:nth-child(6) > tbody > tr > td:nth-child(2) > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > a:nth-child(1)',
-          pluck(data) {
-            return { name: data.outerText, url: data.href };
-          },
+          pluck: { name: 'outerText', url: 'href' },
         },
         {
-          label: 'uploaded',
+          label: 'uploadDate',
           query: '.lista2 > td:nth-child(3)',
-          pluck(data) {
-            return data.outerText;
-          },
+          pluck: { uploadDate: 'outerText' },
         },
         {
           label: 'size',
           query: '.lista2 > td:nth-child(4)',
-          pluck(data) {
-            return data.outerText;
-          },
+          pluck: { size: 'outerText' },
         },
         {
           label: 'seed',
           query: '.lista2 > td:nth-child(5)',
-          pluck(data) {
-            return data.outerText;
-          },
+          pluck: { seed: 'outerText' },
         },
         {
           label: 'leach',
           query: '.lista2 > td:nth-child(6)',
-          pluck(data) {
-            return data.outerText;
-          },
+          pluck: { leach: 'outerText' },
         },
         {
           label: 'uploader',
           query: '.lista2 > td:nth-child(9)',
-          pluck(data) {
-            return data.outerText;
-          },
+          pluck: { uploadUser: 'outerText' },
         },
       ],
-      resultCombiner: (rawResults, selectors) => {
-        const groupedArr = [];
-        // comb through the series of arrays and pull the same index from each one.
-        for (var resInd = 0; resInd < rawResults[0].length; resInd++) {
-          const newObj = {};
-          selectors.forEach((selector, index) => {
-            const originalValue = rawResults[index][resInd];
-            switch (selector.label) {
-              case 'name':
-                newObj.name = originalValue.name;
-                newObj.url = originalValue.url;
-                break;
-              case 'uploaded':
-                newObj.uploaded = new Date(originalValue);
-                break;
-              default:
-                newObj[selector.label] = originalValue;
+      resultCleaner: (rawResult) => {
+        const newResult = Object.assign({}, rawResult);
+        const resKeys = Object.keys(rawResult);
+        resKeys.forEach((key) => {
+          switch (key) {
+            case 'uploadDate': {
+              newResult.uploadDate = new Date(rawResult.uploadDate);
+              break;
             }
-          });
-          groupedArr.push(newObj);
-        }
-
-        return groupedArr;
+            default: {
+              newResult[key] = universalClean(key, rawResult[key]);
+              break;
+            }
+          }
+        });
+        return newResult;
       },
     },
   ],
