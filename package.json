@@ -16,7 +16,8 @@
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public",
-    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register"
+    "test":
+      "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register"
   },
   "author": "",
   "license": "ISC",
@@ -33,7 +34,7 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
-    "pg": "^7.4.1",
+    "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.0",
     "puppeteer": "^1.0.0",

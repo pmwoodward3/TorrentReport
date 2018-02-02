@@ -1,7 +1,5 @@
-// require babel polyfill for testing purposes
-require('babel-polyfill');
-
 const puppeteer = require('puppeteer');
+const { getOrMakeTorrentListing } = require('./fetch');
 
 const pageConsole = (msg) => {
   console.log('PAGE LOG:', msg.text());
@@ -83,7 +81,10 @@ const scrape = async ({
         combinedSelector[key] = result[i][key];
       });
     });
-    groupedResults.push(resultCleaner(combinedSelector));
+    combinedSelector.torrentGroupId = groupId;
+    const cleanResult = resultCleaner(combinedSelector);
+    const torrentListing = await getOrMakeTorrentListing(cleanResult);
+    groupedResults.push(torrentListing);
   }
 
   return {

@@ -40,4 +40,21 @@ const getOrMakeSite = (siteObj) => {
     });
 };
 
-module.exports = getOrMakeSite;
+const getOrMakeTorrentListing = (torrentScrapeObj) => {
+  const newTorrentObj = Object.assign({}, torrentScrapeObj);
+  console.log('checking torrent if exists/create ::: ', torrentScrapeObj.name);
+  return TorrentListing.findOrCreate({
+    where: {
+      name: torrentScrapeObj.name,
+    },
+  })
+    .spread((listing, created) => {
+      console.log(listing.name, 'was created?', created);
+      return listing;
+    })
+    .then((listingObj) => {
+      newTorrentObj.torrentListingId = listingObj.id;
+      return newTorrentObj;
+    });
+};
+module.exports = { getOrMakeSite, getOrMakeTorrentListing };

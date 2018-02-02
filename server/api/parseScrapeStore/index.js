@@ -1,7 +1,9 @@
+// require babel polyfill for testing purposes
+require('babel-polyfill');
 const scrape = require('./scrape');
 const rarbg = require('./sites/rarbg');
 const tpb = require('./sites/tpb');
-const getOrMakeSite = require('./fetch');
+const { getOrMakeSite } = require('./fetch');
 
 // function returns a promise.all of all site scrapes
 let pSS = (sites) => {

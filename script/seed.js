@@ -1,14 +1,3 @@
-/**
- * Welcome to the seed file! This seed file uses a newer language feature called...
- *
- *                  -=-= ASYNC...AWAIT -=-=
- *
- * Async-await is a joy to use! Read more about it in the MDN docs:
- *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
- *
- * Now that you've got the main idea, check it out in practice below!
- */
 const db = require('../server/db');
 const {
   User,
@@ -28,99 +17,97 @@ async function seed() {
     User.create({ email: 'user@email.com', password: '123' }),
   ]);
 
-  const torrentSites = await Promise.all([
-    TorrentSite.create({
-      name: 'The Pirate Bay',
-      short: 'TPB',
-      url: 'https://thepiratebay.org/',
-    }),
-    TorrentSite.create({
-      name: 'RARBG',
-      short: 'RARBG',
-      url: 'https://rarbg.to',
-    }),
-  ]);
+  // const torrentSites = await Promise.all([
+  //   TorrentSite.create({
+  //     name: 'The Pirate Bay',
+  //     short: 'TPB',
+  //     url: 'https://thepiratebay.org/',
+  //   }),
+  //   TorrentSite.create({
+  //     name: 'RARBG',
+  //     short: 'RARBG',
+  //     url: 'https://rarbg.to',
+  //   }),
+  // ]);
 
-  const torrentGroup = await Promise.all([
-    TorrentGroup.create({
-      torrentSiteId: 1,
-      name: 'TOP100MOVIES',
-      tag: 'top100Movies',
-      url: 'https://thepiratebay.org/top/200',
-    }),
-    TorrentGroup.create({
-      torrentSiteId: 2,
-      name: 'TOP100MOVIES',
-      tag: 'top100Movies',
-      url:
-        'https://rarbg.to/top100.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=50&category%5B%5D=51&category%5B%5D=52&category%5B%5D=42&category%5B%5D=46&category%5B%5D=49',
-    }),
-  ]);
+  // const torrentGroup = await Promise.all([
+  //   TorrentGroup.create({
+  //     torrentSiteId: 1,
+  //     name: 'TOP100MOVIES',
+  //     tag: 'top100Movies',
+  //     url: 'https://thepiratebay.org/top/200',
+  //   }),
+  //   TorrentGroup.create({
+  //     torrentSiteId: 2,
+  //     name: 'TOP100MOVIES',
+  //     tag: 'top100Movies',
+  //     url:
+  //       'https://rarbg.to/top100.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=50&category%5B%5D=51&category%5B%5D=52&category%5B%5D=42&category%5B%5D=46&category%5B%5D=49',
+  //   }),
+  // ]);
 
-  console.log('*** HERE *** \t *** HERE *** \t *** HERE *** ');
-  const torrentListing = await Promise.all([
-    TorrentListing.create({
-      name: 'Fake Movie 2017 1080p',
-    }),
-    TorrentListing.create({
-      name: 'NOT ANOTHER Fake Movie 2017 1080p',
-    }),
-    TorrentListing.create({
-      name: 'Drop it likes its Hot 2001 1080p',
-    }),
-  ]);
+  // const torrentListing = await Promise.all([
+  //   TorrentListing.create({
+  //     name: 'Fake Movie 2017 1080p',
+  //   }),
+  //   TorrentListing.create({
+  //     name: 'NOT ANOTHER Fake Movie 2017 1080p',
+  //   }),
+  //   TorrentListing.create({
+  //     name: 'Drop it likes its Hot 2001 1080p',
+  //   }),
+  // ]);
 
-  const torrentInfo = await Promise.all([
-    TorrentInfo.create({
-      torrentListingId: 1,
-      torrentGroupId: 1,
-      uploadDate: new Date(),
-      uploadUser: 'upLOADERuserTPB',
-      size: '2.4 GB',
-      hash: '111233321123',
-      url: 'https://tpb.site',
-    }),
-    TorrentInfo.create({
-      torrentListingId: 1,
-      torrentGroupId: 2,
-      uploadDate: new Date(),
-      uploadUser: 'upLOADERuserNOTfromTPB',
-      size: '5.2 GB',
-      hash: '111233321123',
-      url: 'https://rarbg.site',
-    }),
-  ]);
+  // const torrentInfo = await Promise.all([
+  //   TorrentInfo.create({
+  //     torrentListingId: 1,
+  //     torrentGroupId: 1,
+  //     uploadDate: new Date(),
+  //     uploadUser: 'upLOADERuserTPB',
+  //     size: '2.4 GB',
+  //     hash: '111233321123',
+  //     url: 'https://tpb.site',
+  //   }),
+  //   TorrentInfo.create({
+  //     torrentListingId: 1,
+  //     torrentGroupId: 2,
+  //     uploadDate: new Date(),
+  //     uploadUser: 'upLOADERuserNOTfromTPB',
+  //     size: '5.2 GB',
+  //     hash: '111233321123',
+  //     url: 'https://rarbg.site',
+  //   }),
+  // ]);
 
-  console.log('... populating seed join table data');
-  const ListingsInfo = await Promise.all([
-    TorrentListing.findOrCreate({ where: { name: 'Fake Movie 2017 1080p' } }).spread(async (listing, created) => {
-      await listing.addInfos(1);
-      await listing.addInfos(2);
-    }),
-  ]);
+  // const ListingsInfo = await Promise.all([
+  //   TorrentListing.findOrCreate({ where: { name: 'Fake Movie 2017 1080p' } }).spread(async (listing, created) => {
+  //     await listing.addInfos(1);
+  //     await listing.addInfos(2);
+  //   }),
+  // ]);
 
-  const torrentSnapshot = await Promise.all([
-    TorrentSnapshot.create({
-      torrentInfoId: 1,
-      seed: 420,
-      date: new Date() - 1,
-      leach: 421,
-    }),
-    TorrentSnapshot.create({
-      torrentInfoId: 1,
-      date: new Date() - 2,
-      seed: 420,
-      leach: 421,
-    }),
-  ]);
+  // const torrentSnapshot = await Promise.all([
+  //   TorrentSnapshot.create({
+  //     torrentInfoId: 1,
+  //     seed: 420,
+  //     date: new Date() - 1,
+  //     leach: 421,
+  //   }),
+  //   TorrentSnapshot.create({
+  //     torrentInfoId: 1,
+  //     date: new Date() - 2,
+  //     seed: 420,
+  //     leach: 421,
+  //   }),
+  // ]);
 
   console.log('-------- seeded successfully --------');
   console.log(` + ${users.length} users`);
-  console.log(` + ${torrentSites.length} torrent sites`);
-  console.log(` + ${torrentInfo.length} torrent infos`);
-  console.log(` + ${torrentListing.length} torrent listings`);
-  console.log(` + ${torrentSnapshot.length} torrent snapshots`);
-  console.log(` + ${torrentGroup.length} torrent groups`);
+  // console.log(` + ${torrentSites.length} torrent sites`);
+  // console.log(` + ${torrentInfo.length} torrent infos`);
+  // console.log(` + ${torrentListing.length} torrent listings`);
+  // console.log(` + ${torrentSnapshot.length} torrent snapshots`);
+  // console.log(` + ${torrentGroup.length} torrent groups`);
   console.log('-------------------------------------');
 }
 
