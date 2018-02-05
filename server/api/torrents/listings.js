@@ -31,7 +31,7 @@ router.get('/addinfos', (req, res, next) => {
   })
     .spread((listing, created) => {
       listingObj = listing;
-      return listing.getInfos({ scope: 'withSites' });
+      return listing.getInfos();
     })
     .then(infos => res.json(infos));
 
