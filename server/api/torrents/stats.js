@@ -18,3 +18,16 @@ router.get('/', (req, res, next) => {
   //   next()
   // }
 });
+router.get('/a', (req, res, next) => {
+  // if (req.user && req.user.isAdmin) {
+  TorrentStats.findOne({ where: { active: true } })
+    .then(data => res.json(data))
+    .catch(next);
+  // TorrentStats.max('id')
+  //   .then(maxId => TorrentStats.findById(maxId))
+  //   .then(data => res.json(data))
+  //   .catch(next);
+  // } else {
+  //   next()
+  // }
+});

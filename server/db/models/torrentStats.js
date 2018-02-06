@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const TorrentStats = db.define('torrentStats', {
-  sitesCount: {
+  siteCount: {
     type: Sequelize.INTEGER,
   },
   torrentCount: {
@@ -14,6 +14,12 @@ const TorrentStats = db.define('torrentStats', {
   },
   snapshotCount: {
     type: Sequelize.INTEGER,
+  },
+  active: {
+    type: Sequelize.BOOLEAN,
+  },
+  endedAt: {
+    type: Sequelize.DATE,
   },
 });
 

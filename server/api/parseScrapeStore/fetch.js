@@ -4,7 +4,28 @@ const {
   TorrentListing,
   TorrentSnapshot,
   TorrentGroup,
+  TorrentStats,
 } = require('../../db/models');
+
+const safeFields = {
+  fields: [
+    'seed',
+    'leach',
+    'uploadDate',
+    'uploadUser',
+    'size',
+    'hash',
+    'url',
+    'torrentGroupId',
+    'torrentListingId',
+  ],
+};
+
+const getSnapshotCount = () =>
+  TorrentSnapshot.count().then((data) => {
+    console.log('torrent snapshots:', data);
+    return data;
+  });
 
 const getOrMakeSite = (siteObj) => {
   console.log(siteObj.siteName, '- working on site ');
@@ -29,6 +50,7 @@ const getOrMakeSite = (siteObj) => {
       const newGroups = await Promise.all(site.groups.map(group =>
         TorrentGroup.findOrCreate({
           where: {
+            url: group.webPage,
             name: group.groupName,
             tag: group.groupTag,
             torrentSiteId: site.siteId,
@@ -75,29 +97,19 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
             torrentScrapeObj.name,
             'already exists for this site',
           );
-          found = true;
+          newTorrentObj.torrentInfoId = info.id;
+          found = info;
         }
       });
-      if (found) {
-        return infos;
-      }
+      if (found) return found.updateAttributes(newTorrentObj);
       console.log(
         torrentScrapeObj.torrentSiteId,
         ' | ',
         torrentScrapeObj.name,
         'not found! creating info',
       );
-      return TorrentInfo.create(newTorrentObj, {
-        fields: [
-          'uploadDate',
-          'uploadUser',
-          'size',
-          'hash',
-          'url',
-          'torrentGroupId',
-          'torrentListingId',
-        ],
-      }).then((createdInfo) => {
+      return TorrentInfo.create(newTorrentObj, safeFields).then((createdInfo) => {
+        newTorrentObj.torrentInfoId = createdInfo.id;
         console.log(
           torrentScrapeObj.torrentSiteId,
           ' | ',
@@ -109,4 +121,4 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
     })
     .then(_ => newTorrentObj);
 };
-module.exports = { getOrMakeSite, getOrMakeTorrentListing };
+module.exports = { getOrMakeSite, getOrMakeTorrentListing, getSnapshotCount };

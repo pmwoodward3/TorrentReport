@@ -1,1 +1,26 @@
-const db = require('../../db')
+const { TorrentStats, TorrentSnapshot } = require('../../db/models');
+
+const initStat = () =>
+  TorrentStats.create({
+    active: true,
+  });
+
+const closeStat = (statObj) => {
+  TorrentStats.findOne({ where: { active: true } })
+    .then(activeStat =>
+      activeStat.update(statObj, {
+        fields: ['siteCount', 'torrentCount', 'groupCount', 'snapshotCount', 'active', 'endedAt'],
+      }))
+    .catch((err) => {
+      console.error('\n----- ERR WITH closing stat -----\n');
+      console.error(err);
+    });
+};
+
+const addSnapshots = snapshotArr =>
+  TorrentSnapshot.bulkCreate(snapshotArr).catch((err) => {
+    console.error('\n----- ERR WITH BULK CREATE -----\n');
+    console.error(err);
+  });
+
+module.exports = { initStat, closeStat, addSnapshots };

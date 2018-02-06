@@ -7,6 +7,12 @@ const TorrentInfo = db.define('torrentInfo', {
     type: Sequelize.DATE,
     allowNull: false,
   },
+  seed: {
+    type: Sequelize.INTEGER,
+  },
+  leach: {
+    type: Sequelize.INTEGER,
+  },
   uploadUser: {
     type: Sequelize.STRING,
   },
