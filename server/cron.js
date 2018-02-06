@@ -1,11 +1,12 @@
 const { CronJob } = require('cron');
 const pSS = require('./api/parseScrapeStore');
+const { sendError } = require('./notifier/email/emails');
 
 const scraper = new CronJob(
-  '00 06 23 * * *',
+  '00 38 01 * * *',
   () => {
     console.log('starting');
-    pSS();
+    pSS().catch(err => sendError('automated parse scrape store', err));
   },
   () => {
     console.log('stop');
