@@ -23,16 +23,54 @@ router.get('/', (req, res, next) => {
 router.get('/addinfos', (req, res, next) => {
   // if (req.user && req.user.isAdmin) {
   let listingObj;
-  let newInfoObj;
+  const newInfoObj = {
+    id: 2,
+    uploadDate: '2018-02-05T05:37:22.272Z',
+    uploadUser: 'PROGR',
+    size: '233333.4 GB',
+    hash: '000000000',
+    url: 'https://hellno.site',
+    torrentGroupId: 3,
+    torrentListingId: 3,
+  };
   TorrentListing.findOrCreate({
     where: {
-      name: 'Braven 2018 720p WEB-DL DD5 1 H264-FGT',
+      name: 'Fake Movie 2017 1080p',
     },
   })
     .spread((listing, created) => {
       listingObj = listing;
-      return listing.getInfos();
+      return listing.getInfos({ include: [{ model: TorrentGroup }] });
     })
+    .then((infos) => {
+      let found = false;
+      infos.forEach((info) => {
+        if (info.torrentGroup.torrentSiteId === 3) {
+          // torrent site found
+          console.log('already exists for this site');
+          found = true;
+        }
+      });
+      if (found) {
+        return infos;
+      }
+      console.log('not found! creating info');
+      return TorrentInfo.create(newInfoObj, {
+        fields: [
+          'uploadDate',
+          'uploadUser',
+          'size',
+          'hash',
+          'url',
+          'torrentGroupId',
+          'torrentListingId',
+        ],
+      }).then((createdInfo) => {
+        console.log('created info item assc');
+        return listingObj.addInfo(createdInfo);
+      });
+    })
+
     .then(infos => res.json(infos));
 
   // .then((infos) => {

@@ -13,6 +13,7 @@ const minimumArrLength = (smallest, currentVal) => {
 
 const scrape = async ({
   groupId,
+  siteId,
   groupName,
   groupTag,
   resourceDomain,
@@ -82,6 +83,7 @@ const scrape = async ({
       });
     });
     combinedSelector.torrentGroupId = groupId;
+    combinedSelector.torrentSiteId = siteId;
     const cleanResult = resultCleaner(combinedSelector);
     const torrentListing = await getOrMakeTorrentListing(cleanResult);
     groupedResults.push(torrentListing);

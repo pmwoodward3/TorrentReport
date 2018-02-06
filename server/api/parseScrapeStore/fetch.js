@@ -18,6 +18,10 @@ const getOrMakeSite = (siteObj) => {
     .spread((site, created) => {
       console.log(site.name, '- was created:', created);
       siteObj.siteId = site.id;
+      siteObj.groups.map((group) => {
+        group.siteId = site.id;
+        return group;
+      });
       return siteObj;
     })
     .then(async (site) => {
@@ -42,19 +46,67 @@ const getOrMakeSite = (siteObj) => {
 
 const getOrMakeTorrentListing = (torrentScrapeObj) => {
   const newTorrentObj = Object.assign({}, torrentScrapeObj);
-  console.log('checking torrent if exists/create ::: ', torrentScrapeObj.name);
+  let dbListingObj;
+  console.log(
+    torrentScrapeObj.torrentSiteId,
+    ' | ',
+    torrentScrapeObj.name,
+    'checking torrent if exists/create ::: ',
+  );
   return TorrentListing.findOrCreate({
     where: {
       name: torrentScrapeObj.name,
     },
   })
     .spread((listing, created) => {
-      console.log(listing.name, 'was created?', created);
-      return listing;
+      console.log(torrentScrapeObj.torrentSiteId, ' | ', listing.name, 'was created?', created);
+      newTorrentObj.torrentListingId = listing.id;
+      dbListingObj = listing;
+      return listing.getInfos({ include: [{ model: TorrentGroup }] });
     })
-    .then((listingObj) => {
-      newTorrentObj.torrentListingId = listingObj.id;
-      return newTorrentObj;
-    });
+    .then((infos) => {
+      let found = false;
+      infos.forEach((info) => {
+        if (info.torrentGroup.torrentSiteId === torrentScrapeObj.torrentSiteId) {
+          // torrent site found
+          console.log(
+            torrentScrapeObj.torrentSiteId,
+            ' | ',
+            torrentScrapeObj.name,
+            'already exists for this site',
+          );
+          found = true;
+        }
+      });
+      if (found) {
+        return infos;
+      }
+      console.log(
+        torrentScrapeObj.torrentSiteId,
+        ' | ',
+        torrentScrapeObj.name,
+        'not found! creating info',
+      );
+      return TorrentInfo.create(newTorrentObj, {
+        fields: [
+          'uploadDate',
+          'uploadUser',
+          'size',
+          'hash',
+          'url',
+          'torrentGroupId',
+          'torrentListingId',
+        ],
+      }).then((createdInfo) => {
+        console.log(
+          torrentScrapeObj.torrentSiteId,
+          ' | ',
+          torrentScrapeObj.name,
+          'created info item assc',
+        );
+        return dbListingObj.addInfo(createdInfo);
+      });
+    })
+    .then(_ => newTorrentObj);
 };
 module.exports = { getOrMakeSite, getOrMakeTorrentListing };

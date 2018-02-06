@@ -16,14 +16,14 @@
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public",
-    "test":
-      "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register"
+    "test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
     "compression": "^1.7.1",

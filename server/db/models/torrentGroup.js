@@ -19,9 +19,6 @@ const TorrentGroup = db.define(
     },
   },
   {
-    defaultScope: {
-      // include: [TorrentSite],
-    },
     scopes: {
       withSite: {
         include: [TorrentSite],
