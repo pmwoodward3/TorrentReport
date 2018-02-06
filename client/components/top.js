@@ -13,7 +13,6 @@ class Test extends Component {
 
   componentDidMount() {}
   render() {
-    const { Table, Tr, Td } = Reactable;
     return (
       <div>
         top page

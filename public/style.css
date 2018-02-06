@@ -13,7 +13,8 @@ body {
 #app > div {
   flex-flow: column;
   display: flex;
-  height: 100vh;
+  flex-grow: 1;
+  /* height: 100%; */
 }
 
 .logo,
@@ -105,9 +106,10 @@ body {
 }
 
 .content {
-  padding: 3em;
+  /* height: auto; */
+  min-height: calc(100vh - 4em - 3em - 2em);
+  padding: 1.5em 3em 1.5em 3em;
   flex-grow: 1;
-  flex-shrink: 1;
   flex-basis: auto;
 }
 

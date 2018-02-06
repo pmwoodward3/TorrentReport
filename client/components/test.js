@@ -1,35 +1,68 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import 'react-virtualized/styles.css';
+import { Column, Table, AutoSizer } from 'react-virtualized';
+import { getData } from '../store';
 
 class Test extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      data: 'loading...'
-    }
+      data: [],
+    };
   }
 
   componentDidMount() {
     axios
-      .get('/api/test')
+      .get('/api/torrents/listings')
       .then(res => res.data)
-      .then(data => {
-        console.log('here is the data', data)
-        this.setState({ data })
-      })
+      .then((results) => {
+        console.log(results);
+        this.setState({ data: results });
+      });
   }
 
   render() {
-    console.log('rendered test page')
+    console.log('rendered test page');
+    console.log(this.state.data);
+    const { data } = this.state;
+    if (!data.length) {
+      return (
+        <div>
+          <h1>loading...</h1>
+        </div>
+      );
+    }
+    if (!data === 'signin') {
+      return (
+        <div>
+          <h1>you need to be signed in</h1>
+        </div>
+      );
+    }
     return (
-      <div>
-        data: {this.state.data}
-        <hr />woooo
-      </div>
-    )
+      <AutoSizer disableHeight>
+        {({ width }) => (
+          <Table
+            noRowsRenderer={() => {
+              'no data';
+            }}
+            width={width}
+            height={3020}
+            headerHeight={20}
+            rowHeight={30}
+            rowCount={data.length}
+            rowGetter={({ index }) => data[index]}
+          >
+            <Column label="Name" dataKey="name" width={width / 2} />
+            <Column label="date found" dataKey="createdAt" width={width / 2} />
+          </Table>
+        )}
+      </AutoSizer>
+    );
   }
 }
 
-export default Test
+export default Test;
