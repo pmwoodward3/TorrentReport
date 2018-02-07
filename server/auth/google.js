@@ -20,7 +20,7 @@ module.exports = router;
  */
 
 if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
-  console.log('## OAuth - Google ## Google client ID / secret not found. Skipping Google OAuth.');
+  console.log('## OAuth - Google ## - FAIL! \t (Google client ID / secret not found. Skipping Google OAuth.)');
 } else {
   const googleConfig = {
     clientID: process.env.GOOGLE_CLIENT_ID,

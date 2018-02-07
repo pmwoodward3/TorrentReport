@@ -48,6 +48,9 @@ const Main = (props) => {
             <a href="http://estepanov.io">estepanov.io</a>
           </div>
         </div>
+        <div>
+          <div>Copyright</div>
+        </div>
         {isLoggedIn ? (
           <div>
             <button className="loginButton" onClick={handleClick}>

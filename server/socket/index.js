@@ -1,10 +1,12 @@
 module.exports = (io) => {
   io.on('connection', (socket) => {
-    console.log(`A socket connection to the server has been made: ${socket.id}`);
+    console.log(`## Socket Connection User ## + ${
+      socket.id
+    } \t (A socket connection to the server has been made)`);
     // console.log(socket);
 
     socket.on('disconnect', () => {
-      console.log(`Connection ${socket.id} has left the building`);
+      console.log(`## Socket Connection User## - ${socket.id} \t (has left the building)`);
     });
   });
 };

@@ -32,10 +32,10 @@ const transporter = nodemailer.createTransport(cred);
 // verify connection configuration
 transporter.verify((error, success) => {
   if (error) {
-    console.log('## Email Service Status ## FAIL!');
+    console.log('## Email Service Status ## - FAIL!');
     console.log(error);
   } else {
-    console.log('## Email Service Status ## Ready!');
+    console.log('## Email Service Status ## + Running!');
     // console.log(success);
   }
 });

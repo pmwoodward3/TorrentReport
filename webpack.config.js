@@ -1,6 +1,14 @@
 const LiveReloadPlugin = require('webpack-livereload-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
+const pluginsArr = [
+  new ExtractTextPlugin('public/style-p.css', {
+    allChunks: true,
+  }),
+];
+
+if (isDev) pluginsArr.push(new LiveReloadPlugin({ appendScriptTag: true }));
 
 module.exports = {
   entry: './client/index.js',
@@ -18,12 +26,19 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader',
+        }),
       },
     ],
   },
-  // When we're in development, we can use this handy live-reload plugin
-  // to refresh the page for us every time we make a change to our client-side
-  // files. It's like `nodemon` for the front end!
-  plugins: isDev ? [new LiveReloadPlugin({ appendScriptTag: true })] : [],
+
+  plugins: pluginsArr,
 };
+
+// [
+//   'style-loader',
+//   { loader: 'css-loader', options: { importLoaders: 1 } },
+//   'postcss-loader',
+// ]

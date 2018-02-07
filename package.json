@@ -43,6 +43,7 @@
     "puppeteer": "^1.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-loading-components": "^1.1.12",
     "react-redux": "^5.0.2",
     "react-router-dom": "^4.2.2",
     "react-virtualized": "^9.18.5",
@@ -54,6 +55,7 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
+    "autoprefixer": "^7.2.5",
     "axios-mock-adapter": "^1.11.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.1",
@@ -71,8 +73,10 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "extract-text-webpack-plugin": "^3.0.2",
     "mocha": "^5.0.0",
     "nodemon": "^1.14.11",
+    "postcss-loader": "^2.1.0",
     "react-test-renderer": "^16.2.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-mock-store": "^1.4.0",

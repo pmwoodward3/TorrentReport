@@ -37,7 +37,13 @@ const TorrentListing = db.define(
           {
             model: TorrentInfo,
             as: 'Infos',
-            include: [{ model: TorrentGroup, include: [TorrentSite] }],
+            include: [
+              {
+                as: 'Group',
+                model: TorrentGroup,
+                include: [TorrentSite],
+              },
+            ],
           },
         ],
       },

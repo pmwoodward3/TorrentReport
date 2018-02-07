@@ -4,7 +4,16 @@ const Promise = require('bluebird');
 const scrape = require('./scrape');
 const rarbg = require('./sites/rarbg');
 const tpb = require('./sites/tpb');
-const { getOrMakeSite, getSnapshotCount } = require('./fetch');
+const {
+  getOrMakeSite,
+  getSnapshotCount,
+  getTorrentCount,
+  getGroupCount,
+  getInfoCount,
+  getListCount,
+  getScrapeCount,
+  getSiteCount,
+} = require('./fetch');
 const { checkSnapshot } = require('./check');
 const { initStat, closeStat, addSnapshots } = require('./store');
 const { clean } = require('./clean');
@@ -28,25 +37,38 @@ let pSS = async (sites) => {
         */
       const snapshotsArr = clean(fullSites);
       await addSnapshots(snapshotsArr);
+      const gSiteCount = await getSiteCount();
+      const gScrapeCount = await getScrapeCount();
+      const gGroupCount = await getGroupCount();
+      const gListCount = await getListCount();
+      const ginfoCount = await getInfoCount();
       const snapshotCount = await getSnapshotCount();
+      const getTCount = await getTorrentCount();
       const statObj = {
-        siteCount: fullSites.length,
-        torrentCount: 0,
-        groupCount: 0,
+        siteCount: parseInt(gSiteCount, 10),
+        siteLoadCount: fullSites.length,
+        scrapeCount: parseInt(gScrapeCount, 10),
+        torrentCount: parseInt(getTCount, 10),
+        torrentLoadCount: 0,
+        groupCount: parseInt(gGroupCount, 10),
+        groupLoadCount: 0,
+        listingCount: parseInt(gListCount, 10),
+        infoCount: parseInt(ginfoCount, 10),
         snapshotCount: parseInt(snapshotCount, 10),
         active: false,
         endedAt: new Date(),
       };
 
       fullSites.forEach((site) => {
-        statObj.groupCount += site.groups.length;
+        statObj.groupLoadCount += site.groups.length;
         site.groups.forEach((group) => {
-          statObj.torrentCount += group.results.length;
+          statObj.torrentLoadCount += group.results.length;
         });
       });
       console.log('stat OBJ', statObj);
       closeStat(statObj);
-      return fullSites;
+      return snapshotsArr;
+      // return fullSites;
     });
   }
   console.log('should not get stuff');

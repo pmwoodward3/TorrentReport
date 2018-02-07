@@ -7,7 +7,7 @@ const TorrentGroup = require('./torrentGroup');
 const TorrentStats = require('./torrentStats');
 
 TorrentGroup.belongsTo(TorrentSite);
-TorrentInfo.belongsTo(TorrentGroup);
+TorrentInfo.belongsToMany(TorrentGroup, { as: 'Group', through: 'InfoGroup' });
 // TorrentInfo.belongsTo(TorrentSite);
 
 TorrentListing.belongsToMany(TorrentInfo, { as: 'Infos', through: 'ListingInfo' });

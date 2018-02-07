@@ -8,28 +8,19 @@ const {
 } = require('../../db/models');
 
 const safeFields = {
-  fields: [
-    'seed',
-    'leach',
-    'uploadDate',
-    'uploadUser',
-    'size',
-    'hash',
-    'url',
-    'torrentGroupId',
-    'torrentListingId',
-  ],
+  fields: ['seed', 'leach', 'uploadDate', 'uploadUser', 'size', 'hash', 'url', 'torrentListingId'],
 };
 
-const getSnapshotCount = () =>
-  TorrentSnapshot.count().then((data) => {
-    console.log('torrent snapshots:', data);
-    return data;
-  });
+const getSiteCount = () => TorrentSite.count();
+const getScrapeCount = () => TorrentStats.count();
+const getInfoCount = () => TorrentInfo.count();
+const getListCount = () => TorrentListing.count();
+const getGroupCount = () => TorrentGroup.count();
+const getSnapshotCount = () => TorrentSnapshot.count();
+const getTorrentCount = () => TorrentListing.count();
 
-const getOrMakeSite = (siteObj) => {
-  console.log(siteObj.siteName, '- working on site ');
-  return TorrentSite.findOrCreate({
+const getOrMakeSite = siteObj =>
+  TorrentSite.findOrCreate({
     where: {
       name: siteObj.siteName,
       short: siteObj.siteShortName,
@@ -64,7 +55,6 @@ const getOrMakeSite = (siteObj) => {
       site.groups = newGroups;
       return site;
     });
-};
 
 const getOrMakeTorrentListing = (torrentScrapeObj) => {
   const newTorrentObj = Object.assign({}, torrentScrapeObj);
@@ -84,24 +74,30 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       console.log(torrentScrapeObj.torrentSiteId, ' | ', listing.name, 'was created?', created);
       newTorrentObj.torrentListingId = listing.id;
       dbListingObj = listing;
-      return listing.getInfos({ include: [{ model: TorrentGroup }] });
+      return listing.getInfos({ include: [{ as: 'Group', model: TorrentGroup }] });
     })
     .then((infos) => {
-      let found = false;
+      let foundGroupInfo = false;
+      let foundInfo = false;
       infos.forEach((info) => {
-        if (info.torrentGroup.torrentSiteId === torrentScrapeObj.torrentSiteId) {
-          // torrent site found
-          console.log(
-            torrentScrapeObj.torrentSiteId,
-            ' | ',
-            torrentScrapeObj.name,
-            'already exists for this site',
-          );
-          newTorrentObj.torrentInfoId = info.id;
-          found = info;
+        if (
+          info.uploadDate === torrentScrapeObj.uploadDate &&
+          info.uploadUser === torrentScrapeObj.uploadUser
+        ) {
+          foundInfo = info;
         }
+        info.Group.forEach((group) => {
+          if (group.id === torrentScrapeObj.torrentGroupId) {
+            foundGroupInfo = info;
+            newTorrentObj.torrentInfoId = info.id;
+          }
+        });
       });
-      if (found) return found.updateAttributes(newTorrentObj);
+
+      if (foundGroupInfo) return foundGroupInfo.updateAttributes(newTorrentObj);
+
+      if (foundInfo && !foundGroupInfo) return foundInfo.addGroup(torrentScrapeObj.torrentGroupId);
+
       console.log(
         torrentScrapeObj.torrentSiteId,
         ' | ',
@@ -109,6 +105,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         'not found! creating info',
       );
       return TorrentInfo.create(newTorrentObj, safeFields).then((createdInfo) => {
+        createdInfo.addGroup(torrentScrapeObj.torrentGroupId);
         newTorrentObj.torrentInfoId = createdInfo.id;
         console.log(
           torrentScrapeObj.torrentSiteId,
@@ -121,4 +118,14 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
     })
     .then(_ => newTorrentObj);
 };
-module.exports = { getOrMakeSite, getOrMakeTorrentListing, getSnapshotCount };
+module.exports = {
+  getOrMakeSite,
+  getOrMakeTorrentListing,
+  getSnapshotCount,
+  getTorrentCount,
+  getGroupCount,
+  getInfoCount,
+  getListCount,
+  getScrapeCount,
+  getSiteCount,
+};

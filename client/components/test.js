@@ -5,6 +5,7 @@ import axios from 'axios';
 import 'react-virtualized/styles.css';
 import { Column, Table, AutoSizer } from 'react-virtualized';
 import { getData } from '../store';
+import Loading from 'react-loading-components';
 
 class Test extends Component {
   constructor(props) {
@@ -30,8 +31,11 @@ class Test extends Component {
     const { data } = this.state;
     if (!data.length) {
       return (
-        <div>
-          <h1>loading...</h1>
+        <div className="fullHeight center flexCol">
+          <div className="holder">
+            <div className="loading_text">loading</div>
+            <Loading type="ball_triangle" width={110} height={110} fill="#252525" />
+          </div>
         </div>
       );
     }

@@ -85,6 +85,7 @@ const scrape = async ({
     combinedSelector.torrentGroupId = groupId;
     combinedSelector.torrentSiteId = siteId;
     const cleanResult = resultCleaner(combinedSelector);
+    // groupedResults.push(cleanResult);
     const torrentListing = await getOrMakeTorrentListing(cleanResult);
     groupedResults.push(torrentListing);
   }

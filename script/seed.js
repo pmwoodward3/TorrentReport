@@ -24,8 +24,14 @@ async function seed() {
   const torrentStats = await Promise.all([
     TorrentStats.create({
       siteCount: 0,
+      siteLoadCount: 0,
+      scrapeCount: 0,
       torrentCount: 0,
+      torrentLoadCount: 0,
       groupCount: 0,
+      groupLoadCount: 0,
+      listingCount: 0,
+      infoCount: 0,
       snapshotCount: 0,
       active: false,
       endedAt: yesterday,
@@ -78,7 +84,6 @@ async function seed() {
   // const torrentInfo = await Promise.all([
   //   TorrentInfo.create({
   //     torrentListingId: 1,
-  //     torrentGroupId: 1,
   //     uploadDate: new Date(),
   //     uploadUser: 'upLOADERuserTPB',
   //     size: '2.4 GB',
@@ -87,13 +92,17 @@ async function seed() {
   //   }),
   //   TorrentInfo.create({
   //     torrentListingId: 1,
-  //     torrentGroupId: 2,
   //     uploadDate: new Date(),
   //     uploadUser: 'upLOADERuserNOTfromTPB',
   //     size: '5.2 GB',
   //     hash: '111233321123',
   //     url: 'https://rarbg.site',
   //   }),
+  // ]);
+
+  // const InfoGroups = await Promise.all([
+  //   TorrentInfo.findById(1).then(listing => listing.addGroup(1)),
+  //   TorrentInfo.findById(2).then(listing => listing.addGroup(2)),
   // ]);
 
   // const ListingsInfo = await Promise.all([
