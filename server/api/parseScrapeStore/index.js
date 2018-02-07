@@ -10,7 +10,6 @@ const {
   getTorrentCount,
   getGroupCount,
   getInfoCount,
-  getListCount,
   getScrapeCount,
   getSiteCount,
 } = require('./fetch');
@@ -35,12 +34,11 @@ let pSS = async (sites) => {
           - created stat row with active for this scrape
           - created/found site/group/listing/info for each torrent
         */
-      const snapshotsArr = clean(fullSites);
+      const gScrapeCount = await getScrapeCount();
+      const snapshotsArr = clean(fullSites, gScrapeCount);
       await addSnapshots(snapshotsArr);
       const gSiteCount = await getSiteCount();
-      const gScrapeCount = await getScrapeCount();
       const gGroupCount = await getGroupCount();
-      const gListCount = await getListCount();
       const ginfoCount = await getInfoCount();
       const snapshotCount = await getSnapshotCount();
       const getTCount = await getTorrentCount();
@@ -52,7 +50,6 @@ let pSS = async (sites) => {
         torrentLoadCount: 0,
         groupCount: parseInt(gGroupCount, 10),
         groupLoadCount: 0,
-        listingCount: parseInt(gListCount, 10),
         infoCount: parseInt(ginfoCount, 10),
         snapshotCount: parseInt(snapshotCount, 10),
         active: false,

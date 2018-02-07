@@ -27,10 +27,6 @@ const TorrentStats = db.define('torrentStats', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
   },
-  listingCount: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0,
-  },
   infoCount: {
     type: Sequelize.INTEGER,
     defaultValue: 0,

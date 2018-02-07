@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import 'react-virtualized/styles.css';
 import { Column, Table, AutoSizer } from 'react-virtualized';
-import { getData } from '../store';
-import Loading from 'react-loading-components';
+import { getData } from '../../store';
+import Loader from '../loader';
 
 class Test extends Component {
   constructor(props) {
@@ -30,14 +30,7 @@ class Test extends Component {
     console.log(this.state.data);
     const { data } = this.state;
     if (!data.length) {
-      return (
-        <div className="fullHeight center flexCol">
-          <div className="holder">
-            <div className="loading_text">loading</div>
-            <Loading type="ball_triangle" width={110} height={110} fill="#252525" />
-          </div>
-        </div>
-      );
+      return <Loader message="gathering details" />;
     }
     if (!data === 'signin') {
       return (

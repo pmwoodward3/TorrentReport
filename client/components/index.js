@@ -3,9 +3,8 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
-export { default as Main } from './main'
-export { default as Home } from './home'
-export { default as UserHome } from './user-home'
-export { default as Test } from './test'
-export { default as Top } from './top'
-export { Login, Signup } from './auth-form'
+export { default as Home } from './home/';
+export { default as UserHome } from './user/home/';
+export { default as Test } from './test/';
+export { default as Top } from './top/';
+export { Login, Signup } from './auth-form/';

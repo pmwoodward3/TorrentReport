@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const pluginsArr = [
-  new ExtractTextPlugin('public/style-p.css', {
+  new ExtractTextPlugin('public/style.css', {
     allChunks: true,
   }),
 ];
@@ -28,7 +28,14 @@ module.exports = {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: 'css-loader',
+          use: [{ loader: 'css-loader' }, { loader: 'postcss-loader' }],
+        }),
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{ loader: 'css-loader' }, { loader: 'sass-loader' }, { loader: 'postcss-loader' }],
         }),
       },
     ],

@@ -1,18 +1,24 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import { auth } from '../store'
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { auth } from '../../store';
+
+import s from './style.scss';
 
 /**
  * COMPONENT
  */
-const AuthForm = props => {
-  const { name, displayName, header, handleSubmit, error } = props
+const AuthForm = (props) => {
+  const {
+    name, displayName, header, handleSubmit, error,
+  } = props;
 
   return (
     <div className="center">
       <div className="loginBox">
         <form className="center flexCol" onSubmit={handleSubmit} name={name}>
+          {error &&
+            error.response && <div className="error fullWidth center"> {error.response.data} </div>}
           <h2>{header.toUpperCase()}</h2>
           <div className="fullWidth">
             <label htmlFor="email">
@@ -31,16 +37,13 @@ const AuthForm = props => {
               {displayName.toUpperCase()}
             </button>
           </div>
-          {error &&
-            error.response && (
-              <div className="error"> {error.response.data} </div>
-            )}
+
           <a href="/auth/google">{displayName} with Google</a>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 /**
  * CONTAINER
@@ -49,38 +52,32 @@ const AuthForm = props => {
  *   function, and share the same Component. This is a good example of how we
  *   can stay DRY with interfaces that are very similar to each other!
  */
-const mapLogin = state => {
-  return {
-    name: 'login',
-    header: 'Welcome',
-    displayName: 'Login',
-    error: state.user.error
-  }
-}
+const mapLogin = state => ({
+  name: 'login',
+  header: 'Welcome User',
+  displayName: 'Login',
+  error: state.user.error,
+});
 
-const mapSignup = state => {
-  return {
-    name: 'Register',
-    header: 'Registration',
-    displayName: 'Register',
-    error: state.user.error
-  }
-}
+const mapSignup = state => ({
+  name: 'signup',
+  header: 'Registration',
+  displayName: 'Register',
+  error: state.user.error,
+});
 
-const mapDispatch = dispatch => {
-  return {
-    handleSubmit(evt) {
-      evt.preventDefault()
-      const formName = evt.target.name
-      const email = evt.target.email.value
-      const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  handleSubmit(evt) {
+    evt.preventDefault();
+    const formName = evt.target.name;
+    const email = evt.target.email.value;
+    const password = evt.target.password.value;
+    dispatch(auth(email, password, formName));
+  },
+});
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+export const Login = connect(mapLogin, mapDispatch)(AuthForm);
+export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
 
 /**
  * PROP TYPES
@@ -88,6 +85,7 @@ export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
+  header: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object
-}
+  error: PropTypes.object,
+};

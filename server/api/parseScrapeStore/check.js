@@ -9,9 +9,8 @@ const checkSnapshot = async () => {
     const lastDate = new Date(latestStat.endedAt);
     const timeDiff = lastDate.getTime() - today.getTime();
     const diffDays = timeDiff / (1000 * 3600 * 22);
-    if (diffDays <= -1) {
-      console.log('*************** was yesterday or greater');
-    }
+
+    console.log('#### LAST SCRAPE WAS MORE THAN 2 HOURS AGO #### ', diffDays <= -1);
     return diffDays <= -1;
   });
   return !isActive && isNotFresh;

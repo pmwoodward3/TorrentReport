@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-color: whitesmoke;
+}
+
+#app,
+#app > div {
+  flex-flow: column;
+  display: flex;
+  /* flex-grow: 1; */
+  height: 100%;
+}
+
+.logo,
+.logo a {
+  font-weight: 900;
+  color: rgb(253, 253, 253);
+  font-family: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.3em;
+}
+
+.header {
+  width: 100%;
+  margin: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-flow: row;
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-height: 3em;
+  flex-basis: 3em;
+  align-items: center;
+  justify-content: space-between;
+  /* background: linear-gradient(#2cb5e8, rgb(0, 147, 192)); */
+  background-color: #252525;
+  color: white;
+}
+
+.footer {
+  width: 100%;
+  margin: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 4em;
+  min-height: 4em;
+  flex-grow: 0;
+  flex-shrink: 0;
+  background-color: #252525;
+  color: #a1a1a1;
+}
+
+.footer a:link,
+.footer a:visited {
+  color: #42e82c;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7em;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-decoration: none;
+}
+
+.footer a:hover,
+.footer a:active {
+  text-decoration: underline;
+}
+
+.builtBox {
+  display: flex;
+  flex-direction: column;
+  width: 110px;
+  align-items: center;
+  justify-content: center;
+}
+
+.builtby {
+  color: #7c7c7c;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  letter-spacing: 2px;
+  font-size: 1.2em;
+  text-shadow: black 0px 2px 0px;
+}
+
+.footer .byme a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.7em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  letter-spacing: 3px;
+}
+
+.content {
+  flex-basis: 100%;
+  padding: 1.5em 3em 1.5em 3em;
+  flex-grow: 1;
+}
+
+.nav a {
+  text-transform: capitalize;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none;
+  color: #cccccc;
+  font-size: 0.8em;
+  padding-left: 0.9em;
+  padding-right: 0.9em;
+}
+
+.nav .sNav,
+.nav a:hover,
+.nav a:active {
+  color: white;
+  text-shadow: black 0px 3px;
+  font-weight: bold;
+}

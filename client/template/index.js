@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import { logout } from '../store';
 
+import s from './template.scss';
+
 /**
  * COMPONENT
  *  The Main component is our 'picture frame' - it displays the navbar and anything
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  * */
-const Main = (props) => {
+const Template = (props) => {
   const { children, handleClick, isLoggedIn } = props;
 
   return (
@@ -49,7 +51,7 @@ const Main = (props) => {
           </div>
         </div>
         <div>
-          <div>Copyright</div>
+          <div>Copyright?</div>
         </div>
         {isLoggedIn ? (
           <div>
@@ -88,12 +90,12 @@ const mapDispatch = dispatch => ({
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Main));
+export default withRouter(connect(mapState, mapDispatch)(Template));
 
 /**
  * PROP TYPES
  */
-Main.propTypes = {
+Template.propTypes = {
   children: PropTypes.object,
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,

@@ -1,0 +1,84 @@
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
+label {
+  display: block;
+  padding: 0em 0em 0.5em 1em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.9em;
+  font-weight: 900;
+  letter-spacing: 0px;
+}
+
+.loginInput {
+  background-color: #252525;
+  color: whitesmoke;
+  font-size: 0.7em;
+  width: 100%;
+  padding: 0.9em;
+  border: none;
+  border-radius: 0.5em;
+}
+
+.loginButton {
+  border: none;
+  background-color: #42e82c;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.7em;
+  letter-spacing: 2px;
+  border-radius: 0.5em;
+  padding: 0.9em;
+  min-width: 130px;
+  width: 100%;
+  /* font-weight: 900; */
+}
+
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  padding: 1em;
+  // background-color: #f0f0f0;
+  // border-radius: 2em;
+  // border: white;
+}
+
+.loginBox h2 {
+  font-size: 1.85 em;
+  padding: 0em 0em 1em 0em;
+  margin: 0em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  letter-spacing: 3px;
+  font-stretch: extra-expanded;
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.error {
+  background-color: #ffafaf;
+  padding: 2em 0em 2em 0em;
+  border-radius: 0.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #252525;
+  font-weight: bold;
+}
+.fullWidth {
+  width: 100%;
+}
+.fullHeight {
+  height: 100%;
+}

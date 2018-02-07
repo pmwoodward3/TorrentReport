@@ -19,27 +19,13 @@ router.get('/', (req, res, next) => {
     .then(data => res.json(data))
     .catch(next);
 });
-router.get('/getInfoCount', (req, res, next) => {
-  getInfoCount()
-    .then(data => res.json(data))
-    .catch(next);
-});
-router.get('/', (req, res, next) => {
-  maxIdDetail()
-    .then(data => res.json(data))
-    .catch(next);
-});
 
 router.get('/active', (req, res, next) => {
-  // if (req.user && req.user.isAdmin) {
-  TorrentStats.findOne({ where: { active: true } })
-    .then(data => res.json(data))
-    .catch(next);
-  // TorrentStats.max('id')
-  //   .then(maxId => TorrentStats.findById(maxId))
-  //   .then(data => res.json(data))
-  //   .catch(next);
-  // } else {
-  //   next()
-  // }
+  if (req.user && req.user.isAdmin) {
+    TorrentStats.findOne({ where: { active: true } })
+      .then(data => res.json(data))
+      .catch(next);
+  } else {
+    next();
+  }
 });
