@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import { logout } from '../store';
 
 import s from './template.scss';
+import nav from './nav.scss';
+import mobile from './mobile.scss';
 
 /**
  * COMPONENT
@@ -12,68 +14,128 @@ import s from './template.scss';
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  * */
-const Template = (props) => {
-  const { children, handleClick, isLoggedIn } = props;
+class Template extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuShow: false,
+    };
+    this.mainMenuToggle = this.mainMenuToggle.bind(this);
+  }
 
-  return (
-    <div>
-      <div className="header">
-        <div className="logo">
-          <a href="/">Torrent Report</a>
-        </div>
-        <div className="nav">
-          <NavLink exact activeClassName="sNav" to="/">
-            HOME
-          </NavLink>
-          <NavLink activeClassName="sNav" to="/test">
-            TEST
-          </NavLink>
-          <NavLink exact activeClassName="sNav" to="/top">
-            TOP 100
-          </NavLink>
-          <NavLink exact activeClassName="sNav" to="/top/movies">
-            MOVIES
-          </NavLink>
-          <NavLink exact activeClassName="sNav" to="/top/music">
-            MUSIC
-          </NavLink>
-          <NavLink exact activeClassName="sNav" to="/top/other">
-            OTHER
-          </NavLink>
-        </div>
-      </div>
-      <div className="content">{children}</div>
-      <div className="footer">
-        <div className="builtBox">
-          <div className="builtby">BUILT BY</div>
-          <div className="byme">
-            <a href="http://estepanov.io">estepanov.io</a>
-          </div>
-        </div>
-        <div>
-          <div>Copyright?</div>
-        </div>
-        {isLoggedIn ? (
-          <div>
-            <button className="loginButton" onClick={handleClick}>
-              Logout
-            </button>
-          </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            {!isLoggedIn && (
-              <div>
-                <Link to="/login">LOGIN</Link>
-                <Link to="/signup">SIGN UP</Link>
+  mainMenuToggle = () => {
+    this.setState({ menuShow: !this.state.menuShow });
+  };
+
+  render() {
+    const { children, handleClick, isLoggedIn } = this.props;
+
+    return (
+      <div>
+        <nav role="navigation" id="nav">
+          <input
+            checked={this.state.menuShow}
+            className="trigger"
+            type="checkbox"
+            id="mainNavButton"
+          />
+          <label className="header" htmlFor="mainNavButton" onClick={this.mainMenuToggle}>
+            <div className="logo">
+              <span>
+                <Link to="/">Torrent Report</Link>
+              </span>
+            </div>
+          </label>
+          <ul id="main" onClick={this.mainMenuToggle}>
+            <li id="TR-NAME">
+              <div className="logo">
+                <Link to="/">Torrent Report</Link>
+              </div>
+            </li>
+            <li>
+              <NavLink exact activeClassName="sNav" to="/test">
+                <span>TEST</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink exact activeClassName="sNav" to="/top">
+                <span>TOP TORRENTS</span>
+              </NavLink>
+            </li>
+
+            {isLoggedIn && (
+              <li>
+                <NavLink to="/account" activeClassName="sNav">
+                  <span>ACCOUNT</span>
+                </NavLink>
+                <ul id="subOne">
+                  <li>
+                    <Link to="/account/settings">
+                      <span>settings</span>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+            )}
+
+            <li>
+              <a href="/top#" className="Link-Final">
+                <span>DROP DOWN</span>
+              </a>
+              <ul id="subOne">
+                <li>
+                  <a href="/top#">
+                    <span>Sub Nav Item</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <span>Sub Nav Item</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            {!isLoggedIn ? (
+              <div className="navButtons">
+                <Link to="/signup" id="navSign" className="up">
+                  sign up
+                </Link>
+
+                <Link to="/login" id="navSign" className="in">
+                  login
+                </Link>
+              </div>
+            ) : (
+              <div className="navButtons">
+                <button id="navSign" className="in" onClick={handleClick}>
+                  Logout
+                </button>
               </div>
             )}
+          </ul>
+        </nav>
+
+        <div className="content">{children}</div>
+        <div className="footer">
+          <div className="footerHolder">
+            <div className="growBox">
+              <div className="builtBox">
+                <div className="builtby">BUILT BY</div>
+                <div className="byme">
+                  <a href="http://estepanov.io">estepanov.io</a>
+                </div>
+              </div>
+            </div>
+            <div className="growBox">
+              <Link to="/faq">F.A.Q</Link>
+              <Link to="/about">About</Link>
+            </div>
           </div>
-        )}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 /**
  * CONTAINER

@@ -9,7 +9,10 @@ const GET_DATA = 'GET_DATA';
 /**
  * INITIAL STATE
  */
-const defaultData = [];
+const defaultData = {
+  state: 'init',
+  data: [],
+};
 
 /**
  * ACTION CREATORS
@@ -31,7 +34,7 @@ export const fetchData = () => dispatch =>
 export default function (state = defaultData, action) {
   switch (action.type) {
     case GET_DATA:
-      return action.data;
+      return { state: 'loaded', data: action.data };
     default:
       return state;
   }

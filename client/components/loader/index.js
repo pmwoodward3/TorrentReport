@@ -10,7 +10,7 @@ const Loader = (props) => {
   if (!width) width = 110;
   if (!height) height = 110;
   if (!type) type = 'ball_triangle';
-  if (!fill) fill = '#252525';
+  if (!fill) fill = '#949494';
 
   return (
     <div className="holder">

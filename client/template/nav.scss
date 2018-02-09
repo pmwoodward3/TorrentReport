@@ -1,0 +1,282 @@
+@import '_variables';
+@import '_mixins';
+
+body {
+  -webkit-animation: bugfix infinite 1s; /* needed for checkbox hack */
+}
+
+@-webkit-keyframes bugfix {
+  from {
+    padding: 0;
+  }
+  to {
+    padding: 0;
+  }
+} /* needed for checkbox hack */
+
+#nav {
+  /* default for mobile */
+  position: relative;
+  display: inline-block;
+  flex-flow: row;
+  background-color: $headerBGColor;
+
+  ul#main {
+    display: none;
+    width: 100%;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+
+    #TR-NAME {
+      flex: 1;
+      @media (max-width: $flex_nav_breakpoint) {
+        display: none;
+      }
+    }
+
+    li {
+      a:not(#navSignUpIn) {
+        span {
+          font-size: $main_link_size;
+        }
+        text-transform: capitalize;
+        font-family: Arial, Helvetica, sans-serif;
+
+        font-weight: bold;
+        line-height: $desktop_header_size;
+        padding: 0em 1em 0em 1em;
+        height: $desktop_header_size;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: $flex_nav_linkColor;
+        text-decoration: none;
+        &:hover {
+          background: $flex_nav_hoverColor;
+        }
+        &:visited {
+          text-decoration: none;
+        }
+      }
+      .Link-Final {
+        a {
+          border-right: 0px;
+        }
+      }
+      // 2nd level
+      ul#subOne {
+        list-style: none;
+        padding: 0px;
+        background-color: $dropdownChildBGColor;
+        li {
+          list-style: none;
+          padding-left: 0;
+          a {
+            padding-left: 1.5em;
+          }
+          ul {
+            list-style: none;
+            padding: 0px;
+            li {
+              a {
+                padding-left: 3.125em;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  input.trigger {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    &:checked ~ ul#main,
+    &:checked ~ ul#main li ul#subOne li ul li {
+      @media (max-width: $flex_nav_breakpoint) {
+        display: block !important;
+        /* older flexbox */
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        box-orient: horizontal;
+        background-color: $dropdownBGColor;
+
+        /* newer flexbox */
+        display: flex;
+        flex-direction: row;
+
+        .navButtons {
+          padding: 0.9em;
+        }
+      }
+    }
+  }
+  .header {
+    position: relative;
+    display: block;
+    height: $mobile_header_size;
+    font-size: $mobile_header_font_size_logo;
+    margin: 0;
+    cursor: pointer;
+    .logo {
+      display: block;
+      span {
+        a {
+          color: $site_logo_color;
+        }
+      }
+    }
+    span {
+      height: $mobile_header_size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      a {
+        text-decoration: none;
+        &:visited {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .header:after {
+    /* hamburger & hotdogs */
+    position: absolute;
+    right: 0.5em;
+    top: -0.1em;
+    height: $mobile_header_size;
+    content: '\2261';
+    font-size: $mobile_header_hamburger_size;
+    color: $flex_nav_hotdogsColor;
+  }
+
+  @media (min-width: $flex_nav_breakpointA) {
+  }
+
+  @media (min-width: $flex_nav_breakpoint) {
+    /* style for large screen */
+    ul#main {
+      -webkit-box-orient: horizontal;
+      -moz-box-orient: horizontal;
+      box-orient: horizontal;
+
+      /* newer flexbox */
+      display: flex;
+      flex-direction: row;
+
+      justify-content: center;
+      align-items: center;
+
+      li#TR-NAME {
+        text-align: left;
+        a {
+          font-family: $logoFont;
+          height: $desktop_header_size;
+          line-height: $desktop_header_size;
+          padding: 0em 0em 0em 1.3em;
+          font-size: $desktop_header_font_size_logo;
+          width: 250px;
+          display: flex;
+          &:hover {
+            background: none;
+          }
+        }
+      }
+
+      li {
+        a:not(#navSignUpIn) {
+          text-shadow: black 1px 1px;
+        }
+        position: relative;
+        // text-align: center;/
+        line-height: 3em;
+        height: 3em;
+        // /* older flexbox */
+        // -ms-flex: 1;
+        // -webkit-box-flex: 1;
+        // -moz-box-flex: 1;
+        // box-flex: 1;
+
+        // /* newer flexbox */
+        // flex: 1;
+
+        // 2nd level
+        ul#subOne {
+          display: none !important;
+          position: absolute;
+          top: $desktop_header_size;
+          left: 0;
+          display: block;
+          width: $flex_nav_subNavWidth;
+          background-color: $dropdownChildBGColor;
+          z-index: 200;
+
+          li {
+            text-align: left;
+
+            ul {
+              position: relative;
+              z-index: 300;
+              top: 0px;
+              right: ($flex_nav_subNavWidth - 0.1);
+              li {
+                a {
+                  font-size: 1em;
+                  padding-left: 30px !important;
+                }
+              }
+            }
+          }
+        }
+
+        &:hover > ul#subOne {
+          display: block !important;
+        }
+      }
+
+      .Link-Final {
+        padding-right: 1.3em;
+      }
+    }
+    .header {
+      display: none;
+    }
+  }
+}
+
+#navSign {
+  word-break: keep-all;
+  margin: 0.2em;
+  border: none;
+  color: $button_signin_login_text_color;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-decoration: none;
+  min-width: 7em;
+  font-size: 0.7em;
+  padding: 0.9em;
+  text-align: center;
+}
+
+.navButtons {
+  .in {
+    @include boxBorderRadius($primaryColor);
+    background-color: $button_signin_color;
+  }
+  .up {
+    @include boxBorderRadius($secondaryColor);
+    background-color: $button_login_color;
+  }
+  padding: 0px 10px 0px 10px;
+  display: flex;
+}
+
+.sNav {
+  background-color: $flex_nav_active_Color;
+}

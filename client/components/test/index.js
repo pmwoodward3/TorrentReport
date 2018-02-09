@@ -7,11 +7,13 @@ import { Column, Table, AutoSizer } from 'react-virtualized';
 import { getData } from '../../store';
 import Loader from '../loader';
 
+import s from './style.scss';
+
 class Test extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      data: false,
     };
   }
 
@@ -29,16 +31,19 @@ class Test extends Component {
     console.log('rendered test page');
     console.log(this.state.data);
     const { data } = this.state;
-    if (!data.length) {
+    if (data === false) {
       return <Loader message="gathering details" />;
     }
-    if (!data === 'signin') {
+    if (data === 'signin') {
       return (
         <div>
           <h1>you need to be signed in</h1>
         </div>
       );
     }
+    // const heightCalc = data.length * 20 + 30;
+    let heightCalc = 202 * 20;
+    heightCalc += 30;
     return (
       <AutoSizer disableHeight>
         {({ width }) => (
@@ -47,7 +52,7 @@ class Test extends Component {
               'no data';
             }}
             width={width}
-            height={3020}
+            height={heightCalc}
             headerHeight={20}
             rowHeight={30}
             rowCount={data.length}

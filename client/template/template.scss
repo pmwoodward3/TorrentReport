@@ -1,3 +1,5 @@
+@import '_variables';
+
 * {
   box-sizing: border-box;
 }
@@ -6,7 +8,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100vh;
-  background-color: whitesmoke;
+  background-color: $siteBackGroundColor;
+  -webkit-animation: bugfix infinite 1s; /* needed for checkbox hack */
 }
 
 #app,
@@ -17,56 +20,63 @@ body {
   height: 100%;
 }
 
-.logo,
-.logo a {
-  font-weight: 900;
-  color: rgb(253, 253, 253);
-  font-family: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 1.3em;
+p {
+  a {
+    padding: 0px 2px 0px 2px;
+    color: $tertiaryColor;
+    text-decoration: none;
+    position: relative;
+    &:hover {
+      color: darken($tertiaryColor, 25%);
+
+      &:after {
+        border-bottom: 1px solid darken($tertiaryColor, 25%);
+      }
+    }
+  }
+  a:after {
+    content: '';
+
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+
+    border-bottom: 1px solid $tertiaryColor;
+  }
 }
 
-.header {
-  width: 100%;
-  margin: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
+.logo {
+  min-width: 250px;
+  font-weight: 900;
+  color: $site_logo_color;
+  font-family: $logoFont;
+  text-decoration: none;
   display: flex;
-  flex-flow: row;
-  flex-grow: 0;
-  flex-shrink: 0;
-  min-height: 3em;
-  flex-basis: 3em;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: space-between;
-  /* background: linear-gradient(#2cb5e8, rgb(0, 147, 192)); */
-  background-color: #252525;
-  color: white;
+  height: $desktop_header_size;
 }
 
 .footer {
-  width: 100%;
-  margin: 0px;
-  padding-left: 20px;
-  padding-right: 20px;
+  min-height: $footer_height_min;
+}
+
+.footerHolder {
+  color: $footer_text_color;
+  background-color: $footerBGColor;
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
+  flex-flow: wrap;
   align-items: center;
   justify-content: space-between;
-  flex-basis: 4em;
-  min-height: 4em;
-  flex-grow: 0;
-  flex-shrink: 0;
-  background-color: #252525;
-  color: #a1a1a1;
 }
 
 .footer a:link,
 .footer a:visited {
-  color: #42e82c;
+  color: $footer_link_color;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.7em;
+  font-size: 0.9em;
   padding-left: 1em;
   padding-right: 1em;
   text-decoration: none;
@@ -75,6 +85,23 @@ body {
 .footer a:hover,
 .footer a:active {
   text-decoration: underline;
+}
+
+.footer .growBox {
+  min-height: $footer_height_min;
+  flex-grow: 1;
+  padding: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fcol {
+  display: flex;
+  flex-direction: column;
+  flex-flow: column;
+}
+.fcol div {
+  padding: 2px;
 }
 
 .builtBox {
@@ -86,42 +113,24 @@ body {
 }
 
 .builtby {
-  color: #7c7c7c;
+  color: $footer_text_color;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 900;
   letter-spacing: 2px;
   font-size: 1.2em;
-  text-shadow: black 0px 2px 0px;
+  // text-shadow: black 0px 2px 0px;
 }
 
 .footer .byme a {
-  color: white;
+  color: $footer_text_color;
   text-decoration: none;
-  font-size: 0.7em;
+  font-size: 0.9em;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   letter-spacing: 3px;
 }
 
 .content {
   flex-basis: 100%;
-  padding: 1.5em 3em 1.5em 3em;
+  padding: 2em;
   flex-grow: 1;
-}
-
-.nav a {
-  text-transform: capitalize;
-  font-family: Arial, Helvetica, sans-serif;
-  text-decoration: none;
-  color: #cccccc;
-  font-size: 0.8em;
-  padding-left: 0.9em;
-  padding-right: 0.9em;
-}
-
-.nav .sNav,
-.nav a:hover,
-.nav a:active {
-  color: white;
-  text-shadow: black 0px 3px;
-  font-weight: bold;
 }

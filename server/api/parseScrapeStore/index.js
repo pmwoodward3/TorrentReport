@@ -65,7 +65,6 @@ let pSS = async (sites) => {
       console.log('stat OBJ', statObj);
       closeStat(statObj);
       return snapshotsArr;
-      // return fullSites;
     });
   }
   console.log('should not get stuff');
@@ -74,8 +73,8 @@ let pSS = async (sites) => {
 
 let sites = [];
 
-// sites = sites.concat(rarbg, tpb);
-sites = sites.concat(tpb);
+sites = sites.concat(rarbg, tpb);
+// sites = sites.concat(tpb);
 pSS = pSS.bind(null, sites);
 
 module.exports = pSS;

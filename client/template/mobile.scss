@@ -1,0 +1,17 @@
+/*Responsive Styles*/
+@media screen and (max-width: 720px) {
+  .content {
+    padding: 1em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  // for safari to keep zoomed out on text focus
+  input[type='text'],
+  input[type='number'],
+  input[type='email'],
+  input[type='tel'],
+  input[type='password'] {
+    font-size: 16px;
+  }
+}

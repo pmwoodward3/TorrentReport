@@ -1,39 +1,32 @@
+@import '../../template/_variables';
+@import '../../template/mixins';
+
 form div {
   margin: 1em;
   display: inline-block;
 }
 
-label {
-  display: block;
-  padding: 0em 0em 0.5em 1em;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 0.9em;
-  font-weight: 900;
-  letter-spacing: 0px;
-}
-
 .loginInput {
-  background-color: #252525;
-  color: whitesmoke;
-  font-size: 0.7em;
-  width: 100%;
-  padding: 0.9em;
-  border: none;
-  border-radius: 0.5em;
+  @include text-field();
+  margin: 10px;
+  font-size: 0.9em;
+  &:focus {
+    border: solid 1px $headerBGColor;
+    background-color: darken($siteBackGroundColor, 13%);
+  }
 }
 
 .loginButton {
-  border: none;
-  background-color: #42e82c;
+  margin: 10px 0px 10px 0px;
   color: black;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 0.7em;
   letter-spacing: 2px;
-  border-radius: 0.5em;
   padding: 0.9em;
-  min-width: 130px;
+  // min-width: 15em;
   width: 100%;
-  /* font-weight: 900; */
+  @include boxBorderRadius($primaryColor);
+  background-color: $button_signin_color;
 }
 
 .loginBox {
@@ -41,19 +34,13 @@ label {
   flex-direction: column;
   width: 350px;
   padding: 1em;
-  // background-color: #f0f0f0;
-  // border-radius: 2em;
-  // border: white;
 }
 
-.loginBox h2 {
-  font-size: 1.85 em;
-  padding: 0em 0em 1em 0em;
-  margin: 0em;
+.authHead {
+  font-style: italic;
+  font-size: 1.3em;
+  color: $footer_text_color;
   font-family: Arial, Helvetica, sans-serif;
-  font-weight: 900;
-  letter-spacing: 3px;
-  font-stretch: extra-expanded;
 }
 
 .flexCol {
@@ -69,16 +56,17 @@ label {
 }
 
 .error {
-  background-color: #ffafaf;
+  background-color: $error_message_background_color;
   padding: 2em 0em 2em 0em;
   border-radius: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
-  color: #252525;
+  color: $error_message_text_color;
   font-weight: bold;
 }
 .fullWidth {
   width: 100%;
 }
+
 .fullHeight {
   height: 100%;
 }

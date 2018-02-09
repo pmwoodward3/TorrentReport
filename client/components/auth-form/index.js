@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { auth } from '../../store';
 
@@ -8,42 +9,59 @@ import s from './style.scss';
 /**
  * COMPONENT
  */
-const AuthForm = (props) => {
-  const {
-    name, displayName, header, handleSubmit, error,
-  } = props;
+class AuthForm extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <div className="center">
-      <div className="loginBox">
-        <form className="center flexCol" onSubmit={handleSubmit} name={name}>
-          {error &&
-            error.response && <div className="error fullWidth center"> {error.response.data} </div>}
-          <h2>{header.toUpperCase()}</h2>
-          <div className="fullWidth">
-            <label htmlFor="email">
-              <small>EMAIL</small>
-            </label>
-            <input className="loginInput" name="email" type="text" />
-          </div>
-          <div className="fullWidth">
-            <label htmlFor="password">
-              <small>PASSWORD</small>
-            </label>
-            <input className="loginInput" name="password" type="password" />
-          </div>
-          <div>
+  componentDidMount() {
+    this.nameInput.focus();
+  }
+
+  render() {
+    const {
+      name, displayName, header, handleSubmit, error,
+    } = this.props;
+    return (
+      <div className="center">
+        <div className="loginBox">
+          <form className="center flexCol" onSubmit={handleSubmit} name={name}>
+            {error &&
+              error.response && (
+                <div className="error fullWidth center"> {error.response.data} </div>
+              )}
+            <div className="authHead">{header}</div>
+            <input
+              ref={(input) => {
+                this.nameInput = input;
+              }}
+              placeholder="email"
+              className="loginInput"
+              id="email"
+              name="email"
+              type="text"
+            />
+            <input
+              placeholder="password"
+              className="loginInput"
+              id="password"
+              name="password"
+              type="password"
+            />
+
             <button className="loginButton" type="submit">
               {displayName.toUpperCase()}
             </button>
-          </div>
 
-          <a href="/auth/google">{displayName} with Google</a>
-        </form>
+            <p>
+              <Link to="/auth/google">{displayName} with Google</Link>
+            </p>
+          </form>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 /**
  * CONTAINER
@@ -54,14 +72,14 @@ const AuthForm = (props) => {
  */
 const mapLogin = state => ({
   name: 'login',
-  header: 'Welcome User',
+  header: 'welcome back buddy',
   displayName: 'Login',
   error: state.user.error,
 });
 
 const mapSignup = state => ({
   name: 'signup',
-  header: 'Registration',
+  header: 'signing up is wise',
   displayName: 'Register',
   error: state.user.error,
 });
