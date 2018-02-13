@@ -18,7 +18,7 @@ const { initStat, closeStat, addSnapshots } = require('./store');
 const { clean } = require('./clean');
 
 // function returns a promise.all of all site scrapes
-let pSS = async (sites) => {
+let parseScrapeStore = async (sites) => {
   const shouldGetSnaps = await checkSnapshot();
   // create an array of promises
   if (shouldGetSnaps) {
@@ -73,8 +73,8 @@ let pSS = async (sites) => {
 
 let sites = [];
 
-sites = sites.concat(rarbg, tpb);
-// sites = sites.concat(tpb);
-pSS = pSS.bind(null, sites);
+// sites = sites.concat(rarbg, tpb);
+sites = sites.concat(tpb);
+parseScrapeStore = parseScrapeStore.bind(null, sites);
 
-module.exports = pSS;
+module.exports = parseScrapeStore;

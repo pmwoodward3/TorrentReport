@@ -53,13 +53,13 @@ $flex_nav_breakpointA: 800px;
 $logoFont: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
 
 // home stats square
-$stats_background_color: darken($siteBackGroundColor, 12%);
-$stats_tile_background_color: darken($siteBackGroundColor, 18%);
-$stats_tile_outline_color: darken($siteBackGroundColor, 20%);
-$stats_desc_color: lighten($quinaryColor, 60%);
-$stats_value_color: lighten($quinaryColor, 20%);
-$stats_color_one: lighten($primaryColor, 30%);
-$stats_color_two: lighten($secondaryColor, 30%);
-$stats_color_three: lighten($tertiaryColor, 30%);
-$stats_square_dimension: 120px;
+$stats_background_color: lighten($quinaryColor, 90%);
+$stats_tile_background_color: lighten($quinaryColor, 85%);
+$stats_tile_outline_color: lighten($quinaryColor, 75%);
+$stats_desc_color: lighten($quinaryColor, 65%);
+$stats_value_color: lighten($quinaryColor, 40%);
+// $stats_color_one: lighten($primaryColor, 30%);
+// $stats_color_two: lighten($secondaryColor, 30%);
+// $stats_color_three: lighten($tertiaryColor, 30%);
+$stats_square_dimension: 140px;
 $stats_square_flex_dimension: 140px;

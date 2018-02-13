@@ -3,7 +3,7 @@ const pSS = require('./api/parseScrapeStore');
 const { sendError } = require('./notifier/email/emails');
 
 const scraper = new CronJob(
-  '00 35 09 * * *',
+  '00 17 01 * * *',
   () => {
     console.log('starting automated scrape cron');
     pSS().catch(err => sendError('automated parse scrape store catch', err));

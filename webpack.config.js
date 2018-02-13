@@ -11,7 +11,10 @@ const pluginsArr = [
 if (isDev) pluginsArr.push(new LiveReloadPlugin({ appendScriptTag: true }));
 
 module.exports = {
-  entry: './client/index.js',
+  entry: {
+    js: ['client/index', 'client/components/home'],
+    vendor: ['react', 'react-dom'],
+  },
   output: {
     path: __dirname,
     filename: './public/bundle.js',

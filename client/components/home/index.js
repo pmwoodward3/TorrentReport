@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import SiteStats from '../siteStats';
 
 import s from './style.scss';
 
@@ -41,89 +42,15 @@ export const Home = (props) => {
         </div>
       </div>
       <div className="flex-inline">
-        <div className="stats">
-          <div className="seperator">
-            <div className="descr">
-              <div className="top">TORRENT REPORT</div>
-              <div className="head">STATISTICS</div>
-              <div className="date">as of {todaysDateObj.toLocaleTimeString('en-us', options)}</div>
-            </div>
-            <div className="group2">
-              <div className="group colorOne">
-                <div className="value center">2</div>
-                <div className="name center">
-                  <div className="pos">Sites</div>
-                </div>
-              </div>
-              <div className="group colorTwo">
-                <div className="value center">2</div>
-                <div className="name center">
-                  <div className="pos">Sites</div>
-                </div>
-              </div>
-            </div>
-            <div className="group2">
-              <div className="group colorOne">
-                <div className="value center">2</div>
-                <div className="name center">
-                  <div className="pos">Torrent Sites Scraped</div>
-                </div>
-              </div>
-              <div className="group">
-                <div className="value center">2</div>
-                <div className="name center">
-                  <div className="pos">Sites Visited</div>
-                </div>
-              </div>
-            </div>
+        <SiteStats />
+
+        <div className="daily-listings">
+          <div className="dl-header">NEWLY LISTED TOP TORRENTS</div>
+          <div className="dl-item-group">
+            <div className="dl-item">Torrent Name One</div>
           </div>
-          <div className="seperator">
-            <div className="group2">
-              <div className="group">
-                <div className="value center">2</div>
-                <div className="name center">
-                  <div className="pos">Last Scrape Date</div>
-                </div>
-              </div>
-              <div className="group">
-                <div className="value center">2</div>
-                <div className="name center">
-                  <div className="pos">Last Scrape Time</div>
-                </div>
-              </div>
-            </div>
-            <div className="group2">
-              <div className="group">
-                <div className="value center">203</div>
-                <div className="name center">
-                  <div className="pos">Sites</div>
-                </div>
-              </div>
-              <div className="group">
-                <div className="value center">203</div>
-                <div className="name center">
-                  <div className="pos">Sites</div>
-                </div>
-              </div>
-            </div>
-            <div className="group2">
-              <div className="group">
-                <div className="value center">203</div>
-                <div className="name center">
-                  <div className="pos">Sites</div>
-                </div>
-              </div>
-              <div className="group">
-                <div className="value center">203</div>
-                <div className="name center">
-                  <div className="pos">Sites</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="dl-footer">footer space</div>
         </div>
-        <div className="home-space-square" />
-        <div className="daily-listings">here</div>
       </div>
     </div>
   );

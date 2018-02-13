@@ -22,7 +22,7 @@ export const getData = data => ({ type: GET_DATA, data });
 /**
  * THUNK CREATORS
  */
-export const fetchData = () => dispatch =>
+export const getTestData = () => dispatch =>
   axios
     .get('/api/torrents/listings')
     .then(res => dispatch(getData(res.data || defaultData)))

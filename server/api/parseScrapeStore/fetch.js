@@ -8,7 +8,7 @@ const {
 } = require('../../db/models');
 
 const safeFields = {
-  fields: ['seed', 'leach', 'uploadDate', 'uploadUser', 'size', 'hash', 'url', 'torrentListingId'],
+  fields: ['seed', 'leach', 'hash', 'uploadDate', 'uploadUser', 'size', 'url', 'torrentListingId'],
 };
 
 const getSiteCount = () => TorrentSite.count();
@@ -83,7 +83,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       infos.forEach((info) => {
         if (info.uploadUser === torrentScrapeObj.uploadUser) {
           foundInfo = info;
-          console.log('did find curr uploaduser in info?');
+          console.log('did find curr uploaduser in info!!!!');
           console.log(
             'info uploaduser',
             info.uploadUser,
@@ -92,10 +92,10 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
           );
         }
         info.Group.forEach((group) => {
-          if (group.id === torrentScrapeObj.torrentGroupId) {
+          if (parseInt(group.id, 10) === parseInt(torrentScrapeObj.torrentGroupId, 10)) {
             foundGroupInfo = info;
-            newTorrentObj.torrentInfoId = info.id;
-            console.log('did find obj group in listing info?', foundGroupInfo === false);
+            newTorrentObj.torrentInfoId = parseInt(group.id, 10);
+            console.log('did find obj group in listing info!!!!', foundGroupInfo == false);
             console.log('info group id', group.id, 'obj group id', torrentScrapeObj.torrentGroupId);
           }
         });
@@ -103,13 +103,23 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
 
       // if (foundInfo && !foundGroupInfo) return foundInfo.addGroup(torrentScrapeObj.torrentGroupId);
 
-      if (foundGroupInfo && foundInfo) return foundGroupInfo.updateAttributes(newTorrentObj);
+      if (!foundGroupInfo && foundInfo) {
+        console.log('DID NOT FIND GROUP BUT FOUND INFO, update info add group');
+        return foundInfo
+          .updateAttributes(newTorrentObj)
+          .then(updatedObj => updatedObj.addGroup(torrentScrapeObj.torrentGroupId));
+      }
+      if (foundGroupInfo && foundInfo) {
+        console.log('FOUND GROUP AND INFO, just update');
+        return foundInfo.updateAttributes(newTorrentObj);
+      }
 
-      console.log('creating info');
+      // true Group true Info,
+      console.log('creating info...................');
       return TorrentInfo.create(newTorrentObj, safeFields).then((createdInfo) => {
         createdInfo.addGroup(torrentScrapeObj.torrentGroupId);
         newTorrentObj.torrentInfoId = createdInfo.id;
-        console.log('created info item assc');
+        console.log('.................created info item assc');
         return dbListingObj.addInfo(createdInfo);
       });
     })
