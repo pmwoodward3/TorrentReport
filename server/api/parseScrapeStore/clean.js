@@ -2,10 +2,10 @@ const _ = require('lodash');
 
 const clean = (fullSitesArr, statId) => {
   let itemArr = [];
-  fullSitesArr.forEach((site) => {
-    console.log('site group length', site.groups.length);
-    site.groups.forEach((group) => {
-      console.log('group result length', group.results.length);
+  fullSitesArr.forEach((site, id) => {
+    console.log('( #', id, ') site group length', site.groups.length);
+    site.groups.forEach((group, id) => {
+      console.log('\t( #', id, ') group result length', group.results.length);
       itemArr = itemArr.concat(group.results);
     });
   });

@@ -8,7 +8,25 @@ const {
 } = require('../../db/models');
 
 const safeFields = {
-  fields: ['seed', 'leach', 'hash', 'uploadDate', 'uploadUser', 'size', 'url', 'torrentListingId'],
+  fields: [
+    'imdb',
+    'seed',
+    'minSeed',
+    'minSeedDate',
+    'maxSeed',
+    'maxSeedDate',
+    'leach',
+    'minLeach',
+    'minLeachDate',
+    'maxLeach',
+    'maxLeachDate',
+    'hash',
+    'uploadDate',
+    'uploadUser',
+    'size',
+    'url',
+    'torrentListingId',
+  ],
 };
 
 const getSiteCount = () => TorrentSite.count();
@@ -101,7 +119,37 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         });
       });
 
-      // if (foundInfo && !foundGroupInfo) return foundInfo.addGroup(torrentScrapeObj.torrentGroupId);
+      // newTorrentObj needs max and min setup
+      // compare new min and max to existing
+      const nowDateObj = new Date();
+      if (foundInfo) {
+        if (newTorrentObj.seed > foundInfo.maxSeed) {
+          newTorrentObj.maxSeed = newTorrentObj.seed;
+          newTorrentObj.maxSeedDate = nowDateObj;
+        }
+        if (newTorrentObj.seed < foundInfo.minSeed) {
+          newTorrentObj.minSeed = newTorrentObj.seed;
+          newTorrentObj.minSeedDate = nowDateObj;
+        }
+        if (newTorrentObj.leach > foundInfo.maxLeach) {
+          newTorrentObj.maxLeach = newTorrentObj.leach;
+          newTorrentObj.maxLeachDate = nowDateObj;
+        }
+        if (newTorrentObj.leach < foundInfo.minLeach) {
+          newTorrentObj.minLeach = newTorrentObj.leach;
+          newTorrentObj.minLeachDate = nowDateObj;
+        }
+      } else {
+        // its a newly found torrent init the max and min
+        newTorrentObj.maxSeed = newTorrentObj.seed;
+        newTorrentObj.maxSeedDate = nowDateObj;
+        newTorrentObj.maxLeach = newTorrentObj.leach;
+        newTorrentObj.maxLeachDate = nowDateObj;
+        newTorrentObj.minSeed = newTorrentObj.seed;
+        newTorrentObj.minSeedDate = nowDateObj;
+        newTorrentObj.minLeach = newTorrentObj.leach;
+        newTorrentObj.minLeachDate = nowDateObj;
+      }
 
       if (!foundGroupInfo && foundInfo) {
         console.log('DID NOT FIND GROUP BUT FOUND INFO, update info add group');

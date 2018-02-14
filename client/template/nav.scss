@@ -22,6 +22,7 @@ body {
   background-color: $headerBGColor;
 
   ul#main {
+    opacity: 1;
     display: none;
     width: 100%;
     list-style: none;
@@ -96,11 +97,13 @@ body {
     &:checked ~ ul#main,
     &:checked ~ ul#main li ul#subOne li ul li {
       @media (max-width: $flex_nav_breakpoint) {
+        animation: fadeIn ease-in 1s;
+        opacity: 1;
         display: block !important;
         /* older flexbox */
-        display: -webkit-box;
-        display: -moz-box;
-        display: box;
+        // display: -webkit-box;
+        // display: -moz-box;
+        // display: flex;
         -webkit-box-orient: horizontal;
         -moz-box-orient: horizontal;
         box-orient: horizontal;
@@ -117,14 +120,24 @@ body {
     }
   }
   .header {
+    animation: fadeIn ease-in 1s;
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: row;
     height: $mobile_header_size;
     font-size: $mobile_header_font_size_logo;
     margin: 0;
-    cursor: pointer;
+    // cursor: pointer;
+    .filler {
+      cursor: pointer;
+      flex-grow: 1;
+      z-index: 1;
+    }
     .logo {
+      flex-grow: 0;
+      flex-basis: auto;
       display: block;
+
       span {
         a {
           color: $site_logo_color;
@@ -147,6 +160,8 @@ body {
   }
 
   .header:after {
+    animation: fadeIn ease-in 1s;
+    opacity: 1;
     /* hamburger & hotdogs */
     position: absolute;
     right: 0.5em;
@@ -162,7 +177,9 @@ body {
 
   @media (min-width: $flex_nav_breakpoint) {
     /* style for large screen */
+
     ul#main {
+      animation: fadeIn ease-in 1s;
       -webkit-box-orient: horizontal;
       -moz-box-orient: horizontal;
       box-orient: horizontal;
@@ -176,6 +193,7 @@ body {
 
       li#TR-NAME {
         text-align: left;
+        opacity: 1;
         a {
           font-family: $logoFont;
           height: $desktop_header_size;
@@ -209,6 +227,7 @@ body {
 
         // 2nd level
         ul#subOne {
+          opacity: 1;
           display: none !important;
           position: absolute;
           top: $desktop_header_size;

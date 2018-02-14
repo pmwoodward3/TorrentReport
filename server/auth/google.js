@@ -3,6 +3,8 @@ const router = require('express').Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const { User } = require('../db/models');
 
+const fs = require('fs');
+
 module.exports = router;
 
 /**
@@ -19,14 +21,22 @@ module.exports = router;
  * process.env.GOOGLE_CALLBACK = '/your/google/callback'
  */
 
-if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+const SECRETS_PATH = 'secrets.js';
+let googleConfig;
+if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
   console.log('## OAuth - Google ## - FAIL! \t (Google client ID / secret not found. Skipping Google OAuth.)');
 } else {
-  const googleConfig = {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK,
-  };
+  if (fs.existsSync(SECRETS_PATH)) {
+    console.log('## OAuth - Google ## - SUCCESS! \t (SECRETS VAR)');
+    googleConfig = require(`../../${SECRETS_PATH}`).google;
+  } else {
+    console.log('## OAuth - Google ## - SUCCESS! \t (ENV VAR)');
+    googleConfig = {
+      consumerKey: process.env.GOOGLE_CLIENT_ID,
+      consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.process.env.GOOGLE_CALLBACK,
+    };
+  }
 
   const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done) => {
     const googleId = profile.id;
@@ -43,7 +53,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
 
   passport.use(strategy);
 
-  router.get('/', passport.authenticate('google', { scope: 'email' }));
+  router.get(
+    '/',
+    passport.authenticate('google', { scope: 'https://www.googleapis.com/auth/userinfo.email' }),
+  );
 
   router.get(
     '/callback',

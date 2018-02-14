@@ -1,18 +1,18 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const TorrentSnapshot = db.define('torrentSnapshot', {
   date: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
   },
   seed: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   leach: {
     type: Sequelize.INTEGER,
-    allowNull: false
-  }
-})
+    allowNull: false,
+  },
+});
 
-module.exports = TorrentSnapshot
+module.exports = TorrentSnapshot;

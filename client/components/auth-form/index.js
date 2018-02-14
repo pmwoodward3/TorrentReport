@@ -54,7 +54,7 @@ class AuthForm extends Component {
             </button>
 
             <p>
-              <Link to="/auth/google">{displayName} with Google</Link>
+              <a href="/auth/google">{displayName} with Google</a>
             </p>
           </form>
         </div>

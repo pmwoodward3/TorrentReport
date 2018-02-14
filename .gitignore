@@ -1,6 +1,7 @@
 node_modules
-public/bundle.js
-public/bundle.js.map
+public/js/bundle.js
+public/js/bundle.js.map
+public/js/**
 public/style.css
 public/style.css.map
 secrets.js

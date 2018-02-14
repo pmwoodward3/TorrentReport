@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import { logout } from '../store';
-
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faSignInAlt, faSignOutAlt, faUser, faUserPlus } from '@fortawesome/fontawesome-free-solid';
 import s from './template.scss';
 import nav from './nav.scss';
 import mobile from './mobile.scss';
@@ -38,15 +39,18 @@ class Template extends Component {
             className="trigger"
             type="checkbox"
             id="mainNavButton"
+            name="mainNavButton"
           />
-          <label className="header" htmlFor="mainNavButton" onClick={this.mainMenuToggle}>
+          <label className="header" htmlFor="mainNavButton">
+            <div className="filler" onClick={this.mainMenuToggle} />
             <div className="logo">
               <span>
                 <Link to="/">Torrent Report</Link>
               </span>
             </div>
+            <div className="filler" onClick={this.mainMenuToggle} />
           </label>
-          <ul id="main" onClick={this.mainMenuToggle}>
+          <ul className="" id="main" onClick={this.mainMenuToggle}>
             <li id="TR-NAME">
               <div className="logo">
                 <Link to="/">Torrent Report</Link>
@@ -98,17 +102,17 @@ class Template extends Component {
             {!isLoggedIn ? (
               <div className="navButtons">
                 <Link to="/signup" id="navSign" className="up">
-                  sign up
+                  <FontAwesomeIcon icon={faUserPlus} /> sign up
                 </Link>
 
                 <Link to="/login" id="navSign" className="in">
-                  login
+                  <FontAwesomeIcon icon={faSignInAlt} /> login
                 </Link>
               </div>
             ) : (
               <div className="navButtons">
                 <button id="navSign" className="in" onClick={handleClick}>
-                  Logout
+                  <FontAwesomeIcon icon={faSignOutAlt} /> Logout
                 </button>
               </div>
             )}

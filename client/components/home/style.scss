@@ -1,88 +1,10 @@
 @import '../../template/_variables';
 @import '../../template/_mixins';
 
-.home-notification {
-  @include boxRadiusNoShadow();
-  display: inline-flex;
-  flex-direction: column;
-
-  width: 100%;
-  background-color: lighten($secondaryColor, 30%);
-  padding: 2em;
-}
-.home-notification-head {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  letter-spacing: 1px;
-  font-size: 1.4em;
-  font-weight: bolder;
-  color: darken($secondaryColor, 40%);
-  padding-bottom: 0.2em;
-  margin-bottom: 0.5em;
-  border-bottom: 1px solid darken($secondaryColor, 40%);
-}
-.home-notification-text {
-  line-height: 1.4em;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
-}
-.home-notification-action {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  p {
-    padding: 0px;
-    margin: 0px;
-  }
-}
-
 .flex-inline {
   display: inline-flex;
   width: 100%;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-}
-
-.daily-listings {
-  @include boxRadiusNoShadow();
-  background-color: lighten($primaryColor, 30%);
-  min-width: 200px;
-  // flex-basis: 300px;
-  height: 450px;
-  margin: 1em;
-  flex-grow: 1;
-  display: inline-flex;
-  flex-direction: column;
-  padding: 1em;
-
-  .dl-header {
-    display: inline-flex;
-    flex-wrap: wrap;
-    color: darken($primaryColor, 40%);
-    letter-spacing: 2px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 2em;
-  }
-  .dl-item-group {
-    display: inline-flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    flex-grow: 1;
-    .dl-item {
-      margin: 5px 0px 0px 0px;
-      flex-wrap: wrap;
-      display: inline-flex;
-      border-bottom: 1px solid lighten($primaryColor, 10%);
-      padding: 3px 0px 3px 0px;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 0.8em;
-    }
-  }
-  .dl-footer {
-    display: inline-flex;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 0.8em;
-    color: darken($primaryColor, 5%);
-  }
 }

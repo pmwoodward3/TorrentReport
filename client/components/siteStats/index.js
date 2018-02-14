@@ -15,10 +15,7 @@ import StatSquare from './statSquare';
 class SiteStats extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      menuShow: false,
-    };
-    // this.mainMenuToggle = this.mainMenuToggle.bind(this);
+    this.state = {};
   }
 
   componentDidMount() {
@@ -28,13 +25,12 @@ class SiteStats extends Component {
   render() {
     const stats = this.props.siteStats;
     const nowDateObj = new Date();
-    let duration,
-      lastScrapeTime;
+    let duration;
+    let lastScrapeTime;
     if (stats.endedAt && stats.createdAt) {
       const endedDateObj = moment(stats.endedAt);
       const createdDateObj = moment(stats.createdAt);
       duration = endedDateObj.diff(createdDateObj, 'minutes', true); // 1;
-      // console.log(endedDateObj.diff(createdDateObj, 'minutes', true));
       duration = duration.toFixed(2);
       lastScrapeTime = moment(stats.endedAt).fromNow();
     }
@@ -57,12 +53,12 @@ class SiteStats extends Component {
             <div className="date">as of {nowDateObj.toLocaleTimeString('en-us', options)}</div>
           </div>
           <div className="group2">
-            <StatSquare name="Script RUn COunt" value={stats.scrapeCount} />
-            <StatSquare name="Site COunt" value={stats.siteCount} />
+            <StatSquare name="Scrape Runs" value={stats.scrapeCount} />
+            <StatSquare name="Sites" value={stats.siteCount} />
           </div>
           <div className="group2">
-            <StatSquare name="Torrent Listing Count" value={stats.scrapeCount} />
-            <StatSquare name="Torrent Load COunt" value={stats.siteCount} />
+            <StatSquare name="Sites Load Count" value={stats.siteLoadCount} />
+            <StatSquare name="Torrent Load Count" value={stats.torrentLoadCount} />
           </div>
         </div>
         <div className="seperator">
@@ -72,10 +68,10 @@ class SiteStats extends Component {
           </div>
           <div className="group2">
             <StatSquare name="Snapshot Count" value={stats.snapshotCount} />
-            <StatSquare name="Site Load COunt" value={stats.siteLoadCount} />
+            <StatSquare name="Torrent COunt" value={stats.torrentCount} />
           </div>
           <div className="group2">
-            <StatSquare name="last scrape took (minutes)" value={duration} />
+            <StatSquare name="minutes scrape time" value={duration} />
             <StatSquare name="last scrape run" value={lastScrapeTime} />
           </div>
         </div>
@@ -83,14 +79,6 @@ class SiteStats extends Component {
     );
   }
 }
-
-/**
- * CONTAINER
- */
-
-/**
- * CONTAINER
- */
 
 const mapState = state => ({
   siteStats: state.stats.siteStats,
@@ -103,10 +91,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(SiteStats);
-
-/**
- * PROP TYPES
- */
-SiteStats.propTypes = {
-  siteStats: PropTypes.object,
-};

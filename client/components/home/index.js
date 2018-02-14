@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SiteStats from '../siteStats';
+import Notification from '../notification';
+import DailyListing from '../dailyListing';
 
 import s from './style.scss';
 
@@ -28,29 +30,14 @@ export const Home = (props) => {
 
   return (
     <div>
-      <div className="home-notification">
-        <div className="home-notification-head">What is Torrent Report?</div>
-        <div className="home-notification-text">
-          Welcome home {email}. Torrent Report is a torrent information aggregator. This site does
-          not create, host, or distribute any torrents or their files. Instead this site crawls top
-          torrent sites to get their top torrents.
-        </div>
-        <div className="home-notification-action">
-          <p>
-            <Link to="/about">Learn More</Link>
-          </p>
-        </div>
-      </div>
+      <Notification title="What is Torrent Report?" linkText="Learn More" linkURI="/about">
+        Welcome home {email}. Torrent Report is a torrent information aggregator. This site does not
+        create, host, or distribute any torrents or their files. Instead this site crawls top
+        torrent sites to get their top torrents.
+      </Notification>
       <div className="flex-inline">
         <SiteStats />
-
-        <div className="daily-listings">
-          <div className="dl-header">NEWLY LISTED TOP TORRENTS</div>
-          <div className="dl-item-group">
-            <div className="dl-item">Torrent Name One</div>
-          </div>
-          <div className="dl-footer">footer space</div>
-        </div>
+        <DailyListing />
       </div>
     </div>
   );

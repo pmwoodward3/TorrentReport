@@ -6,7 +6,7 @@ const checkSnapshot = async () => {
   const isActive = await TorrentStats.findOne({ where: { active: true } }).then(result => result != null);
   const isNotFresh = await maxIdDetail().then((latestStat) => {
     const today = new Date();
-    const lastDate = new Date(latestStat.endedAt);
+    const lastDate = new Date(latestStat.createdAt);
     const timeDiff = lastDate.getTime() - today.getTime();
     const diffDays = timeDiff / (1000 * 3600 * 22);
 

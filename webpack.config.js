@@ -11,19 +11,21 @@ const pluginsArr = [
 if (isDev) pluginsArr.push(new LiveReloadPlugin({ appendScriptTag: true }));
 
 module.exports = {
-  entry: {
-    js: ['client/index', 'client/components/home'],
-    vendor: ['react', 'react-dom'],
-  },
+  entry: './client/index.js',
+  // entry: {
+  //   path: __dirname,
+  //   js: ['./client/index.js', './client/components/home/index.js'],
+  //   vendor: ['react', 'react-dom'],
+  // },
   output: {
     path: __dirname,
-    filename: './public/bundle.js',
+    filename: './public/js/bundle.js',
   },
   devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
       },

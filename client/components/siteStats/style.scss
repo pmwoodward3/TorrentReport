@@ -17,7 +17,6 @@
   min-height: $stats_square_flex_dimension;
   display: flex;
   flex-direction: column;
-  height: 4em;
   justify-content: center;
   align-items: center;
 }
@@ -53,13 +52,14 @@
 
 .stats .group2 {
   display: flex;
+  flex-grow: 1;
   flex-direction: row;
 }
 
 .stats .group {
   background-color: $stats_tile_background_color;
   @include boxBorderRadiusNoShadow($stats_tile_background_color);
-  height: 4em;
+  min-height: 4em;
   margin: 5px;
   padding: 5px;
   flex-grow: 1;
@@ -84,7 +84,7 @@
 .name .pos {
   // width: 100%;
   position: absolute;
-  top: 0.4em;
+  top: 0.8em;
 }
 .stats .group .value {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -96,6 +96,7 @@
   position: relative;
   top: -0.7em;
   text-align: center;
+  animation: fadeIn ease-in 1s;
 }
 
 .center {

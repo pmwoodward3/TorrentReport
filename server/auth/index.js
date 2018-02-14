@@ -1,7 +1,10 @@
 const router = require('express').Router();
 const User = require('../db/models/user');
+const _ = require('lodash');
 
 module.exports = router;
+
+const cleanUser = userObj => _.pick(userObj, ['email', 'id']);
 
 router.post('/login', (req, res, next) => {
   User.findOne({ where: { email: req.body.email } })
@@ -11,7 +14,7 @@ router.post('/login', (req, res, next) => {
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password');
       } else {
-        req.login(user, err => (err ? next(err) : res.json(user)));
+        req.login(user, err => (err ? next(err) : res.json(cleanUser(user))));
       }
     })
     .catch(next);
@@ -21,7 +24,7 @@ router.post('/signup', (req, res, next) => {
   // user registration
   User.create(req.body)
     .then((user) => {
-      req.login(user, err => (err ? next(err) : res.json(user)));
+      req.login(user, err => (err ? next(err) : res.json(cleanUser(user))));
     })
     .catch((err) => {
       if (err.name === 'SequelizeUniqueConstraintError') {
@@ -39,7 +42,7 @@ router.post('/logout', (req, res) => {
 });
 
 router.get('/me', (req, res) => {
-  res.json(req.user);
+  res.json(cleanUser(req.user));
 });
 
 router.use('/google', require('./google'));
