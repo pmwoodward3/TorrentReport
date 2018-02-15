@@ -22,7 +22,7 @@
 }
 
 .descr .top {
-  font-family: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
+  font-family: $logoFont;
   font-weight: 900;
   font-size: 1.3em;
   color: lighten($quinaryColor, 30%);
@@ -32,7 +32,7 @@
   letter-spacing: 3px;
   margin: 0px;
   padding: 0px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: $header_font_family;
   font-size: 2em;
   word-wrap: break-word;
   color: lighten($quinaryColor, 30%);

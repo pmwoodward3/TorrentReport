@@ -7,4 +7,5 @@ export { default as Home } from './home/';
 export { default as UserHome } from './user/home/';
 export { default as Test } from './test/';
 export { default as Top } from './top/';
+export { default as NewListings } from './newListings/';
 export { Login, Signup } from './auth-form/';

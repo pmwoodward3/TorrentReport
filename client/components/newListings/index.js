@@ -12,9 +12,8 @@ import { fetchDailyListings } from '../../store';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 
-import MiniListItem from './miniListItem';
+import ListItem from './listItem';
 import { getListingsByID } from '../store_helper';
-
 /**
  * COMPONENT
  */
@@ -24,7 +23,6 @@ class DailyListing extends Component {
     this.state = {
       filter: 'seed',
       order: 'top',
-      max: 11,
     };
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleOrder = this.toggleOrder.bind(this);
@@ -53,7 +51,7 @@ class DailyListing extends Component {
     if (!_.has(this.props.dailyListings, 'days1')) {
       return (
         <div id="DL" className="daily-listings">
-          <Loader message="downloading data" />
+          <Loader message="fetching some data" />
         </div>
       );
     }
@@ -67,23 +65,20 @@ class DailyListing extends Component {
       },
       orderArr,
     );
-    const finalSize = orderedFiltered.slice(0, this.state.max);
-    const hiddenResults = orderedFiltered.length - this.state.max;
+    const finalSize = orderedFiltered;
     return (
-      <div id="DL" className="daily-listings">
+      <div id="NL" className="new-listings">
         <div className="dl-top">
           <div className="dl-header">TOP NEWLY LISTED TORRENTS</div>
           <div className="dl-detail" />
         </div>
         <div className="dl-item-group">
           {finalSize.map((item, index) => (
-            <MiniListItem key={item.id} active={this.state.filter} index={index} item={item} />
+            <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
           ))}
         </div>
         <div className="dl-footer">
-          <div className="dl-more">
-            <Link to="/new/listings">View {hiddenResults} more results</Link>
-          </div>
+          <div className="dl-more">thats all folks</div>
           <div className="dl-options">
             <div>
               <div className="current">sorted by {this.state.filter}ers</div>

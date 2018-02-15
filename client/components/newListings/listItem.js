@@ -13,6 +13,7 @@ const shorten = originalName =>
  */
 export default (props) => {
   const { name, id, Infos } = props.item;
+  const { active } = props;
   const seed = Infos.reduce((acc, curr) => acc + curr.seed, 0);
   const leach = Infos.reduce((acc, curr) => acc + curr.leach, 0);
   const earliestUpload = Infos.reduce(
@@ -21,25 +22,31 @@ export default (props) => {
     new Date(),
   );
 
-  // if (!value) return <Loader />;
+  let seedClass = 'seed';
+  let leachClass = 'leach';
+  if (active === 'seed') {
+    seedClass += ' active';
+  } else {
+    leachClass += ' active';
+  }
+
   return (
     <div className="dl-item">
       <div className="number">
         <div>{props.index + 1}</div>
       </div>
       <Link alt={name} to={`/listing/${id}`}>
-        {shorten(name)}
+        {name}
       </Link>
       <div className="group">
         <div className="sub">
-          <div className="seed">
+          <div className={seedClass}>
             <FontAwesomeIcon icon={faCaretUp} /> {seed}
           </div>
-          <div className="leach">
+          <div className={leachClass}>
             <FontAwesomeIcon icon={faCaretDown} /> {leach}
           </div>
         </div>
-
         <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>
       </div>
     </div>

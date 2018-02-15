@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { maxIdDetail } = require('../parseScrapeStore/check');
-const { TorrentStats } = require('../../db/models');
+const { TorrentStats, TorrentSite, TorrentGroup } = require('../../db/models');
 const {
   getOrMakeSite,
   getSnapshotCount,
@@ -16,6 +16,12 @@ module.exports = router;
 
 router.get('/', (req, res, next) => {
   maxIdDetail()
+    .then(async (statObj) => {
+      const newStatObj = statObj.toJSON();
+      newStatObj.sites = await TorrentSite.findAll();
+      newStatObj.groups = await TorrentGroup.findAll();
+      return newStatObj;
+    })
     .then(data => res.json(data))
     .catch(next);
 });

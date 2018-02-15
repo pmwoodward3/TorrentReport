@@ -18,7 +18,7 @@ class Test extends Component {
   componentDidMount() {}
 
   render() {
-    return <div>Rendered</div>;
+    return <div>yo yo</div>;
   }
 }
 

@@ -50,8 +50,6 @@ $flex_nav_subNavWidth: 12.5em;
 $flex_nav_breakpoint: 800px;
 $flex_nav_breakpointA: 800px;
 
-$logoFont: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
-
 // home stats square
 $stats_background_color: lighten($quinaryColor, 90%);
 $stats_tile_background_color: lighten($quinaryColor, 85%);
@@ -63,3 +61,7 @@ $stats_value_color: lighten($quinaryColor, 40%);
 // $stats_color_three: lighten($tertiaryColor, 30%);
 $stats_square_dimension: 140px;
 $stats_square_flex_dimension: 140px;
+
+@import url('https://fonts.googleapis.com/css?family=Assistant:800|Fredoka+One|Roboto+Slab:700');
+$logoFont: 'Roboto Slab', serif, Arial, Helvetica, sans-serif;
+$header_font_family: 'Assistant', sans-serif;

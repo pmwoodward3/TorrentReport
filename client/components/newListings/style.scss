@@ -1,15 +1,11 @@
 @import '../../template/_variables';
 @import '../../template/_mixins';
 
-.daily-listings {
+.new-listings {
   @include boxRadiusNoShadow();
   background-color: lighten($primaryColor, 30%);
-  min-width: 200px;
-  // flex-basis: 300px;
-  min-height: 450px;
-  margin: 1em;
   flex-grow: 1;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   padding: 1em;
   .dl-top {

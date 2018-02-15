@@ -11,10 +11,11 @@
   padding: 2em;
 }
 .home-notification-head {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: $header_font_family;
   letter-spacing: 1px;
   font-size: 1.4em;
-  font-weight: bolder;
+  text-transform: capitalize;
+  font-weight: 700;
   color: darken($secondaryColor, 40%);
   padding-bottom: 0.2em;
   margin-bottom: 0.5em;

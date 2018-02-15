@@ -12,7 +12,7 @@ import s from './style.scss';
  * COMPONENT
  */
 export const Home = (props) => {
-  const { email } = props;
+  const { email, isLoggedIn } = props;
 
   const todaysDateObj = new Date();
   // const today24Hour =
@@ -30,11 +30,13 @@ export const Home = (props) => {
 
   return (
     <div>
-      <Notification title="What is Torrent Report?" linkText="Learn More" linkURI="/about">
-        Welcome home {email}. Torrent Report is a torrent information aggregator. This site does not
-        create, host, or distribute any torrents or their files. Instead this site crawls top
-        torrent sites to get their top torrents.
-      </Notification>
+      {!isLoggedIn && (
+        <Notification title="What is Torrent Report?" linkText="Learn More" linkURI="/about">
+          Welcome home {email}. Torrent Report is a torrent information aggregator. This site does
+          not create, host, or distribute any torrents or their files. Instead this site crawls top
+          torrent sites to get their top torrents.
+        </Notification>
+      )}
       <div className="flex-inline">
         <SiteStats />
         <DailyListing />
@@ -48,6 +50,7 @@ export const Home = (props) => {
  */
 const mapState = state => ({
   email: state.user.email,
+  isLoggedIn: !!state.user.id,
 });
 
 export default connect(mapState)(Home);
