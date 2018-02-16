@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const TorrentInfo = require('./torrentInfo');
 const TorrentGroup = require('./torrentGroup');
+const TorrentSnapshot = require('./torrentSnapshot');
 const TorrentSite = require('./torrentSite');
 const db = require('../db');
 
@@ -28,7 +29,7 @@ const TorrentListing = db.define(
           {
             model: TorrentInfo,
             as: 'Infos',
-            include: [TorrentGroup],
+            include: [TorrentSnapshot, TorrentGroup],
           },
         ],
       },
@@ -38,6 +39,7 @@ const TorrentListing = db.define(
             model: TorrentInfo,
             as: 'Infos',
             include: [
+              { model: TorrentSnapshot },
               {
                 as: 'Group',
                 model: TorrentGroup,

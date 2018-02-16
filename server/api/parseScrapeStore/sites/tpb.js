@@ -1,5 +1,38 @@
 const { universalClean } = require('./utils');
 
+const listingCheck = cleanListingObj =>
+  cleanListingObj.category.includes('porn') || cleanListingObj.category.includes('Porn');
+
+const resultCleaner = (rawResult) => {
+  const newResult = Object.assign({}, rawResult);
+  const resKeys = Object.keys(rawResult);
+  resKeys.forEach((key) => {
+    switch (key) {
+      case 'magnet': {
+        newResult.hash = magnetCleanup(rawResult.magnet);
+        break;
+      }
+      case 'category': {
+        newResult.category = rawResult.category.replace(/\n/g, ' ').trim();
+        break;
+      }
+      case 'uploaded': {
+        delete newResult.uploaded;
+        const clean = uploadedCleanup(rawResult.uploaded);
+        newResult.uploadDate = clean.uploadDate;
+        newResult.uploadUser = clean.uploadUser;
+        newResult.size = clean.size;
+        break;
+      }
+      default: {
+        newResult[key] = universalClean(key, rawResult[key]);
+        break;
+      }
+    }
+  });
+  return newResult;
+};
+
 const tpb = {
   siteName: 'The Pirate Bay',
   siteShortName: 'TPB',
@@ -42,35 +75,8 @@ const tpb = {
           pluck: { leach: 'outerText' },
         },
       ],
-      resultCleaner: (rawResult) => {
-        const newResult = Object.assign({}, rawResult);
-        const resKeys = Object.keys(rawResult);
-        resKeys.forEach((key) => {
-          switch (key) {
-            case 'magnet': {
-              newResult.hash = magnetCleanup(rawResult.magnet);
-              break;
-            }
-            case 'category': {
-              newResult.category = rawResult.category.replace(/\n/g, ' ').trim();
-              break;
-            }
-            case 'uploaded': {
-              delete newResult.uploaded;
-              const clean = uploadedCleanup(rawResult.uploaded);
-              newResult.uploadDate = clean.uploadDate;
-              newResult.uploadUser = clean.uploadUser;
-              newResult.size = clean.size;
-              break;
-            }
-            default: {
-              newResult[key] = universalClean(key, rawResult[key]);
-              break;
-            }
-          }
-        });
-        return newResult;
-      },
+      resultCleaner,
+      listingCheck,
     },
   ],
 };

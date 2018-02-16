@@ -43,6 +43,7 @@
     "passport-google-oauth": "^1.0.0",
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
+    "pg-native": "^2.2.0",
     "prop-types": "^15.6.0",
     "puppeteer": "^1.0.0",
     "react": "^16.2.0",

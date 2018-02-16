@@ -54,6 +54,14 @@ export const fetchListingById = infoID => (dispatch) => {
     dispatch(spreadListings(infoArr));
   });
 };
+export const fetchListingsById = listingIds => (dispatch) => {
+  axios.post('/api/torrents/listings/', { listingIds }).then((res) => {
+    if (res.data === null) throw Error('null data');
+    const infoArr = [];
+    infoArr.push(res.data);
+    dispatch(spreadListings(infoArr));
+  });
+};
 
 /**
  * REDUCER

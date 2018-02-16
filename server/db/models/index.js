@@ -13,6 +13,7 @@ TorrentGroup.belongsToMany(TorrentInfo, { as: 'Group', through: 'InfoGroup' });
 TorrentListing.belongsToMany(TorrentInfo, { as: 'Infos', through: 'ListingInfo' });
 TorrentInfo.belongsTo(TorrentListing);
 
+TorrentInfo.hasMany(TorrentSnapshot);
 TorrentSnapshot.belongsTo(TorrentInfo);
 TorrentSnapshot.belongsTo(TorrentStats);
 

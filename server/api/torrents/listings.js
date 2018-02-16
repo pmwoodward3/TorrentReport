@@ -23,9 +23,19 @@ router.get('/:id', (req, res, next) => {
   // }
 });
 
+router.post('/', (req, res, next) => {
+  if (!req.body.listingIds || !req.body.listingIds.length > 0) return res.sendStatus(404);
+  const id = req.body.listingIds.map(item => parseInt(item, 10));
+  TorrentListing.scope('withSites')
+    .findAll({ where: { id } })
+    .then(data => res.json(data))
+    .catch(next);
+});
+
 router.get('/new/:days', (req, res, next) => {
-  if (!req.params.days) req.params.days = 1;
-  const days = parseInt(req.params.days, 10);
+  let input = req.params.days;
+  if (!input || !Number.isInteger(input)) input = 1;
+  const days = parseInt(input, 10);
   if (days > 31) res.sendStatus(403);
   const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
 

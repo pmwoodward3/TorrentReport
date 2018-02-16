@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const _ = require('lodash');
 const {
   TorrentSite,
   TorrentInfo,
@@ -14,9 +15,12 @@ module.exports = router;
 
 router.get('/:id', (req, res, next) => {
   // if (req.user && req.user.isAdmin) {
-  TorrentInfo.findById(parseInt(req.params.id, 10), {
+  const id = parseInt(req.params.id, 10);
+  if (!Number.isInteger(id)) return res.sendStatus(404);
+  TorrentInfo.findById(id, {
     include: [
       { model: TorrentListing },
+      { model: TorrentSnapshot },
       { as: 'Group', through: 'InfoGroup', model: TorrentGroup },
     ],
   })
@@ -34,17 +38,28 @@ router.post('/', (req, res, next) => {
   if (!req.body.infoIds || !req.body.infoIds.length > 0) return res.sendStatus(404);
   const id = req.body.infoIds.map(item => parseInt(item, 10));
 
-  TorrentInfo.findAll(
-    { where: { id } },
-    {
-      include: [
-        { model: TorrentListing },
-        { as: 'Group', through: 'InfoGroup', model: TorrentGroup },
-      ],
-    },
-  )
+  TorrentInfo.findAll({
+    where: { id },
+    include: [
+      { model: TorrentListing },
+      { model: TorrentSnapshot },
+      { as: 'Group', through: 'InfoGroup', model: TorrentGroup },
+    ],
+  })
     .then(data => res.json(data))
     .catch(next);
+  // .then(async (infoList) => {
+  //   const newInfoList = [];
+  //   const holder = await Array.from(infoList).forEach(async (infoItem) => {
+  //     const newInfoItem = _.cloneDeep(infoItem);
+  //     const Snapshots = await infoItem.getTorrentSnapshots();
+  //     newInfoItem.Snapshots = Snapshots;
+  //     // console.log('\n\n\n2=========\n', newInfoItem);
+  //     newInfoList.push(newInfoItem);
+  //   });
+  //   console.log('My infolist length', infoList.length);
+  //   return newInfoList;
+  // })
   // } else {
   //   next()
   // }
@@ -62,7 +77,6 @@ router.get('/new/top/:days/:order', (req, res, next) => {
         [Op.gte]: new Date(filterTime),
       },
     },
-    limit: 100,
     order: [[req.params.order, 'DESC']],
     include: ['Group'],
   })

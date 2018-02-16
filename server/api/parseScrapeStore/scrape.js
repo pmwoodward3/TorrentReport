@@ -20,6 +20,7 @@ const scrape = async ({
   webPage,
   selectors,
   resultCleaner,
+  listingCheck,
 }) => {
   console.log(`start scrape | groupName: ${groupName} | rD: ${resourceDomain} | selC: ${selectors.length}`);
 
@@ -85,9 +86,12 @@ const scrape = async ({
     combinedSelector.torrentGroupId = groupId;
     combinedSelector.torrentSiteId = siteId;
     const cleanResult = resultCleaner(combinedSelector);
+    const shouldSkip = listingCheck(cleanResult);
     // groupedResults.push(cleanResult);
-    const torrentListing = await getOrMakeTorrentListing(cleanResult);
-    groupedResults.push(torrentListing);
+    if (!shouldSkip) {
+      const torrentListing = await getOrMakeTorrentListing(cleanResult);
+      groupedResults.push(torrentListing);
+    }
   }
 
   return {

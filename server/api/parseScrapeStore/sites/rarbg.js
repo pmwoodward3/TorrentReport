@@ -1,5 +1,27 @@
 const { universalClean } = require('./utils');
 
+const resultCleaner = (rawResult) => {
+  const newResult = Object.assign({}, rawResult);
+  const resKeys = Object.keys(rawResult);
+  resKeys.forEach((key) => {
+    switch (key) {
+      case 'uploadDate': {
+        const uploadDate = new Date(rawResult.uploadDate);
+        uploadDate.setHours(uploadDate.getHours() - 6);
+        newResult.uploadDate = new Date(uploadDate);
+        break;
+      }
+      default: {
+        newResult[key] = universalClean(key, rawResult[key]);
+        break;
+      }
+    }
+  });
+  return newResult;
+};
+
+const listingCheck = cleanListingObj => false;
+
 const rarbg = {
   siteName: 'RARBG',
   siteShortName: 'RARBG',
@@ -44,25 +66,8 @@ const rarbg = {
           pluck: { uploadUser: 'outerText' },
         },
       ],
-      resultCleaner: (rawResult) => {
-        const newResult = Object.assign({}, rawResult);
-        const resKeys = Object.keys(rawResult);
-        resKeys.forEach((key) => {
-          switch (key) {
-            case 'uploadDate': {
-              const uploadDate = new Date(rawResult.uploadDate);
-              uploadDate.setHours(uploadDate.getHours() - 6);
-              newResult.uploadDate = new Date(uploadDate);
-              break;
-            }
-            default: {
-              newResult[key] = universalClean(key, rawResult[key]);
-              break;
-            }
-          }
-        });
-        return newResult;
-      },
+      resultCleaner,
+      listingCheck,
     },
   ],
 };

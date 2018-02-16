@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
-const { TorrentSite, TorrentListing, TorrentGroup } = require('./index');
+const {
+  TorrentSite, TorrentListing, TorrentGroup, TorrentSnapshot,
+} = require('./index');
 const db = require('../db');
 
 const TorrentInfo = db.define(
@@ -41,6 +43,24 @@ const TorrentInfo = db.define(
     },
     minLeachDate: {
       type: Sequelize.DATE,
+    },
+    ratio: {
+      type: Sequelize.DOUBLE,
+    },
+    minRatio: {
+      type: Sequelize.DOUBLE,
+    },
+    minRatioDate: {
+      type: Sequelize.DATE,
+    },
+    maxRatio: {
+      type: Sequelize.DOUBLE,
+    },
+    maxRatioDate: {
+      type: Sequelize.DATE,
+    },
+    category: {
+      type: Sequelize.STRING,
     },
     uploadUser: {
       type: Sequelize.STRING,
