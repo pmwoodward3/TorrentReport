@@ -12,10 +12,10 @@ const Op = Sequelize.Op;
 
 module.exports = router;
 
-router.get('/', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   // if (req.user && req.user.isAdmin) {
   TorrentListing.scope('withSites')
-    .findAll()
+    .findById(parseInt(req.params.id, 10))
     .then(data => res.json(data))
     .catch(next);
   // } else {

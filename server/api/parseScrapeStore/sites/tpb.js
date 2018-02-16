@@ -127,8 +127,12 @@ const uploadedCleanup = (uploadedString) => {
     newUploadDate = new Date(upMonthDateHourMinute[1], upMonth, upDate, 0, 0);
   }
 
+  const uploadDate = new Date(newUploadDate);
+  uploadDate.setHours(uploadDate.getHours() - 5);
+  const finalUploadDate = new Date(uploadDate);
+
   return {
-    uploadDate: newUploadDate,
+    uploadDate: finalUploadDate,
     uploadUser: infoArr[3],
     size: infoArr[2].replace('GiB', 'GB').replace('MiB', 'MB'),
   };

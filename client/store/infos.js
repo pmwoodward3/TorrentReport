@@ -27,6 +27,27 @@ export const updateInfos = listingsToUpdateArr => ({
 });
 
 /**
+ * THUNK CREATORS
+ */
+export const fetchInfoById = infoID => (dispatch) => {
+  if (!infoID) return false;
+  axios.get(`/api/torrents/infos/${infoID}`).then((res) => {
+    if (res.data === null) throw Error('null data');
+    const infoArr = [];
+    infoArr.push(res.data);
+    dispatch(addInfos(infoArr));
+  });
+};
+
+export const fetchInfosById = infoIds => (dispatch) => {
+  if (!infoIds) return false;
+  axios.post('/api/torrents/infos/', { infoIds }).then((res) => {
+    if (res.data === null) throw Error('null data');
+    dispatch(addInfos(res.data));
+  });
+};
+
+/**
  * REDUCER
  */
 export default (state = initialState, action) => {
@@ -53,7 +74,7 @@ export default (state = initialState, action) => {
         listing => updateIdsArr.indexOf(listing.id) >= 0,
       );
       const newListingArr = removedNewListings.concat(action.listingsToUpdateArr);
-      const newCurrentIds = [...state.currentIds, updateIdsArr];
+      const newCurrentIds = [...updateIdsArr];
       return {
         ...state,
         items: newListingArr,

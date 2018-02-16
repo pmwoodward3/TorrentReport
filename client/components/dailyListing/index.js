@@ -49,6 +49,10 @@ class DailyListing extends Component {
     this.setState({ filter: this.oppositeFilter(this.state.filter) });
   }
 
+  shouldComponentUpdate(nextProps) {
+    return _.has(nextProps.dailyListings, 'days1');
+  }
+
   render() {
     if (!_.has(this.props.dailyListings, 'days1')) {
       return (
@@ -58,7 +62,7 @@ class DailyListing extends Component {
       );
     }
     const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
-    const listings = getListingsByID(this.props.dailyListings.days1);
+    const listings = this.props.dailyListings.days1;
     const orderedFiltered = _.orderBy(
       listings,
       (obj) => {

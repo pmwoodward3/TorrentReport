@@ -50,7 +50,9 @@ const rarbg = {
         resKeys.forEach((key) => {
           switch (key) {
             case 'uploadDate': {
-              newResult.uploadDate = new Date(rawResult.uploadDate);
+              const uploadDate = new Date(rawResult.uploadDate);
+              uploadDate.setHours(uploadDate.getHours() - 6);
+              newResult.uploadDate = new Date(uploadDate);
               break;
             }
             default: {

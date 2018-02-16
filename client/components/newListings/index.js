@@ -17,7 +17,7 @@ import { getListingsByID } from '../store_helper';
 /**
  * COMPONENT
  */
-class DailyListing extends Component {
+class NewListings extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,16 +47,20 @@ class DailyListing extends Component {
     this.setState({ filter: this.oppositeFilter(this.state.filter) });
   }
 
+  shouldComponentUpdate(nextProps) {
+    return _.has(nextProps.dailyListings, 'days1');
+  }
+
   render() {
     if (!_.has(this.props.dailyListings, 'days1')) {
       return (
-        <div id="DL" className="daily-listings">
+        <div id="NL" className="new-listings">
           <Loader message="fetching some data" />
         </div>
       );
     }
     const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
-    const listings = getListingsByID(this.props.dailyListings.days1);
+    const listings = this.props.dailyListings.days1;
     const orderedFiltered = _.orderBy(
       listings,
       (obj) => {
@@ -115,4 +119,4 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(DailyListing);
+export default connect(mapState, mapDispatch)(NewListings);

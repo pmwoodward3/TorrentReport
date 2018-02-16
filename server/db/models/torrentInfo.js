@@ -55,13 +55,13 @@ const TorrentInfo = db.define(
       type: Sequelize.STRING,
     },
   },
-  // {
-  //   scopes: {
-  //     details: {
-  //       include: ['Groups'],
-  //     },
-  //   },
-  // },
+  {
+    scopes: {
+      details: {
+        include: [],
+      },
+    },
+  },
 );
 
 module.exports = TorrentInfo;

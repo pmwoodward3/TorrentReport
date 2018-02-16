@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import _ from 'lodash';
+import { getOrFetchSiteStats, getSiteStats } from '../store_helper';
 
 import s from './style.scss';
 
@@ -15,16 +17,23 @@ import StatSquare from './statSquare';
 class SiteStats extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    const stats = getSiteStats();
+    this.state = {
+      stats,
+    };
   }
 
   componentDidMount() {
-    this.props.load();
+    if (!getSiteStats()) getOrFetchSiteStats();
+  }
+
+  shouldComponentUpdate() {
+    return !this.state.stats && getSiteStats();
   }
 
   render() {
-    const stats = this.props.siteStats;
-    const nowDateObj = new Date();
+    const stats = getSiteStats();
+    const nowDateObj = new Date(stats.fetched);
     let duration;
     let lastScrapeTime;
     if (stats.endedAt && stats.createdAt) {
@@ -81,7 +90,7 @@ class SiteStats extends Component {
 }
 
 const mapState = state => ({
-  siteStats: state.stats.siteStats,
+  stats: state.stats,
 });
 
 const mapDispatch = dispatch => ({

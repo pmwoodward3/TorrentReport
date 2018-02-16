@@ -32,13 +32,27 @@ export const updateListings = listingsToUpdateArr => ({
  */
 
 export const spreadListings = listings => (dispatch) => {
+  if (!listings) return false;
   const infosArr = [];
   listings.forEach((listing) => {
     listing.Infos.forEach(info => infosArr.push(info));
   });
-  const onlyListingsArr = listings.map(listing => _.clone(listing));
+  const onlyListingsArr = listings.map((listing) => {
+    const newListing = _.clone(listing);
+    newListing.infoIds = listing.Infos.map(info => info.id);
+    return newListing;
+  });
   dispatch(addListings(onlyListingsArr));
   if (infosArr.length) dispatch(addInfos(infosArr));
+};
+
+export const fetchListingById = infoID => (dispatch) => {
+  axios.get(`/api/torrents/listings/${infoID}`).then((res) => {
+    if (res.data === null) throw Error('null data');
+    const infoArr = [];
+    infoArr.push(res.data);
+    dispatch(spreadListings(infoArr));
+  });
 };
 
 /**
@@ -51,7 +65,9 @@ export default (state = initialState, action) => {
       const newListingArr = [...state.items];
       action.listingsArr.forEach((listing) => {
         if (newIds.indexOf(listing.id) === -1) {
-          newListingArr.push(_.cloneDeep(listing));
+          const newListing = { ...listing };
+          newListing.infoIds = listing.Infos.map(info => info.id);
+          newListingArr.push(_.omit(newListing, 'Infos'));
           newIds.push(listing.id);
         }
       });

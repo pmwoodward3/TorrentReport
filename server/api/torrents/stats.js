@@ -20,6 +20,7 @@ router.get('/', (req, res, next) => {
       const newStatObj = statObj.toJSON();
       newStatObj.sites = await TorrentSite.findAll();
       newStatObj.groups = await TorrentGroup.findAll();
+      newStatObj.fetched = new Date();
       return newStatObj;
     })
     .then(data => res.json(data))

@@ -12,11 +12,37 @@ const Op = Sequelize.Op;
 
 module.exports = router;
 
-router.get('/', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   // if (req.user && req.user.isAdmin) {
-  TorrentInfo.findAll({
-    include: [TorrentListing],
+  TorrentInfo.findById(parseInt(req.params.id, 10), {
+    include: [
+      { model: TorrentListing },
+      { as: 'Group', through: 'InfoGroup', model: TorrentGroup },
+    ],
   })
+    .then(data => res.json(data))
+    .catch(next);
+  // } else {
+  //   next()
+  // }
+});
+
+router.post('/', (req, res, next) => {
+  // if (req.user && req.user.isAdmin) {
+  console.log('-->', req.body);
+  // if (!req.body.infoIds || !req.body.infoIds.length > 0) return res.sendStatus(401);
+  if (!req.body.infoIds || !req.body.infoIds.length > 0) return res.sendStatus(404);
+  const id = req.body.infoIds.map(item => parseInt(item, 10));
+
+  TorrentInfo.findAll(
+    { where: { id } },
+    {
+      include: [
+        { model: TorrentListing },
+        { as: 'Group', through: 'InfoGroup', model: TorrentGroup },
+      ],
+    },
+  )
     .then(data => res.json(data))
     .catch(next);
   // } else {
