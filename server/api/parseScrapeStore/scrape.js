@@ -54,7 +54,7 @@ const scrape = async ({
   await page.goto(webPage, {
     timeout: 100000,
   });
-  await page.waitFor(3000);
+  await page.waitFor(10000);
 
   const pageEvalFunc = (results, pluck) =>
     results.map((result) => {

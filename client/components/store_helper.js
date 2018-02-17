@@ -1,5 +1,45 @@
 import _ from 'lodash';
-import store, { fetchInfoById, fetchListingById, fetchInfosById, fetchStats } from '../store';
+import store, {
+  fetchInfoById,
+  fetchListingById,
+  fetchInfosById,
+  fetchStats,
+  fetchGroups,
+  fetchSites,
+} from '../store';
+
+const getSiteByID = (siteId) => {
+  if (!siteId) return false;
+  const state = store.getState();
+  const foundSite = _.find(state.sites.items, site => site.id === siteId);
+  console.log('foundInf', foundSite);
+  return foundSite || false;
+};
+
+const getOrFetchSiteByID = (siteId) => {
+  if (!siteId) return false;
+  const foundSite = getSiteByID(siteId);
+  if (foundSite) return foundSite;
+  // fetch groups we might need it for site only
+  store.dispatch(fetchGroups());
+  // store.dispatch(fetchSites());
+  return false;
+};
+
+const getGroupByID = (groupId) => {
+  if (!groupId) return false;
+  const state = store.getState();
+  const foundInfo = _.find(state.groups.items, group => group.id === groupId);
+  return foundInfo || false;
+};
+
+const getOrFetchGroupByID = (groupId) => {
+  if (!groupId) return false;
+  const foundGroup = getGroupByID(groupId);
+  if (foundGroup) return foundGroup;
+  store.dispatch(fetchGroups());
+  return false;
+};
 
 const getInfosByID = (infosIdArr) => {
   if (!infosIdArr) return false;
@@ -83,4 +123,8 @@ module.exports = {
   getOrFetchListingsByID,
   getSiteStats,
   getOrFetchSiteStats,
+  getSiteByID,
+  getOrFetchSiteByID,
+  getGroupByID,
+  getOrFetchGroupByID,
 };

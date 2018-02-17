@@ -1,6 +1,7 @@
 import axios from 'axios';
 import history from '../history';
 import _ from 'lodash';
+import { spreadGroups } from './groups';
 
 /**
  * INITIAL STATE
@@ -29,13 +30,23 @@ export const updateInfos = listingsToUpdateArr => ({
 /**
  * THUNK CREATORS
  */
+export const spreadInfos = infosArr => (dispatch) => {
+  if (!infosArr) return false;
+  const Groups = [];
+  infosArr.forEach((info) => {
+    info.Group.forEach(groupItem => Groups.push(_.cloneDeep(groupItem)));
+  });
+  dispatch(addInfos(infosArr));
+  if (Groups.length) dispatch(spreadGroups(Groups));
+};
+
 export const fetchInfoById = infoID => (dispatch) => {
   if (!infoID) return false;
   axios.get(`/api/torrents/infos/${infoID}`).then((res) => {
     if (res.data === null) throw Error('null data');
     const infoArr = [];
     infoArr.push(res.data);
-    dispatch(addInfos(infoArr));
+    dispatch(spreadInfos(infoArr));
   });
 };
 
@@ -43,7 +54,7 @@ export const fetchInfosById = infoIds => (dispatch) => {
   if (!infoIds) return false;
   axios.post('/api/torrents/infos/', { infoIds }).then((res) => {
     if (res.data === null) throw Error('null data');
-    dispatch(addInfos(res.data));
+    dispatch(spreadInfos(res.data));
   });
 };
 

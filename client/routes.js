@@ -4,8 +4,20 @@ import { Route, Switch, Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import history from './history';
 import Template from './template';
-import { Login, Signup, Home, UserHome, Test, Top, Listing, NewListings } from './components/';
-import { me } from './store';
+import {
+  Login,
+  Signup,
+  Home,
+  UserHome,
+  Test,
+  Top,
+  Listing,
+  Info,
+  Group,
+  Site,
+  NewListings,
+} from './components/';
+import { me, fetchGroups } from './store';
 
 /**
  * COMPONENT
@@ -24,6 +36,9 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/listing/:id" component={Listing} />
+            <Route exact path="/info/:id" component={Info} />
+            <Route exact path="/group/:id" component={Group} />
+            <Route exact path="/site/:id" component={Site} />
             <Route exact path="/new/listings" component={NewListings} />
             <Route exact path="/test" component={Test} />
             <Route exact path="/top" component={Top} />
@@ -59,6 +74,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   loadInitialData() {
     dispatch(me());
+    dispatch(fetchGroups());
   },
 });
 

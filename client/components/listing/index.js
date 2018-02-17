@@ -31,9 +31,8 @@ class Listing extends Component {
   }
 
   componentDidMount() {
-    const listing = getOrFetchListingByID(this.state.listingId);
-    const infos = getOrFetchInfosByID(this.state.listing.infoIds);
-    this.setState({ listing, infos });
+    if (!this.state.listing) getOrFetchListingByID(this.state.listingId);
+    if (!this.state.infos) getOrFetchInfosByID(this.state.listing.infoIds);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,12 +46,18 @@ class Listing extends Component {
     if (!this.state.listing || !this.state.infos) return <Loader />;
     return (
       <div>
-        <b> {this.state.listing.name}</b>
-        <p>{this.state.infos && this.state.infos.length} </p>
+        <h1>listing</h1>
+        <b>{this.state.listing.name}</b>
+        <p>TR First Found This Listing on: {this.state.listing.createdAt} </p>
+        <p>FOUND INFOS ({this.state.infos.length}) </p>
         {this.state.infos &&
           this.state.infos.map(info => (
             <p key={info.id}>
-              {info.uploadDate} - {info.uploadUser}
+              <Link to={`/info/${info.id}`}>
+                #{info.id} - uploaded by: {info.uploadUser}
+              </Link>{' '}
+              | seed: {info.seed} (max: {info.maxSeed} | min: {info.minSeed}) - leach: {info.leach}{' '}
+              (max: {info.maxLeach} | min: {info.minLeach}) | {info.uploadDate}
             </p>
           ))}
       </div>

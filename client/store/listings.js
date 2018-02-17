@@ -1,7 +1,7 @@
 import axios from 'axios';
 import history from '../history';
 import _ from 'lodash';
-import { addInfos } from './index';
+import { spreadInfos } from './index';
 
 /**
  * INITIAL STATE
@@ -37,13 +37,8 @@ export const spreadListings = listings => (dispatch) => {
   listings.forEach((listing) => {
     listing.Infos.forEach(info => infosArr.push(info));
   });
-  const onlyListingsArr = listings.map((listing) => {
-    const newListing = _.clone(listing);
-    newListing.infoIds = listing.Infos.map(info => info.id);
-    return newListing;
-  });
-  dispatch(addListings(onlyListingsArr));
-  if (infosArr.length) dispatch(addInfos(infosArr));
+  dispatch(addListings(listings));
+  if (infosArr.length) dispatch(spreadInfos(infosArr));
 };
 
 export const fetchListingById = infoID => (dispatch) => {

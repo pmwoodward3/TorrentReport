@@ -6,6 +6,8 @@ import user from './user';
 import stats from './stats';
 import listings from './listings';
 import infos from './infos';
+import groups from './groups';
+import sites from './sites';
 import test from './test';
 
 const reducer = combineReducers({
@@ -14,6 +16,8 @@ const reducer = combineReducers({
   stats,
   listings,
   infos,
+  groups,
+  sites,
 });
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })));
 const store = createStore(reducer, middleware);
@@ -23,4 +27,6 @@ export * from './user';
 export * from './stats';
 export * from './listings';
 export * from './infos';
+export * from './groups';
+export * from './sites';
 export * from './test';

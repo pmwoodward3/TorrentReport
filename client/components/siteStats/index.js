@@ -73,15 +73,15 @@ class SiteStats extends Component {
         <div className="seperator">
           <div className="group2">
             <StatSquare name="Group Count" value={stats.groupCount} />
-            <StatSquare name="Info COunt" value={stats.infoCount} />
+            <StatSquare name="Info Count" value={stats.infoCount} />
           </div>
           <div className="group2">
             <StatSquare name="Snapshot Count" value={stats.snapshotCount} />
-            <StatSquare name="Torrent COunt" value={stats.torrentCount} />
+            <StatSquare name="Torrent Count" value={stats.torrentCount} />
           </div>
           <div className="group2">
-            <StatSquare name="minutes scrape time" value={duration} />
-            <StatSquare name="last scrape run" value={lastScrapeTime} />
+            <StatSquare name="Minute Scrape Time" value={duration} />
+            <StatSquare name="Last Scrape Run" value={lastScrapeTime} />
           </div>
         </div>
       </div>
