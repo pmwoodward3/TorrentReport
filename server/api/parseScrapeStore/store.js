@@ -30,10 +30,11 @@ const closeStat = (statObj) => {
     });
 };
 
-const addSnapshots = snapshotArr =>
+const addSnapshots = (snapshotArr) => {
   TorrentSnapshot.bulkCreate(snapshotArr).catch((err) => {
     console.error('\n----- ERR WITH BULK CREATE -----\n');
     console.error(err);
   });
+};
 
 module.exports = { initStat, closeStat, addSnapshots };

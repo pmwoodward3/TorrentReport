@@ -114,11 +114,11 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
             'obj uplaoduser',
             torrentScrapeObj.uploadUser,
           );
+          newTorrentObj.torrentInfoId = parseInt(info.id, 10);
         }
         info.Group.forEach((group) => {
           if (parseInt(group.id, 10) === parseInt(torrentScrapeObj.torrentGroupId, 10)) {
             foundGroupInfo = info;
-            newTorrentObj.torrentInfoId = parseInt(info.id, 10);
             console.log('did find obj group in listing info!!!!', foundGroupInfo == false);
             console.log('info group id', group.id, 'obj group id', torrentScrapeObj.torrentGroupId);
           }
