@@ -14,6 +14,14 @@ import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 
 import ListItem from './listItem';
 import { getListingsByID } from '../store_helper';
+
+// data stream with recompose
+// import { Observable } from "rxjs"
+// import config from "recompose/rxjsObservableConfig"
+// import {
+//   setObservableConfig,
+//   componentFromStream
+// } from "recompose"
 /**
  * COMPONENT
  */

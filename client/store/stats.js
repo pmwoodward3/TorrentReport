@@ -9,11 +9,13 @@ const defaultData = {
   state: 'init',
   siteStats: {},
   dailyListings: {},
+  userCount: 0,
 };
 
 /**
  * ACTION TYPES
  */
+const SET_ONLINE_USERS = 'SET_ONLINE_USERS';
 const RECEIVE_STATS = 'RECEIVE_STATS';
 const RECEIVE_DAILY_LISTINGS = 'RECEIVE_DAILY_LISTINGS';
 const SET_DAILY_LISTINGS = 'SET_DAILY_LISTINGS';
@@ -21,6 +23,7 @@ const SET_DAILY_LISTINGS = 'SET_DAILY_LISTINGS';
 /**
  * ACTION CREATORS
  */
+export const setOnlineUsers = userCount => ({ type: SET_ONLINE_USERS, userCount });
 export const receiveStats = siteStats => ({ type: RECEIVE_STATS, siteStats });
 export const recieveDailyListings = (dailyListings, days) => ({
   type: RECEIVE_DAILY_LISTINGS,
@@ -57,6 +60,10 @@ export const fetchDailyListings = days => dispatch =>
  */
 export default (state = defaultData, action) => {
   switch (action.type) {
+    case SET_ONLINE_USERS: {
+      const { userCount } = action;
+      return { ...state, userCount };
+    }
     case RECEIVE_STATS:
       return { ...state, state: 'loaded', siteStats: action.siteStats };
     case RECEIVE_DAILY_LISTINGS: {

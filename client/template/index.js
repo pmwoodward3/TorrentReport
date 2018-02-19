@@ -29,7 +29,9 @@ class Template extends Component {
   };
 
   render() {
-    const { children, handleClick, isLoggedIn } = this.props;
+    const {
+      children, handleClick, isLoggedIn, userCount,
+    } = this.props;
 
     return (
       <div>
@@ -130,6 +132,7 @@ class Template extends Component {
                 </div>
               </div>
             </div>
+            <div className="growBox">{`${userCount} users online`}</div>
             <div className="growBox">
               <Link to="/faq">F.A.Q</Link>
               <Link to="/about">About</Link>
@@ -145,6 +148,7 @@ class Template extends Component {
  * CONTAINER
  */
 const mapState = state => ({
+  userCount: state.stats.userCount,
   isLoggedIn: !!state.user.id,
 });
 
