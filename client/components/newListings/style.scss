@@ -80,10 +80,11 @@
       }
       .group {
         display: inline-flex;
-        flex-direction: row;
-        @media (max-width: $flex_nav_breakpoint) {
-          flex-direction: column;
+        // flex-direction: row;
+        @media (min-width: $flex_nav_breakpoint) {
+          flex-direction: row;
         }
+
         justify-content: flex-end;
         align-items: center;
         flex-wrap: wrap;

@@ -9,7 +9,6 @@ import { spreadInfos } from './index';
 const initialState = {
   state: 'init',
   items: {},
-  currentIds: [],
 };
 
 /**
@@ -64,34 +63,15 @@ export const fetchListingsById = listingIds => (dispatch) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_LISTINGS: {
-      const newIds = [...state.currentIds];
-      const newListingArr = [...state.items];
+      const newListingObj = {
+        ...state.items,
+      };
       action.listingsArr.forEach((listing) => {
-        if (newIds.indexOf(listing.id) === -1) {
-          const newListing = { ...listing };
-          newListing.infoIds = listing.Infos.map(info => info.id);
-          newListingArr.push(_.omit(newListing, 'Infos'));
-          newIds.push(listing.id);
-        }
+        newListingObj[listing.id] = listing;
       });
       return {
         ...state,
-        items: newListingArr,
-        currentIds: newIds,
-      };
-    }
-    case UPDATE_LISTINGS: {
-      const updateIdsArr = action.listingsToUpdateArr.map(listing => listing.id);
-      const removedNewListings = _.filter(
-        state.items,
-        listing => updateIdsArr.indexOf(listing.id) >= 0,
-      );
-      const newListingArr = removedNewListings.concat(action.listingsToUpdateArr);
-      const newCurrentIds = [...state.currentIds, updateIdsArr];
-      return {
-        ...state,
-        items: newListingArr,
-        currentIds: newCurrentIds,
+        items: newListingObj,
       };
     }
     default:

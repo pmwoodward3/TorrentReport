@@ -8,12 +8,13 @@ import store, {
   fetchSites,
 } from '../store';
 
+const getNeededIds = (idArr, target) => idArr.filter(id => target[id] > 0);
+
 const getSiteByID = (siteId) => {
   if (!siteId) return false;
   const state = store.getState();
-  const foundSite = _.find(state.sites.items, site => site.id === siteId);
-  console.log('foundInf', foundSite);
-  return foundSite || false;
+  const { items } = state.sites;
+  return items[siteId] || false;
 };
 
 const getOrFetchSiteByID = (siteId) => {
@@ -29,8 +30,8 @@ const getOrFetchSiteByID = (siteId) => {
 const getGroupByID = (groupId) => {
   if (!groupId) return false;
   const state = store.getState();
-  const foundInfo = _.find(state.groups.items, group => group.id === groupId);
-  return foundInfo || false;
+  const { items } = state.groups;
+  return items[groupId] || false;
 };
 
 const getOrFetchGroupByID = (groupId) => {
@@ -44,25 +45,37 @@ const getOrFetchGroupByID = (groupId) => {
 const getInfosByID = (infosIdArr) => {
   if (!infosIdArr) return false;
   const state = store.getState();
-  const results = _.filter(state.infos.items, info => infosIdArr.indexOf(info.id) >= 0);
+  const { items } = state.infos;
+  const results = [];
+  infosIdArr.forEach((id) => {
+    if (items[id]) results.push(items[id]);
+    else return false;
+  });
   return results && results.length === infosIdArr.length ? results : false;
 };
 const getListingsByID = (listingsIdArr) => {
   if (!listingsIdArr) return false;
   const state = store.getState();
-  const results = state.listings.items.filter(listing => listingsIdArr.indexOf(listing.id) >= 0);
+  const { items } = state.listings;
+  const results = [];
+  listingsIdArr.forEach((id) => {
+    if (items[id]) results.push(items[id]);
+    else return false;
+  });
   return results && results.length === listingsIdArr.length ? results : false;
 };
 const getInfoByID = (infoId) => {
   if (!infoId) return false;
   const state = store.getState();
-  const foundInfo = _.find(state.infos.items, info => info.id === infoId);
+  const { items } = state.infos;
+  const foundInfo = items[infoId];
   return foundInfo || false;
 };
 const getListingByID = (listingId) => {
   if (!listingId) return false;
   const state = store.getState();
-  const foundListing = _.find(state.listings.items, listing => listing.id === listingId);
+  const listings = state.listings.items;
+  const foundListing = listings[listingId];
   return foundListing || false;
 };
 const getOrFetchInfoByID = (infoId) => {
@@ -82,16 +95,17 @@ const getOrFetchListingByID = (listingId) => {
 const getOrFetchInfosByID = (infoIdArr) => {
   if (!infoIdArr) return false;
   const foundInfos = getInfosByID(infoIdArr);
-  if (foundInfos && foundInfos.length) return foundInfos;
-  store.dispatch(fetchInfosById(infoIdArr));
+  if (foundInfos && foundInfos.length === infoIdArr.length) return foundInfos;
+  const state = store.getState();
+  const neededInfoIdArr = getNeededIds(infoIdArr, state.infos.items);
+  store.dispatch(fetchInfosById(neededInfoIdArr));
   return false;
 };
 const getOrFetchListingsByID = (listingIdArr) => {
   const foundListings = getListingsByID(listingIdArr);
-  if (foundListings && foundListings.length) return foundListings;
+  if (foundListings && foundListings.length === listingIdArr.length) return foundListings;
   const state = store.getState();
-  const neededListingIdArr = state.listings.currentIds.filter(listing => listingIdArr.indexOf(listing.id) === -1);
-  console.log('dispatching lising id!!!');
+  const neededListingIdArr = getNeededIds(listingIdArr, state.listings.items);
   store.dispatch(fetchListingById(neededListingIdArr));
   return false;
 };
@@ -107,7 +121,6 @@ const getSiteStats = () => {
 const getOrFetchSiteStats = () => {
   const siteStats = getSiteStats();
   if (siteStats) return siteStats;
-  console.log('dispatching fetch stats!!!!!');
   store.dispatch(fetchStats());
   return false;
 };

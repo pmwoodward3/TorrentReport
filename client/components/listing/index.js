@@ -22,7 +22,7 @@ class Listing extends Component {
     const { id } = props.match.params;
     const safeId = parseInt(id, 10);
     const listing = getListingByID(safeId);
-    const infos = getInfosByID(listing.infoIds);
+    const infos = listing.Infos || false;
     this.state = {
       listing,
       listingId: safeId || false,
@@ -32,13 +32,12 @@ class Listing extends Component {
 
   componentDidMount() {
     if (!this.state.listing) getOrFetchListingByID(this.state.listingId);
-    if (!this.state.infos) getOrFetchInfosByID(this.state.listing.infoIds);
   }
 
   componentWillReceiveProps(nextProps) {
     const listingId = this.state.listingId || parseInt(nextProps.match.params.id, 10);
     const listing = this.state.listing || getListingByID(listingId);
-    const infos = this.state.infos || getInfosByID(listing.infoIds);
+    const infos = this.state.infos || listing.Infos || false;
     if (!this.state.listing || !this.state.infos) this.setState({ listing, listingId, infos });
   }
 
@@ -48,7 +47,7 @@ class Listing extends Component {
       <div>
         <h1>listing</h1>
         <b>{this.state.listing.name}</b>
-        <p>TR First Found This Listing on: {this.state.listing.createdAt} </p>
+        <p>we Found This Listing on: {this.state.listing.createdAt} </p>
         <p>FOUND INFOS ({this.state.infos.length}) </p>
         {this.state.infos &&
           this.state.infos.map(info => (

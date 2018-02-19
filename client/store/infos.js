@@ -8,8 +8,7 @@ import { spreadGroups } from './groups';
  */
 const initialState = {
   state: 'init',
-  items: [],
-  currentIds: [],
+  items: {},
 };
 
 /**
@@ -64,32 +63,13 @@ export const fetchInfosById = infoIds => (dispatch) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_INFOS: {
-      const newIds = [...state.currentIds];
-      const newInfoArr = [...state.items];
+      const newInfoObj = { ...state.items };
       action.infosArr.forEach((info) => {
-        if (newIds.indexOf(info.id) === -1) {
-          newInfoArr.push(_.cloneDeep(info));
-          newIds.push(info.id);
-        }
+        newInfoObj[info.id] = info;
       });
       return {
-        ...state,
-        items: newInfoArr,
-        currentIds: newIds,
-      };
-    }
-    case UPDATE_INFOS: {
-      const updateIdsArr = action.listingsToUpdateArr.map(listing => listing.id);
-      const removedNewListings = _.filter(
-        state.items,
-        listing => updateIdsArr.indexOf(listing.id) >= 0,
-      );
-      const newListingArr = removedNewListings.concat(action.listingsToUpdateArr);
-      const newCurrentIds = [...updateIdsArr];
-      return {
-        ...state,
-        items: newListingArr,
-        currentIds: newCurrentIds,
+        ...state.items,
+        items: newInfoObj,
       };
     }
     default:

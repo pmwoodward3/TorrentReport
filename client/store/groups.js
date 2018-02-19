@@ -8,8 +8,7 @@ import { addSites } from './sites';
  */
 const initialState = {
   state: 'init',
-  items: [],
-  currentIds: [],
+  items: {},
 };
 
 /**
@@ -54,32 +53,13 @@ export const fetchGroups = () => (dispatch) => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_GROUPS: {
-      const newIds = [...state.currentIds];
-      const newGroupArr = [...state.items];
-      action.groupsArr.forEach((info) => {
-        if (newIds.indexOf(info.id) === -1) {
-          newGroupArr.push(_.cloneDeep(info));
-          newIds.push(info.id);
-        }
+      const newGroupObj = { ...state.items };
+      action.groupsArr.forEach((group) => {
+        newGroupObj[group.id] = group;
       });
       return {
-        ...state,
-        items: newGroupArr,
-        currentIds: newIds,
-      };
-    }
-    case UPDATE_GROUPS: {
-      const updateIdsArr = action.groupsToUpdate.map(group => group.id);
-      const removedNewInfos = _.filter(
-        state.items,
-        listing => updateIdsArr.indexOf(listing.id) >= 0,
-      );
-      const newGroupArr = removedNewInfos.concat(action.groupsToUpdate);
-      const newCurrentIds = [...updateIdsArr];
-      return {
-        ...state,
-        items: newGroupArr,
-        currentIds: newCurrentIds,
+        ...state.items,
+        items: newGroupObj,
       };
     }
     default:
