@@ -8,7 +8,7 @@ import { spreadInfos } from './index';
  */
 const initialState = {
   state: 'init',
-  items: [],
+  items: {},
   currentIds: [],
 };
 

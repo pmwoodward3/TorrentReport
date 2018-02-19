@@ -64,13 +64,13 @@ class Info extends Component {
         <h2>torrent name: {this.state.listing.name}</h2>
         <b>
           {' '}
-          User {this.state.info.uploadUser} listed this torrent on {this.state.info.uploadDate}
+          User {this.state.info.uploadUser} listed this torrent on {moment(this.state.info.uploadDate).format('MMMM Do YYYY, h:mm:ss a')}
         </b>
         <h2>Snapshots</h2>
         {this.state.info.torrentSnapshots.map((snapshot, index) => (
           <div key={snapshot.id}>
-            [{index + 1} / {this.state.info.torrentSnapshots.length}] seed: {snapshot.seed} | leach:{' '}
-            {snapshot.leach} on {snapshot.date}
+          {moment(snapshot.date).format('MMMM Do YYYY, h:mm:ss a')} - seed: {snapshot.seed} | leach:{' '}
+            {snapshot.leach}
           </div>
         ))}
         <h2>Groups</h2>

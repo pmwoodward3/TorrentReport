@@ -39,6 +39,10 @@
       padding: 5px 0px 5px 0px;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 0.9em;
+      .name {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
       a {
         line-height: 1.2em;
         padding: 0;
@@ -46,7 +50,6 @@
         display: inline-flex;
         flex-basis: auto;
         flex-grow: 1;
-        word-break: break-all;
         word-wrap: break-word;
         text-decoration: none;
         color: darken($primaryColor, 40%);

@@ -35,9 +35,11 @@ export default (props) => {
       <div className="number">
         <div>{props.index + 1}</div>
       </div>
-      <Link alt={name} to={`/listing/${id}`}>
-        {name}
-      </Link>
+      <div className="name">
+        <Link alt={name} to={`/listing/${id}`}>
+          {name}
+        </Link>
+      </div>
       <div className="group">
         <div className="sub">
           <div className={seedClass}>

@@ -42,8 +42,8 @@ class Group extends Component {
         <b>
           {this.state.group.name} (tag: {this.state.group.tag})
         </b>
-        <p>createdAt : {this.state.group.createdAt}</p>
-        <p>updatedAt : {this.state.group.updatedAt}</p>
+        <p>createdAt : {moment(this.state.group.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        <p>updatedAt : {moment(this.state.group.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
         <p>url : {this.state.group.url}</p>
         <p>
           from site:{this.state.group.torrentSite.name}

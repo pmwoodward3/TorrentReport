@@ -53,8 +53,8 @@ class Site extends Component {
         <b> {this.state.site.name}</b>
         <p> short: {this.state.site.short}</p>
         <p> url: {this.state.site.url}</p>
-        <p> createdAt: {this.state.site.createdAt}</p>
-        <p> updatedAt: {this.state.site.updatedAt}</p>
+        <p> createdAt: {moment(this.state.site.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        <p> updatedAt: {moment(this.state.site.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
         <div>
           {groups &&
             groups.length > 0 &&
