@@ -62,7 +62,11 @@ router.get('/new/:days', (req, res, next) => {
     include: [
       {
         model: TorrentInfo,
-        include: [{ as: 'Group', model: TorrentGroup, include: [TorrentSite] }],
+        group: 'id',
+        include: [
+          { model: TorrentListing },
+          { as: 'Group', model: TorrentGroup, include: [TorrentSite] },
+        ],
       },
     ],
   })

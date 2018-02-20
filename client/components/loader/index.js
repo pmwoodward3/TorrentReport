@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Loading from 'react-loading-components';
 
-import s from './style.scss';
+import './style.scss';
 
 const Loader = (props) => {
   let {

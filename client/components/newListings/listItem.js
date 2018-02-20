@@ -16,6 +16,7 @@ export default (props) => {
   const { active } = props;
   const seed = Infos.reduce((acc, curr) => acc + curr.seed, 0);
   const leach = Infos.reduce((acc, curr) => acc + curr.leach, 0);
+  const ratio = seed / leach;
   const earliestUpload = Infos.reduce(
     (earliestDate, currInfo) =>
       (new Date(currInfo.uploadDate) < earliestDate ? new Date(currInfo.uploadDate) : earliestDate),
@@ -40,8 +41,8 @@ export default (props) => {
           {name}
         </Link>
       </div>
-      <div className="group">
-        <div className="sub">
+      <div className="group-holder">
+        <div className="group">
           <div className={seedClass}>
             <FontAwesomeIcon icon={faCaretUp} /> {seed}
           </div>
@@ -49,7 +50,11 @@ export default (props) => {
             <FontAwesomeIcon icon={faCaretDown} /> {leach}
           </div>
         </div>
-        <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>
+
+        <div className="group">
+          <div className="ratio">{Math.floor(ratio * 100) / 100}</div>
+          <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>
+        </div>
       </div>
     </div>
   );

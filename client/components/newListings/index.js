@@ -13,7 +13,9 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 
 import ListItem from './listItem';
+import ListHeaderItem from './listHeaderItem';
 import { getListingsByID } from '../store_helper';
+import listHeaderItem from './listHeaderItem';
 
 // data stream with recompose
 // import { Observable } from "rxjs"
@@ -35,28 +37,19 @@ class NewListings extends Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleOrder = this.toggleOrder.bind(this);
   }
-
   componentDidMount() {
     if (!_.has(this.props.dailyListings, 'days1')) this.props.load();
   }
-
-  oppositeOrder(order = this.state.order) {
-    return order === 'top' ? 'bottom' : 'top';
-  }
-
-  toggleOrder() {
-    this.setState({ order: this.oppositeOrder(this.state.order) });
-  }
-  oppositeFilter(filter = this.state.filter) {
-    return filter === 'seed' ? 'leach' : 'seed';
-  }
-
-  toggleFilter() {
-    this.setState({ filter: this.oppositeFilter(this.state.filter) });
-  }
-
   shouldComponentUpdate(nextProps) {
     return _.has(nextProps.dailyListings, 'days1');
+  }
+
+  toggleOrder(order) {
+    this.setState({ order });
+  }
+
+  toggleFilter(filter) {
+    this.setState({ filter });
   }
 
   render() {
@@ -85,32 +78,13 @@ class NewListings extends Component {
           <div className="dl-detail" />
         </div>
         <div className="dl-item-group">
+          <ListHeaderItem order={this.state.order} active={this.state.filter} />
           {finalSize.map((item, index) => (
             <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
           ))}
         </div>
         <div className="dl-footer">
           <div className="dl-more">thats all folks</div>
-          <div className="dl-options">
-            <div>
-              <div className="current">sorted by {this.state.filter}ers</div>
-              <div className="try">
-                switch to{' '}
-                <a href="#DL" onClick={this.toggleFilter}>
-                  {this.oppositeFilter()}ers
-                </a>
-              </div>
-            </div>
-            <div>
-              <div className="current">ordered by {this.state.order} listings</div>
-              <div className="try">
-                switch to{' '}
-                <a href="#DL" onClick={this.toggleOrder}>
-                  {this.oppositeOrder()}
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     );

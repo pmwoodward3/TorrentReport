@@ -15,6 +15,7 @@ import Loader from '../loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 import './style.scss';
+import SeedLeachPie from '../charts/seedLeachPie';
 
 class Listing extends Component {
   constructor(props) {
@@ -49,6 +50,12 @@ class Listing extends Component {
         <b>{this.state.listing.name}</b>
         <p>we Found This Listing on: {this.state.listing.createdAt} </p>
         <p>FOUND INFOS ({this.state.infos.length}) </p>
+        <div>
+          <SeedLeachPie
+            seed={this.state.infos.reduce((accum, curr) => accum + curr.seed, 0)}
+            leach={this.state.infos.reduce((accum, curr) => accum + curr.leach, 0)}
+          />
+        </div>
         {this.state.infos &&
           this.state.infos.map(info => (
             <p key={info.id}>

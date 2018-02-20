@@ -53,3 +53,12 @@
       endColorstr='#{$to}'
     );
 }
+
+@mixin loginRegisterButton () {
+  margin: 10px 0px 10px 0px;
+  font-size: 0.7em;
+  letter-spacing: 2px;
+  padding: 0.9em;
+  width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

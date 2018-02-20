@@ -16,17 +16,18 @@ form div {
   }
 }
 
+.disabledButton {
+  @include loginRegisterButton();
+  color: lighten(black, 50%);
+  background-color: lighten(black, 80%);
+  @include boxBorderRadius(lighten(black, 90%));
+}
+
 .loginButton {
-  margin: 10px 0px 10px 0px;
+  @include loginRegisterButton();
   color: black;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 0.7em;
-  letter-spacing: 2px;
-  padding: 0.9em;
-  // min-width: 15em;
-  width: 100%;
-  @include boxBorderRadius($primaryColor);
   background-color: $button_signin_color;
+  @include boxBorderRadius($primaryColor);
 }
 
 .loginBox {
@@ -57,7 +58,7 @@ form div {
 
 .error {
   background-color: $error_message_background_color;
-  padding: 2em 0em 2em 0em;
+  padding: 2em;
   border-radius: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
   color: $error_message_text_color;

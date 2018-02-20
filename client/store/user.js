@@ -27,7 +27,14 @@ export const me = () => dispatch =>
     .then(res => dispatch(getUser(res.data || defaultUser)))
     .catch(err => console.log(err));
 
-export const auth = (email, password, method) => dispatch =>
+export const auth = (email, password, method) => (dispatch) => {
+  if (!method) return dispatch(getUser({ error: { response: { data: 'need a method' } } }));
+  if (!email || email.length <= 8) {
+    return dispatch(getUser({ error: { response: { data: 'email needs to be atleast 8 charecters long.' } } }));
+  }
+  if (!password || password.length <= 2) {
+    return dispatch(getUser({ error: { response: { data: 'password needs to be longer.' } } }));
+  }
   axios
     .post(`/auth/${method}`, { email, password })
     .then(
@@ -41,6 +48,7 @@ export const auth = (email, password, method) => dispatch =>
       },
     )
     .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr));
+};
 
 export const logout = () => dispatch =>
   axios

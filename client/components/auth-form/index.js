@@ -12,6 +12,19 @@ import s from './style.scss';
 class AuthForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      email: '',
+      password: '',
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    console.log(event.target.name);
+    console.log(event.target.value);
+    const newObj = {};
+    newObj[event.target.name] = event.target.value;
+    this.setState(newObj);
   }
 
   componentDidMount() {
@@ -19,9 +32,11 @@ class AuthForm extends Component {
   }
 
   render() {
+    console.log('state', this.state);
     const {
       name, displayName, header, handleSubmit, error,
     } = this.props;
+    const isReady = this.state.email.length >= 3 && this.state.password.length >= 3;
     return (
       <div className="center">
         <div className="loginBox">
@@ -38,6 +53,8 @@ class AuthForm extends Component {
               placeholder="email"
               className="loginInput"
               id="email"
+              onChange={this.handleInputChange}
+              value={this.state.email}
               name="email"
               type="text"
             />
@@ -45,11 +62,13 @@ class AuthForm extends Component {
               placeholder="password"
               className="loginInput"
               id="password"
+              onChange={this.handleInputChange}
+              value={this.state.password}
               name="password"
               type="password"
             />
 
-            <button className="loginButton" type="submit">
+            <button disable={isReady ? 'false' : 'true'} className={isReady ? 'loginButton' : 'disabledButton'} type="submit">
               {displayName.toUpperCase()}
             </button>
 

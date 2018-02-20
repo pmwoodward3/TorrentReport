@@ -15,6 +15,7 @@ import Loader from '../loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 import './style.scss';
+import LineChart from '../charts/snapshotLine';
 
 class Info extends Component {
   constructor(props) {
@@ -42,31 +43,28 @@ class Info extends Component {
   componentWillReceiveProps(nextProps) {
     const infoId = this.state.infoId || parseInt(nextProps.match.params.id, 10);
     const info = this.state.info || getInfoByID(infoId);
-    console.log(nextProps);
-    console.log('---->', getListingByID(info.torrentListingId));
     const listing = this.state.listing || getListingByID(info.torrentListingId);
     if (info && !listing) {
-      console.log('fetching listing');
       getOrFetchListingByID(info.torrentListingId);
     }
-    console.log('-----LISTING---compwil recprp ----', listing);
     if (!this.state.info || !this.state.listing || !this.state.infoId) {
       this.setState({ info, infoId, listing });
     }
   }
 
   render() {
-    console.log(' info state ', this.state);
     if (!this.state.info || !this.state.infoId || !this.state.listing) return <Loader />;
     return (
       <div>
-        <h1>INFO FOR UPLOAD BY: {this.state.info.uploadUser}</h1>
-        <h2>torrent name: {this.state.listing.name}</h2>
+        <h1>INFO FOR UPLOAD BY:</h1>
+        <h2>{this.state.info.uploadUser}</h2>
+        <h2>torrent name: {this.state.listing.name} (<Link to={`/listing/${this.state.listing.id}`}>info</Link>)</h2>
         <b>
           {' '}
           User {this.state.info.uploadUser} listed this torrent on {moment(this.state.info.uploadDate).format('MMMM Do YYYY, h:mm:ss a')}
         </b>
         <h2>Snapshots</h2>
+        <LineChart snapshots={this.state.info.torrentSnapshots} />
         {this.state.info.torrentSnapshots.map((snapshot, index) => (
           <div key={snapshot.id}>
           {moment(snapshot.date).format('MMMM Do YYYY, h:mm:ss a')} - seed: {snapshot.seed} | leach:{' '}

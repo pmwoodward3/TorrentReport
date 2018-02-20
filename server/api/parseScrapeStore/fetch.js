@@ -83,11 +83,11 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
   const newTorrentObj = Object.assign({}, torrentScrapeObj);
   let dbListingObj;
   console.log(
-    '===============',
+    'site id:',
     torrentScrapeObj.torrentSiteId,
-    ' | ',
+    ' | group id:',
     torrentScrapeObj.torrentGroupId,
-    ' | ',
+    ' | torrent listing name:',
     torrentScrapeObj.name,
   );
   return TorrentListing.findOrCreate({
@@ -96,7 +96,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
     },
   })
     .spread((listing, created) => {
-      console.log('was created?', created);
+      console.log('... was created?', created);
       newTorrentObj.torrentListingId = listing.id;
       dbListingObj = listing;
       return listing.getInfos({ include: [{ as: 'Group', model: TorrentGroup }] });
@@ -107,9 +107,9 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       infos.forEach((info) => {
         if (info.uploadUser === torrentScrapeObj.uploadUser) {
           foundInfo = info;
-          console.log('did find curr uploaduser in info!!!!');
+          console.log('... did find curr uploaduser in info!!!!');
           console.log(
-            'info uploaduser',
+            '\tinfo uploaduser',
             info.uploadUser,
             'obj uplaoduser',
             torrentScrapeObj.uploadUser,
@@ -119,13 +119,19 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         info.Group.forEach((group) => {
           if (parseInt(group.id, 10) === parseInt(torrentScrapeObj.torrentGroupId, 10)) {
             foundGroupInfo = info;
-            console.log('did find obj group in listing info!!!!', foundGroupInfo == false);
-            console.log('info group id', group.id, 'obj group id', torrentScrapeObj.torrentGroupId);
+            console.log('... group already exists in existing info ', foundGroupInfo == false);
+            console.log(
+              '\tinfo group id',
+              group.id,
+              'obj group id',
+              torrentScrapeObj.torrentGroupId,
+            );
           }
         });
       });
 
-      newTorrentObj.ratio = newTorrentObj.seed / newTorrentObj.leach;
+      const rawRatio = newTorrentObj.seed / newTorrentObj.leach;
+      newTorrentObj.ratio = Math.floor(rawRatio * 100) / 100;
 
       // newTorrentObj needs max and min setup
       // compare new min and max to existing
@@ -172,22 +178,22 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       }
 
       if (!foundGroupInfo && foundInfo) {
-        console.log('DID NOT FIND GROUP BUT FOUND INFO, update info add group');
+        console.log('... DID NOT FIND GROUP BUT FOUND INFO, update info add group');
         return foundInfo
           .updateAttributes(newTorrentObj)
           .then(updatedObj => updatedObj.addGroup(torrentScrapeObj.torrentGroupId));
       }
       if (foundGroupInfo && foundInfo) {
-        console.log('FOUND GROUP AND INFO, just update');
+        console.log('.. FOUND GROUP AND INFO, just update');
         return foundInfo.updateAttributes(newTorrentObj);
       }
 
       // true Group true Info,
-      console.log('creating info...................');
+      console.log('... creating info');
       return TorrentInfo.create(newTorrentObj, safeFields).then((createdInfo) => {
         createdInfo.addGroup(torrentScrapeObj.torrentGroupId);
         newTorrentObj.torrentInfoId = createdInfo.id;
-        console.log('.................created info item assc');
+        console.log('... created info item and association ');
         return dbListingObj.addInfo(createdInfo);
       });
     })
