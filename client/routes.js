@@ -8,7 +8,7 @@ import {
   Login,
   Signup,
   Home,
-  UserHome,
+  AccountHome,
   Test,
   Top,
   Listing,
@@ -16,6 +16,7 @@ import {
   Group,
   Site,
   NewListings,
+  NoMatch,
 } from './components/';
 import { me, fetchGroups } from './store';
 
@@ -45,14 +46,14 @@ class Routes extends Component {
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
-                <Route path="/home" component={UserHome} />
+                <Route path="/account" component={AccountHome} />
               </Switch>
             )}
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            {/* Displays our Login component as a fallback */}
-            <Route component={Home} />
+            {/* Displays noMatch component as a fallback */}
+            <Route path="*" component={NoMatch} status={404} />
 
             {/* <Route component={Login} /> */}
           </Switch>

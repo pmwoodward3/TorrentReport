@@ -12,47 +12,21 @@ const Op = Sequelize.Op;
 
 module.exports = router;
 
-router.get('/', (req, res, next) => {
-  // if (req.user && req.user.isAdmin) {
-  TorrentSnapshot.findAll()
-    .then(data => res.json(data))
-    .catch(next);
-  // } else {
-  //   next()
-  // }
-});
+// this is for testing purposes.
+// no need to ever fetch ALL snapshots
+// router.get('/', (req, res, next) => {
+//   TorrentSnapshot.findAll()
+//     .then(data => res.json(data))
+//     .catch(next);
+// });
 
-router.get('/new/top/:days/:order', (req, res, next) => {
-  if (!req.params.order || !['seed', 'leach'].includes(req.params.order)) req.params.order = 'seed';
-  if (!req.params.days) req.params.days = 1;
-  const days = parseInt(req.params.days, 10);
-  if (days > 31) res.sendStatus(403);
-  const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
-  TorrentSnapshot.findAll({
-    where: {
-      createdAt: {
-        [Op.gte]: new Date(filterTime),
-      },
-    },
-    limit: 100,
-    order: [[req.params.order, 'DESC']],
-    include: [
-      {
-        model: TorrentInfo,
-        include: [{ as: 'Group', model: TorrentGroup, include: [TorrentSite] }],
-      },
-    ],
-  })
-    .then(data => res.json(data))
-    .catch(next);
-});
-
+// new snapshots grouped by torrentinfo Id from the past X days
+// this is a love note to my evachka
 router.get('/new/:days', (req, res, next) => {
   if (!req.params.days) req.params.days = 1;
   const days = parseInt(req.params.days, 10);
   if (days > 31) res.sendStatus(403);
   const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
-  // if (req.user && req.user.isAdmin) {
   TorrentSnapshot.findAll({
     where: {
       createdAt: {
@@ -65,18 +39,45 @@ router.get('/new/:days', (req, res, next) => {
         group: 'id',
         include: [
           { model: TorrentListing },
-          { as: 'Group', model: TorrentGroup, include: [TorrentSite] },
+          { as: 'Group', model: TorrentGroup, include: [{ model: TorrentSite }] },
         ],
       },
     ],
   })
     .then(data => res.json(data))
     .catch(next);
-  // } else {
-  //   next()
-  // }
 });
 
+// new snapshots from specific site for past X days
+router.get('/new/:days/site/:siteId', (req, res, next) => {
+  if (!req.params.days) req.params.days = 1;
+  if (!req.params.siteId) return res.sendStatus(404);
+  const id = parseInt(req.params.siteId, 10);
+  const days = parseInt(req.params.days, 10);
+  if (days > 31) res.sendStatus(403);
+  const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
+  TorrentSnapshot.findAll({
+    where: {
+      createdAt: {
+        [Op.gte]: new Date(filterTime),
+      },
+    },
+    include: [
+      {
+        model: TorrentInfo,
+        group: 'id',
+        include: [
+          { model: TorrentListing },
+          { as: 'Group', model: TorrentGroup, include: [{ model: TorrentSite, where: { id } }] },
+        ],
+      },
+    ],
+  })
+    .then(data => res.json(data))
+    .catch(next);
+});
+
+// need to test this. limit might be before query completion?
 router.get('/alltime/top/:order', (req, res, next) => {
   if (!req.params.order || !['seed', 'leach'].includes(req.params.order)) req.params.order = 'seed';
 

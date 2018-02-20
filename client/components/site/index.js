@@ -45,7 +45,7 @@ class Site extends Component {
   }
 
   render() {
-    if (!this.state.site || !this.state.siteId || !this.state.groups) return <Loader />;
+    if (!this.state.site || !this.state.siteId || !this.state.groups) { return <Loader message="random" />; }
     const { groups } = this.state;
     return (
       <div>

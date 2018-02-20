@@ -23,7 +23,7 @@ class TopNewSnapshots extends Component {
     }
   }
   render() {
-    if (this.props.topNewSnapshots.state !== 'ready') return <Loader />;
+    if (this.props.topNewSnapshots.state !== 'ready') return <Loader message="random" />;
     return (
       <div>
         top page (count: {this.props.topNewSnapshots.items.length})

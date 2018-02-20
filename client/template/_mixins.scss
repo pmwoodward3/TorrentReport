@@ -62,3 +62,44 @@
   width: 100%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
+@mixin buttonHoverActive($mainColor, $backgroundColor) {
+  @include boxBorderRadius($mainColor);
+  background-color: $backgroundColor;
+  &:hover {
+    background-color: darken($backgroundColor, 15%);
+  }
+  &:active {
+    color: lighten($mainColor, 15%);
+    background-color: lighten($backgroundColor, 5%);
+    transform: translateY(1px);
+    border: none;
+  }
+}
+
+@mixin buttonHoverEffect() {
+  & span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  & span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+  &:hover span {
+    padding-right: 25px;
+  }
+
+  &:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+}

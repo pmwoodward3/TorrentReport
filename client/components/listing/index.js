@@ -16,6 +16,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 import './style.scss';
 import SeedLeachPie from '../charts/seedLeachPie';
+import SyncLine from '../charts/syncLine';
 
 class Listing extends Component {
   constructor(props) {
@@ -43,7 +44,22 @@ class Listing extends Component {
   }
 
   render() {
-    if (!this.state.listing || !this.state.infos) return <Loader />;
+    if (!this.state.listing || !this.state.infos) return <Loader message="random" />;
+    const agg = [];
+
+    for (let h = 0; h < this.state.infos[0].length; h++) {
+      const newObj = {};
+      newObj.seed = 0;
+      newObj.leach = 0;
+      for (let i = 0; i < this.state.infos.length; i++) {
+        newObj.date = this.state.infos[i][h].createdAt;
+        newObj.seed += this.state.infos[i][h].seed;
+        newObj.leach += this.state.infos[i][h].leach;
+      }
+      agg.push(newObj);
+    }
+    console.log(agg);
+
     return (
       <div>
         <h1>listing</h1>
@@ -58,13 +74,20 @@ class Listing extends Component {
         </div>
         {this.state.infos &&
           this.state.infos.map(info => (
-            <p key={info.id}>
-              <Link to={`/info/${info.id}`}>
-                #{info.id} - uploaded by: {info.uploadUser}
-              </Link>{' '}
-              | seed: {info.seed} (max: {info.maxSeed} | min: {info.minSeed}) - leach: {info.leach}{' '}
-              (max: {info.maxLeach} | min: {info.minLeach}) | {info.uploadDate}
-            </p>
+            <div key={info.id}>
+              <p>
+                <Link to={`/info/${info.id}`}>
+                  #{info.id} - uploaded by: {info.uploadUser}
+                </Link>{' '}
+                | seed: {info.seed} (max: {info.maxSeed} | min: {info.minSeed}) - leach:{' '}
+                {info.leach} (max: {info.maxLeach} | min: {info.minLeach}) | {info.uploadDate}
+              </p>
+              <SyncLine
+                syncId="listings"
+                data={info.torrentSnapshots}
+                pluck={[{ key: 'seed', color: '#008000' }, { key: 'leach', color: '#ff0000' }]}
+              />
+            </div>
           ))}
       </div>
     );

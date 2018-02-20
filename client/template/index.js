@@ -5,16 +5,10 @@ import { withRouter, Link, NavLink } from 'react-router-dom';
 import { logout } from '../store';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faSignOutAlt, faUser, faUserPlus } from '@fortawesome/fontawesome-free-solid';
-import s from './template.scss';
-import nav from './nav.scss';
-import mobile from './mobile.scss';
+import './template.scss';
+import './nav.scss';
+import './mobile.scss';
 
-/**
- * COMPONENT
- *  The Main component is our 'picture frame' - it displays the navbar and anything
- *  else common to our entire app. The 'picture' inside the frame is the space
- *  rendered out by the component's `children`.
- * */
 class Template extends Component {
   constructor(props) {
     super(props);
@@ -85,36 +79,36 @@ class Template extends Component {
             )}
 
             <li>
-              <a href="/top#" className="Link-Final">
+              <NavLink to="/what" activeClassName="sNav" className="Link-Final">
                 <span>DROP DOWN</span>
-              </a>
+              </NavLink>
               <ul id="subOne">
                 <li>
-                  <a href="/top#">
+                  <NavLink to="/what/top" activeClassName="sNav">
                     <span>Sub Nav Item</span>
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
-                  <a href="#">
+                  <NavLink to="/what/top2" activeClassName="sNav">
                     <span>Sub Nav Item</span>
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </li>
             {!isLoggedIn ? (
               <div className="navButtons">
                 <Link to="/signup" id="navSign" className="up">
-                  <FontAwesomeIcon icon={faUserPlus} /> sign up
+                <span><FontAwesomeIcon icon={faUserPlus} /> sign up</span>
                 </Link>
 
                 <Link to="/login" id="navSign" className="in">
-                  <FontAwesomeIcon icon={faSignInAlt} /> login
+                <span><FontAwesomeIcon icon={faSignInAlt} /> login</span>
                 </Link>
               </div>
             ) : (
               <div className="navButtons">
                 <button id="navSign" className="in" onClick={handleClick}>
-                  <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                <span><FontAwesomeIcon icon={faSignOutAlt} /> Logout</span>
                 </button>
               </div>
             )}

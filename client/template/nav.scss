@@ -285,12 +285,12 @@ body {
 
 .navButtons {
   .in {
-    @include boxBorderRadius($primaryColor);
-    background-color: $button_signin_color;
+    @include buttonHoverActive($primaryColor, $button_signin_color);
+    @include buttonHoverEffect();
   }
   .up {
-    @include boxBorderRadius($secondaryColor);
-    background-color: $button_login_color;
+    @include buttonHoverActive($secondaryColor, $button_login_color);
+    @include buttonHoverEffect();
   }
   padding: 0px 10px 0px 10px;
   display: flex;

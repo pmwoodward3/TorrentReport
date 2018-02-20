@@ -25,9 +25,9 @@ form div {
 
 .loginButton {
   @include loginRegisterButton();
-  color: black;
   background-color: $button_signin_color;
   @include boxBorderRadius($primaryColor);
+  @include buttonHoverActive($primaryColor, $button_signin_color);
 }
 
 .loginBox {

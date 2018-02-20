@@ -29,11 +29,9 @@ class Info extends Component {
       info,
       listing,
     };
-    console.log('constructor props', this.props);
   }
 
   componentDidMount() {
-    console.log('mounting');
     if (!this.state.info) {
       const haveInfoId = getOrFetchInfoByID(this.state.infoId);
       if (haveInfoId) this.setState({ info: haveInfoId });
@@ -53,18 +51,19 @@ class Info extends Component {
   }
 
   render() {
-    if (!this.state.info || !this.state.infoId || !this.state.listing) return <Loader />;
+    if (!this.state.info || !this.state.infoId || !this.state.listing) return <Loader message="random"/>;
     return (
       <div>
         <h1>INFO FOR UPLOAD BY:</h1>
         <h2>{this.state.info.uploadUser}</h2>
-        <h2>torrent name: {this.state.listing.name} (<Link to={`/listing/${this.state.listing.id}`}>info</Link>)</h2>
+        <h2>torrent name:
+        {this.state.listing.name} (<Link to={`/listing/${this.state.listing.id}`}>listing detail</Link>)</h2>
         <b>
           {' '}
           User {this.state.info.uploadUser} listed this torrent on {moment(this.state.info.uploadDate).format('MMMM Do YYYY, h:mm:ss a')}
         </b>
         <h2>Snapshots</h2>
-        <LineChart snapshots={this.state.info.torrentSnapshots} />
+        {this.state.info.torrentSnapshots.length > 1 && <LineChart snapshots={this.state.info.torrentSnapshots} />}
         {this.state.info.torrentSnapshots.map((snapshot, index) => (
           <div key={snapshot.id}>
           {moment(snapshot.date).format('MMMM Do YYYY, h:mm:ss a')} - seed: {snapshot.seed} | leach:{' '}

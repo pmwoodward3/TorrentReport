@@ -46,7 +46,10 @@ router.post('/', (req, res, next) => {
       { model: TorrentListing },
       { model: TorrentSnapshot },
       {
-        as: 'Group', through: 'InfoGroup', model: TorrentGroup, include: [TorrentSite],
+        as: 'Group',
+        through: 'InfoGroup',
+        model: TorrentGroup,
+        include: [TorrentSite],
       },
     ],
   })
@@ -84,7 +87,7 @@ router.get('/new/:days', (req, res, next) => {
         [Op.gte]: new Date(filterTime),
       },
     },
-    include: ['Group'],
+    include: ['Group', TorrentSnapshot],
   })
     .then(data => res.json(data))
     .catch(next);
@@ -103,7 +106,7 @@ router.get('/new/group/:groupId/:daysUpdated', (req, res, next) => {
         [Op.gte]: new Date(filterTime),
       },
     },
-    include: [{ as: 'Group', model: TorrentGroup, where: { id } }],
+    include: [{ as: 'Group', model: TorrentGroup, where: { id } }, { model: TorrentSnapshot }],
   })
     .then(data => res.json(data))
     .catch(next);

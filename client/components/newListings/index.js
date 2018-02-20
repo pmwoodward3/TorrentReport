@@ -56,7 +56,7 @@ class NewListings extends Component {
     if (!_.has(this.props.dailyListings, 'days1')) {
       return (
         <div id="NL" className="new-listings">
-          <Loader message="fetching some data" />
+          <Loader message="random" />
         </div>
       );
     }

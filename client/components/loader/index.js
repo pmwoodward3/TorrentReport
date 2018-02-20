@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Loading from 'react-loading-components';
+import randomString from './random';
 
 import './style.scss';
 
@@ -10,8 +11,9 @@ const Loader = (props) => {
   if (!width) width = 110;
   if (!height) height = 110;
   if (!type) type = 'ball_triangle';
-  if (!fill) fill = '#949494';
-
+  fill = 'black';
+  // if (!fill) fill = '#949494';
+  if (message === 'random') message = randomString();
   return (
     <div className="holder">
       <Loading type={type} width={width} height={height} fill={fill} />

@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { auth } from '../../store';
+import { auth, clearError } from '../../store';
 
-import s from './style.scss';
+import './style.scss';
 
-/**
- * COMPONENT
- */
 class AuthForm extends Component {
   constructor(props) {
     super(props);
@@ -19,20 +16,18 @@ class AuthForm extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  componentDidMount() {
+    this.nameInput.focus();
+    if (this.props.error) this.props.removeError();
+  }
+
   handleInputChange(event) {
-    console.log(event.target.name);
-    console.log(event.target.value);
     const newObj = {};
     newObj[event.target.name] = event.target.value;
     this.setState(newObj);
   }
 
-  componentDidMount() {
-    this.nameInput.focus();
-  }
-
   render() {
-    console.log('state', this.state);
     const {
       name, displayName, header, handleSubmit, error,
     } = this.props;
@@ -68,7 +63,11 @@ class AuthForm extends Component {
               type="password"
             />
 
-            <button disable={isReady ? 'false' : 'true'} className={isReady ? 'loginButton' : 'disabledButton'} type="submit">
+            <button
+              disable={isReady ? 'false' : 'true'}
+              className={isReady ? 'loginButton' : 'disabledButton'}
+              type="submit"
+            >
               {displayName.toUpperCase()}
             </button>
 
@@ -82,13 +81,6 @@ class AuthForm extends Component {
   }
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = state => ({
   name: 'login',
   header: 'welcome back buddy',
@@ -111,14 +103,14 @@ const mapDispatch = dispatch => ({
     const password = evt.target.password.value;
     dispatch(auth(email, password, formName));
   },
+  removeError() {
+    dispatch(clearError());
+  },
 });
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
 
-/**
- * PROP TYPES
- */
 AuthForm.propTypes = {
   name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,

@@ -12,7 +12,6 @@ socket.on('message', (data) => {
 });
 
 socket.on('data', (data) => {
-  console.log('data', data);
   if (data.userCount) store.dispatch(setOnlineUsers(data.userCount));
 });
 

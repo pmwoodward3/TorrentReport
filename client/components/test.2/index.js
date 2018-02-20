@@ -32,7 +32,7 @@ class Test extends Component {
     console.log(this.state.data);
     const { data } = this.state;
     if (data === false) {
-      return <Loader message="gathering details" />;
+      return <Loader message="random" />;
     }
     if (data === 'signin') {
       return (
