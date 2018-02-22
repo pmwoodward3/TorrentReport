@@ -51,7 +51,11 @@ export const setDailyListings = (dailyListings, days) => ({
 export const fetchTopNewSnapshots = (days = 1) => dispatch =>
   axios
     .get(`/api/torrents/snapshots/new/${days}`)
-    .then(res => dispatch(receiveTopNewSnapshots(res.data)))
+    .then((res) => {
+      // const listingsArr =
+      // dispatch(spreadListings(res.data))
+      dispatch(receiveTopNewSnapshots(res.data));
+    })
     .catch(err => console.log(err));
 
 export const fetchStats = () => dispatch =>
@@ -65,8 +69,14 @@ export const fetchDailyListings = days => dispatch =>
   axios
     .get(`/api/torrents/listings/new/${days}`)
     .then((res) => {
-      dispatch(spreadListings(res.data));
-      dispatch(recieveDailyListings(res.data, 1));
+      const { data } = res;
+      console.log('inside of fetchdailylistings', data);
+      if (!data.length) {
+        dispatch(fetchDailyListings(days + 1));
+      } else {
+        dispatch(spreadListings(data));
+        dispatch(recieveDailyListings(data, days));
+      }
     })
     .catch(err => console.log(err));
 

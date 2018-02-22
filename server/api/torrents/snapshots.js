@@ -20,6 +20,17 @@ module.exports = router;
 //     .catch(next);
 // });
 
+// return all the snapshots for a specific infoID
+router.get('/:infoId', (req, res, next) => {
+  if (!req.params.infoId || !Number.isInteger(parseInt(req.params.infoId, 10))) { return res.sendStatus(404); }
+  const id = parseInt(req.params.infoId, 10);
+  TorrentSnapshot.findAll({
+    include: [{ model: TorrentInfo, where: { id } }],
+  })
+    .then(data => res.json(data))
+    .catch(next);
+});
+
 // new snapshots grouped by torrentinfo Id from the past X days
 // this is a love note to my evachka
 router.get('/new/:days', (req, res, next) => {

@@ -13,14 +13,10 @@ const Op = Sequelize.Op;
 module.exports = router;
 
 router.get('/:id', (req, res, next) => {
-  // if (req.user && req.user.isAdmin) {
   TorrentListing.scope('withSites')
     .findById(parseInt(req.params.id, 10))
     .then(data => res.json(data))
     .catch(next);
-  // } else {
-  //   next()
-  // }
 });
 
 router.post('/', (req, res, next) => {
@@ -33,11 +29,10 @@ router.post('/', (req, res, next) => {
 });
 
 router.get('/new/:days', (req, res, next) => {
-  let input = req.params.days;
-  if (!input || !Number.isInteger(input)) input = 1;
-  const days = parseInt(input, 10);
-  if (days > 31) res.sendStatus(403);
-  const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
+  const input = parseInt(req.params.days, 10);
+  if (!input || !Number.isInteger(input)) return res.sendStatus(404);
+  if (input > 31) return res.sendStatus(403);
+  const filterTime = new Date() - input * 24 * 60 * 60 * 1000;
 
   TorrentListing.scope('withSites')
     .findAll({
@@ -50,16 +45,4 @@ router.get('/new/:days', (req, res, next) => {
     })
     .then(data => res.json(data))
     .catch(next);
-});
-
-router.get('/a', (req, res, next) => {
-  // if (req.user && req.user.isAdmin) {
-  TorrentListing.findById(1)
-    .then(listing => listing.getInfos())
-    // .findAll()
-    .then(data => res.json(data))
-    .catch(next);
-  // } else {
-  //   next()
-  // }
 });

@@ -17,6 +17,7 @@ import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 import './style.scss';
 import SeedLeachPie from '../charts/seedLeachPie';
 import SyncLine from '../charts/syncLine';
+import SimpleLine from '../charts/simpleLine';
 
 class Listing extends Component {
   constructor(props) {
@@ -45,33 +46,90 @@ class Listing extends Component {
 
   render() {
     if (!this.state.listing || !this.state.infos) return <Loader message="random" />;
-    const agg = [];
+    const combinedDateFormat = 'MMMM Do YYYY [at] hh:mm:ss a';
+    const justFullDateFormat = 'MMMM Do YYYY';
+    const justDateFormat = 'MM/DD/YYYY';
+    const justTimeFormat = 'h:mm:ss a';
 
-    for (let h = 0; h < this.state.infos[0].length; h++) {
-      const newObj = {};
-      newObj.seed = 0;
-      newObj.leach = 0;
-      for (let i = 0; i < this.state.infos.length; i++) {
-        newObj.date = this.state.infos[i][h].createdAt;
-        newObj.seed += this.state.infos[i][h].seed;
-        newObj.leach += this.state.infos[i][h].leach;
-      }
-      agg.push(newObj);
-    }
+    const holderObj = {};
+
+    this.state.infos.forEach((item, index) => {
+      item.torrentSnapshots.forEach((snap, snapIndex) => {
+        // const simplifiedDate = moment(snap.date).format(justDateFormat);
+        const foundObj = holderObj[snap.date];
+        // console.log('checking..', simplifiedDate, 'from', item.uploadUser);
+        if (foundObj) {
+          // console.log('\tfound', snap.date);
+          foundObj.seed += snap.seed;
+          foundObj.leach += snap.leach;
+        } else {
+          // console.log('not found');
+          holderObj[snap.date] = {
+            date: snap.date,
+            seed: snap.seed,
+            leach: snap.leach,
+          };
+        }
+      });
+    });
+
+    const keys = Object.keys(holderObj);
+    const agg = [];
+    keys.forEach(key => agg.push(holderObj[key]));
     console.log(agg);
 
     return (
       <div>
-        <h1>listing</h1>
-        <b>{this.state.listing.name}</b>
-        <p>we Found This Listing on: {this.state.listing.createdAt} </p>
-        <p>FOUND INFOS ({this.state.infos.length}) </p>
-        <div>
-          <SeedLeachPie
-            seed={this.state.infos.reduce((accum, curr) => accum + curr.seed, 0)}
-            leach={this.state.infos.reduce((accum, curr) => accum + curr.leach, 0)}
-          />
+        <div className="listing-header">{this.state.listing.name}</div>
+        <div className="l-section-header">GENERAL Combined INFO</div>
+        <div className="l-split-details">
+          <div className="l-details">
+            <div className="item">
+              <div className="title">first discovered</div>
+              <div className="value">
+                <div>
+                  <div>{moment(this.state.listing.createdAt).format(justFullDateFormat)}</div>
+                  <div>{moment(this.state.listing.createdAt).format(justTimeFormat)}</div>
+                </div>
+              </div>
+            </div>
+            <div className="item">
+              <div className="title">uploads found</div>
+              <div className="value">
+                <div className="number">{this.state.infos.length}</div>
+              </div>
+            </div>
+          </div>
+          <div className="l-details">
+            <div className="item">
+              <div className="title">peers</div>
+              <div className="value">
+                <div className="center">
+                  <SeedLeachPie
+                    seed={this.state.infos.reduce((accum, curr) => accum + curr.seed, 0)}
+                    leach={this.state.infos.reduce((accum, curr) => accum + curr.leach, 0)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="l-details">
+            <div className="item">
+              <div className="title">history</div>
+              <div className="value">
+                <div className="center">
+                  <SimpleLine
+                    data={agg}
+                    syncId="listings"
+                    pluck={[{ key: 'seed', color: '#008000' }, { key: 'leach', color: '#ff0000' }]}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div className="l-section-header">uploads by users</div>
         {this.state.infos &&
           this.state.infos.map(info => (
             <div key={info.id}>

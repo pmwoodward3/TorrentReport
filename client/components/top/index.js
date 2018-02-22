@@ -34,7 +34,13 @@ class TopNewSnapshots extends Component {
               to={`/listing/${snapshot.torrentInfo.torrentListing.id}`}
             >
               View Listing
-            </Link>) (<Link to={`/info/${snapshot.torrentInfo.id}`}>View Info</Link>){' '}
+            </Link>) (<Link to={`/info/${snapshot.torrentInfo.id}`}>View Info</Link>) - uploaded by:{' '}
+            {snapshot.torrentInfo.uploadUser} -
+            {snapshot.torrentInfo.Group.reduce(
+              (accum, group) =>
+                (accum += ` (${group.name} - ${group.tag} [${group.torrentSite.name}])`),
+              '',
+            )}
           </div>
         ))}
       </div>

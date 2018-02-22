@@ -7,7 +7,6 @@ const CustomTooltip = (props) => {
   const { active } = props;
   if (active) {
     const { payload, label } = props;
-    console.log('here are props', props);
     return (
       <div className="custom-tooltip">
         <div className="label">
