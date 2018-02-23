@@ -108,3 +108,80 @@
     }
   }
 }
+
+.listings-infos {
+  margin-top: 0.5em;
+  display: inline-flex;
+  flex-direction: column;
+  width: 100%;
+  .item {
+    width: 100%;
+    background-color: lighten($secondaryColor, 35%);
+    border-radius: 5px;
+    padding: 1em;
+    margin: 0em 0em 0.5em 0em;
+    .header {
+      display: inline-flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      font-size: 1.2em;
+      font-weight: bolder;
+      .user {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+      .date {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+        text-align: right;
+      }
+      .value {
+        font-family: $header_font_family;
+        font-size: 1.4em;
+        color: darken($secondaryColor, 40%);
+      }
+      .desc {
+        color: lighten($secondaryColor, 15%);
+        text-transform: uppercase;
+        font-size: 0.7em;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+    }
+    .details {
+      display: inline-flex;
+      width: 100%;
+      flex-direction: row;
+      .link {
+        display: flex;
+        flex-direction: column;
+        /* Safari */
+        -webkit-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
+        flex-basis: auto;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        min-width: 10em;
+        flex-basis: auto;
+      }
+      .chart {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        min-width: 300px;
+      }
+    }
+  }
+}

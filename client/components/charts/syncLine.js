@@ -1,5 +1,14 @@
 import React from 'react';
-import { LineChart, XAxis, YAxis, Tooltip, CartesianGrid, Line, Label } from 'recharts';
+import {
+  ResponsiveContainer,
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Line,
+  Label,
+} from 'recharts';
 import moment from 'moment';
 import './styles.scss';
 
@@ -44,32 +53,32 @@ export default (props) => {
   });
   const yAxisKey = maxSeed >= maxLeach ? 'seed' : 'leach';
   return (
-    <LineChart
-      width={300}
-      height={150}
-      data={newData}
-      syncId={syncId}
-      margin={{
-        top: 10,
-        right: 10,
-        left: 10,
-        bottom: 10,
-      }}
-    >
-      <YAxis dataKey={yAxisKey} axisLine={!false} tickLine={false} hide={false} />
+    <ResponsiveContainer height={150}>
+      <LineChart
+        data={newData}
+        syncId={syncId}
+        margin={{
+          top: 10,
+          right: 10,
+          left: 10,
+          bottom: 10,
+        }}
+      >
+        <YAxis dataKey={yAxisKey} axisLine={!false} tickLine={false} hide={false} />
 
-      <XAxis dataKey="date" axisLine={!false} tickLine={false} hide={false} />
-      {pluck.map((set, index) => (
-        <Line
-          key={`${index}-${set.key}`}
-          type="monotone"
-          dataKey={set.key}
-          stroke={set.color}
-          fill={set.color}
-          strokeWidth={2}
-        />
-      ))}
-      <Tooltip content={<CustomTooltip />} />
-    </LineChart>
+        <XAxis dataKey="date" axisLine={!false} tickLine={false} hide={false} />
+        {pluck.map((set, index) => (
+          <Line
+            key={`${index}-${set.key}`}
+            type="monotone"
+            dataKey={set.key}
+            stroke={set.color}
+            fill={set.color}
+            strokeWidth={2}
+          />
+        ))}
+        <Tooltip content={<CustomTooltip />} />
+      </LineChart>
+    </ResponsiveContainer>
   );
 };

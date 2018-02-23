@@ -31,15 +31,15 @@ export default (props) => {
         syncId={syncId}
         isAnimationActive={false}
         margin={{
-          top: 0,
+          top: 10,
           right: 10,
           left: 10,
           bottom: 0,
         }}
       >
-        <YAxis dataKey={yAxisKey} axisLine={!false} tickLine={false} hide={false} />
+        <YAxis dataKey={yAxisKey} axisLine={!false} tickLine={false} hide={!false} />
 
-        <XAxis dataKey="date" axisLine={!false} tickLine={false} hide={false} />
+        <XAxis dataKey="date" axisLine={!false} tickLine={false} hide={!false} />
         <Tooltip />
         {pluck.map((set, index) => (
           <Line

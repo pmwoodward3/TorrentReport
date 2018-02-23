@@ -130,23 +130,54 @@ class Listing extends Component {
         </div>
 
         <div className="l-section-header">uploads by users</div>
-        {this.state.infos &&
-          this.state.infos.map(info => (
-            <div key={info.id}>
-              <p>
-                <Link to={`/info/${info.id}`}>
-                  #{info.id} - uploaded by: {info.uploadUser}
-                </Link>{' '}
-                | seed: {info.seed} (max: {info.maxSeed} | min: {info.minSeed}) - leach:{' '}
-                {info.leach} (max: {info.maxLeach} | min: {info.minLeach}) | {info.uploadDate}
-              </p>
-              <SyncLine
-                syncId="listings"
-                data={info.torrentSnapshots}
-                pluck={[{ key: 'seed', color: '#008000' }, { key: 'leach', color: '#ff0000' }]}
-              />
-            </div>
-          ))}
+        <div className="listings-infos">
+          {this.state.infos &&
+            this.state.infos.map(info => (
+              <div className="item" key={info.id}>
+                <div className="header">
+                  <div className="user">
+                    <div className="value">
+                      <Link to={`/info/${info.id}`}>{info.uploadUser}</Link>
+                    </div>
+                    <div className="desc">upload user</div>
+                  </div>
+                  <div className="date">
+                    <div className="value">
+                      {moment(info.uploadDate).format(combinedDateFormat)}
+                    </div>
+                    <div className="desc">upload date</div>
+                  </div>
+                </div>
+                <div className="details">
+                  {/* <div className="link">
+                    <Link to={`/info/${info.id}`}>VIEW MORE INFO</Link>
+            </div> */}
+                  <div className="info">
+                    seed: {info.seed} <br />
+                    - max: {info.maxSeed}
+                    <br />
+                    - min: {info.minSeed}
+                    <br />
+                    leach: {info.leach}
+                    <br />
+                    - max: {info.maxLeach}
+                    <br />
+                    - min: {info.minLeach}
+                  </div>
+                  <div className="chart">
+                    <SyncLine
+                      syncId="listings"
+                      data={info.torrentSnapshots}
+                      pluck={[
+                        { key: 'seed', color: '#008000' },
+                        { key: 'leach', color: '#ff0000' },
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     );
   }

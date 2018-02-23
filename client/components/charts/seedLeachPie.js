@@ -80,8 +80,7 @@ class SeedLeachPie extends React.Component {
           outerRadius={80}
           paddingAngle={5}
           label={renderCustomizedLabel}
-          animationBegin={1}
-          isAnimationActive={!false}
+          isAnimationActive={false}
         >
           {data.map((entry, index) => (
             <Cell key={index} strokeWidth={0} fill={COLORS[entry.name]} />
