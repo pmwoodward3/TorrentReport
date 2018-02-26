@@ -55,15 +55,11 @@ class Listing extends Component {
 
     this.state.infos.forEach((item, index) => {
       item.torrentSnapshots.forEach((snap, snapIndex) => {
-        // const simplifiedDate = moment(snap.date).format(justDateFormat);
         const foundObj = holderObj[snap.date];
-        // console.log('checking..', simplifiedDate, 'from', item.uploadUser);
         if (foundObj) {
-          // console.log('\tfound', snap.date);
           foundObj.seed += snap.seed;
           foundObj.leach += snap.leach;
         } else {
-          // console.log('not found');
           holderObj[snap.date] = {
             date: snap.date,
             seed: snap.seed,
@@ -76,7 +72,6 @@ class Listing extends Component {
     const keys = Object.keys(holderObj);
     const agg = [];
     keys.forEach(key => agg.push(holderObj[key]));
-    console.log(agg);
 
     return (
       <div>
@@ -113,32 +108,36 @@ class Listing extends Component {
               </div>
             </div>
           </div>
-          <div className="l-details">
-            <div className="item">
-              <div className="title">history</div>
-              <div className="value">
-                <div className="center">
-                  <SimpleLine
-                    data={agg}
-                    syncId="listings"
-                    pluck={[{ key: 'seed', color: '#008000' }, { key: 'leach', color: '#ff0000' }]}
-                  />
+          {agg.length > 1 &&
+            this.state.infos.length && (
+              <div className="l-details">
+                <div className="item">
+                  <div className="title">history</div>
+                  <div className="value">
+                    <div className="center">
+                      <SimpleLine
+                        data={agg}
+                        syncId="listings"
+                        pluck={[
+                          { key: 'seed', color: '#008000' },
+                          { key: 'leach', color: '#ff0000' },
+                        ]}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            )}
         </div>
 
-        <div className="l-section-header">uploads by users</div>
+        {<div className="l-section-header">uploads by users</div>}
         <div className="listings-infos">
           {this.state.infos &&
             this.state.infos.map(info => (
-              <div className="item" key={info.id}>
+              <Link to={`/info/${info.id}`} key={info.id} className="item">
                 <div className="header">
                   <div className="user">
-                    <div className="value">
-                      <Link to={`/info/${info.id}`}>{info.uploadUser}</Link>
-                    </div>
+                    <div className="value">{info.uploadUser}</div>
                     <div className="desc">upload user</div>
                   </div>
                   <div className="date">
@@ -149,33 +148,53 @@ class Listing extends Component {
                   </div>
                 </div>
                 <div className="details">
-                  {/* <div className="link">
-                    <Link to={`/info/${info.id}`}>VIEW MORE INFO</Link>
-            </div> */}
                   <div className="info">
-                    seed: {info.seed} <br />
-                    - max: {info.maxSeed}
-                    <br />
-                    - min: {info.minSeed}
-                    <br />
-                    leach: {info.leach}
-                    <br />
-                    - max: {info.maxLeach}
-                    <br />
-                    - min: {info.minLeach}
+                    <div className="info-group">
+                      <div className="info-item">
+                        <div className="label">seeders</div>
+                        <div className="value">{info.seed}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">max seeders</div>
+                        <div className="value">{info.maxSeed}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">min seeders</div>
+                        <div className="value">{info.minSeed}</div>
+                      </div>
+                    </div>
+
+                    <div className="info-group">
+                      <div className="info-item">
+                        <div className="label">leachers</div>
+                        <div className="value">{info.leach}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">max leachers</div>
+                        <div className="value">{info.maxLeach}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">min leachers</div>
+                        <div className="value">{info.minLeach}</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="chart">
-                    <SyncLine
-                      syncId="listings"
-                      data={info.torrentSnapshots}
-                      pluck={[
-                        { key: 'seed', color: '#008000' },
-                        { key: 'leach', color: '#ff0000' },
-                      ]}
-                    />
-                  </div>
+                  {agg.length > 1 ? (
+                    <div className="chart">
+                      <SyncLine
+                        syncId="listings"
+                        data={info.torrentSnapshots}
+                        pluck={[
+                          { key: 'seed', color: '#008000' },
+                          { key: 'leach', color: '#ff0000' },
+                        ]}
+                      />
+                    </div>
+                  ) : (
+                    <div className="chart"> torrent just discovered.</div>
+                  )}
                 </div>
-              </div>
+              </Link>
             ))}
         </div>
       </div>

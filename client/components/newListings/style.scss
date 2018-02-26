@@ -13,15 +13,30 @@
   .dl-top {
     display: inline-flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .dl-header {
       display: inline-flex;
-      flex-wrap: wrap;
       color: darken($primaryColor, 40%);
       letter-spacing: 2px;
       font-family: $header_font_family;
       font-size: 2em;
+      flex-basis: auto;
     }
     .dl-detail {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      #nl-search {
+        border-radius: 1em;
+        background-color: lighten($primaryColor, 25%);
+        border: solid 1px lighten($primaryColor, 20%);
+        color: darken($primaryColor, 25%);
+        width: 100%;
+        font-size: 1.1em;
+        margin: 5px;
+        padding: 10px 20px 10px 20px;
+      }
     }
   }
   .dl-options {

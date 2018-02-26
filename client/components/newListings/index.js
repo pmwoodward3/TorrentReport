@@ -17,6 +17,8 @@ import ListHeaderItem from './listHeaderItem';
 import { getListingsByID } from '../store_helper';
 import listHeaderItem from './listHeaderItem';
 
+import { searchWithinArray } from '../search/searchUtils';
+
 // data stream with recompose
 // import { Observable } from "rxjs"
 // import config from "recompose/rxjsObservableConfig"
@@ -33,9 +35,11 @@ class NewListings extends Component {
     this.state = {
       filter: 'seed',
       order: 'top',
+      search: '',
     };
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleOrder = this.toggleOrder.bind(this);
+    this.searchChange = this.searchChange.bind(this);
   }
   componentDidMount() {
     if (!_.has(this.props.dailyListings, 'days1')) this.props.load();
@@ -50,6 +54,10 @@ class NewListings extends Component {
 
   toggleFilter(filter) {
     this.setState({ filter });
+  }
+
+  searchChange(event) {
+    this.setState({ search: event.target.value });
   }
 
   render() {
@@ -70,12 +78,19 @@ class NewListings extends Component {
       },
       orderArr,
     );
-    const finalSize = orderedFiltered;
+    const finalSize = searchWithinArray(orderedFiltered, this.state.search);
     return (
       <div id="NL" className="new-listings">
         <div className="dl-top">
           <div className="dl-header">TOP NEWLY LISTED TORRENTS</div>
-          <div className="dl-detail" />
+          <div className="dl-detail">
+            <input
+              placeholder="search these listings..."
+              id="nl-search"
+              name="nl-search"
+              onChange={this.searchChange}
+            />{' '}
+          </div>
         </div>
         <div className="dl-item-group">
           <ListHeaderItem order={this.state.order} active={this.state.filter} />

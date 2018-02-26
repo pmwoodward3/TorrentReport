@@ -13,10 +13,7 @@ class SeedLeachPie extends React.Component {
   }
 
   render() {
-    if (!this.props.seed || !this.props.leach) {
-      console.log('not ready', this.props);
-      return <div />;
-    }
+    if (!this.props.seed || !this.props.leach) return <div />;
     const data = [
       { name: 'seeders', value: this.props.seed },
       { name: 'leachers', value: this.props.leach },
@@ -67,7 +64,7 @@ class SeedLeachPie extends React.Component {
 
     const RADIAN = Math.PI / 180;
     return (
-      <PieChart width={260} height={130}>
+      <PieChart width={300} height={130}>
         <Pie
           data={data}
           dataKey="value"

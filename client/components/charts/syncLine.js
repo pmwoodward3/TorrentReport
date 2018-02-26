@@ -13,9 +13,8 @@ import moment from 'moment';
 import './styles.scss';
 
 const CustomTooltip = (props) => {
-  const { active } = props;
-  if (active) {
-    const { payload, label } = props;
+  const { active, payload, label } = props;
+  if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
         <div className="label">
