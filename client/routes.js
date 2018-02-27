@@ -17,6 +17,7 @@ import {
   Site,
   NewListings,
   NoMatch,
+  ScrollToTopRoute,
 } from './components/';
 import { me, fetchGroups } from './store';
 
@@ -35,18 +36,18 @@ class Routes extends Component {
       <Router history={history}>
         <Template>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/listing/:id" component={Listing} />
-            <Route exact path="/info/:id" component={Info} />
-            <Route exact path="/group/:id" component={Group} />
-            <Route exact path="/site/:id" component={Site} />
-            <Route exact path="/new/listings" component={NewListings} />
+            <ScrollToTopRoute exact path="/" component={Home} />
+            <ScrollToTopRoute exact path="/listing/:id" component={Listing} />
+            <ScrollToTopRoute exact path="/info/:id" component={Info} />
+            <ScrollToTopRoute exact path="/group/:id" component={Group} />
+            <ScrollToTopRoute exact path="/site/:id" component={Site} />
+            <ScrollToTopRoute exact path="/new/listings" component={NewListings} />
             <Route exact path="/test" component={Test} />
-            <Route exact path="/top" component={Top} />
+            <ScrollToTopRoute exact path="/top" component={Top} />
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
-                <Route path="/account" component={AccountHome} />
+                <ScrollToTopRoute path="/account" component={AccountHome} />
               </Switch>
             )}
             {/* Routes placed here are available to all visitors */}

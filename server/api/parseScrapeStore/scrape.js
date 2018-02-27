@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { getOrMakeTorrentListing } = require('./fetch');
+const { getOrMakeTorrentListing, addOrSetUser } = require('./fetch');
 
 const pageConsole = (msg) => {
   console.log('PAGE LOG:', msg.text());
@@ -12,6 +12,7 @@ const minimumArrLength = (smallest, currentVal) => {
 };
 
 const scrape = async ({
+  typeId,
   groupId,
   siteId,
   groupName,
@@ -22,7 +23,9 @@ const scrape = async ({
   resultCleaner,
   listingCheck,
 }) => {
-  console.log(`start scrape | groupName: ${groupName} | rD: ${resourceDomain} | selC: ${selectors.length}`);
+  console.log(`start scrape | groupName: ${groupName} | resourceDomain: ${resourceDomain} | selectCount: ${
+    selectors.length
+  }`);
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -85,16 +88,21 @@ const scrape = async ({
     });
     combinedSelector.torrentGroupId = groupId;
     combinedSelector.torrentSiteId = siteId;
+    combinedSelector.typeId = typeId;
     const cleanResult = resultCleaner(combinedSelector);
+    // filter out unwated results here
     const shouldSkip = listingCheck(cleanResult);
     // groupedResults.push(cleanResult);
     if (!shouldSkip) {
       const torrentListing = await getOrMakeTorrentListing(cleanResult);
+      const res = await addOrSetUser(torrentListing);
+      console.log(' res here ===>', res);
       groupedResults.push(torrentListing);
     }
   }
 
   return {
+    typeId,
     groupId,
     groupName,
     groupTag,

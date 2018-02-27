@@ -72,7 +72,6 @@ let parseScrapeStore = async (sites) => {
 };
 
 let sites = [];
-
 sites = sites.concat(rarbg, tpb);
 // sites = sites.concat(tpb);
 parseScrapeStore = parseScrapeStore.bind(null, sites);

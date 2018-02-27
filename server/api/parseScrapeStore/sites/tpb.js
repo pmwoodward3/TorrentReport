@@ -39,7 +39,8 @@ const tpb = {
   siteUrl: 'https://thepiratebay.org/',
   groups: [
     {
-      groupName: 'TV',
+      type: 'TV',
+      groupName: 'HDTV',
       groupTag: 'top100HDTV',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/208',
@@ -79,6 +80,7 @@ const tpb = {
       listingCheck,
     },
     {
+      type: 'TV',
       groupName: 'TV',
       groupTag: 'top100TV',
       resourceDomain: 'thepiratebay.org',
@@ -119,10 +121,93 @@ const tpb = {
       listingCheck,
     },
     {
-      groupName: 'MOVIES',
-      groupTag: 'top100Movies',
+      type: 'VIDEO',
+      groupName: 'VIDEOS',
+      groupTag: 'top100VIDEOS',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/200',
+      selectors: [
+        {
+          label: 'name',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > div > a',
+          pluck: { name: 'outerText', url: 'href' },
+        },
+        {
+          label: 'category',
+          query: '#searchResult > tbody > tr > td:nth-child(1)',
+          pluck: { category: 'outerText' },
+        },
+        {
+          label: 'magnet',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > a:nth-child(2)',
+          pluck: { magnet: 'href' },
+        },
+        {
+          label: 'uploaded',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > .detDesc',
+          pluck: { uploaded: 'outerText' },
+        },
+        {
+          label: 'seed',
+          query: '#searchResult > tbody > tr > td:nth-child(3)',
+          pluck: { seed: 'outerText' },
+        },
+        {
+          label: 'leach',
+          query: '#searchResult > tbody > tr > td:nth-child(4)',
+          pluck: { leach: 'outerText' },
+        },
+      ],
+      resultCleaner,
+      listingCheck,
+    },
+    {
+      type: 'MOVIES',
+      groupName: 'MOVIES',
+      groupTag: 'top100MOVIES',
+      resourceDomain: 'thepiratebay.org',
+      webPage: 'https://thepiratebay.org/top/201',
+      selectors: [
+        {
+          label: 'name',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > div > a',
+          pluck: { name: 'outerText', url: 'href' },
+        },
+        {
+          label: 'category',
+          query: '#searchResult > tbody > tr > td:nth-child(1)',
+          pluck: { category: 'outerText' },
+        },
+        {
+          label: 'magnet',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > a:nth-child(2)',
+          pluck: { magnet: 'href' },
+        },
+        {
+          label: 'uploaded',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > .detDesc',
+          pluck: { uploaded: 'outerText' },
+        },
+        {
+          label: 'seed',
+          query: '#searchResult > tbody > tr > td:nth-child(3)',
+          pluck: { seed: 'outerText' },
+        },
+        {
+          label: 'leach',
+          query: '#searchResult > tbody > tr > td:nth-child(4)',
+          pluck: { leach: 'outerText' },
+        },
+      ],
+      resultCleaner,
+      listingCheck,
+    },
+    {
+      type: 'MOVIES',
+      groupName: 'HDMOVIES',
+      groupTag: 'top100HDMOVIES',
+      resourceDomain: 'thepiratebay.org',
+      webPage: 'https://thepiratebay.org/top/207',
       selectors: [
         {
           label: 'name',

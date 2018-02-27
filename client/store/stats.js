@@ -19,6 +19,7 @@ const defaultData = {
 /**
  * ACTION TYPES
  */
+const LOADING_TOP_NEW_SNAPSHOTS = 'LOADING_TOP_NEW_SNAPSHOTS';
 const RECEIVE_TOP_NEW_SNAPSHOTS = 'RECEIVE_TOP_NEW_SNAPSHOTS';
 const SET_ONLINE_USERS = 'SET_ONLINE_USERS';
 const RECEIVE_STATS = 'RECEIVE_STATS';
@@ -28,6 +29,7 @@ const SET_DAILY_LISTINGS = 'SET_DAILY_LISTINGS';
 /**
  * ACTION CREATORS
  */
+export const loadingTopNewSnapshots = () => ({ type: LOADING_TOP_NEW_SNAPSHOTS });
 export const receiveTopNewSnapshots = snapshotsArr => ({
   type: RECEIVE_TOP_NEW_SNAPSHOTS,
   snapshotsArr,
@@ -48,7 +50,8 @@ export const setDailyListings = (dailyListings, days) => ({
 /**
  * THUNK CREATORS
  */
-export const fetchTopNewSnapshots = (days = 1) => dispatch =>
+export const fetchTopNewSnapshots = (days = 1) => (dispatch) => {
+  dispatch(loadingTopNewSnapshots());
   axios
     .get(`/api/torrents/snapshots/new/${days}`)
     .then((res) => {
@@ -57,6 +60,7 @@ export const fetchTopNewSnapshots = (days = 1) => dispatch =>
       dispatch(receiveTopNewSnapshots(res.data));
     })
     .catch(err => console.log(err));
+};
 
 export const fetchStats = () => dispatch =>
   axios
@@ -89,6 +93,8 @@ export default (state = defaultData, action) => {
       const { userCount } = action;
       return { ...state, userCount };
     }
+    case LOADING_TOP_NEW_SNAPSHOTS:
+      return { ...state, topNewSnapshots: { state: 'loading' } };
     case RECEIVE_TOP_NEW_SNAPSHOTS:
       return { ...state, topNewSnapshots: { state: 'ready', items: action.snapshotsArr } };
     case RECEIVE_STATS:

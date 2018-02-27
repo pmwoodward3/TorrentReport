@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { auth, clearError } from '../../store';
+import { enableSubmit } from './utils';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faHandPeace, faIdBadge } from '@fortawesome/fontawesome-free-solid';
 
 import './style.scss';
 
@@ -29,9 +32,10 @@ class AuthForm extends Component {
 
   render() {
     const {
-      name, displayName, header, handleSubmit, error,
+      name, displayName, header, handleSubmit, error, icon,
     } = this.props;
-    const isReady = this.state.email.length >= 3 && this.state.password.length >= 3;
+
+    const isReady = enableSubmit(this.state.email, this.state.password);
     return (
       <div className="center">
         <div className="loginBox">
@@ -40,7 +44,12 @@ class AuthForm extends Component {
               error.response && (
                 <div className="error fullWidth center"> {error.response.data} </div>
               )}
-            <div className="authHead">{header}</div>
+            <div className="authHead">
+              <div className="icon">
+                <FontAwesomeIcon icon={icon} />
+              </div>
+              {header}
+            </div>
             <input
               ref={(input) => {
                 this.nameInput = input;
@@ -84,6 +93,7 @@ class AuthForm extends Component {
 const mapLogin = state => ({
   name: 'login',
   header: 'welcome back buddy',
+  icon: faIdBadge,
   displayName: 'Login',
   error: state.user.error,
 });
@@ -91,6 +101,7 @@ const mapLogin = state => ({
 const mapSignup = state => ({
   name: 'signup',
   header: 'signing up is wise',
+  icon: faHandPeace,
   displayName: 'Register',
   error: state.user.error,
 });
@@ -117,4 +128,5 @@ AuthForm.propTypes = {
   header: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object,
+  icon: PropTypes.object,
 };

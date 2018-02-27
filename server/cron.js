@@ -11,7 +11,7 @@ const scraper = new CronJob(
   () => {
     sendError('automated parse scrape store has stopped', 'stop log called');
   },
-  false /* Start the job right now */,
+  true /* Start the job right now */,
   'America/New_York',
 );
 

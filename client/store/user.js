@@ -32,7 +32,8 @@ export const me = () => dispatch =>
     .catch(err => console.log(err));
 
 export const auth = (email, password, method) => (dispatch) => {
-  if (!email.includes('@') || !email.includes('.')) {
+  const r = new RegExp(/^[a-z0-9](.?[a-z0-9_-]){0,}@[a-z0-9-]+.([a-z]{1,6}.)?[a-z]{2,6}$/g);
+  if (!r.exec(email)) {
     return dispatch(setError('your email does not look valid'));
   }
   if (!method) return dispatch(setError('need a method'));
@@ -50,8 +51,7 @@ export const auth = (email, password, method) => (dispatch) => {
         history.push('/account');
       },
       (authError) => {
-        // rare example: a good use case for parallel (non-catch) error handler
-        dispatch(getUser({ error: authError }));
+        dispatch(setError(authError));
       },
     )
     .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr));

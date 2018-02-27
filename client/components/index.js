@@ -13,4 +13,5 @@ export { default as Site } from './site/';
 export { default as Group } from './group/';
 export { default as NewListings } from './newListings/';
 export { default as NoMatch } from './noMatch/';
+export { default as ScrollToTopRoute } from './ScrollToTopRoute/';
 export { Login, Signup } from './auth-form/';

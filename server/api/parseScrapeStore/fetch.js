@@ -1,3 +1,5 @@
+const { sendError } = require('../../notifier/email/emails');
+
 const {
   TorrentSite,
   TorrentInfo,
@@ -5,10 +7,14 @@ const {
   TorrentSnapshot,
   TorrentGroup,
   TorrentStats,
+  TorrentCategory,
+  TorrentUploader,
 } = require('../../db/models');
 
 const safeFields = {
   fields: [
+    'torrentCategoryId',
+    'torrentUploaderId',
     'imdb',
     'seed',
     'minSeed',
@@ -69,12 +75,27 @@ const getOrMakeSite = siteObj =>
             tag: group.groupTag,
             torrentSiteId: site.siteId,
           },
-        }).spread((groupObj, created) => {
+        }).spread(async (groupObj, created) => {
           console.log(site.siteName, '- group: ', groupObj.name, 'was created:', created);
           group.groupId = groupObj.id;
           return group;
         })));
-      console.log(site.siteName, '- assigning new group arr with info...');
+
+      for (let i = 0; i < newGroups.length; i++) {
+        const currItem = Object.assign({}, newGroups[i]);
+        const id = await TorrentCategory.findOrCreate({
+          where: {
+            name: currItem.type,
+          },
+        }).spread((categoryObj, created) => {
+          console.log(site.siteName, '- category: ', categoryObj.name, 'was created:', created);
+          return categoryObj.id;
+        });
+        currItem.typeId = id;
+        newGroups[i] = currItem;
+      }
+
+      console.log(site.siteName, '- assigning new group arr with above info...');
       site.groups = newGroups;
       return site;
     });
@@ -87,6 +108,8 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
     torrentScrapeObj.torrentSiteId,
     ' | group id:',
     torrentScrapeObj.torrentGroupId,
+    ' | type id:',
+    torrentScrapeObj.typeId,
     ' | torrent listing name:',
     torrentScrapeObj.name,
   );
@@ -99,35 +122,56 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       console.log('... was created?', created);
       newTorrentObj.torrentListingId = listing.id;
       dbListingObj = listing;
-      return listing.getInfos({ include: [{ as: 'Group', model: TorrentGroup }] });
+      return listing.getInfos({
+        include: [
+          { as: 'Group', model: TorrentGroup },
+          { model: TorrentUploader },
+          { as: 'Category', through: 'InfoCategory', model: TorrentCategory },
+        ],
+      });
     })
     .then((infos) => {
       let foundGroupInfo = false;
       let foundInfo = false;
+      let foundCategory = false;
       infos.forEach((info) => {
+        // check if current torrent uplaod user is already in our db.
         if (info.uploadUser === torrentScrapeObj.uploadUser) {
           foundInfo = info;
           console.log('... did find curr uploaduser in info!!!!');
           console.log(
-            '\tinfo uploaduser',
+            '... info uploaduser',
             info.uploadUser,
             'obj uplaoduser',
             torrentScrapeObj.uploadUser,
           );
           newTorrentObj.torrentInfoId = parseInt(info.id, 10);
         }
+
+        // check if group already found
         info.Group.forEach((group) => {
           if (parseInt(group.id, 10) === parseInt(torrentScrapeObj.torrentGroupId, 10)) {
             foundGroupInfo = info;
             console.log('... group already exists in existing info ', foundGroupInfo == false);
             console.log(
-              '\tinfo group id',
+              '... info group id',
               group.id,
               'obj group id',
               torrentScrapeObj.torrentGroupId,
             );
           }
         });
+        console.log('info ', info);
+        console.log('info cate', info.Category);
+        // check if category is linked to info
+        if (Array.isArray(info.Category)) {
+          info.Category.forEach((category) => {
+            if (parseInt(category.id, 10) === parseInt(torrentScrapeObj.typeId, 10)) {
+              console.log('... found category linked to info already');
+              foundCategory = info;
+            }
+          });
+        }
       });
 
       const rawRatio = newTorrentObj.seed / newTorrentObj.leach;
@@ -181,17 +225,29 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         console.log('... DID NOT FIND GROUP BUT FOUND INFO, update info add group');
         return foundInfo
           .updateAttributes(newTorrentObj)
-          .then(updatedObj => updatedObj.addGroup(torrentScrapeObj.torrentGroupId));
+          .then(updatedObj => updatedObj.addGroup(torrentScrapeObj.torrentGroupId))
+          .then((updatedObj) => {
+            console.log(
+              '... inside of did not find group after addgroup updatedObj ->',
+              updatedObj,
+            );
+            if (!foundCategory) return foundInfo.addCategory(torrentScrapeObj.typeId);
+            return updatedObj;
+          });
       }
       if (foundGroupInfo && foundInfo) {
         console.log('.. FOUND GROUP AND INFO, just update');
-        return foundInfo.updateAttributes(newTorrentObj);
+        return foundInfo.updateAttributes(newTorrentObj).then((updatedObj) => {
+          if (!foundCategory) return updatedObj.addCategory(torrentScrapeObj.typeId);
+          return updatedObj;
+        });
       }
 
       // true Group true Info,
       console.log('... creating info');
       return TorrentInfo.create(newTorrentObj, safeFields).then((createdInfo) => {
         createdInfo.addGroup(torrentScrapeObj.torrentGroupId);
+        createdInfo.addCategory(torrentScrapeObj.typeId);
         newTorrentObj.torrentInfoId = createdInfo.id;
         console.log('... created info item and association ');
         return dbListingObj.addInfo(createdInfo);
@@ -199,7 +255,25 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
     })
     .then(_ => newTorrentObj);
 };
+
+const addOrSetUser = (listingObj) => {
+  console.log('listing obj in add or set user==>', listingObj);
+  return TorrentUploader.findOrCreate({
+    where: { name: listingObj.uploadUser },
+  })
+    .spread(async (uploaderObj, created) => {
+      // console.log('torrentUploaderId:', uploaderObj.id);
+      // console.log('uploaderObj AddSiteUploader:', listingObj.torrentSiteId);
+      await TorrentInfo.findById(listingObj.torrentInfoId).then(infoObj =>
+        infoObj.update({ torrentUploaderId: uploaderObj.id }));
+      console.log(' uploaderObj   ----  >>>>>', uploaderObj);
+      return uploaderObj.addTorrentSite(listingObj.torrentSiteId);
+    })
+    .catch(err => sendError(`error in add or set user ${addOrSetUser}`));
+};
+
 module.exports = {
+  addOrSetUser,
   getOrMakeSite,
   getOrMakeTorrentListing,
   getSnapshotCount,

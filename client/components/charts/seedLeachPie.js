@@ -64,17 +64,17 @@ class SeedLeachPie extends React.Component {
 
     const RADIAN = Math.PI / 180;
     return (
-      <PieChart width={300} height={130}>
+      <PieChart width={320} height={130}>
         <Pie
           data={data}
           dataKey="value"
           nameKey="name"
-          cx={100}
+          cx={150}
           cy={120}
           startAngle={180}
           endAngle={0}
-          innerRadius={60}
-          outerRadius={80}
+          innerRadius={50}
+          outerRadius={70}
           paddingAngle={5}
           label={renderCustomizedLabel}
           isAnimationActive={false}

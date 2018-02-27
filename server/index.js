@@ -4,7 +4,10 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const session = require('express-session');
+const RateLimit = require('express-rate-limit');
+
 const passport = require('passport');
+const helmet = require('helmet');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
 
@@ -39,6 +42,12 @@ passport.deserializeUser((id, done) =>
     .catch(done));
 
 const createApp = () => {
+  // for proxy in production
+  if (app.get('env') === 'production') app.enable('trust proxy');
+
+  // secure headers
+  app.use(helmet());
+
   // logging middleware
   app.use(morgan('dev'));
 
@@ -50,18 +59,34 @@ const createApp = () => {
   app.use(compression());
 
   // session middleware with passport
-  app.use(session({
-    secret: process.env.SESSION_SECRET || 'asdasdasdasdasd',
+  const sessionValues = {
+    cookie: {},
+    name: 'sessionId',
     store: sessionStore,
     resave: false,
-    saveUninitialized: false,
-  }));
+    saveUninitialized: true,
+    secret: process.env.SESSION_SECRET || 'asdasdasdasdasd',
+  };
+  if (app.get('env') === 'production') {
+    app.set('trust proxy', 1);
+    sessionValues.cookie.secure = true;
+  }
+  app.use(session(sessionValues));
+
+  // passport auth
   app.use(passport.initialize());
   app.use(passport.session());
 
+  // rate limiter for api
+  const limiter = new RateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 50, // limit each IP to 100 requests per windowMs
+    delayMs: 3000, // disable delaying - full speed until the max limit is reached
+  });
+
   // auth and api routes
-  app.use('/auth', require('./auth'));
-  app.use('/api', require('./api'));
+  app.use('/auth', require('./auth'), limiter);
+  app.use('/api', require('./api'), limiter);
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')));

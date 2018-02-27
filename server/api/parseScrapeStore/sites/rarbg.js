@@ -28,6 +28,7 @@ const rarbg = {
   siteUrl: 'https://rarbg.to',
   groups: [
     {
+      type: 'MOVIES',
       groupName: 'MOVIES',
       groupTag: 'top100Movies',
       resourceDomain: 'rarbg.to',
@@ -70,6 +71,7 @@ const rarbg = {
       listingCheck,
     },
     {
+      type: 'TV',
       groupName: 'TV',
       groupTag: 'top100TV',
       resourceDomain: 'rarbg.to',

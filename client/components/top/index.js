@@ -15,10 +15,7 @@ class TopNewSnapshots extends Component {
   }
 
   componentDidMount() {
-    if (
-      this.props.topNewSnapshots.state !== 'loading' ||
-      this.props.topNewSnapshots.state !== 'ready'
-    ) {
+    if (this.props.topNewSnapshots.state === 'init') {
       this.props.load();
     }
   }

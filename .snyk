@@ -1,0 +1,50 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.10.2
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:braces:20180219':
+    - react-loading-components > webpack > watchpack > chokidar > anymatch > micromatch > braces:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+  'npm:hoek:20180212':
+    - node-pre-gyp > hawk > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > request > hawk > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > request > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > request > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - node-pre-gyp > request > hawk > cryptiles > boom > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - react-loading-components > webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - react-loading-components > webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > boom > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.506Z'
+    - react-loading-components > webpack > watchpack > chokidar > fsevents > node-pre-gyp > hawk > sntp > hoek:
+        reason: None given
+        expires: '2018-03-29T20:25:39.507Z'
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - react-loading-components > webpack > watchpack > chokidar > fsevents > node-pre-gyp > tar-pack > debug:
+        patched: '2018-02-27T20:22:29.938Z'
+  'npm:tough-cookie:20170905':
+    - react-loading-components > webpack > watchpack > chokidar > fsevents > node-pre-gyp > request > tough-cookie:
+        patched: '2018-02-27T20:22:29.938Z'

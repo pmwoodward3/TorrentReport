@@ -1,3 +1,4 @@
+const { sendError } = require('../../notifier/email/emails');
 const { TorrentStats, TorrentSnapshot } = require('../../db/models');
 
 const initStat = () =>
@@ -27,14 +28,15 @@ const closeStat = (statObj) => {
     .catch((err) => {
       console.error('\n----- ERR WITH closing stat -----\n');
       console.error(err);
+      sendError(`error in closing stat - ${err}`);
     });
 };
 
-const addSnapshots = (snapshotArr) => {
+const addSnapshots = snapshotArr =>
   TorrentSnapshot.bulkCreate(snapshotArr).catch((err) => {
     console.error('\n----- ERR WITH BULK CREATE -----\n');
     console.error(err);
+    sendError(`error in bulk stat create - ${err}`);
   });
-};
 
 module.exports = { initStat, closeStat, addSnapshots };

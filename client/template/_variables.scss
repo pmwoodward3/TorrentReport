@@ -35,7 +35,7 @@ $main_link_size: 0.9em;
 
 // header size - desktop
 $desktop_header_size: 3em;
-$desktop_header_font_size_logo: 1.5em;
+$desktop_header_font_size_logo: 1.7em;
 $mobile_header_size: 2em;
 $mobile_header_font_size_logo: 1.32em;
 $mobile_header_hamburger_size: 1.9em;
@@ -51,9 +51,9 @@ $flex_nav_breakpoint: 800px;
 $flex_nav_breakpointA: 800px;
 
 // home stats square
-$stats_background_color: lighten($quinaryColor, 90%);
-$stats_tile_background_color: lighten($quinaryColor, 85%);
-$stats_tile_outline_color: lighten($quinaryColor, 75%);
+$stats_background_color: lighten($quinaryColor, 96%);
+$stats_tile_background_color: lighten($quinaryColor, 90%);
+$stats_tile_outline_color: lighten($quinaryColor, 85%);
 $stats_desc_color: lighten($quinaryColor, 65%);
 $stats_value_color: lighten($quinaryColor, 40%);
 // $stats_color_one: lighten($primaryColor, 30%);
