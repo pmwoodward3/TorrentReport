@@ -41,17 +41,23 @@ class Template extends Component {
             <div className="filler" onClick={this.mainMenuToggle} />
             <div className="logo">
               <span>
-                <Link to="/">Torrent Report</Link>
+                <Link to="/">
+                  <div>Torrent Report</div>
+                  <div id="logo-version-mobile">ALPHA VERSION</div>
+                </Link>
               </span>
             </div>
             <div className="filler" onClick={this.mainMenuToggle} />
           </label>
+
           <ul className="" id="main" onClick={this.mainMenuToggle}>
-            <li id="TR-NAME">
-              <div className="logo">
-                <Link to="/">Torrent Report</Link>
-              </div>
-            </li>
+            <div className="logo">
+              <Link id="logoId" to="/">
+                Torrent Report
+              </Link>
+              <div id="logo-version">ALPHA VERSION</div>
+            </div>
+            <li id="TR-NAME" />
             <li>
               <NavLink exact activeClassName="sNav" to="/test">
                 <span>TEST</span>
@@ -98,17 +104,23 @@ class Template extends Component {
             {!isLoggedIn ? (
               <div className="navButtons">
                 <Link to="/signup" id="navSign" className="up">
-                <span><FontAwesomeIcon icon={faUserPlus} /> sign up</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUserPlus} /> sign up
+                  </span>
                 </Link>
 
                 <Link to="/login" id="navSign" className="in">
-                <span><FontAwesomeIcon icon={faSignInAlt} /> login</span>
+                  <span>
+                    <FontAwesomeIcon icon={faSignInAlt} /> login
+                  </span>
                 </Link>
               </div>
             ) : (
               <div className="navButtons">
                 <button id="navSign" className="in" onClick={handleClick}>
-                <span><FontAwesomeIcon icon={faSignOutAlt} /> Logout</span>
+                  <span>
+                    <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                  </span>
                 </button>
               </div>
             )}

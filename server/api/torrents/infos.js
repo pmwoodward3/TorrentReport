@@ -6,6 +6,7 @@ const {
   TorrentListing,
   TorrentSnapshot,
   TorrentGroup,
+  TorrentCategory,
 } = require('../../db/models');
 const Sequelize = require('sequelize');
 
@@ -20,6 +21,7 @@ router.get('/:id', (req, res, next) => {
   TorrentInfo.findById(id, {
     include: [
       { model: TorrentListing },
+      { as: 'Category', model: TorrentCategory },
       { model: TorrentSnapshot },
       {
         as: 'Group',
@@ -44,6 +46,7 @@ router.post('/', (req, res, next) => {
     where: { id },
     include: [
       { model: TorrentListing },
+      { as: 'Category', model: TorrentCategory },
       { model: TorrentSnapshot },
       {
         as: 'Group',
@@ -70,7 +73,7 @@ router.get('/new/top/:days/:order', (req, res, next) => {
       },
     },
     order: [[req.params.order, 'DESC']],
-    include: ['Group'],
+    include: ['Group', { as: 'Category', model: TorrentCategory }],
   })
     .then(data => res.json(data))
     .catch(next);
@@ -87,7 +90,7 @@ router.get('/new/:days', (req, res, next) => {
         [Op.gte]: new Date(filterTime),
       },
     },
-    include: ['Group', TorrentSnapshot],
+    include: ['Group', TorrentSnapshot, { as: 'Category', model: TorrentCategory }],
   })
     .then(data => res.json(data))
     .catch(next);
@@ -106,7 +109,11 @@ router.get('/new/group/:groupId/:daysUpdated', (req, res, next) => {
         [Op.gte]: new Date(filterTime),
       },
     },
-    include: [{ as: 'Group', model: TorrentGroup, where: { id } }, { model: TorrentSnapshot }],
+    include: [
+      { as: 'Group', model: TorrentGroup, where: { id } },
+      { as: 'Category', model: TorrentCategory },
+      { model: TorrentSnapshot },
+    ],
   })
     .then(data => res.json(data))
     .catch(next);

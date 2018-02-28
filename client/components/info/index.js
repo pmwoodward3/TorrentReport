@@ -12,10 +12,9 @@ import {
 import moment from 'moment';
 import _ from 'lodash';
 import Loader from '../loader';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 import './style.scss';
 import LineChart from '../charts/snapshotLine';
+import BasicToolTip from '../tooltip/basic';
 
 class Info extends Component {
   constructor(props) {
@@ -51,6 +50,7 @@ class Info extends Component {
   }
 
   render() {
+    console.log(this.state);
     if (!this.state.info || !this.state.infoId || !this.state.listing) {
       return <Loader message="random" />;
     }
@@ -77,7 +77,10 @@ class Info extends Component {
         <div className="i-split-details">
           <div className="i-details">
             <div className="item">
-              <div className="title">uploaded on</div>
+              <div className="title">
+                <div>uploaded on</div>
+                <BasicToolTip message="The date listed as the upload date from the originating torrent site." />
+              </div>
               <div className="value">
                 <div>
                   <div>{moment(this.state.info.uploadDate).format(justFullDateFormat)}</div>
@@ -86,7 +89,10 @@ class Info extends Component {
               </div>
             </div>
             <div className="item">
-              <div className="title">upload discovered</div>
+              <div className="title">
+                <div>upload discovered</div>
+                <BasicToolTip message="The date we first saw this torrent in our scrapes." />
+              </div>
               <div className="value">
                 <div>
                   <div>{moment(this.state.info.createdAt).format(justFullDateFormat)}</div>
@@ -95,7 +101,10 @@ class Info extends Component {
               </div>
             </div>
             <div className="item">
-              <div className="title">last scraped</div>
+              <div className="title">
+                <div>last scraped</div>
+                <BasicToolTip message="The last date we scraped this torrent." />
+              </div>
               <div className="value">
                 <div>
                   <div>{moment(this.state.info.updatedAt).format(justFullDateFormat)}</div>
@@ -106,13 +115,19 @@ class Info extends Component {
           </div>
           <div className="i-details">
             <div className="item">
-              <div className="title">current seed:leach ratio</div>
+              <div className="title">
+                <div>ratio</div>
+                <BasicToolTip message="The current seed/leach ratio." />
+              </div>
               <div className="value">
                 <div className="number">{this.state.info.ratio}</div>
               </div>
             </div>
             <div className="item">
-              <div className="title">lowest seed:leach ratio</div>
+              <div className="title">
+                <div>lowest ratio</div>
+                <BasicToolTip message="The lowest seed/leach ratio and the date when we saw it." />
+              </div>
               <div className="value">
                 <div className="number-date">{this.state.info.minRatio}</div>
                 <div className="date">
@@ -122,7 +137,10 @@ class Info extends Component {
               </div>
             </div>
             <div className="item">
-              <div className="title">highest seed:leach ratio</div>
+              <div className="title">
+                <div>highest ratio</div>
+                <BasicToolTip message="The highest seed/leach ratio and the date when we saw it." />
+              </div>
               <div className="value">
                 <div className="number-date">{this.state.info.maxRatio}</div>
                 <div className="date">
@@ -134,13 +152,21 @@ class Info extends Component {
           </div>
           <div className="i-details">
             <div className="item">
-              <div className="title">current seed</div>
+              <div className="title">
+                <div>current seed</div>
+                <BasicToolTip message="The current amount of users sharing this file." />
+              </div>
+
               <div className="value">
                 <div className="number i-seed">{this.state.info.seed}</div>
               </div>
             </div>
             <div className="item">
-              <div className="title">lowest seed</div>
+              <div className="title">
+                <div>lowest seed</div>
+                <BasicToolTip message="The lowest amount of users sharing this file and the date we saw it." />
+              </div>
+
               <div className="value">
                 <div className="number-date">{this.state.info.minSeed}</div>
                 <div className="date">
@@ -150,7 +176,10 @@ class Info extends Component {
               </div>
             </div>
             <div className="item">
-              <div className="title">highest seed</div>
+              <div className="title">
+                <div>highest seed</div>
+                <BasicToolTip message="The highest amount of users sharing this file and the date we saw it." />
+              </div>
               <div className="value">
                 <div className="number-date">{this.state.info.maxSeed}</div>
                 <div className="date">
@@ -162,13 +191,19 @@ class Info extends Component {
           </div>
           <div className="i-details">
             <div className="item">
-              <div className="title">current leach</div>
+              <div className="title">
+                <div>current leach</div>
+                <BasicToolTip message="The current amount of users downloading this file." />
+              </div>
               <div className="value">
                 <div className="number i-leach">{this.state.info.leach}</div>
               </div>
             </div>
             <div className="item">
-              <div className="title">lowest leach</div>
+              <div className="title">
+                <div>lowest leach</div>
+                <BasicToolTip message="The lowest amount of users downloading this file and the date we saw it." />
+              </div>
               <div className="value">
                 <div className="number-date">{this.state.info.minLeach}</div>
                 <div className="date">
@@ -178,7 +213,10 @@ class Info extends Component {
               </div>
             </div>
             <div className="item">
-              <div className="title">highest leach</div>
+              <div className="title">
+                <div>highest leach</div>
+                <BasicToolTip message="The highest amount of users downloading this file and the date we saw it." />
+              </div>
               <div className="value">
                 <div className="number-date">{this.state.info.maxLeach}</div>
                 <div className="date">
@@ -188,7 +226,6 @@ class Info extends Component {
               </div>
             </div>
           </div>
-
         </div>
 
         <div className="i-section-header">Snapshots</div>
@@ -206,14 +243,20 @@ class Info extends Component {
               <div className="seed i-seed">seed</div>
               <div className="leach i-leach">leach</div>
             </div>
-            {this.state.info.torrentSnapshots.map((snapshot, index) => (
-              <div className="item" key={snapshot.id}>
-                <div className="date">{moment(snapshot.date).format(justFullDateFormat)}</div>
-                <div className="time">{moment(snapshot.date).format(justTimeFormat)}</div>
-                <div className="seed i-seed">{snapshot.seed}</div>
-                <div className="leach i-leach">{snapshot.leach}</div>
-              </div>
-            ))}
+            {this.state.info.torrentSnapshots
+              .sort((a, b) => {
+                a = new Date(a.date);
+                b = new Date(b.date);
+                return a > b ? -1 : a < b ? 1 : 0;
+              })
+              .map((snapshot, index) => (
+                <div className="item" key={snapshot.id}>
+                  <div className="date">{moment(snapshot.date).format(justDateFormat)}</div>
+                  <div className="time">{moment(snapshot.date).format(justTimeFormat)}</div>
+                  <div className="seed i-seed">{snapshot.seed}</div>
+                  <div className="leach i-leach">{snapshot.leach}</div>
+                </div>
+              ))}
           </div>
         </div>
 

@@ -55,8 +55,6 @@ class Routes extends Component {
             <Route path="/signup" component={Signup} />
             {/* Displays noMatch component as a fallback */}
             <Route path="*" component={NoMatch} status={404} />
-
-            {/* <Route component={Login} /> */}
           </Switch>
         </Template>
       </Router>

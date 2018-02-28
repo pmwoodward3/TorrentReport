@@ -96,7 +96,6 @@ const scrape = async ({
     if (!shouldSkip) {
       const torrentListing = await getOrMakeTorrentListing(cleanResult);
       const res = await addOrSetUser(torrentListing);
-      console.log(' res here ===>', res);
       groupedResults.push(torrentListing);
     }
   }

@@ -260,7 +260,7 @@ const uploadedCleanup = (uploadedString) => {
   const hyphenRegEx = /(.*)-(.*)/;
   const colonRegEx = /(.*):(.*)/;
 
-  const uploadedDate = infoArr[1];
+  const uploadedDate = infoArr && infoArr.length ? infoArr[1] : new Date();
   const upMonthDateHourMinute = uploadedDate.split(spaceRegEx);
   upMonthDateHourMinute.splice(0, 1);
   upMonthDateHourMinute.splice(2, 1);

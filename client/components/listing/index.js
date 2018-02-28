@@ -151,6 +151,32 @@ class Listing extends Component {
                   <div className="info">
                     <div className="info-group">
                       <div className="info-item">
+                        <div className="label">listed as</div>
+                        <div className="value">{info.category}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">torrent size</div>
+                        <div className="value">{info.size}</div>
+                      </div>
+                    </div>
+
+                    <div className="info-group">
+                      <div className="info-item">
+                        <div className="label">ratio</div>
+                        <div className="value">{info.ratio}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">max ratio</div>
+                        <div className="value">{info.maxLeach}</div>
+                      </div>
+                      <div className="info-item">
+                        <div className="label">min ratio</div>
+                        <div className="value">{info.minLeach}</div>
+                      </div>
+                    </div>
+
+                    <div className="info-group">
+                      <div className="info-item">
                         <div className="label">seeders</div>
                         <div className="value">{info.seed}</div>
                       </div>
@@ -191,7 +217,7 @@ class Listing extends Component {
                       />
                     </div>
                   ) : (
-                    <div className="chart"> torrent just discovered.</div>
+                    <div />
                   )}
                 </div>
               </Link>

@@ -52,7 +52,7 @@ export default (props) => {
         <YAxis yAxisId="right" orientation="right">
           <Label angle={90} value="ratio" position="right" />
         </YAxis>
-        <CartesianGrid strokeDasharray="3 3" />
+
         <Tooltip />
         <Line
           yAxisId="right"

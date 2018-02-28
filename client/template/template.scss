@@ -46,17 +46,6 @@ p {
   }
 }
 
-.logo {
-  font-weight: 900;
-  color: $site_logo_color;
-  font-family: $logoFont;
-  text-decoration: none;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: $desktop_header_size;
-}
-
 .footer {
   min-height: $footer_height_min;
 }

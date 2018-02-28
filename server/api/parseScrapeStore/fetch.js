@@ -161,7 +161,6 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
             );
           }
         });
-        console.log('info ', info);
         console.log('info cate', info.Category);
         // check if category is linked to info
         if (Array.isArray(info.Category)) {
@@ -227,10 +226,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
           .updateAttributes(newTorrentObj)
           .then(updatedObj => updatedObj.addGroup(torrentScrapeObj.torrentGroupId))
           .then((updatedObj) => {
-            console.log(
-              '... inside of did not find group after addgroup updatedObj ->',
-              updatedObj,
-            );
+            console.log('... inside of did not find group after addgroup updatedObj ->');
             if (!foundCategory) return foundInfo.addCategory(torrentScrapeObj.typeId);
             return updatedObj;
           });
@@ -256,21 +252,18 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
     .then(_ => newTorrentObj);
 };
 
-const addOrSetUser = (listingObj) => {
-  console.log('listing obj in add or set user==>', listingObj);
-  return TorrentUploader.findOrCreate({
-    where: { name: listingObj.uploadUser },
+const addOrSetUser = listingObj => TorrentUploader.findOrCreate({
+  where: { name: listingObj.uploadUser },
+})
+  .spread(async (uploaderObj, created) => {
+    // console.log('torrentUploaderId:', uploaderObj.id);
+    // console.log('uploaderObj AddSiteUploader:', listingObj.torrentSiteId);
+    await TorrentInfo.findById(listingObj.torrentInfoId).then(infoObj =>
+      infoObj.update({ torrentUploaderId: uploaderObj.id }));
+
+    return uploaderObj.addTorrentSite(listingObj.torrentSiteId);
   })
-    .spread(async (uploaderObj, created) => {
-      // console.log('torrentUploaderId:', uploaderObj.id);
-      // console.log('uploaderObj AddSiteUploader:', listingObj.torrentSiteId);
-      await TorrentInfo.findById(listingObj.torrentInfoId).then(infoObj =>
-        infoObj.update({ torrentUploaderId: uploaderObj.id }));
-      console.log(' uploaderObj   ----  >>>>>', uploaderObj);
-      return uploaderObj.addTorrentSite(listingObj.torrentSiteId);
-    })
-    .catch(err => sendError(`error in add or set user ${addOrSetUser}`));
-};
+  .catch(err => sendError(`error in add or set user ${addOrSetUser}`));
 
 module.exports = {
   addOrSetUser,

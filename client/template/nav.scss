@@ -90,6 +90,28 @@ body {
     }
   }
 
+  /*
+   // box to right
+  #logo-version {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 10;
+    background-color: $primaryColor;
+    color: darken($primaryColor, 40%);
+    letter-spacing: 1px;
+    font-size: 0.9em;
+    height: 2em;
+    width: 5em;
+    transform: translate(20em, 0.3em);
+    font-family: monospace !important;
+    padding: 2px;
+    line-height: 0.9em;
+    font-weight: normal !important;
+  }
+  */
+
   input.trigger {
     position: absolute;
     top: -9999px;
@@ -133,17 +155,7 @@ body {
       flex-grow: 1;
       z-index: 1;
     }
-    .logo {
-      flex-grow: 0;
-      flex-basis: auto;
-      display: block;
 
-      span {
-        a {
-          color: $site_logo_color;
-        }
-      }
-    }
     span {
       height: $mobile_header_size;
       display: flex;
@@ -192,11 +204,13 @@ body {
       align-items: center;
 
       li#TR-NAME {
-        text-align: left;
+        flex-grow: 1;
+        flex-shrink: 1;
+        // text-align: left;
         opacity: 1;
-        a {
+        a:not(#logoId) {
           font-family: $logoFont;
-          height: $desktop_header_size;
+          // height: $desktop_header_size;
           line-height: $desktop_header_size;
           padding: 0em 0em 0em 1.3em;
           font-size: $desktop_header_font_size_logo;
@@ -204,6 +218,7 @@ body {
           display: flex;
           &:hover {
             background: none;
+            display: flex;
           }
         }
       }
@@ -298,4 +313,91 @@ body {
 
 .sNav {
   background-color: $flex_nav_active_Color;
+}
+
+.header {
+  .logo {
+    margin-top: 0.6em;
+    span {
+      a {
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+#main {
+  .logo {
+    @media (max-width: $flex_nav_breakpoint) {
+      display: none;
+    }
+  }
+}
+
+.logo {
+  font-weight: 900;
+  color: $site_logo_color;
+  font-family: $logoFont;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-left: 2em;
+}
+
+a#logoId {
+  display: flex;
+  text-decoration: none;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: $site_logo_color;
+  font-size: 1.6em;
+  &:hover {
+    background-color: none;
+  }
+}
+// bottom bar
+#logo-version {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 10;
+  background-color: $primaryColor;
+  color: darken($primaryColor, 40%);
+  font-size: 0.9em;
+  height: 1.2em;
+  width: 16em;
+  // left: 2.6em;
+  // top: 3.7em;
+  transform: translate(0em, 2.9em);
+  font-family: monospace !important;
+  padding: 2px;
+  line-height: 0.9em;
+  letter-spacing: 2px;
+  font-weight: normal !important;
+}
+
+#logo-version-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // position: fixed;
+  z-index: 10;
+  background-color: $primaryColor;
+  color: darken($primaryColor, 40%);
+  font-size: 0.7em;
+  height: 1em;
+  width: 14em;
+  transform: translate(0.2em, 0.2em);
+  font-family: monospace !important;
+  padding: 1px;
+  line-height: 1em;
+  letter-spacing: 2px;
+  font-weight: normal !important;
 }

@@ -14,4 +14,5 @@ export { default as Group } from './group/';
 export { default as NewListings } from './newListings/';
 export { default as NoMatch } from './noMatch/';
 export { default as ScrollToTopRoute } from './ScrollToTopRoute/';
+export { default as BasicToolTip } from './tooltip/basic';
 export { Login, Signup } from './auth-form/';
