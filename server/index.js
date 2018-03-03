@@ -20,8 +20,10 @@ module.exports = app;
 
 const { scraper } = require('./cron');
 
-scraper.start();
-console.log('## Scrape Service Status ##', scraper.running ? '+ Running' : '- FAIL!');
+if (process.env.NODE_ENV !== 'test') {
+  scraper.start();
+  console.log('## Scrape Service Status ##', scraper.running ? '+ Running' : '- FAIL!');
+}
 
 /**
  * In your development environment, you can keep all of your
@@ -31,6 +33,7 @@ console.log('## Scrape Service Status ##', scraper.running ? '+ Running' : '- FA
  * keys as environment variables, so that they can still be read by the
  * Node process on process.env
  */
+
 if (process.env.NODE_ENV !== 'production') require('../secrets');
 
 // passport registration

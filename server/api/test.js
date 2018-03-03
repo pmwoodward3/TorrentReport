@@ -5,6 +5,7 @@ const {
   TorrentListing,
   TorrentSnapshot,
   TorrentGroup,
+  TorrentStats,
 } = require('../db/models');
 const pSS = require('./parseScrapeStore');
 
@@ -18,4 +19,8 @@ router.get('/', (req, res, next) => {
   // } else {
   //   next()
   // }
+});
+
+router.get('/redo', (req, res, next) => {
+  TorrentStats.findOne({ where: { active: true } }).then(result => res.send(result));
 });
