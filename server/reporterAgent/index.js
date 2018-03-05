@@ -2,6 +2,7 @@ require('babel-polyfill');
 const Promise = require('bluebird');
 const sitesArray = require('./sites/index');
 const safeToRunAgent = require('./utils/safeToRunAgent');
+const scrapeSite = require('./scrape');
 
 function reporterAgent() {
   safeToRunAgent()
