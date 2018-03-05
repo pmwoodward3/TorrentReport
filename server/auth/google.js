@@ -33,7 +33,7 @@ if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
   } else {
     console.log('## OAuth - Google ## - SUCCESS! \t (ENV VAR)');
     googleConfig = {
-      consumerKey: process.env.GOOGLE_CLIENT_ID,
+      clientID: process.env.GOOGLE_CLIENT_ID,
       consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK,
     };
