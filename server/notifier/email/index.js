@@ -21,6 +21,7 @@ if (fs.existsSync(SECRETS_PATH)) {
     port: process.env.EMAIL_PORT,
     secure: process.env.EMAIL_SEC, // use TLS
     auth: {
+      type: 'login',
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },

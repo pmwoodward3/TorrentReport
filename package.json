@@ -20,7 +20,7 @@
     "test":
       "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
     "test-server":
-      "NODE_ENV='test' DATABASE_URL='postgres://root:secret@localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
+      "NODE_ENV='test' DATABASE_URL='postgres://root:root@localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
     "snyk-protect": "snyk protect",
     "snyk-test": "snyk test",
     "prepare": "npm run snyk-protect"
