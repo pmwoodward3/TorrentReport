@@ -35,7 +35,7 @@ if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
     googleConfig = {
       consumerKey: process.env.GOOGLE_CLIENT_ID,
       consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.process.env.GOOGLE_CALLBACK,
+      callbackURL: process.env.GOOGLE_CALLBACK,
     };
   }
 
