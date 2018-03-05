@@ -1,12 +1,13 @@
 const nodemailer = require('nodemailer');
 const fs = require('fs');
+const path = require('path');
 
-const SECRETS_PATH = 'secrets.js';
+const SECRETS_PATH = path.resolve(__dirname, '../../../secrets.js');
 
 let cred;
 
 if (fs.existsSync(SECRETS_PATH)) {
-  cred = require(`../../../${SECRETS_PATH}`).email;
+  cred = require(SECRETS_PATH).email;
 } else if (
   !process.env.EMAIL_HOST ||
   !process.env.EMAIL_PORT ||
@@ -18,8 +19,8 @@ if (fs.existsSync(SECRETS_PATH)) {
 } else {
   cred = {
     host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: process.env.EMAIL_SEC, // use TLS
+    port: parseInt(process.env.EMAIL_PORT, 10),
+    secure: process.env.EMAIL_SEC == 'true', // use TLS
     auth: {
       type: 'login',
       user: process.env.EMAIL_USER,

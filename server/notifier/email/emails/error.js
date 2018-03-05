@@ -1,6 +1,6 @@
 const sender = 'admin@torrent.report';
 const titleGen = body => `TorrentReport > Error > ${body}`;
-const bodyHTML = body => `<h1>Error happened again..</h1><p>${body}</p>`;
+const bodyHTML = body => `<h1>Error happened again..</h1><br /><p>${body}</p>`;
 const bodyTEXT = body => `Error happened again...     \n  ${body} `;
 
 const errorMessage = ({ message, title, receiver }) => ({

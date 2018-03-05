@@ -4,6 +4,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const { User } = require('../db/models');
 
 const fs = require('fs');
+const path = require('path');
 
 module.exports = router;
 
@@ -21,14 +22,14 @@ module.exports = router;
  * process.env.GOOGLE_CALLBACK = '/your/google/callback'
  */
 
-const SECRETS_PATH = 'secrets.js';
+const SECRETS_PATH = path.resolve(__dirname, '../../secrets.js');
 let googleConfig;
 if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
   console.log('## OAuth - Google ## - FAIL! \t (Google client ID / secret not found. Skipping Google OAuth.)');
 } else {
   if (fs.existsSync(SECRETS_PATH)) {
     console.log('## OAuth - Google ## - SUCCESS! \t (SECRETS VAR)');
-    googleConfig = require(`../../${SECRETS_PATH}`).google;
+    googleConfig = require(SECRETS_PATH).google;
   } else {
     console.log('## OAuth - Google ## - SUCCESS! \t (ENV VAR)');
     googleConfig = {
