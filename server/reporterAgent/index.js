@@ -2,20 +2,20 @@ require('babel-polyfill');
 const sitesArray = require('./sites/index');
 const safeToRunAgent = require('./utils/safeToRunAgent');
 const scrapeSite = require('./scrape');
+const { initStat, closeStat } = require('./utils/stats');
 
 function reporterAgent() {
   let holdVar;
   return new Promise((reporterResolve, reporterReject) => {
     let hold3var;
-    safeToRunAgent()
+    return safeToRunAgent()
       .then((isSafe) => {
         if (!isSafe) throw Error('not safe to run agent');
-        // start snapshot obj
-        // return: pass sites to siteScraperObj
-        return isSafe;
+        return initStat();
       })
-      .catch(rej => reporterReject(rej.message))
-      .then(res => reporterResolve(res));
+      .then(_ => scrapeSite(sitesArray))
+      .then(reporterResolve)
+      .catch(reporterReject);
   });
 }
 

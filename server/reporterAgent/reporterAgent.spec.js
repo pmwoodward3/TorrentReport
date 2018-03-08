@@ -14,16 +14,16 @@ describe('reportAgent', () => {
   describe('properties', () => {
     before(() => db.sync({ force: true }));
     it('should be a promise chain', () => {
-      const result = reporterAgent();
+      const result = reporterAgent().catch(console.log);
       return expect(result).to.be.a('promise');
     });
   });
   describe('if a scrape is currently active', () => {
     before(() => db.sync({ force: true }));
-    /* it('should fail', () => {
+    it('should fail', () => {
       initStat()
         .then(_ => reporterAgent())
-        .catch(err => expect(err).to.be(err));
-    }); */
+        .then(res => expect(res).to.be.a(null), err => expect(err).to.be.a('error'));
+    });
   });
 });
