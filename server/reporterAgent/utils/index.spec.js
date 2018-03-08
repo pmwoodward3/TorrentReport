@@ -21,6 +21,7 @@ describe('reporterAgent Utilities', () => {
             expect(Array.from(activeStats).length).to.equal(1);
           })));
   });
+
   describe('closeStat()', () => {
     beforeEach(() => db.sync({ force: true }));
     describe('when called', () => {
@@ -45,13 +46,12 @@ describe('reporterAgent Utilities', () => {
     beforeEach(() => db.sync({ force: true }));
     describe('when scrape is still active', () => {
       let statObj;
-      before(() => {
-        initStat();
-      });
       it('should return false if scrape is ongoing', () => {
-        safeToRunAgent().then((isReady) => {
-          expect(isReady).to.equal(false);
-        });
+        initStat()
+          .then(_ => safeToRunAgent())
+          .then((isReady) => {
+            expect(isReady).to.equal(false);
+          });
         // assert.equal(-1, [1, 2, 3].indexOf(4));
       });
     });
