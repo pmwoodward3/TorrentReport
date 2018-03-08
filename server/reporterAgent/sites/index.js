@@ -1,4 +1,8 @@
 const ThePirateBay = require('./tpb');
 const RARBG = require('./rarbg');
 
-module.exports = [ThePirateBay, RARBG];
+const sitesArray = [];
+sitesArray.push(ThePirateBay);
+sitesArray.push(RARBG);
+
+module.exports = sitesArray;

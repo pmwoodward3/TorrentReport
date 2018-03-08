@@ -1,3 +1,3 @@
-const scrapeSite = () => {}
+const scrapeSite = (sitesArray) => {};
 
 module.exports = scrapeSite;
