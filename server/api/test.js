@@ -8,12 +8,22 @@ const {
   TorrentStats,
 } = require('../db/models');
 const pSS = require('./parseScrapeStore');
+const reporterAgent = require('../reporterAgent');
 
 module.exports = router;
 
 router.get('/', (req, res, next) => {
   // if (req.user && req.user.isAdmin) {
   pSS()
+    .then(data => res.json(data))
+    .catch(next);
+  // } else {
+  //   next()
+  // }
+});
+router.get('/new', (req, res, next) => {
+  // if (req.user && req.user.isAdmin) {
+  reporterAgent()
     .then(data => res.json(data))
     .catch(next);
   // } else {

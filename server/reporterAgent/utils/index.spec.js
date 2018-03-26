@@ -46,13 +46,12 @@ describe('reporterAgent Utilities', () => {
     beforeEach(() => db.sync({ force: true }));
     describe('when scrape is still active', () => {
       let statObj;
-      it('should return false if scrape is ongoing', () => {
+      it('should return error if scrape is ongoing', () => {
         initStat()
           .then(_ => safeToRunAgent())
           .then((isReady) => {
             expect(isReady).to.equal(false);
           });
-        // assert.equal(-1, [1, 2, 3].indexOf(4));
       });
     });
   });
