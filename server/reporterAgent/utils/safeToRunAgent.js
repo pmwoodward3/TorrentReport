@@ -1,5 +1,9 @@
 const TorrentStats = require('../../db/models/torrentStats');
 
+/** @description Condition for unsafe: current active stat object in database
+ * or last scrape started less than 22 hours ago.
+ * @returns {boolean} Returns true or false whether it is safe to run agent.
+ * */
 const safeToRunAgent = () =>
   // check if an active stat agent is running
   TorrentStats.findOne({ where: { active: true } }).then((result) => {
@@ -11,10 +15,8 @@ const safeToRunAgent = () =>
         const today = new Date();
         const lastDate = new Date(latestStat.createdAt);
         const timeDiff = lastDate.getTime() - today.getTime();
-        console.log('time diff ---------', timeDiff);
         const diffDays = timeDiff / (1000 * 3600 * 22);
-        console.log('days diff ---------', diffDays);
-        return !(diffDays >= -1);
+        return diffDays <= -1;
       });
     });
   });

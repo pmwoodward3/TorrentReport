@@ -1,20 +1,25 @@
-require('babel-polyfill');
+/* eslint-disable no-unused-vars */
+require('babel-polyfill'); // fix for tests
 const sitesArray = require('./sites/index');
 const safeToRunAgent = require('./utils/safeToRunAgent');
 const scrapeSite = require('./scrape');
 const { initStat, closeStat } = require('./utils/stats');
+const { getOrMakeNestedSite } = require('./fetchOrMake/siteGroupCategory');
+const sequentialPromise = require('./utils/sequentialPromise');
 
 function reporterAgent(inputSiteArr = sitesArray) {
-  let holdVar;
   return new Promise((reporterResolve, reporterReject) => {
     let hold3var;
     return safeToRunAgent()
       .then((isSafe) => {
         if (!isSafe) throw Error('not safe to run agent');
+        else {
+          return initStat()
+            .then(_ => sequentialPromise(inputSiteArr, getOrMakeNestedSite))
+            .then(siteArrWithIds => sequentialPromise(siteArrWithIds, scrapeSite))
+            .then(_ => closeStat({}));
+        }
       })
-      .then(initStat)
-      .then(_ => scrapeSite(inputSiteArr))
-      .then(_ => closeStat({}))
       .then(reporterResolve)
       .catch(reporterReject);
   });

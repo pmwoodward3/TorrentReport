@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
@@ -10,6 +11,7 @@ const passport = require('passport');
 const helmet = require('helmet');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
+const { logger } = require('./logging');
 
 const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
@@ -22,7 +24,7 @@ const { scraper } = require('./cron');
 
 if (process.env.NODE_ENV !== 'test') {
   scraper.start();
-  console.log('## Scrape Service Status ##', scraper.running ? '+ Running' : '- FAIL!');
+  logger.info('## Scrape Service Status ##', scraper.running ? '+ Running' : '- FAIL!');
 }
 
 /**
@@ -52,7 +54,7 @@ const createApp = () => {
   app.use(helmet());
 
   // logging middleware
-  app.use(morgan('dev'));
+  app.use(morgan('combined', { stream: logger.stream }));
 
   // body parsing middleware
   app.use(bodyParser.json());
@@ -111,9 +113,9 @@ const createApp = () => {
   });
 
   // error handling endware
-  app.use((err, req, res, next) => {
-    console.error(err);
-    console.error(err.stack);
+  app.use((err, req, res) => {
+    logger.error(err);
+    logger.error(err.stack);
     res.status(err.status || 500).send(err.message || 'Internal server error.');
   });
 };
@@ -121,7 +123,7 @@ const createApp = () => {
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
-    console.log(`## Web Server ## + Running! \t(on port ${PORT})`));
+    logger.info(`## Web Server ## + Running! \t(on port ${PORT})`));
 
   // set up our socket control center
   const io = socketio(server);

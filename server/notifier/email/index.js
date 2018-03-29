@@ -1,3 +1,5 @@
+/* eslint-disable global-require import/no-dynamic-require */
+const { logger } = require('../../logging');
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
@@ -15,7 +17,7 @@ if (fs.existsSync(SECRETS_PATH)) {
   !process.env.EMAIL_USER ||
   !process.env.EMAIL_PASS
 ) {
-  throw 'Missing Email Config Details';
+  throw Error('Missing Email Config Details');
 } else {
   cred = {
     host: process.env.EMAIL_HOST,
@@ -34,11 +36,11 @@ const transporter = nodemailer.createTransport(cred);
 // verify connection configuration
 transporter.verify((error, success) => {
   if (error) {
-    console.log('## Email Service Status ## - FAIL!');
-    console.log(error);
+    logger.info('## Email Service Status ## - FAIL!');
+    logger.info(`'## Email Service Status ## error: ${error}`);
   } else {
-    console.log('## Email Service Status ## + Running!');
-    // console.log(success);
+    logger.info('## Email Service Status ## + Running!');
+    logger.info(`## Email Service Status ## success: ${success}`);
   }
 });
 

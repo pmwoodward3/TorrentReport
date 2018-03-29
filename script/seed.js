@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const db = require('../server/db');
 const {
   User,
@@ -138,7 +140,7 @@ async function seed() {
 }
 
 seed()
-  .catch((err) => {
+  .catch(err => {
     console.error(err.message);
     console.error(err.stack);
     process.exitCode = 1;

@@ -1,8 +1,9 @@
+const { logger } = require('../../../logging');
 const transporter = require('../index');
 const { errorMessage } = require('./error');
 
 const logEmail = (data) => {
-  console.log('--- email sent ---\n', data);
+  logger.info('--- email sent ---', data);
 };
 
 const sendError = (title, message) => {

@@ -1,3 +1,4 @@
+const { logger } = require('../logging');
 const passport = require('passport');
 const router = require('express').Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -25,13 +26,13 @@ module.exports = router;
 const SECRETS_PATH = path.resolve(__dirname, '../../secrets.js');
 let googleConfig;
 if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
-  console.log('## OAuth - Google ## - FAIL! \t (Google client ID / secret not found. Skipping Google OAuth.)');
+  logger.info('## OAuth - Google ## - FAIL! \t (Google client ID / secret not found. Skipping Google OAuth.)');
 } else {
   if (fs.existsSync(SECRETS_PATH)) {
-    console.log('## OAuth - Google ## - SUCCESS! \t (SECRETS VAR)');
+    logger.info('## OAuth - Google ## - SUCCESS! \t (SECRETS VAR)');
     googleConfig = require(SECRETS_PATH).google;
   } else {
-    console.log('## OAuth - Google ## - SUCCESS! \t (ENV VAR)');
+    logger.info('## OAuth - Google ## - SUCCESS! \t (ENV VAR)');
     googleConfig = {
       clientID: process.env.GOOGLE_CLIENT_ID,
       consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
