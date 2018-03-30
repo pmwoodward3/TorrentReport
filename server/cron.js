@@ -1,13 +1,13 @@
 const { logger } = require('./logging');
 const { CronJob } = require('cron');
-const pSS = require('./api/parseScrapeStore');
+const reporterAgent = require('./reporterAgent');
 const { sendError } = require('./notifier/email/emails');
 
 const scraper = new CronJob(
   '00 17 01 * * *',
   () => {
     logger.info('starting automated scrape cron');
-    pSS().catch(err => sendError('automated parse scrape store catch', err));
+    reporterAgent().catch(err => sendError('automated parse scrape store catch', err));
   },
   () => {
     sendError('automated parse scrape store has stopped', 'stop log called');

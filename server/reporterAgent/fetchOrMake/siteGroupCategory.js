@@ -65,6 +65,12 @@ const getOrMakeNestedSite = siteObj =>
       RALogger.log('verbose', `${site.siteName} - - assigning new group arr with above info...`);
       site.groups = newGroups;
       return site;
+    })
+    .catch((err) => {
+      console.log(err);
+      RALogger.error('error in siteGroupCategory.js');
+      RALogger.error(err);
+      return { skip: true };
     });
 
 module.exports = getOrMakeNestedSite;

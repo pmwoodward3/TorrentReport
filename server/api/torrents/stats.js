@@ -1,20 +1,11 @@
 const router = require('express').Router();
-const { maxIdDetail } = require('../parseScrapeStore/check');
 const {
   TorrentStats, TorrentSite, TorrentGroup, TorrentCategory,
 } = require('../../db/models');
-const {
-  getOrMakeSite,
-  getSnapshotCount,
-  getTorrentCount,
-  getGroupCount,
-  getInfoCount,
-  getListCount,
-  getScrapeCount,
-  getSiteCount,
-} = require('../parseScrapeStore/fetch');
 
 module.exports = router;
+
+const maxIdDetail = () => TorrentStats.max('id').then(maxId => TorrentStats.findById(maxId));
 
 router.get('/', (req, res, next) => {
   maxIdDetail()

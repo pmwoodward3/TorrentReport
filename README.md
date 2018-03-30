@@ -12,10 +12,10 @@ Using Node.js with express, sequelize, postgres, and puppeteer (the headless chr
 
 #### Technologies & Frameworks
 
-Server: Express, body-parser
-Persistance: Sequelize, Postgres
-Authentication: Passport, Passport-Google
-Testing: Mocha, Chai
+* Server: Express, body-parser
+* Persistance: GraphQL _planned_ , Sequelize, Postgres
+* Authentication: Passport, Passport-Google
+* Testing: Mocha, Chai
 
 ### Information Gathering (aka reporterAgent)
 
@@ -24,3 +24,5 @@ The central figure in this show is the reporterAgent (./server/reporterAgent), a
 ## Front End
 
 Built using React 16 with redux, redux-thunks, and without any front-end css frameworks (custom flexbox). The application has been optimized for two screen sizes. anything less than 800 pixels wide is considered a condensed "mobile" view. Using SASS (mixins and variables),
+
+The application currently utilizes a RESTful api, but I am rewriting it using GraphQL. This will allow me to utilize Relay with React and greatly simplify the data-fetching.

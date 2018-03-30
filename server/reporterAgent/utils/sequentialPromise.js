@@ -1,8 +1,9 @@
-const factoryFuncArr = (array, func) => array.map(item => () => func(item));
+const factoryFuncArr = (array, funcToCall) => array.map(item => () => funcToCall(item));
 
 const serializedPromiseArr = funcArr =>
   funcArr.reduce(
-    (promise, func) => promise.then(result => func().then(Array.prototype.concat.bind(result))),
+    (promise, currFunc) =>
+      promise.then(result => currFunc().then(Array.prototype.concat.bind(result))),
     Promise.resolve([]),
   );
 

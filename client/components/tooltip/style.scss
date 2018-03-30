@@ -4,6 +4,7 @@
 .basic-tooltip-holder {
   display: flex;
   color: darken($stats_background_color, 15%);
+  cursor: help;
 }
 .basic-tooltip {
   display: none;

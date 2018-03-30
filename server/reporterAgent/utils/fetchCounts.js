@@ -5,8 +5,6 @@ const {
   TorrentSnapshot,
   TorrentGroup,
   TorrentStats,
-  TorrentCategory,
-  TorrentUploader,
 } = require('../../db/models');
 
 const getSiteCount = () => TorrentSite.count();

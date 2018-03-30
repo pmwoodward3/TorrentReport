@@ -3,9 +3,10 @@ require('babel-polyfill'); // fix for tests
 const sitesArray = require('./sites/index');
 const safeToRunAgent = require('./utils/safeToRunAgent');
 const scrapeSite = require('./scrape');
-const { initStat, closeStat } = require('./utils/stats');
-const { getOrMakeNestedSite } = require('./fetchOrMake/siteGroupCategory');
+const { initStat, closeStat } = require('./fetchOrMake/stats');
+const getOrMakeNestedSite = require('./fetchOrMake/siteGroupCategory');
 const sequentialPromise = require('./utils/sequentialPromise');
+const filterSkip = require('./utils/filterSkip');
 
 function reporterAgent(inputSiteArr = sitesArray) {
   return new Promise((reporterResolve, reporterReject) => {
@@ -16,8 +17,9 @@ function reporterAgent(inputSiteArr = sitesArray) {
         else {
           return initStat()
             .then(_ => sequentialPromise(inputSiteArr, getOrMakeNestedSite))
+            .then(filterSkip)
             .then(siteArrWithIds => sequentialPromise(siteArrWithIds, scrapeSite))
-            .then(_ => closeStat({}));
+            .then(closeStat);
         }
       })
       .then(reporterResolve)

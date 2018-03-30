@@ -1,35 +1,55 @@
 const { RALogger } = require('../../logging');
 const {
-  TorrentSite,
   TorrentInfo,
   TorrentListing,
-  TorrentSnapshot,
   TorrentGroup,
-  TorrentStats,
   TorrentCategory,
   TorrentUploader,
 } = require('../../db/models');
 
+const safeFields = {
+  fields: [
+    'torrentCategoryId',
+    'torrentUploaderId',
+    'imdb',
+    'seed',
+    'minSeed',
+    'minSeedDate',
+    'maxSeed',
+    'maxSeedDate',
+    'leach',
+    'minLeach',
+    'minLeachDate',
+    'maxLeach',
+    'maxLeachDate',
+    'ratio',
+    'minRatio',
+    'minRatioDate',
+    'maxRatio',
+    'maxRatioDate',
+    'hash',
+    'uploadDate',
+    'uploadUser',
+    'size',
+    'category',
+    'url',
+    'torrentListingId',
+  ],
+};
+
 const getOrMakeTorrentListing = (torrentScrapeObj) => {
   const newTorrentObj = Object.assign({}, torrentScrapeObj);
   let dbListingObj;
-  RALogger.info(
-    'site id:',
-    torrentScrapeObj.torrentSiteId,
-    ' | group id:',
-    torrentScrapeObj.torrentGroupId,
-    ' | type id:',
-    torrentScrapeObj.typeId,
-    ' | torrent listing name:',
-    torrentScrapeObj.name,
-  );
+  RALogger.verbose(`site id: ${torrentScrapeObj.torrentSiteId}  | group id: ${
+    torrentScrapeObj.torrentGroupId
+  }  | type id: ${torrentScrapeObj.typeId}  | torrent listing name: ${torrentScrapeObj.name}`);
   return TorrentListing.findOrCreate({
     where: {
       name: torrentScrapeObj.name,
     },
   })
     .spread((listing, created) => {
-      RALogger.info('... was created?', created);
+      RALogger.verbose(`... was created? ${created}`);
       newTorrentObj.torrentListingId = listing.id;
       dbListingObj = listing;
       return listing.getInfos({
@@ -48,13 +68,8 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         // check if current torrent uplaod user is already in our db.
         if (info.uploadUser === torrentScrapeObj.uploadUser) {
           foundInfo = info;
-          RALogger.info('... did find curr uploaduser in info!!!!');
-          RALogger.info(
-            '... info uploaduser',
-            info.uploadUser,
-            'obj uplaoduser',
-            torrentScrapeObj.uploadUser,
-          );
+          RALogger.verbose('... did find curr uploaduser in info!!!!');
+          RALogger.verbose(`... info uploaduser ${info.uploadUser} obj uplaoduser ${torrentScrapeObj.uploadUser}`);
           newTorrentObj.torrentInfoId = parseInt(info.id, 10);
         }
 
@@ -62,21 +77,16 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         info.Group.forEach((group) => {
           if (parseInt(group.id, 10) === parseInt(torrentScrapeObj.torrentGroupId, 10)) {
             foundGroupInfo = info;
-            RALogger.info('... group already exists in existing info ', foundGroupInfo == false);
-            RALogger.info(
-              '... info group id',
-              group.id,
-              'obj group id',
-              torrentScrapeObj.torrentGroupId,
-            );
+            RALogger.verbose(`... group already exists in existing info  ${foundGroupInfo}`);
+            RALogger.verbose(`... info group id ${group.id} obj group id ${torrentScrapeObj.torrentGroupId} `);
           }
         });
-        RALogger.info('info cate', info.Category);
+        RALogger.verbose(`info cate ${info.Category}`);
         // check if category is linked to info
         if (Array.isArray(info.Category)) {
           info.Category.forEach((category) => {
             if (parseInt(category.id, 10) === parseInt(torrentScrapeObj.typeId, 10)) {
-              RALogger.info('... found category linked to info already');
+              RALogger.verbose('... found category linked to info already');
               foundCategory = info;
             }
           });
@@ -131,18 +141,18 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       }
 
       if (!foundGroupInfo && foundInfo) {
-        RALogger.info('... DID NOT FIND GROUP BUT FOUND INFO, update info add group');
+        RALogger.verbose('... DID NOT FIND GROUP BUT FOUND INFO, update info add group');
         return foundInfo
           .updateAttributes(newTorrentObj)
           .then(updatedObj => updatedObj.addGroup(torrentScrapeObj.torrentGroupId))
           .then((updatedObj) => {
-            RALogger.info('... inside of did not find group after addgroup updatedObj ->');
+            RALogger.verbose('... inside of did not find group after addgroup updatedObj ->');
             if (!foundCategory) return foundInfo.addCategory(torrentScrapeObj.typeId);
             return updatedObj;
           });
       }
       if (foundGroupInfo && foundInfo) {
-        RALogger.info('.. FOUND GROUP AND INFO, just update');
+        RALogger.verbose('.. FOUND GROUP AND INFO, just update');
         return foundInfo.updateAttributes(newTorrentObj).then((updatedObj) => {
           if (!foundCategory) return updatedObj.addCategory(torrentScrapeObj.typeId);
           return updatedObj;
@@ -150,12 +160,12 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       }
 
       // true Group true Info,
-      RALogger.info('... creating info');
+      RALogger.verbose('... creating info');
       return TorrentInfo.create(newTorrentObj, safeFields).then((createdInfo) => {
         createdInfo.addGroup(torrentScrapeObj.torrentGroupId);
         createdInfo.addCategory(torrentScrapeObj.typeId);
         newTorrentObj.torrentInfoId = createdInfo.id;
-        RALogger.info('... created info item and association ');
+        RALogger.verbose('... created info item and association ');
         return dbListingObj.addInfo(createdInfo);
       });
     })

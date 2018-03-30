@@ -11,3 +11,4 @@ npm-debug.log
 yarn-error.log
 **/scrapedResults.js
 package-lock.json
+**.log
