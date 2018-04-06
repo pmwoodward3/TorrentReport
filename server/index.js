@@ -70,7 +70,7 @@ const createApp = () => {
     store: sessionStore,
     resave: false,
     saveUninitialized: true,
-    secret: process.env.SESSION_SECRET || 'asdasdasdasdasd',
+    secret: process.env.SESSION_SECRET || '2167SQe023713Lhr3KE349ads786asd5s62s9m3ldf3487634',
   };
   if (app.get('env') === 'production') {
     app.set('trust proxy', 1);
@@ -90,6 +90,7 @@ const createApp = () => {
   });
 
   // auth and api routes
+  app.use('/test', require('./test'));
   app.use('/auth', require('./auth'), limiter);
   app.use('/api', require('./api'), limiter);
 
@@ -113,7 +114,7 @@ const createApp = () => {
   });
 
   // error handling endware
-  app.use((err, req, res) => {
+  app.use((err, req, res, next) => {
     logger.error(err);
     logger.error(err.stack);
     res.status(err.status || 500).send(err.message || 'Internal server error.');
@@ -122,8 +123,9 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  const server = app.listen(PORT, () =>
-    logger.info(`## Web Server ## + Running! \t(on port ${PORT})`));
+  const server = app.listen(PORT, () => {
+    logger.info(`## Web Server ## + Running! \t(on port ${PORT}) -> http://localhost:${PORT}/`);
+  });
 
   // set up our socket control center
   const io = socketio(server);

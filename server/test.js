@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { TorrentStats } = require('../db/models');
-const reporterAgent = require('../reporterAgent');
+const { TorrentStats } = require('./db/models');
+const reporterAgent = require('./reporterAgent');
 
 module.exports = router;
 

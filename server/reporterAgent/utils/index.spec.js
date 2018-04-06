@@ -3,10 +3,10 @@ const chai = require('chai');
 // const chaiThings = require('chai-things');
 // chai.use(chaiProperties);
 // chai.use(chaiThings);
-const expect = chai.expect;
+const { expect } = chai;
 
 const { TorrentStats } = require('../../db/models');
-const db = require('../../db/db'); // db for forcesync
+// const db = require('../../db/db'); // db for forcesync
 const safeToRunAgent = require('./safeToRunAgent'); // part of test
 const { initStat, closeStat, setCloseStat } = require('../fetchOrMake/stats'); // part of test
 
@@ -14,7 +14,6 @@ const { siteData } = require('../testData');
 
 describe('reporterAgent Utilities', () => {
   describe('initStat()', () => {
-    beforeEach(() => db.sync({ force: true }));
     describe('when called', () =>
       it('should create an active torrentStat listings', () =>
         initStat()
@@ -26,7 +25,6 @@ describe('reporterAgent Utilities', () => {
   });
 
   describe('closeStat()', () => {
-    before(() => db.sync({ force: true }));
     describe('when called', () => {
       it('should close active torrentStat listing ', () =>
         initStat()
@@ -48,14 +46,11 @@ describe('reporterAgent Utilities', () => {
   });
 
   describe('safeToRunAgent()', () => {
-    beforeEach(() => db.sync({ force: true }));
     describe('when scrape is still active', () => {
-      it('should return error if scrape is ongoing', () => {
+      it('should throw error if scrape is ongoing', () => {
         initStat()
-          .then(_ => safeToRunAgent())
-          .then((isReady) => {
-            expect(isReady).to.equal(false);
-          })
+          .then(_ => expect(safeToRunAgent).to.throw('not safe to run agent'))
+          .catch(_ => Promise.resolve())
           .then(closeStat(siteData));
       });
     });

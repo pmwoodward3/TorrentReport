@@ -51,7 +51,8 @@ export const auth = (email, password, method) => (dispatch) => {
         history.push('/account');
       },
       (authError) => {
-        dispatch(setError(authError));
+        // console.log('auth error:', authError);
+        dispatch(setError(authError.response.data));
       },
     )
     .catch(dispatchOrHistoryErr => console.error(dispatchOrHistoryErr));
