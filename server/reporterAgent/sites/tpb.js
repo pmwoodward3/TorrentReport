@@ -298,6 +298,8 @@ const uploadedCleanup = (uploadedString) => {
     newUploadDate = new Date(upMonthDateHourMinute[1], upMonth, upDate, 0, 0);
   }
 
+  // adjust for TPB servers time zone
+
   const uploadDate = new Date(newUploadDate);
   uploadDate.setHours(uploadDate.getHours() - 5);
   const finalUploadDate = new Date(uploadDate);

@@ -1,14 +1,14 @@
 /* global describe beforeEach it */
 
-const { expect } = require('chai');
-const request = require('supertest');
-const db = require('../db');
-const app = require('../index');
+// const { expect } = require('chai');
+// const request = require('supertest');
+// const db = require('../db');
+// const app = require('../index');
 
-const User = db.model('user');
+// const User = db.model('user');
 
-describe('User routes', () => {
-  beforeEach(() => db.sync({ force: true }));
+// describe('User routes', () => {
+//   beforeEach(() => db.sync({ force: true }));
   /*    commented out because user api is limited to logged in users     */
   // describe('/api/users/', () => {
   //   const codysEmail = 'cody@puppybook.com';
@@ -25,4 +25,4 @@ describe('User routes', () => {
   //       expect(res.body[0].email).to.be.equal(codysEmail);
   //     }));
   // }); // end describe('/api/users')
-}); // end describe('User routes')
+// }); // end describe('User routes')

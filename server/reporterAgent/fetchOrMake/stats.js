@@ -56,6 +56,7 @@ const closeStat = async (fullSites) => {
   const ginfoCount = await getInfoCount();
   const snapshotCount = await getSnapshotCount();
   const getTCount = await getTorrentCount();
+  const currentTime = new Date();
   const statObj = {
     siteCount: parseInt(gSiteCount, 10),
     siteLoadCount: fullSites.length,
@@ -67,7 +68,7 @@ const closeStat = async (fullSites) => {
     infoCount: parseInt(ginfoCount, 10),
     snapshotCount: parseInt(snapshotCount, 10),
     active: false,
-    endedAt: new Date(),
+    endedAt: currentTime,
   };
 
   fullSites.forEach((site) => {

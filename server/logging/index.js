@@ -45,7 +45,7 @@ const consoleConfig = {
 const fileConfig = {
   app: {
     filename: `${fullLogsDir}/app-%DATE%.log`,
-    datePattern: 'YYYY-MM-DD-HH-MM',
+    datePattern: 'YYYY-MM-DD',
     maxSize: '20m',
     maxFiles: '14d',
     timestamp: tsFormat,
@@ -53,8 +53,9 @@ const fileConfig = {
     json: env !== 'development',
   },
   reporterAgent: {
+    level: 'verbose',
     filename: `${fullLogsDir}/reporter-agent-%DATE%.log`,
-    datePattern: 'YYYY-MM-DD-HH-MM',
+    datePattern: 'YYYY-MM-DD',
     maxSize: '20m',
     maxFiles: '14d',
     timestamp: tsFormat,

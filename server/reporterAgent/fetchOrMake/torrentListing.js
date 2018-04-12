@@ -66,7 +66,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       let foundCategory = false;
       infos.forEach((info) => {
         // check if current torrent uplaod user is already in our db.
-        if (info.uploadUser === torrentScrapeObj.uploadUser) {
+        if (info.uploadUser.toLowerCase() === torrentScrapeObj.uploadUser.toLowerCase()) {
           foundInfo = info;
           RALogger.verbose('... did find curr uploaduser in info!!!!');
           RALogger.verbose(`... info uploaduser ${info.uploadUser} obj uplaoduser ${torrentScrapeObj.uploadUser}`);

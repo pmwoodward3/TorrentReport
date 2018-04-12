@@ -8,10 +8,16 @@ const TorrentUploader = db.define(
   {
     name: {
       type: Sequelize.STRING,
+      allowNull: true,
+    },
+    lowerCaseName: {
+      type: Sequelize.STRING,
       allowNull: false,
     },
     count: {
       type: Sequelize.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
     },
   },
   {
