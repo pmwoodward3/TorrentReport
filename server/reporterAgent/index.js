@@ -8,12 +8,12 @@ const getOrMakeNestedSite = require('./fetchOrMake/siteGroupCategory');
 const sequentialPromise = require('./utils/sequentialPromise');
 const filterSkip = require('./utils/filterSkip');
 
-function reporterAgent(inputSiteArr = sitesArray) {
+function reporterAgent(inputSiteArr = sitesArray, skipSafetyCheck = false) {
   return new Promise((reporterResolve, reporterReject) => {
     let hold3var;
     return safeToRunAgent()
       .then((isSafe) => {
-        if (!isSafe) throw Error('not safe to run agent');
+        if (!isSafe && !skipSafetyCheck) throw Error('not safe to run agent');
         else {
           return initStat()
             .then(_ => sequentialPromise(inputSiteArr, getOrMakeNestedSite))
