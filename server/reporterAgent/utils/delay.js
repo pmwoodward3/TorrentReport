@@ -2,16 +2,18 @@ const { RALogger } = require('../../logging');
 
 const delay = (func, value, time) =>
   new Promise((resolveDelay, rejectDelay) => {
-    RALogger.verbose(` == delay set == ${time} ms == value: ${value} ==`);
+    // add random time between 1 and 60 seconds to delay
+    const randomTime = !time ? 0 : time + Math.floor(Math.random() * 60000) + 1000;
+    RALogger.verbose(` == delay set == ${time} ms == value: ${value} == random time: ${randomTime}`);
     setTimeout(() => {
       try {
-        RALogger.verbose(` == delay resolve == ${time} ms == value: ${value} ==`);
+        RALogger.verbose(` == delay resolve == ${time} ms == value: ${value}  == random time: ${randomTime}`);
         resolveDelay(func(value));
       } catch (err) {
-        RALogger.verbose(` == delay reject == ${time} ms == value: ${value} ==`);
+        RALogger.verbose(` == delay reject == ${time} ms == value: ${value}  == random time: ${randomTime}`);
         rejectDelay(err);
       }
-    }, time);
+    }, randomTime);
   });
 
 module.exports = delay;

@@ -15,8 +15,10 @@ reporterAgent(undefined, true)
     console.log(`Time elapsed: ${elapsedTime(startTime)} minutes`);
     process.exit(0);
   })
-  .catch((_) => {
+  .catch((err) => {
     console.log('Scrape encountered an error.');
     console.log(`Time elapsed: ${elapsedTime(startTime)} minutes`);
+    console.log('error:');
+    console.log(err);
     process.exit(1);
   });

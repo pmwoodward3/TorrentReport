@@ -12,6 +12,6 @@ const serializedPromiseArr = funcArr =>
   );
 
 const sequentialPromise = (dataArr, func, delayTime = 0) =>
-  serializedPromiseArr(factoryFuncArr(dataArr, func, (delayTime = 0)));
+  serializedPromiseArr(factoryFuncArr(dataArr, func, delayTime));
 
 module.exports = sequentialPromise;

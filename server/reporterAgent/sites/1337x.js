@@ -450,7 +450,10 @@ const uploadedCleanup = (uploadedString) => {
     newUploadDate = new Date(year, month, date);
     RALogger.verbose(`------ else ------ newUploadDate: ${newUploadDate}`);
   }
-  return new Date(newUploadDate);
+  const uploadDate = new Date(newUploadDate);
+  uploadDate.setHours(uploadDate.getHours() - 5);
+
+  return uploadDate;
 };
 
 module.exports = leet1337x;

@@ -93,7 +93,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         }
       });
 
-      const rawRatio = newTorrentObj.seed / newTorrentObj.leach;
+      const rawRatio = newTorrentObj.leach === 0 ? 0 : newTorrentObj.seed / newTorrentObj.leach;
       newTorrentObj.ratio = Math.floor(rawRatio * 100) / 100;
 
       // newTorrentObj needs max and min setup

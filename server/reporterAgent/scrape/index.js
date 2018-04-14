@@ -6,7 +6,7 @@ const filterSkip = require('../utils/filterSkip');
 const scrapeSite = siteObj =>
   new Promise((scrapeResolve, scrapeReject) => {
     const newSiteObj = Object.assign({}, siteObj);
-    sequentialPromise(siteObj.groups, scrape, 90000) // 1.5min delay between scrape runs
+    sequentialPromise(siteObj.groups, scrape, 60000) // min 1 min delay between scrape runs
       .then((groupScraped) => {
         const groupsToKeep = filterSkip(groupScraped);
         newSiteObj.groups = groupsToKeep;

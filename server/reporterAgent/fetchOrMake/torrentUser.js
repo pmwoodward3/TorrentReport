@@ -16,10 +16,9 @@ const addOrSetUser = (listingObj) => {
       RALogger.verbose(`torrentUploader Name: ${uploaderObj.name} - Id: ${
         uploaderObj.id
       } - uploaderObj AddSiteUploader: ${listingObj.torrentSiteId}`);
-      await TorrentInfo.findById(listingObj.torrentInfoId).then(infoObj =>
-        infoObj.update({ torrentUploaderId: uploaderObj.id }));
-
-      return uploaderObj.addTorrentSite(listingObj.torrentSiteId);
+      return TorrentInfo.findById(listingObj.torrentInfoId)
+        .then(infoObj => infoObj.update({ torrentUploaderId: uploaderObj.id }))
+        .then(_ => uploaderObj.addTorrentSite(listingObj.torrentSiteId));
     })
     .catch((err) => {
       RALogger.error('ERROR IN addOrSetUser');
