@@ -49,7 +49,12 @@ if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
       .then(foundUser =>
         (foundUser
           ? done(null, foundUser)
-          : User.create({ name, email, googleId }).then(createdUser => done(null, createdUser))))
+          : User.create({
+            name,
+            email,
+            googleId,
+            activated: true,
+          }).then(createdUser => done(null, createdUser))))
       .catch(done);
   });
 

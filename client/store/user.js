@@ -7,7 +7,9 @@ import history from '../history';
 const GET_USER = 'GET_USER';
 const REMOVE_USER = 'REMOVE_USER';
 const SET_ERROR = 'SET_ERROR';
+const SET_SUCCESS = 'SET_SUCCESS';
 const CLEAR_ERROR = 'CLEAR_ERROR';
+const CLEAR_SUCCESS = 'CLEAR_SUCCESS';
 
 /**
  * INITIAL STATE
@@ -20,7 +22,9 @@ const defaultUser = {};
 const getUser = user => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 export const setError = errorMessage => ({ type: SET_ERROR, errorMessage });
+export const setSuccess = successMessage => ({ type: SET_SUCCESS, successMessage });
 export const clearError = () => ({ type: CLEAR_ERROR });
+export const clearSuccess = () => ({ type: CLEAR_SUCCESS });
 
 /**
  * THUNK CREATORS
@@ -47,11 +51,31 @@ export const auth = (email, password, method) => (dispatch) => {
     .post(`/auth/${method}`, { email, password })
     .then(
       (res) => {
-        dispatch(getUser(res.data));
-        history.push('/account');
+        console.log('post axios here', method, '- email', email, '- password', password);
+        console.log(res);
+        switch (method) {
+          case 'signup': {
+            dispatch(setSuccess(`You have successfully signed up. We emailed you a link that needs to clicked to activate your account. Check your email: ${
+              res.data.email
+            } `));
+            break;
+          }
+          case 'login': {
+            if (res.data === 'Need to activate account.') {
+              dispatch(setError('You still have not activeated your account.'));
+            } else {
+              dispatch(getUser(res.data));
+              history.push('/account');
+            }
+            break;
+          }
+          default: {
+            dispatch(setError('Auth Form Error - Unknown Method'));
+          }
+        }
       },
       (authError) => {
-        // console.log('auth error:', authError);
+        console.log('auth error:', authError);
         dispatch(setError(authError.response.data));
       },
     )
@@ -85,9 +109,23 @@ export default function (state = defaultUser, action) {
       };
       return newUserObj;
     }
+    case SET_SUCCESS: {
+      const newUserObj = { ...state };
+      newUserObj.success = {
+        response: {
+          data: action.successMessage,
+        },
+      };
+      return newUserObj;
+    }
     case CLEAR_ERROR: {
       const newUserObj = { ...state };
       delete newUserObj.error;
+      return newUserObj;
+    }
+    case CLEAR_SUCCESS: {
+      const newUserObj = { ...state };
+      delete newUserObj.success;
       return newUserObj;
     }
     default:

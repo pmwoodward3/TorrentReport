@@ -1,6 +1,17 @@
 @import '../../template/_variables';
 @import '../../template/mixins';
 
+@keyframes fadeInMessage {
+  from {
+    opacity: 0;
+    height: 0%;
+  }
+  to {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
 form div {
   margin: 1em;
   display: inline-block;
@@ -67,6 +78,19 @@ form div {
   height: 100%;
 }
 
+.success {
+  background-color: $success_message_background_color;
+  padding: 2em;
+  border-radius: 0.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: $success_message_text_color;
+  font-weight: bold;
+  animation-name: fadeInMessage;
+  animation-fill-mode: forwards;
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in;
+}
+
 .error {
   background-color: $error_message_background_color;
   padding: 2em;
@@ -74,6 +98,10 @@ form div {
   font-family: Arial, Helvetica, sans-serif;
   color: $error_message_text_color;
   font-weight: bold;
+  animation-name: fadeInMessage;
+  animation-fill-mode: forwards;
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in;
 }
 .fullWidth {
   width: 100%;

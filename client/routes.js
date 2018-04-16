@@ -17,6 +17,8 @@ import {
   Site,
   NewListings,
   NoMatch,
+  ActivateAccount,
+  ResetPassword,
   ScrollToTopRoute,
 } from './components/';
 import { me, fetchGroups } from './store';
@@ -53,6 +55,8 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route path="/activate" component={ActivateAccount} />
+            <Route path="/resetpassword" component={ResetPassword} />
             {/* Displays noMatch component as a fallback */}
             <Route path="*" component={NoMatch} status={404} />
           </Switch>

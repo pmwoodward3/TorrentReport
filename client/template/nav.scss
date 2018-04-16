@@ -14,6 +14,46 @@ body {
   }
 } /* needed for checkbox hack */
 
+@keyframes menuFadeIn {
+  from {
+    background-color: $headerBGColor;
+  }
+  to {
+    background-color: $flex_nav_hoverColor;
+  }
+}
+
+@keyframes menuFadeOutMain {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes logoFadeIn {
+  from {
+    color: $site_logo_color;
+    letter-spacing: 0;
+  }
+  to {
+    color: $primaryColor;
+    letter-spacing: 2px;
+  }
+}
+
+@keyframes logoFadeOut {
+  from {
+    color: $primaryColor;
+    letter-spacing: 2px;
+  }
+  to {
+    color: $site_logo_color;
+    letter-spacing: 0em;
+  }
+}
+
 #nav {
   /* default for mobile */
   position: relative;
@@ -55,6 +95,9 @@ body {
         text-decoration: none;
         &:hover {
           background: $flex_nav_hoverColor;
+          animation-name: menuFadeIn;
+          animation-duration: 0.6s;
+          animation-timing-function: ease-in-out;
         }
         &:visited {
           text-decoration: none;
@@ -227,6 +270,9 @@ body {
         a:not(#navSignUpIn) {
           text-shadow: black 1px 1px;
         }
+        animation-name: menuFadeOutMain;
+        animation-duration: 0.6s;
+        animation-timing-function: ease-in-out;
         position: relative;
         // text-align: center;/
         line-height: 3em;
@@ -341,7 +387,6 @@ body {
 
 .logo {
   font-weight: 900;
-  color: $site_logo_color;
   font-family: $logoFont;
   display: flex;
   justify-content: flex-start;
@@ -357,9 +402,16 @@ a#logoId {
   align-items: center;
   justify-content: center;
   color: $site_logo_color;
+  animation-name: logoFadeOut;
+  animation-duration: 0.6s;
+  // animation-fill-mode: backwards;
   font-size: 1.6em;
   &:hover {
-    background-color: none;
+    // background-color: none;
+    animation-name: logoFadeIn;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
   }
 }
 // bottom bar

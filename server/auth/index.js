@@ -24,6 +24,8 @@ router.post('/login', (req, res, next) => {
         res.status(401).send('User not found');
       } else if (!user.correctPassword(sanitizedBody.password)) {
         res.status(401).send('Incorrect password');
+      } else if (!user.activated) {
+        res.send('Need to activate account.');
       } else {
         req.login(user, err => (err ? next(err) : res.json(cleanUser(user))));
       }
@@ -39,7 +41,9 @@ router.post('/signup', (req, res, next) => {
   // user registration
   User.create(sanitizedBody)
     .then((user) => {
-      req.login(user, err => (err ? next(err) : res.json(cleanUser(user))));
+      const objectToSend = cleanUser(user);
+      res.send(objectToSend);
+      // req.login(user, err => (err ? next(err) : res.json(cleanUser(user))));
     })
     .catch((err) => {
       if (err.name === 'SequelizeUniqueConstraintError') {

@@ -16,6 +16,10 @@ const User = db.define('user', {
   password: {
     type: Sequelize.STRING,
   },
+  activated: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   salt: {
     type: Sequelize.STRING,
   },
@@ -58,5 +62,11 @@ const setSaltAndPassword = (user) => {
   }
 };
 
+const sendActivationEmail = (user) => {
+  console.log('----> send email <----');
+  console.log(user);
+};
+
 User.beforeCreate(setSaltAndPassword);
 User.beforeUpdate(setSaltAndPassword);
+User.afterCreate(sendActivationEmail);

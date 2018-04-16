@@ -1,3 +1,4 @@
+import siteConfig from '../config';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -43,7 +44,7 @@ class Template extends Component {
               <span>
                 <Link to="/">
                   <div>Torrent Report</div>
-                  <div id="logo-version-mobile">ALPHA VERSION</div>
+                  <div id="logo-version-mobile">{siteConfig.version.name()}</div>
                 </Link>
               </span>
             </div>
@@ -55,7 +56,7 @@ class Template extends Component {
               <Link id="logoId" to="/">
                 Torrent Report
               </Link>
-              <div id="logo-version">ALPHA VERSION</div>
+              <div id="logo-version">{siteConfig.version.name()}</div>
             </div>
             <li id="TR-NAME" />
             <li>

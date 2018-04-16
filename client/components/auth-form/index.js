@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { auth, clearError } from '../../store';
+import { auth, clearError, clearSuccess } from '../../store';
 import { enableSubmit } from './utils';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faHandPeace, faIdBadge } from '@fortawesome/fontawesome-free-solid';
@@ -22,6 +22,7 @@ class AuthForm extends Component {
   componentDidMount() {
     this.nameInput.focus();
     if (this.props.error) this.props.removeError();
+    if (this.props.success) this.props.removeSuccess();
   }
 
   handleInputChange(event) {
@@ -32,17 +33,28 @@ class AuthForm extends Component {
 
   render() {
     const {
-      name, displayName, header, handleSubmit, error, icon,
+      name, displayName, header, handleSubmit, error, icon, success, removeES,
     } = this.props;
-
     const isReady = enableSubmit(this.state.email, this.state.password);
     return (
       <div className="center">
         <div className="loginBox">
-          <form className="center flexCol" onSubmit={handleSubmit} name={name}>
+          <form
+            className="center flexCol"
+            onSubmit={(event) => {
+              event.preventDefault();
+              removeES();
+              return handleSubmit(event);
+            }}
+            name={name}
+          >
             {error &&
               error.response && (
                 <div className="error fullWidth center"> {error.response.data} </div>
+              )}
+            {success &&
+              success.response && (
+                <div className="success fullWidth center"> {success.response.data} </div>
               )}
             <div className="authHead">
               <div className="icon">
@@ -50,39 +62,48 @@ class AuthForm extends Component {
               </div>
               {header}
             </div>
-            <input
-              ref={(input) => {
-                this.nameInput = input;
-              }}
-              placeholder="email"
-              className="loginInput"
-              id="email"
-              onChange={this.handleInputChange}
-              value={this.state.email}
-              name="email"
-              type="text"
-            />
-            <input
-              placeholder="password"
-              className="loginInput"
-              id="password"
-              onChange={this.handleInputChange}
-              value={this.state.password}
-              name="password"
-              type="password"
-            />
 
-            <button
-              disable={isReady ? 'false' : 'true'}
-              className={isReady ? 'loginButton' : 'disabledButton'}
-              type="submit"
-            >
-              {displayName.toUpperCase()}
-            </button>
+            {!this.state.hidden && (
+              <input
+                ref={(input) => {
+                  this.nameInput = input;
+                }}
+                placeholder="email"
+                className="loginInput"
+                id="email"
+                onChange={this.handleInputChange}
+                value={this.state.email}
+                name="email"
+                type="text"
+              />
+            )}
+            {!this.state.hidden && (
+              <input
+                placeholder="password"
+                className="loginInput"
+                id="password"
+                onChange={this.handleInputChange}
+                value={this.state.password}
+                name="password"
+                type="password"
+              />
+            )}
 
-            <p>
-              <a href="/auth/google">{displayName} with Google</a>
-            </p>
+            {!this.state.hidden && (
+              <button
+                disable={isReady ? 'false' : 'true'}
+                className={isReady ? 'loginButton' : 'disabledButton'}
+                type="submit"
+              >
+                {displayName.toUpperCase()}
+              </button>
+            )}
+
+            {!this.state.hidden && (
+              <p>
+                <a href="/auth/google">{displayName} with Google</a>
+              </p>
+            )}
           </form>
         </div>
       </div>
@@ -96,6 +117,7 @@ const mapLogin = state => ({
   icon: faIdBadge,
   displayName: 'Login',
   error: state.user.error,
+  success: state.user.success,
 });
 
 const mapSignup = state => ({
@@ -104,6 +126,7 @@ const mapSignup = state => ({
   icon: faHandPeace,
   displayName: 'Register',
   error: state.user.error,
+  success: state.user.success,
 });
 
 const mapDispatch = dispatch => ({
@@ -117,6 +140,13 @@ const mapDispatch = dispatch => ({
   removeError() {
     dispatch(clearError());
   },
+  removeSuccess() {
+    dispatch(clearSuccess());
+  },
+  removeES() {
+    dispatch(clearError());
+    dispatch(clearSuccess());
+  },
 });
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
@@ -128,5 +158,6 @@ AuthForm.propTypes = {
   header: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object,
+  success: PropTypes.object,
   icon: PropTypes.object,
 };

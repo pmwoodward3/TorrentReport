@@ -10,6 +10,10 @@ $site_logo_color: #ffffff;
 
 $siteBackGroundColor: #ffffff;
 
+// success
+$success_message_background_color: lighten(green, 30%);
+$success_message_text_color: $quinaryColor;
+
 // error
 $error_message_background_color: lighten(red, 30%);
 $error_message_text_color: $quinaryColor;
