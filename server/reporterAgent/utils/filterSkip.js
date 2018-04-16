@@ -1,3 +1,3 @@
-const filterSkips = arrOfStuff => arrOfStuff.filter(group => !group.skip);
+const filterSkips = arrOfStuff => Array.from(arrOfStuff).filter(group => !group.skip);
 
 module.exports = filterSkips;

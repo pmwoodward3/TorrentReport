@@ -1,8 +1,7 @@
 /* eslint-disable no-await-in-loop */
 const { RALogger } = require('../../logging');
 const puppeteer = require('puppeteer');
-const getOrMakeTorrentListing = require('../fetchOrMake/torrentListing');
-const addOrSetUser = require('../fetchOrMake/torrentUser');
+const { randomResolution, randomAgent } = require('../utils/randomBrowser');
 
 const pageConsole = (msg) => {
   console.log('PAGE LOG:', msg.text());
@@ -23,12 +22,13 @@ const puppet = async ({
   resourceDomain,
   webPage,
   selectors,
-  resultCleaner,
-  listingCheck,
 }) => {
   RALogger.verbose(`start scrape | groupName: ${groupName} | resourceDomain: ${resourceDomain} | selectCount: ${
     selectors.length
   }`);
+
+  let blocked = false;
+
   try {
     const browser = await puppeteer.launch({
       headless: true,
@@ -36,8 +36,8 @@ const puppet = async ({
     });
 
     const page = await browser.newPage();
-    await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A');
-    await page.setViewport({ width: 1300, height: 1000 });
+    await page.setUserAgent(randomAgent());
+    await page.setViewport(randomResolution());
     await page.setRequestInterception(true);
     page.on('console', pageConsole);
     page.on('request', (interceptedRequest) => {
@@ -58,9 +58,20 @@ const puppet = async ({
       }
     });
     await page.goto(webPage, {
-      timeout: 80000,
+      timeout: 90000,
     });
-    await page.waitFor(10000);
+    await page.waitFor(12000);
+
+    // this is to check if blocked currently for rarbg
+    try {
+      const messageCheck = await page.$eval('body > div > div > b', obj => obj.innerText);
+      if (messageCheck === 'There is something wrong with your browser!') blocked = true;
+      console.log(` ------------------> >>>>>>>>>>>>>>>>> ${messageCheck}`);
+      console.log(blocked);
+      console.log('------------------------ <<<<<<<<<<<<<');
+    } catch (err) {
+      console.log('I dont think we are blocked!');
+    }
 
     const pageEvalFunc = (results, pluck) =>
       results.map((result) => {
@@ -73,7 +84,8 @@ const puppet = async ({
       });
 
     const results = await Promise.all(selectors.map(selector => page.$$eval(selector.query, pageEvalFunc, selector.pluck)));
-    browser.close();
+
+    await browser.close();
 
     // lowest length of selector results should be used as limit
     const selectLimit = results.reduce(minimumArrLength, results[0].length);
@@ -92,27 +104,23 @@ const puppet = async ({
       combinedSelector.torrentGroupId = groupId;
       combinedSelector.torrentSiteId = siteId;
       combinedSelector.typeId = typeId;
-      const cleanResult = resultCleaner(combinedSelector);
-      // filter out unwated results here
-      const shouldSkip = listingCheck(cleanResult);
-      // groupedResults.push(cleanResult);
-      if (!shouldSkip) {
-        const torrentListing = await getOrMakeTorrentListing(cleanResult);
-        await addOrSetUser(torrentListing);
-        groupedResults.push(torrentListing);
-      }
+      groupedResults.push(combinedSelector);
     }
-
-    return {
+    return groupedResults.length ? groupedResults : { skip: true };
+  } catch (err) {
+    console.log('error !');
+    console.log({
       typeId,
       groupId,
+      siteId,
       groupName,
       groupTag,
       resourceDomain,
       webPage,
-      results: groupedResults,
-    };
-  } catch (err) {
+      selectors,
+    });
+    console.log(err);
+
     RALogger.error('in puppeteer error');
     RALogger.error(err);
     return { skip: true };

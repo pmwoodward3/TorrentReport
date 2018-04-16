@@ -4,7 +4,7 @@ const { TorrentInfo, TorrentUploader } = require('../../db/models');
 
 const addOrSetUser = (listingObj) => {
   const lowerCaseName = listingObj.uploadUser.toLowerCase();
-  TorrentUploader.findOrCreate({
+  return TorrentUploader.findOrCreate({
     where: { lowerCaseName },
   })
     .spread(async (uploaderObj, created) => {
@@ -23,7 +23,7 @@ const addOrSetUser = (listingObj) => {
     .catch((err) => {
       RALogger.error('ERROR IN addOrSetUser');
       RALogger.error(err);
-      sendError(`error in add or set user ${addOrSetUser}`);
+      // sendError(`error in add or set user ${addOrSetUser} - ${err}`);
     });
 };
 

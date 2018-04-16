@@ -1,7 +1,6 @@
 const delay = require('./delay');
 
-const factoryFuncArr = (array, funcToCall, delayTime = 0) =>
-  array.map(item => () => delay(funcToCall, item, delayTime)); // one minute delay between requests
+const factoryFuncArr = (dataArray, funcToCall, delayTime = 0) => dataArray.map(item => () => delay(funcToCall, item, delayTime)); // one minute delay between requests
 // const factoryFuncArr = (array, funcToCall) => array.map(item => () => funcToCall(item));
 
 const serializedPromiseArr = funcArr =>

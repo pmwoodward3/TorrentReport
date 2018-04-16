@@ -20,26 +20,34 @@ const setCloseStat = statObj =>
   TorrentStats.findOne({ where: { active: true } }).then((activeStat) => {
     const newStatObj = { ...statObj };
     newStatObj.active = false;
-    return activeStat.update(newStatObj, {
-      fields: [
-        'siteCount',
-        'siteLoadCount',
-        'scrapeCount',
-        'torrentCount',
-        'torrentLoadCount',
-        'groupLoadCount',
-        'groupCount',
-        'snapshotCount',
-        'infoCount',
-        'active',
-        'endedAt',
-      ],
-    });
+    return activeStat
+      .update(newStatObj, {
+        fields: [
+          'siteCount',
+          'siteLoadCount',
+          'scrapeCount',
+          'torrentCount',
+          'torrentLoadCount',
+          'groupLoadCount',
+          'groupCount',
+          'snapshotCount',
+          'infoCount',
+          'active',
+          'endedAt',
+        ],
+      })
+      .catch((err) => {
+        RALogger.error(' --- ERROR IN setCloseStat -----');
+        RALogger.error(snapshotArr);
+        RALogger.error(err);
+        throw Error(err);
+      });
   });
 
 const addSnapshots = snapshotArr =>
   TorrentSnapshot.bulkCreate(snapshotArr).catch((err) => {
     RALogger.error('----- ERR WITH BULK CREATE -----');
+    RALogger.error(snapshotArr);
     RALogger.error(err);
   });
 
