@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const db = require('../db');
+const sendActivationLink = require('../../notifier/email');
 
 const User = db.define('user', {
   email: {
@@ -65,6 +66,10 @@ const setSaltAndPassword = (user) => {
 const sendActivationEmail = (user) => {
   console.log('----> send email <----');
   console.log(user);
+  sendActivationLink('FAKE123TOKEN', user.email).catch((err) => {
+    console.error('send activation email error');
+    console.error(err);
+  });
 };
 
 User.beforeCreate(setSaltAndPassword);
