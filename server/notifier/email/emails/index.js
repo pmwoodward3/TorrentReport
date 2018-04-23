@@ -1,7 +1,7 @@
 const { logger } = require('../../../logging');
 const transporter = require('../index');
 const { errorMessage } = require('./error');
-const { activateMessage } = require('./activateAccount');
+const activateMessage = require('./activateAccount');
 
 const logEmail = (data) => {
   logger.info('--- email sent ---', data);
@@ -17,8 +17,8 @@ const sendActivationLink = (token, email) => {
   return transporter.sendMail(messageObj);
 };
 
-const sendMessage = messageFunc => (title, message) => {
-  const messageObj = messageFunc(title, message);
-};
+// const sendMessage = messageFunc => (title, message) => {
+//   const messageObj = messageFunc(title, message);
+// };
 
 module.exports = { sendError, sendActivationLink };

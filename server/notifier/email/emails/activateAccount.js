@@ -1,10 +1,11 @@
 const sender = 'admin@torrent.report';
 const titleGen = body => `Torrent.Report > ${body}`;
 const bodyHTML = body =>
-  `<h1>Torrent.Report</h1><br /><p>your token is <b>${body}</b></p><hr /><p>Torrent.Report ❤️ 🌏</p>`;
-const bodyTEXT = body => `Torrent.Report\n${body} `;
+  `<h1>Torrent.Report</h1><br /><p>Your token is <b>${body}</b></p><p><a href="https://torrent.report/activate?token=${body}">click here</a> to continue using your account.</p><hr /><p>❤️    <a href="https://torrent.report/>Torrent.Report</a>    🌏</p>`;
+const bodyTEXT = body =>
+  `Torrent.Report\nYour token is: ${body}. Or continue using your account by navigating to https://torrent.report/activate?token=${body}`;
 
-const activateMessage = ({ token, receiver }) => ({
+const activateMessage = (token, receiver) => ({
   from: sender,
   to: receiver,
   subject: titleGen('Activate Your Account'),
@@ -12,4 +13,4 @@ const activateMessage = ({ token, receiver }) => ({
   html: bodyHTML(token),
 });
 
-module.exports = { activateMessage };
+module.exports = activateMessage;
