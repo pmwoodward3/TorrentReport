@@ -1,4 +1,5 @@
 const User = require('./user');
+const UserAccess = require('./userAccess');
 const TorrentSite = require('./torrentSite');
 const TorrentInfo = require('./torrentInfo');
 const TorrentListing = require('./torrentListing');
@@ -28,8 +29,11 @@ TorrentInfo.hasMany(TorrentSnapshot);
 TorrentSnapshot.belongsTo(TorrentInfo);
 TorrentSnapshot.belongsTo(TorrentStats);
 
+UserAccess.belongsTo(User);
+
 module.exports = {
   User,
+  UserAccess,
   TorrentSite,
   TorrentInfo,
   TorrentListing,

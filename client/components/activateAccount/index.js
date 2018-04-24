@@ -15,7 +15,9 @@ class Test extends Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log('--> activate account props -->', this.props);
+  }
 
   render() {
     return (

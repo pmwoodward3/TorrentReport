@@ -20,9 +20,12 @@ class AuthForm extends Component {
   }
 
   componentDidMount() {
-    this.nameInput.focus();
-    if (this.props.error) this.props.removeError();
-    if (this.props.success) this.props.removeSuccess();
+    if (this.nameInput) this.nameInput.focus();
+  }
+
+  componentWillUnmount() {
+    this.props.removeError();
+    this.props.removeSuccess();
   }
 
   handleInputChange(event) {
@@ -35,6 +38,8 @@ class AuthForm extends Component {
     const {
       name, displayName, header, handleSubmit, error, icon, success, removeES,
     } = this.props;
+    let hideForms = true;
+    if (!success) hideForms = false;
     const isReady = enableSubmit(this.state.email, this.state.password);
     return (
       <div className="center">
@@ -63,7 +68,7 @@ class AuthForm extends Component {
               {header}
             </div>
 
-            {!this.state.hidden && (
+            {!hideForms && (
               <input
                 ref={(input) => {
                   this.nameInput = input;
@@ -77,7 +82,7 @@ class AuthForm extends Component {
                 type="text"
               />
             )}
-            {!this.state.hidden && (
+            {!hideForms && (
               <input
                 placeholder="password"
                 className="loginInput"
@@ -89,7 +94,7 @@ class AuthForm extends Component {
               />
             )}
 
-            {!this.state.hidden && (
+            {!hideForms && (
               <button
                 disable={isReady ? 'false' : 'true'}
                 className={isReady ? 'loginButton' : 'disabledButton'}
@@ -99,7 +104,7 @@ class AuthForm extends Component {
               </button>
             )}
 
-            {!this.state.hidden && (
+            {!hideForms && (
               <p>
                 <a href="/auth/google">{displayName} with Google</a>
               </p>
