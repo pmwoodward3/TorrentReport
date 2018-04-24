@@ -55,8 +55,8 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/activate" component={ActivateAccount} />
-            <Route path="/resetpassword" component={ResetPassword} />
+            <Route path="/activate/:token" component={ActivateAccount} />
+            <Route path="/resetpassword/:token" component={ResetPassword} />
             {/* Displays noMatch component as a fallback */}
             <Route path="*" component={NoMatch} status={404} />
           </Switch>

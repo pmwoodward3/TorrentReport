@@ -118,7 +118,7 @@ class AuthForm extends Component {
 
 const mapLogin = state => ({
   name: 'login',
-  header: 'welcome back buddy',
+  header: 'welcome back',
   icon: faIdBadge,
   displayName: 'Login',
   error: state.user.error,
@@ -127,7 +127,7 @@ const mapLogin = state => ({
 
 const mapSignup = state => ({
   name: 'signup',
-  header: 'signing up is wise',
+  header: 'sign up',
   icon: faHandPeace,
   displayName: 'Register',
   error: state.user.error,

@@ -6,20 +6,19 @@ const bodyHTML = body =>
   Your token is <b>${body}</b>
   </p>
   <p>
-  <a href="https://torrent.report/activate?token=${body}">
+  <a href="https://torrent.report/activate/${body}">
   click here
   </a>
-  to continue using your account.
+  to activate using your account.
   </p>
   <hr />
   <p>
   ❤️
-  <a href="https://torrent.report/> Torrent.Report
-  </a>
+  https://torrent.report
   🌏
   </p>`;
 const bodyTEXT = body =>
-  `Torrent.Report\nYour token is: ${body}. Or continue using your account by navigating to https://torrent.report/activate?token=${body}`;
+  `Torrent.Report\nYour token is: ${body}.\n Or activate your account by navigating to https://torrent.report/activate/${body}`;
 
 const activateMessage = (token, receiver) => ({
   from: sender,
