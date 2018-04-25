@@ -41,7 +41,7 @@ const tpb = {
     {
       type: 'TV',
       groupName: 'HDTV',
-      groupTag: 'top100HDTV',
+      groupTag: 'Top 100 HDTV',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/208',
       selectors: [
@@ -82,7 +82,7 @@ const tpb = {
     {
       type: 'TV',
       groupName: 'TV',
-      groupTag: 'top100TV',
+      groupTag: 'Top 100 TV',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/205',
       selectors: [
@@ -123,7 +123,7 @@ const tpb = {
     {
       type: 'VIDEO',
       groupName: 'VIDEOS',
-      groupTag: 'top100VIDEOS',
+      groupTag: 'Top 100 VIDEOS',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/200',
       selectors: [
@@ -164,7 +164,7 @@ const tpb = {
     {
       type: 'MOVIES',
       groupName: 'MOVIES',
-      groupTag: 'top100MOVIES',
+      groupTag: 'Top 100 MOVIES',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/201',
       selectors: [
@@ -205,7 +205,7 @@ const tpb = {
     {
       type: 'MOVIES',
       groupName: 'HDMOVIES',
-      groupTag: 'top100HDMOVIES',
+      groupTag: 'Top 100 HD MOVIES',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/207',
       selectors: [

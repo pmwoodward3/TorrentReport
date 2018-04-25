@@ -2,9 +2,12 @@
 @import '_mixins';
 
 /*Responsive Styles*/
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 767px) {
   .content {
     padding: 1em;
+  }
+  .footerHolder {
+    flex-direction: column;
   }
 }
 

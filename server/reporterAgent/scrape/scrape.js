@@ -6,7 +6,7 @@ const cleanCheckSave = require('../utils/cleanCheckSave');
 const filterSkip = require('../utils/filterSkip');
 
 const scrapeSwitchBoard = (siteGroupObj) => {
-  console.log(` switchboard webPage - ${siteGroupObj.webPage}`);
+  console.log(` switchboard webPage - ${siteGroupObj.webPage} - ${siteGroupObj.isRss}`);
   if (siteGroupObj.isRss) return rss(siteGroupObj);
   return puppet(siteGroupObj);
 };

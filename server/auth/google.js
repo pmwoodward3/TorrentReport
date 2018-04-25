@@ -68,7 +68,7 @@ if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
   router.get(
     '/callback',
     passport.authenticate('google', {
-      successRedirect: '/home',
+      successRedirect: '/account',
       failureRedirect: '/login',
     }),
   );

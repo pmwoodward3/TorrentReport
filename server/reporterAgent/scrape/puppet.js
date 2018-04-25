@@ -106,6 +106,7 @@ const puppet = async ({
       combinedSelector.typeId = typeId;
       groupedResults.push(combinedSelector);
     }
+    console.log('grouped results length', groupedResults.length);
     return groupedResults.length ? groupedResults : { skip: true };
   } catch (err) {
     console.log('error !');

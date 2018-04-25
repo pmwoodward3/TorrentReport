@@ -30,7 +30,7 @@ const rarbg = {
     {
       type: 'MOVIES',
       groupName: 'MOVIES',
-      groupTag: 'top100Movies',
+      groupTag: 'Top 100 Movies',
       resourceDomain: 'rarbg.to',
       webPage:
         'https://rarbg.to/top100.php?category%5B%5D=14&category%5B%5D=48&category%5B%5D=17&category%5B%5D=44&category%5B%5D=45&category%5B%5D=47&category%5B%5D=50&category%5B%5D=51&category%5B%5D=52&category%5B%5D=42&category%5B%5D=46&category%5B%5D=49',
@@ -73,7 +73,7 @@ const rarbg = {
     {
       type: 'TV',
       groupName: 'TV',
-      groupTag: 'top100TV',
+      groupTag: 'Top 100 TV',
       resourceDomain: 'rarbg.to',
       webPage: 'https://rarbg.to/top100.php?category%5B%5D=18&category%5B%5D=41&category%5B%5D=49',
       selectors: [

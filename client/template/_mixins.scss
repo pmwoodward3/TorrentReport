@@ -1,12 +1,16 @@
-@mixin boxBorderRadius ($base-color) {
+@mixin boxBorderRadius($base-color) {
   @include boxBorderRadiusNoShadow($base-color) text-shadow: 0 -1px 0 darken($base-color, 10%);
 }
-@mixin boxBorderRadiusNoShadow ($base-color) {
+@mixin boxBorderRadiusNoShadow($base-color) {
   @include boxRadiusNoShadow();
   border: 1px solid darken($base-color, 20%);
-  @include box-shadow(0,1px,0,lighten($base-color, 20%), inset);
+  @include box-shadow(0, 1px, 0, lighten($base-color, 20%), inset);
 }
-@mixin boxRadiusNoShadow () {
+@mixin boxNoBRadiusNoShadow($base-color) {
+  @include boxRadiusNoShadow();
+  @include box-shadow(0, 1px, 0, lighten($base-color, 20%), inset);
+}
+@mixin boxRadiusNoShadow() {
   border-radius: 3px;
 }
 
@@ -54,7 +58,7 @@
     );
 }
 
-@mixin loginRegisterButton () {
+@mixin loginRegisterButton() {
   margin: 10px 0px 10px 0px;
   font-size: 0.7em;
   letter-spacing: 2px;

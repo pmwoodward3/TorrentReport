@@ -58,7 +58,7 @@
 
 .stats .group {
   background-color: $stats_tile_background_color;
-  @include boxBorderRadiusNoShadow($stats_tile_background_color);
+  @include boxNoBRadiusNoShadow($stats_tile_background_color);
   min-height: 4em;
   margin: 5px;
   padding: 5px;

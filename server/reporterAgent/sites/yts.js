@@ -22,8 +22,8 @@ const proccessItem = (rssItem) => {
         break;
       }
       case 'enclosure': {
-        // formattedItem.hash = rssItem.enclosure.url.replace('https://yts.am/torrent/download/', '');
-        formattedItem.hash = rssItem.enclosure.url;
+        formattedItem.hash = rssItem.enclosure.url.replace('https://yts.am/torrent/download/', '');
+        // formattedItem.hash = rssItem.enclosure.url.split();
         break;
       }
       default: {
@@ -68,10 +68,10 @@ const resultCleaner = (rawResult) => {
         break;
       }
       case 'uploaded': {
-        RALogger.verbose('------ entering uploaded switch');
+        // RALogger.verbose('------ entering uploaded switch');
         delete newResult.uploaded;
         newResult.uploadDate = new Date(uploadedCleanup(rawResult.uploaded));
-        RALogger.verbose(`------ exiting uploaded switch ------ newresultuploadedate: ${newResult.uploadDate}`);
+        // RALogger.verbose(`------ exiting uploaded switch ------ newresultuploadedate: ${newResult.uploadDate}`);
 
         break;
       }
@@ -85,11 +85,12 @@ const resultCleaner = (rawResult) => {
 };
 
 const yts = {
-  siteName: 'YIFFY',
+  siteName: 'YTS AM',
   siteShortName: 'YTS',
   siteUrl: 'https://yts.am/',
   groups: [
     {
+      isRss: true,
       type: 'MOVIES',
       groupName: 'Movies',
       groupTag: 'New Movies',

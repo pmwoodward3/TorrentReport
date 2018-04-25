@@ -6,6 +6,7 @@ import { withRouter, Link, NavLink } from 'react-router-dom';
 import { logout } from '../store';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faSignOutAlt, faUser, faUserPlus } from '@fortawesome/fontawesome-free-solid';
+import BuiltBy from './BuiltBy.js';
 import './template.scss';
 import './nav.scss';
 import './mobile.scss';
@@ -132,12 +133,7 @@ class Template extends Component {
         <div className="footer">
           <div className="footerHolder">
             <div className="growBox">
-              <div className="builtBox">
-                <div className="builtby">BUILT BY</div>
-                <div className="byme">
-                  <a href="http://estepanov.io">estepanov.io</a>
-                </div>
-              </div>
+              <BuiltBy />
             </div>
             <div className="growBox">{`${userCount} users online`}</div>
             <div className="growBox">

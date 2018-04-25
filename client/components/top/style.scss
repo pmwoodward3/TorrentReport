@@ -3,3 +3,25 @@
 
 .top-container {
 }
+
+.top-header-list {
+}
+
+.top-header-site {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+.top-header-site-item {
+  padding: 10px;
+}
+
+.top-header-site-groups {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.top-header-site-groups-item {
+}

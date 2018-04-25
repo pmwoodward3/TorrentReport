@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { fetchTopNewSnapshots } from '../../store';
 import Loader from '../loader';
+import './style.scss';
 
 class TopNewSnapshots extends Component {
   constructor(props) {
@@ -20,9 +21,33 @@ class TopNewSnapshots extends Component {
     }
   }
   render() {
+    const { groups, sites } = this.props;
+    const sitesArr = Object.keys(sites).map(key => sites[key]);
+    const groupsArr = Object.keys(groups).map(key => groups[key]);
+    const sitesWithGroups = sitesArr.map((site) => {
+      const newSite = Object.assign({}, site);
+      newSite.groups = groupsArr.filter(group => group.torrentSiteId === site.id);
+      return newSite;
+    });
     if (this.props.topNewSnapshots.state !== 'ready') return <Loader message="random" />;
     return (
       <div className="top-container">
+        <div className="top-header-list">
+          <div className="top-header-site">
+            {sitesWithGroups.map(site => (
+              <div className="top-header-site-item" key={`${site.id}thsi`}>
+                {site.name}
+                <div className="top-header-site-groups">
+                  {site.groups.map(group => (
+                    <div className="top-header-site-groups-item" key={`${site.id}thsi${group.id}`}>
+                      {group.name} - {group.tag}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
         top page (count: {this.props.topNewSnapshots.items.length})
         <hr />
         {this.props.topNewSnapshots.items.map(snapshot => (
@@ -47,6 +72,8 @@ class TopNewSnapshots extends Component {
 
 const mapState = state => ({
   topNewSnapshots: state.stats.topNewSnapshots,
+  sites: state.sites.items,
+  groups: state.groups.items,
 });
 
 const mapDispatch = dispatch => ({

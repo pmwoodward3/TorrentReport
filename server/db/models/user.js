@@ -67,16 +67,18 @@ const setSaltAndPassword = (user) => {
 
 const createAuthToken = (user) => {
   console.log('----> creating user auth <----');
-  userAccess
-    .create({
-      userId: user.id,
-      action: 'activate_account',
-    })
-    .then(accessObj => sendActivationLink(accessObj.token, user.email))
-    .catch((err) => {
-      console.error('error creating user access');
-      console.error(err);
-    });
+  if (!user.actived) {
+    userAccess
+      .create({
+        userId: user.id,
+        action: 'activate_account',
+      })
+      .then(accessObj => sendActivationLink(accessObj.token, user.email))
+      .catch((err) => {
+        console.error('error creating user access');
+        console.error(err);
+      });
+  }
 };
 
 User.beforeCreate(setSaltAndPassword);

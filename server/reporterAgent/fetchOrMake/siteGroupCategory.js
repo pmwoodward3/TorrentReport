@@ -29,8 +29,9 @@ const getOrMakeNestedSite = siteObj =>
     })
     .then(async (site) => {
       RALogger.log('verbose', `${site.siteName} - creating or finding groups...`);
-      const newGroups = await Promise.all(site.groups.map(group =>
-        TorrentGroup.findOrCreate({
+      const newGroups = await Promise.all(site.groups.map((group) => {
+        const groupHolder = group;
+        return TorrentGroup.findOrCreate({
           where: {
             url: group.webPage,
             name: group.groupName,
@@ -42,12 +43,14 @@ const getOrMakeNestedSite = siteObj =>
             'verbose',
             `${site.siteName} - group: ${groupObj.name} - was created? ${created}`,
           );
-          group.groupId = groupObj.id;
-          return group;
-        })));
+          groupHolder.groupId = groupObj.id;
+          return groupHolder;
+        });
+      }));
 
       for (let i = 0; i < newGroups.length; i++) {
         const currItem = Object.assign({}, newGroups[i]);
+        console.log('===============', currItem);
         const id = await TorrentCategory.findOrCreate({
           where: {
             name: currItem.type,

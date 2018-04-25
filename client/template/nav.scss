@@ -233,6 +233,10 @@ body {
   @media (min-width: $flex_nav_breakpoint) {
     /* style for large screen */
 
+    .logo {
+      margin-left: 2em;
+    }
+
     ul#main {
       animation: fadeIn ease-in 1s;
       -webkit-box-orient: horizontal;
@@ -392,7 +396,6 @@ body {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  padding-left: 2em;
 }
 
 a#logoId {
