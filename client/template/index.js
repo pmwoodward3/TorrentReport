@@ -60,11 +60,11 @@ class Template extends Component {
               <div id="logo-version">{siteConfig.version.name()}</div>
             </div>
             <li id="TR-NAME" />
-            <li>
+            {/* <li>
               <NavLink exact activeClassName="sNav" to="/test">
                 <span>TEST</span>
               </NavLink>
-            </li>
+            </li> */}
             <li>
               <NavLink exact activeClassName="sNav" to="/top">
                 <span>TOP TORRENTS</span>
@@ -86,14 +86,14 @@ class Template extends Component {
               </li>
             )}
 
-            <li>
+            {/* <li>
               <NavLink to="/what" activeClassName="sNav" className="Link-Final">
-                <span>DROP DOWN</span>
+                <span>Categories</span>
               </NavLink>
               <ul id="subOne">
                 <li>
                   <NavLink to="/what/top" activeClassName="sNav">
-                    <span>Sub Nav Item</span>
+                    <span>top</span>
                   </NavLink>
                 </li>
                 <li>
@@ -102,7 +102,7 @@ class Template extends Component {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
             {!isLoggedIn ? (
               <div className="navButtons">
                 <Link to="/signup" id="navSign" className="up">
@@ -110,7 +110,6 @@ class Template extends Component {
                     <FontAwesomeIcon icon={faUserPlus} /> sign up
                   </span>
                 </Link>
-
                 <Link to="/login" id="navSign" className="in">
                   <span>
                     <FontAwesomeIcon icon={faSignInAlt} /> login

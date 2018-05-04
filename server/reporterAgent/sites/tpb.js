@@ -40,8 +40,8 @@ const tpb = {
   groups: [
     {
       type: 'TV',
-      groupName: 'HDTV',
-      groupTag: 'Top 100 HDTV',
+      groupName: 'TV',
+      groupTag: 'Top 100 HD TV',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/208',
       selectors: [
@@ -204,7 +204,7 @@ const tpb = {
     },
     {
       type: 'MOVIES',
-      groupName: 'HDMOVIES',
+      groupName: 'MOVIES',
       groupTag: 'Top 100 HD MOVIES',
       resourceDomain: 'thepiratebay.org',
       webPage: 'https://thepiratebay.org/top/207',

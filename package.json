@@ -115,7 +115,8 @@
     "supertest": "^3.0.0",
     "wallaby-webpack": "^3.9.5",
     "webpack": "^3.11.0",
-    "webpack-livereload-plugin": "^1.1.0"
+    "webpack-livereload-plugin": "^1.1.0",
+    "workerize-loader": "^1.0.2"
   },
   "snyk": true
 }

@@ -14,7 +14,20 @@
 }
 
 .top-header-site-item {
-  padding: 10px;
+  padding: 5px;
+  margin: 5px;
+  background-color: $stats_tile_background_color;
+  @include boxNoBRadiusNoShadow($stats_tile_background_color);
+  h1 {
+    padding: 0px;
+    margin: 0px;
+    font-family: $header_font_family;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+    font-size: 1.2em;
+  }
 }
 
 .top-header-site-groups {

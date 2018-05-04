@@ -7,11 +7,8 @@ const tpb = require('./reporterAgent/sites/tpb');
 
 module.exports = router;
 
-router.get('/', (req, res, next) => {
-  reporterAgent()
-    .then(data => res.json(data))
-    .catch(next);
-});
+// router.get('/', (req, res, next) => {   reporterAgent()     .then(data =>
+// res.json(data))     .catch(next); });
 
 router.get('/scraperss', (req, res, next) => {
   scraperss(yts.groups[0])

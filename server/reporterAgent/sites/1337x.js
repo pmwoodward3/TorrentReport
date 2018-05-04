@@ -55,7 +55,7 @@ const leet1337x = {
   groups: [
     {
       type: 'MOVIES',
-      groupName: 'Movies',
+      groupName: 'MOVIES',
       groupTag: 'Popular Movies - 24 Hours',
       resourceDomain: '1337x.to',
       webPage: 'https://1337x.to/popular-movies',
@@ -101,7 +101,7 @@ const leet1337x = {
     },
     {
       type: 'MOVIES',
-      groupName: 'Movies',
+      groupName: 'MOVIES',
       groupTag: 'Top 100 Movies',
       resourceDomain: '1337x.to',
       webPage: 'https://1337x.to/top-100-movies',
@@ -334,7 +334,7 @@ const leet1337x = {
     },
     {
       type: 'MOVIES',
-      groupName: 'Movies',
+      groupName: 'MOVIES',
       groupTag: 'Trending Movies',
       resourceDomain: '1337x.to',
       webPage: 'https://1337x.to/trending/d/movies/', // trending page so selectors are different

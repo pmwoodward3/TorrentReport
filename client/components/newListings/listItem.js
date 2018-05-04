@@ -1,27 +1,28 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import moment from 'moment';
 import Loader from '../loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faCaretUp, faCaretDown, faClock, faUpload } from '@fortawesome/fontawesome-free-solid';
+import {faCaretUp, faCaretDown, faClock, faUpload} from '@fortawesome/fontawesome-free-solid';
 
-const shorten = originalName =>
-  (originalName.length > 44 ? `${originalName.slice(0, 44)}...` : originalName);
+const shorten = originalName => (originalName.length > 44
+  ? `${originalName.slice(0, 44)}...`
+  : originalName);
 
 /**
  * COMPONENT
  */
-export default (props) => {
-  const { name, id, Infos } = props.item;
-  const { active } = props;
+export default(props) => {
+  const {name, id, Infos} = props.item;
+  const {active} = props;
   const seed = Infos.reduce((acc, curr) => acc + curr.seed, 0);
   const leach = Infos.reduce((acc, curr) => acc + curr.leach, 0);
-  const ratio = seed / leach;
-  const earliestUpload = Infos.reduce(
-    (earliestDate, currInfo) =>
-      (new Date(currInfo.uploadDate) < earliestDate ? new Date(currInfo.uploadDate) : earliestDate),
-    new Date(),
-  );
+  const ratio = leach
+    ? seed / leach
+    : 0;
+  const earliestUpload = Infos.reduce((earliestDate, currInfo) => (new Date(currInfo.uploadDate) < earliestDate
+    ? new Date(currInfo.uploadDate)
+    : earliestDate), new Date(),);
 
   let seedClass = 'seed';
   let leachClass = 'leach';
@@ -44,10 +45,10 @@ export default (props) => {
       <div className="group-holder">
         <div className="group">
           <div className={seedClass}>
-            <FontAwesomeIcon icon={faCaretUp} /> {seed}
+            <FontAwesomeIcon icon={faCaretUp}/> {seed}
           </div>
           <div className={leachClass}>
-            <FontAwesomeIcon icon={faCaretDown} /> {leach}
+            <FontAwesomeIcon icon={faCaretDown}/> {leach}
           </div>
         </div>
 

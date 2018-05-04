@@ -27,18 +27,24 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      #nl-search {
-        border-radius: 3px;
-        background-color: lighten($primaryColor, 25%);
-        border: solid 1px lighten($primaryColor, 20%);
-        color: darken($primaryColor, 25%);
-        width: 100%;
-        font-size: 1.1em;
-        margin: 5px;
-        padding: 10px 20px 10px 20px;
-      }
     }
   }
+  #nl-search {
+    border-radius: 3px;
+    background-color: lighten($primaryColor, 25%);
+    border: solid 1px lighten($primaryColor, 20%);
+    color: darken($primaryColor, 25%);
+    width: 100%;
+    font-size: 1.1em;
+    margin: 5px;
+    padding: 10px 20px 10px 20px;
+  }
+  #nl-search:focus {
+    border: solid 4px darken($primaryColor, 20%);
+    margin: 2px;
+    outline-width: 0;
+  }
+
   .dl-options {
     display: flex;
     flex-direction: column;

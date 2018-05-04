@@ -27,6 +27,10 @@ class TopNewSnapshots extends Component {
     const sitesWithGroups = sitesArr.map((site) => {
       const newSite = Object.assign({}, site);
       newSite.groups = groupsArr.filter(group => group.torrentSiteId === site.id);
+      newSite.groupNames = newSite.groups.reduce(
+        (arr, item) => (!arr.includes(item.name) ? [item.name, ...arr] : arr),
+        [],
+      );
       return newSite;
     });
     if (this.props.topNewSnapshots.state !== 'ready') return <Loader message="random" />;
@@ -36,11 +40,11 @@ class TopNewSnapshots extends Component {
           <div className="top-header-site">
             {sitesWithGroups.map(site => (
               <div className="top-header-site-item" key={`${site.id}thsi`}>
-                {site.name}
+                <h1>{site.name}</h1>
                 <div className="top-header-site-groups">
-                  {site.groups.map(group => (
-                    <div className="top-header-site-groups-item" key={`${site.id}thsi${group.id}`}>
-                      {group.name} - {group.tag}
+                  {site.groupNames.map(group => (
+                    <div className="top-header-site-groups-item" key={`${site.id}thsi${group}`}>
+                      {group}
                     </div>
                   ))}
                 </div>
