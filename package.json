@@ -2,9 +2,6 @@
   "name": "TorrentReport",
   "version": "1.0.0",
   "description": "torrent site stats",
-  "engines": {
-    "node": ">= 9.7.0"
-  },
   "main": "index.js",
   "scripts": {
     "dev-port": "lsof -i tcp:8080",

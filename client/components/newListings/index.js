@@ -52,12 +52,12 @@ class NewListings extends Component {
   }
 
   searchChange = (event) => {
-    this.killWorker();
-    const searchInput = event.target.value
-    this.setState({search: searchInput});
+    const searchInput = event.target.value;
     if (!searchInput.trim().length) 
-      this.setState({searching: false, searchResults: []})
-    const arrToUse = this.state.searchResults.length
+      return this.setState({search: '', searching: false, searchResults: []})
+    this.setState({search: searchInput, searching: true});
+    const isMoreGeneral = searchInput.length < this.state.search;
+    const arrToUse = this.state.searchResults.length && isMoreGeneral
       ? this.state.searchResults
       : this.props.dailyListings.days1;
     this.sendSearchToWorker(arrToUse, searchInput)
@@ -65,19 +65,22 @@ class NewListings extends Component {
 
   sendSearchToWorker = (array, target) => {
     this.initWorker();
-    this.setState({searching: true})
     this
       .workerHolder
       .postMessage({array, target})
   }
 
   killWorker = () => {
-    this
-      .workerHolder
-      .terminate();
-    this.workerHolder = undefined;
+    if (this.workerHolder) {
+      this
+        .workerHolder
+        .terminate();
+      this.workerHolder = undefined;
+    }
   }
   initWorker = () => {
+    this.killWorker();
+
     this.workerHolder = new Worker(worker)
     this.workerHolder.onmessage = (m) => {
       const {result} = m.data;
@@ -120,13 +123,14 @@ class NewListings extends Component {
               onChange={this.searchChange}/>
           </div>
         </div>
-        <div className="dl-item-group">
-          <ListHeaderItem order={this.state.order} active={this.state.filter}/> {finalSize.map((item, index) => (<ListItem key={item.id} active={this.state.filter} index={index} item={item}/>))}
-          {!finalSize.length && 'no results to show'}
-        </div>
-        <div className="dl-footer">
-          <div className="dl-more">thats all folks</div>
-        </div>
+        {finalSize.length
+          ? <div className="dl-item-group">
+              <ListHeaderItem order={this.state.order} active={this.state.filter}/> {finalSize.map((item, index) => (<ListItem key={item.id} active={this.state.filter} index={index} item={item}/>))}
+            </div>
+          : <div>
+            Nothing results for: {this.state.search}.
+          </div>}
+
       </div>
     );
   }

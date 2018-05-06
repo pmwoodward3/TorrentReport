@@ -10,20 +10,35 @@ const TorrentCategory = require('./torrentCategory');
 const TorrentUploader = require('./torrentUploader');
 
 TorrentGroup.belongsTo(TorrentSite);
-TorrentInfo.belongsToMany(TorrentGroup, { as: 'Group', through: 'InfoGroup' });
-TorrentGroup.belongsToMany(TorrentInfo, { as: 'Group', through: 'InfoGroup' });
+TorrentInfo.belongsToMany(TorrentGroup, {
+  as: 'Group',
+  through: 'InfoGroup'
+});
+TorrentGroup.belongsToMany(TorrentInfo, {
+  as: 'Group',
+  through: 'InfoGroup'
+});
 
-TorrentListing.belongsToMany(TorrentInfo, { as: 'Infos', through: 'ListingInfo' });
+TorrentListing.belongsToMany(TorrentInfo, {
+  as: 'Infos',
+  through: 'ListingInfo'
+});
 TorrentInfo.belongsTo(TorrentListing);
 
-TorrentInfo.belongsToMany(TorrentCategory, { as: 'Category', through: 'InfoCategory' });
-TorrentCategory.belongsToMany(TorrentInfo, { as: 'Category', through: 'InfoCategory' });
+TorrentInfo.belongsToMany(TorrentCategory, {
+  as: 'Category',
+  through: 'InfoCategory'
+});
+TorrentCategory.belongsToMany(TorrentInfo, {
+  as: 'Category',
+  through: 'InfoCategory'
+});
 
 TorrentInfo.belongsTo(TorrentUploader);
 TorrentUploader.hasMany(TorrentInfo);
 
-TorrentUploader.belongsToMany(TorrentSite, { through: 'SiteUploader' });
-TorrentSite.belongsToMany(TorrentUploader, { through: 'SiteUploader' });
+TorrentUploader.belongsToMany(TorrentSite, {through: 'SiteUploader'});
+TorrentSite.belongsToMany(TorrentUploader, {through: 'SiteUploader'});
 
 TorrentInfo.hasMany(TorrentSnapshot);
 TorrentSnapshot.belongsTo(TorrentInfo);
@@ -41,5 +56,5 @@ module.exports = {
   TorrentGroup,
   TorrentStats,
   TorrentUploader,
-  TorrentCategory,
+  TorrentCategory
 };
