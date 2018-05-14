@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { faHandPeace, faIdBadge } from '@fortawesome/fontawesome-free-solid';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { auth, clearError, clearSuccess } from '../../store';
 import { enableSubmit } from './utils';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faHandPeace, faIdBadge } from '@fortawesome/fontawesome-free-solid';
 
 import './style.scss';
 
@@ -156,13 +154,3 @@ const mapDispatch = dispatch => ({
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm);
 export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
-
-AuthForm.propTypes = {
-  name: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  header: PropTypes.string.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object,
-  success: PropTypes.object,
-  icon: PropTypes.object,
-};

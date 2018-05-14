@@ -1,4 +1,4 @@
-import React, { Component } from 'React';
+import React, { Component } from 'react';
 import SVGbase from './SVGbase';
 import SVGhover from './SVGhover';
 
@@ -40,8 +40,8 @@ class BuiltBy extends Component {
             {this.state.hover ? (
               <SVGhover style={styleHover} height={height} width={width} />
             ) : (
-              <SVGbase style={style} height={height} width={width} />
-            )}
+                <SVGbase style={style} height={height} width={width} />
+              )}
           </a>
         </div>
       </div>

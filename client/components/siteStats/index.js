@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
-import _ from 'lodash';
 import { getOrFetchSiteStats, getSiteStats } from '../store_helper';
 
-import s from './style.scss';
+import './style.scss';
 
 import { fetchStats } from '../../store';
 
@@ -23,16 +20,12 @@ class SiteStats extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() { // eslint-disable-line
     if (!getSiteStats()) getOrFetchSiteStats();
   }
 
-  shouldComponentUpdate() {
-    return !this.state.stats && getSiteStats();
-  }
-
   render() {
-    const stats = getSiteStats();
+    const stats = this.props.stats.siteStats;
     const nowDateObj = new Date(stats.fetched);
     let duration;
     let lastScrapeTime;

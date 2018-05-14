@@ -5,14 +5,11 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   Line,
-  Label,
 } from 'recharts';
-import moment from 'moment';
 import './styles.scss';
 
-export default (props) => {
+export default function SimpleLine(props) {
   const { syncId, pluck, data } = props;
   let maxSeed = 0;
   let maxLeach = 0;
@@ -20,6 +17,7 @@ export default (props) => {
     if (snapshot.seed > maxSeed) maxSeed = snapshot.seed;
     if (snapshot.leach > maxLeach) maxLeach = snapshot.leach;
     const ratio = snapshot.seed / snapshot.leach;
+    // eslint-disable-next-line no-param-reassign
     snapshot.ratio = Math.floor(ratio * 100) / 100;
     return snapshot;
   });
@@ -54,4 +52,4 @@ export default (props) => {
       </LineChart>
     </ResponsiveContainer>
   );
-};
+}

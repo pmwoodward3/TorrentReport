@@ -5,7 +5,6 @@ import store, {
   fetchInfosById,
   fetchStats,
   fetchGroups,
-  fetchSites,
 } from '../store';
 
 const getNeededIds = (idArr, target) => idArr.filter(id => target[id] > 0);
@@ -47,7 +46,7 @@ const getInfosByID = (infosIdArr) => {
   const state = store.getState();
   const { items } = state.infos;
   const results = [];
-  infosIdArr.forEach((id) => {
+  infosIdArr.forEach((id) => { // eslint-disable-line consistent-return
     if (items[id]) results.push(items[id]);
     else return false;
   });
@@ -58,7 +57,7 @@ const getListingsByID = (listingsIdArr) => {
   const state = store.getState();
   const { items } = state.listings;
   const results = [];
-  listingsIdArr.forEach((id) => {
+  listingsIdArr.forEach((id) => { // eslint-disable-line consistent-return
     if (items[id]) results.push(items[id]);
     else return false;
   });

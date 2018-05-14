@@ -1,21 +1,14 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import moment from 'moment';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import './style.scss';
 
 import Loader from '../loader';
-import {fetchDailyListings} from '../../store';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import {faSignInAlt} from '@fortawesome/fontawesome-free-solid';
+import { fetchDailyListings } from '../../store';
 
 import ListItem from './listItem';
 import ListHeaderItem from './listHeaderItem';
-import {getListingsByID} from '../store_helper';
-import listHeaderItem from './listHeaderItem';
 
 // import searchWithinArray from '../search/searchArray';
 import worker from './filterWorker';
@@ -28,46 +21,44 @@ class NewListings extends Component {
       order: 'top',
       search: '',
       searchResults: [],
-      searching: false
+      searching: false,
     };
 
-    this.workerHolder = undefined
-    this.initWorker()
+    this.workerHolder = undefined;
+    this.initWorker();
   }
   componentDidMount() {
-    if (!_.has(this.props.dailyListings, 'days1')) 
-      this.props.load();
-    }
-  
-  shouldComponentUpdate(nextProps) {
+    if (!_.has(this.props.dailyListings, 'days1')) this.props.load();
+  }
+
+  shouldComponentUpdate(nextProps) { //eslint-disable-line
     return _.has(nextProps.dailyListings, 'days1');
   }
 
   toggleOrder = (order) => {
-    this.setState({order});
+    this.setState({ order });
   }
 
   toggleFilter = (filter) => {
-    this.setState({filter});
+    this.setState({ filter });
   }
 
   searchChange = (event) => {
     const searchInput = event.target.value;
-    if (!searchInput.trim().length) 
-      return this.setState({search: '', searching: false, searchResults: []})
-    this.setState({search: searchInput, searching: true});
+    if (!searchInput.trim().length) return this.setState({ search: '', searching: false, searchResults: [] });
+    this.setState({ search: searchInput, searching: true });
     const isMoreGeneral = searchInput.length < this.state.search;
     const arrToUse = this.state.searchResults.length && isMoreGeneral
       ? this.state.searchResults
       : this.props.dailyListings.days1;
-    this.sendSearchToWorker(arrToUse, searchInput)
+    return this.sendSearchToWorker(arrToUse, searchInput);
   }
 
   sendSearchToWorker = (array, target) => {
     this.initWorker();
     this
       .workerHolder
-      .postMessage({array, target})
+      .postMessage({ array, target });
   }
 
   killWorker = () => {
@@ -81,11 +72,10 @@ class NewListings extends Component {
   initWorker = () => {
     this.killWorker();
 
-    this.workerHolder = new Worker(worker)
+    this.workerHolder = new Worker(worker); // eslint-disable-line
     this.workerHolder.onmessage = (m) => {
-      const {result} = m.data;
-      this.setState({searchResults: result, searching: false})
-      console.log("msg from worker: ", m.data);
+      const { result } = m.data;
+      this.setState({ searchResults: result, searching: false });
     };
   }
 
@@ -93,7 +83,7 @@ class NewListings extends Component {
     if (!_.has(this.props.dailyListings, 'days1')) {
       return (
         <div id="NL" className="new-listings">
-          <Loader message="random"/>
+          <Loader message="random" />
         </div>
       );
     }
@@ -109,7 +99,7 @@ class NewListings extends Component {
         .Infos
         .reduce((acc, curr) => acc + curr[this.state.filter], 0);
       return data;
-    }, orderArr,);
+    }, orderArr);
 
     return (
       <div id="NL" className="new-listings">
@@ -120,13 +110,16 @@ class NewListings extends Component {
               placeholder="search these listings..."
               id="nl-search"
               name="nl-search"
-              onChange={this.searchChange}/>
+              onChange={this.searchChange} />
           </div>
         </div>
         {finalSize.length
           ? <div className="dl-item-group">
-              <ListHeaderItem order={this.state.order} active={this.state.filter}/> {finalSize.map((item, index) => (<ListItem key={item.id} active={this.state.filter} index={index} item={item}/>))}
-            </div>
+            <ListHeaderItem order={this.state.order} active={this.state.filter} />
+            {finalSize.map((item, index) => (
+              <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
+            ))}
+          </div>
           : <div>
             Nothing results for: {this.state.search}.
           </div>}
@@ -136,12 +129,12 @@ class NewListings extends Component {
   }
 }
 
-const mapState = state => ({dailyListings: state.stats.dailyListings});
+const mapState = state => ({ dailyListings: state.stats.dailyListings });
 
-const mapDispatch = dispatch => ({
-  load() {
-    dispatch(fetchDailyListings(1));
-  }
-});
+const mapDispatch = (dispatch) => {
+  // load() {
+  dispatch(fetchDailyListings(1));
+  // }
+};
 
 export default connect(mapState, mapDispatch)(NewListings);

@@ -1,12 +1,11 @@
-import siteConfig from '../config';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { faSignInAlt, faSignOutAlt, faUserPlus } from '@fortawesome/fontawesome-free-solid';
 import { withRouter, Link, NavLink } from 'react-router-dom';
-import { logout } from '../store';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faSignInAlt, faSignOutAlt, faUser, faUserPlus } from '@fortawesome/fontawesome-free-solid';
-import BuiltBy from './BuiltBy.js';
+import siteConfig from '../config';
+import { logout } from '../store';
+import BuiltBy from './BuiltBy';
 import './template.scss';
 import './nav.scss';
 import './mobile.scss';
@@ -117,14 +116,14 @@ class Template extends Component {
                 </Link>
               </div>
             ) : (
-              <div className="navButtons">
-                <button id="navSign" className="in" onClick={handleClick}>
-                  <span>
-                    <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+                <div className="navButtons">
+                  <button id="navSign" className="in" onClick={handleClick}>
+                    <span>
+                      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
                   </span>
-                </button>
-              </div>
-            )}
+                  </button>
+                </div>
+              )}
           </ul>
         </nav>
 
@@ -163,12 +162,3 @@ const mapDispatch = dispatch => ({
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
 export default withRouter(connect(mapState, mapDispatch)(Template));
-
-/**
- * PROP TYPES
- */
-Template.propTypes = {
-  children: PropTypes.object,
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-};

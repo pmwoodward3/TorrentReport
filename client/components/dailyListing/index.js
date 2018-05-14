@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import _ from 'lodash';
 import Loader from '../loader';
 
 import './style.scss';
 
 import { fetchDailyListings } from '../../store';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 
 import MiniListItem from './miniListItem';
-import { getListingsByID } from '../store_helper';
 
 /**
  * COMPONENT
@@ -49,7 +44,7 @@ class DailyListing extends Component {
     this.setState({ filter: this.oppositeFilter(this.state.filter) });
   }
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps) { // eslint-disable-line class-methods-use-this
     return _.has(nextProps.dailyListings, 'days1');
   }
 
