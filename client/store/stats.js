@@ -1,5 +1,5 @@
 import axios from 'axios';
-import history from '../history';
+// import history from '../history';
 import { spreadListings } from './index';
 
 /**
@@ -74,7 +74,6 @@ export const fetchDailyListings = days => dispatch =>
     .get(`/api/torrents/listings/new/${days}`)
     .then((res) => {
       const { data } = res;
-      console.log('inside of fetchdailylistings', data);
       if (!data.length) {
         dispatch(fetchDailyListings(days + 1));
       } else {

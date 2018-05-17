@@ -32,8 +32,7 @@ function getTiming(duration) {
   };
 }
 
-export default function SVGHover() {
-  const { height, width, style } = this.props;
+export default function SVGHover({ height, width, style }) {
   return (
     <Animation keyframes={getKeyFrames()} timing={getTiming(1000)}>
       <svg

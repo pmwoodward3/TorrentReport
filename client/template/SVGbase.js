@@ -1,7 +1,8 @@
 import React from 'react';
 import { Animation } from 'react-web-animation';
 
-function getKeyFrames() { // eslint-disable-line class-methods-use-this
+function getKeyFrames() {
+  // eslint-disable-line class-methods-use-this
   return [
     {
       transform: 'scale(1.15)',
@@ -29,8 +30,7 @@ function getTiming(duration) {
   };
 }
 
-export default function SVGBase() {
-  const { height, width, style } = this.props;
+export default function SVGBase({ height, width, style }) {
   return (
     <Animation keyframes={getKeyFrames()} timing={getTiming(1000)}>
       <svg

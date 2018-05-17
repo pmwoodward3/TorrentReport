@@ -13,7 +13,9 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
 const { logger } = require('./logging');
 
-const sessionStore = new SequelizeStore({ db });
+const sessionStore = new SequelizeStore({
+  db,
+});
 const PORT = process.env.PORT || 8080;
 const app = express();
 const socketio = require('socket.io');
@@ -54,11 +56,15 @@ const createApp = () => {
   app.use(helmet());
 
   // logging middleware
-  app.use(morgan('combined', { stream: logger.stream }));
+  app.use(morgan('combined', {
+    stream: logger.stream,
+  }));
 
   // body parsing middleware
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.urlencoded({
+    extended: true,
+  }));
 
   // compression middleware
   app.use(compression());
@@ -114,6 +120,7 @@ const createApp = () => {
   });
 
   // error handling endware
+  // eslint-disable-next-line
   app.use((err, req, res, next) => {
     logger.error(err);
     logger.error(err.stack);
