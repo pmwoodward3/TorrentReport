@@ -36,18 +36,18 @@ module.exports = User;
 /**
  * instanceMethods
  */
-User.prototype.correctPassword = function (candidatePwd) {
+User.prototype.correctPassword = function correctPassword(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt) === this.password;
 };
 
 /**
  * classMethods
  */
-User.generateSalt = function () {
+User.generateSalt = function generateSalt() {
   return crypto.randomBytes(16).toString('base64');
 };
 
-User.encryptPassword = function (plainText, salt) {
+User.encryptPassword = function encryptPassword(plainText, salt) {
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
@@ -60,13 +60,12 @@ User.encryptPassword = function (plainText, salt) {
  */
 const setSaltAndPassword = (user) => {
   if (user.changed('password')) {
-    user.salt = User.generateSalt();
-    user.password = User.encryptPassword(user.password, user.salt);
+    user.salt = User.generateSalt(); // eslint-disable-line
+    user.password = User.encryptPassword(user.password, user.salt); // eslint-disable-line
   }
 };
 
 const createAuthToken = (user) => {
-  console.log('----> creating user auth <----');
   if (!user.actived) {
     userAccess
       .create({

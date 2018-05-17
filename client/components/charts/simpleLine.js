@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ResponsiveContainer,
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Line,
-} from 'recharts';
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
 import './styles.scss';
 
 export default function SimpleLine(props) {
@@ -14,11 +7,11 @@ export default function SimpleLine(props) {
   let maxSeed = 0;
   let maxLeach = 0;
   const newData = data.map((snapshot) => {
+    const newSnapshot = { ...snapshot };
     if (snapshot.seed > maxSeed) maxSeed = snapshot.seed;
     if (snapshot.leach > maxLeach) maxLeach = snapshot.leach;
     const ratio = snapshot.seed / snapshot.leach;
-    // eslint-disable-next-line no-param-reassign
-    snapshot.ratio = Math.floor(ratio * 100) / 100;
+    newSnapshot.ratio = Math.floor(ratio * 100) / 100;
     return snapshot;
   });
   const yAxisKey = maxSeed >= maxLeach ? 'seed' : 'leach';

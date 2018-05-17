@@ -1,25 +1,15 @@
 import React from 'react';
-import {
-  ResponsiveContainer,
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Line,
-  Label,
-} from 'recharts';
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Line } from 'recharts';
 import moment from 'moment';
 import './styles.scss';
 
 const CustomTooltip = (props) => {
-  const { active, payload, label } = props;
+  const { active, payload } = props;
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
         <div className="label">
-          <p>{`${moment(payload[0].payload.date).format('MM/DD/YYYY')}`}</p>
-          <p>{`${moment(payload[0].payload.date).format('HH:mm:ss')}`}</p>
+          <p>{`${payload[0].payload.date}`}</p>
         </div>
         <div className="desc">
           <div className="row" style={{ color: payload[1].fill }}>
@@ -38,18 +28,31 @@ const CustomTooltip = (props) => {
   return null;
 };
 
-export default (props) => {
+const SyncLine = (props) => {
   const { syncId, pluck, data } = props;
   let maxSeed = 0;
   let maxLeach = 0;
-  const newData = data.map((snapshot) => {
-    if (snapshot.seed > maxSeed) maxSeed = snapshot.seed;
-    if (snapshot.leach > maxLeach) maxLeach = snapshot.leach;
-    const ratio = snapshot.seed / snapshot.leach;
-    snapshot.ratio = Math.floor(ratio * 100) / 100;
-    snapshot.date = moment(snapshot.createdAt).format();
-    return snapshot;
+
+  const holderObj = {};
+  data.forEach((snap) => {
+    if (snap.seed > maxSeed) maxSeed = snap.seed;
+    if (snap.leach > maxLeach) maxLeach = snap.leach;
+    const ratio = snap.seed / snap.leach;
+    const generalDate = moment(new Date(snap.date)).format('MM/DD/YYYY');
+    if (holderObj[generalDate]) {
+      holderObj[generalDate].seed += snap.seed;
+      holderObj[generalDate].leach += snap.leach;
+      holderObj[generalDate].ratio = holderObj[generalDate].seed / holderObj[generalDate].leach;
+    } else {
+      holderObj[generalDate] = {
+        ratio: Math.floor(ratio * 100) / 100, // eslint-disable-line
+        date: generalDate,
+        seed: snap.seed,
+        leach: snap.leach,
+      };
+    }
   });
+  const newData = Object.keys(holderObj).map(key => holderObj[key]);
   const yAxisKey = maxSeed >= maxLeach ? 'seed' : 'leach';
   return (
     <ResponsiveContainer height={150}>
@@ -81,3 +84,5 @@ export default (props) => {
     </ResponsiveContainer>
   );
 };
+
+export default SyncLine;

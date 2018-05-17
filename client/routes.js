@@ -18,9 +18,9 @@ import {
   NoMatch,
   ActivateAccount,
   ResetPassword,
-  ScrollToTopRoute,
+  ScrollToTop,
 } from './components/';
-import { me, fetchGroups } from './store';
+import { me } from './store';
 
 /**
  * COMPONENT
@@ -35,31 +35,33 @@ class Routes extends Component {
 
     return (
       <Router history={history}>
-        <Template>
-          <Switch>
-            <ScrollToTopRoute exact path="/" component={Home} />
-            <ScrollToTopRoute exact path="/listing/:id" component={Listing} />
-            <ScrollToTopRoute exact path="/info/:id" component={Info} />
-            <ScrollToTopRoute exact path="/group/:id" component={Group} />
-            <ScrollToTopRoute exact path="/site/:id" component={Site} />
-            <ScrollToTopRoute exact path="/new/listings" component={NewListings} />
-            <Route exact path="/test" component={Test} />
-            <ScrollToTopRoute exact path="/top" component={Top} />
-            {isLoggedIn && (
-              <Switch>
-                {/* Routes placed here are only available after logging in */}
-                <ScrollToTopRoute path="/account" component={AccountHome} />
-              </Switch>
-            )}
-            {/* Routes placed here are available to all visitors */}
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/activate/:token" component={ActivateAccount} />
-            <Route path="/resetpassword/:token" component={ResetPassword} />
-            {/* Displays noMatch component as a fallback */}
-            <Route path="*" component={NoMatch} status={404} />
-          </Switch>
-        </Template>
+        <ScrollToTop>
+          <Template>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/listing/:id" component={Listing} />
+              <Route exact path="/info/:id" component={Info} />
+              <Route exact path="/group/:id" component={Group} />
+              <Route exact path="/site/:id" component={Site} />
+              <Route exact path="/new/listings" component={NewListings} />
+              <Route exact path="/test" component={Test} />
+              <Route exact path="/top" component={Top} />
+              {isLoggedIn && (
+                <Switch>
+                  {/* Routes placed here are only available after logging in */}
+                  <Route path="/account" component={AccountHome} />
+                </Switch>
+              )}
+              {/* Routes placed here are available to all visitors */}
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/activate/:token" component={ActivateAccount} />
+              <Route path="/resetpassword/:token" component={ResetPassword} />
+              {/* Displays noMatch component as a fallback */}
+              <Route path="*" component={NoMatch} status={404} />
+            </Switch>
+          </Template>
+        </ScrollToTop>
       </Router>
     );
   }
@@ -80,7 +82,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   loadInitialData() {
     dispatch(me());
-    dispatch(fetchGroups());
   },
 });
 

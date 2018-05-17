@@ -31,44 +31,44 @@ class NewListings extends Component {
     if (!_.has(this.props.dailyListings, 'days1')) this.props.load();
   }
 
-  shouldComponentUpdate(nextProps) { //eslint-disable-line
+  // eslint-disable-next-line
+  shouldComponentUpdate(nextProps) {
     return _.has(nextProps.dailyListings, 'days1');
   }
 
   toggleOrder = (order) => {
     this.setState({ order });
-  }
+  };
 
   toggleFilter = (filter) => {
     this.setState({ filter });
-  }
+  };
 
   searchChange = (event) => {
     const searchInput = event.target.value;
-    if (!searchInput.trim().length) return this.setState({ search: '', searching: false, searchResults: [] });
+    if (!searchInput.trim().length) {
+      return this.setState({ search: '', searching: false, searchResults: [] });
+    }
     this.setState({ search: searchInput, searching: true });
     const isMoreGeneral = searchInput.length < this.state.search;
-    const arrToUse = this.state.searchResults.length && isMoreGeneral
-      ? this.state.searchResults
-      : this.props.dailyListings.days1;
+    const arrToUse =
+      this.state.searchResults.length && isMoreGeneral
+        ? this.state.searchResults
+        : this.props.dailyListings.days1;
     return this.sendSearchToWorker(arrToUse, searchInput);
-  }
+  };
 
   sendSearchToWorker = (array, target) => {
     this.initWorker();
-    this
-      .workerHolder
-      .postMessage({ array, target });
-  }
+    this.workerHolder.postMessage({ array, target });
+  };
 
   killWorker = () => {
     if (this.workerHolder) {
-      this
-        .workerHolder
-        .terminate();
+      this.workerHolder.terminate();
       this.workerHolder = undefined;
     }
-  }
+  };
   initWorker = () => {
     this.killWorker();
 
@@ -77,7 +77,7 @@ class NewListings extends Component {
       const { result } = m.data;
       this.setState({ searchResults: result, searching: false });
     };
-  }
+  };
 
   render() {
     if (!_.has(this.props.dailyListings, 'days1')) {
@@ -87,43 +87,45 @@ class NewListings extends Component {
         </div>
       );
     }
-    const orderArr = this.state.order === 'top'
-      ? ['desc']
-      : ['asc'];
+    const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
 
-    const arrToStartWith = this.state.search && !this.state.searching
-      ? this.state.searchResults
-      : this.props.dailyListings.days1;
-    const finalSize = _.orderBy(arrToStartWith, (obj) => {
-      const data = obj
-        .Infos
-        .reduce((acc, curr) => acc + curr[this.state.filter], 0);
-      return data;
-    }, orderArr);
+    const arrToStartWith =
+      this.state.search && !this.state.searching
+        ? this.state.searchResults
+        : this.props.dailyListings.days1;
+    const finalSize = _.orderBy(
+      arrToStartWith,
+      (obj) => {
+        const data = obj.Infos.reduce((acc, curr) => acc + curr[this.state.filter], 0);
+        return data;
+      },
+      orderArr,
+    );
 
     return (
       <div id="NL" className="new-listings">
         <div className="dl-top">
           <div className="dl-header">TOP NEWLY LISTED TORRENTS</div>
-          <div className="dl-detail">{this.state.searching && 'searching'}
+          <div className="dl-detail">
+            {this.state.searching && 'searching'}
             <input
               placeholder="search these listings..."
               id="nl-search"
               name="nl-search"
-              onChange={this.searchChange} />
+              onChange={this.searchChange}
+            />
           </div>
         </div>
-        {finalSize.length
-          ? <div className="dl-item-group">
+        {finalSize.length ? (
+          <div className="dl-item-group">
             <ListHeaderItem order={this.state.order} active={this.state.filter} />
             {finalSize.map((item, index) => (
               <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
             ))}
           </div>
-          : <div>
-            Nothing results for: {this.state.search}.
-          </div>}
-
+        ) : (
+          <div>Nothing results for: {this.state.search}.</div>
+        )}
       </div>
     );
   }
@@ -131,10 +133,10 @@ class NewListings extends Component {
 
 const mapState = state => ({ dailyListings: state.stats.dailyListings });
 
-const mapDispatch = (dispatch) => {
-  // load() {
-  dispatch(fetchDailyListings(1));
-  // }
-};
+const mapDispatch = dispatch => ({
+  load: () => {
+    dispatch(fetchDailyListings(1));
+  },
+});
 
 export default connect(mapState, mapDispatch)(NewListings);

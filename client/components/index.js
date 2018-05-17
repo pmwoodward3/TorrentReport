@@ -13,7 +13,7 @@ export { default as Site } from './site/';
 export { default as Group } from './group/';
 export { default as NewListings } from './newListings/';
 export { default as NoMatch } from './noMatch/';
-export { default as ScrollToTopRoute } from './ScrollToTopRoute/';
+export { default as ScrollToTop } from './ScrollToTop/';
 export { default as BasicToolTip } from './tooltip/basic';
 export { default as ActivateAccount } from './activateAccount';
 export { default as ResetPassword } from './resetPassword';

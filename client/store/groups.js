@@ -1,6 +1,4 @@
 import axios from 'axios';
-import history from '../history';
-import _ from 'lodash';
 import { addSites } from './sites';
 
 /**
@@ -37,7 +35,7 @@ export const spreadGroups = groupsArr => (dispatch) => {
   });
 
   dispatch(addGroups(groupsArr));
-  if (Sites.length) dispatch(addSites(Sites));
+  return Sites.length ? dispatch(addSites(Sites)) : false;
 };
 
 export const fetchGroups = () => (dispatch) => {
@@ -58,7 +56,7 @@ export default (state = initialState, action) => {
         newGroupObj[group.id] = group;
       });
       return {
-        ...state.items,
+        ...state,
         items: newGroupObj,
       };
     }

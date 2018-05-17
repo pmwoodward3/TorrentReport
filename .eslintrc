@@ -4,7 +4,6 @@
   "extends": ["airbnb-base", "plugin:react/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    // "prettier/prettier": "error",
     "react/prop-types": 0,
     "react/jsx-filename-extension": [
       1,

@@ -1,66 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { getData } from '../../store';
-import { getOrFetchGroupByID, getGroupByID } from '../store_helper';
 import moment from 'moment';
-import _ from 'lodash';
+
+import { fetchGroups } from '../../store';
 import Loader from '../loader';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/fontawesome-free-solid';
 import './style.scss';
 
-class Group extends Component {
-  constructor(props) {
-    super(props);
-    const { id } = props.match.params;
-    const safeId = parseInt(id, 10);
-    const group = getGroupByID(safeId);
-    this.state = {
-      group,
-      groupId: safeId || false,
-    };
-  }
-
-  componentDidMount() {
-    getOrFetchGroupByID(this.state.groupId);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const groupId = this.state.groupId || parseInt(nextProps.match.params.id, 10);
-    const group = this.state.group || getGroupByID(groupId);
-    if (!this.state.group || !this.state.infos) this.setState({ group, groupId });
-  }
-
-  render() {
-    if (!this.state.group || !this.state.groupId) return <Loader />;
-    console.log(this.state);
-    return (
-      <div>
-        <h1>group info</h1>
-        <b>
-          {this.state.group.name} (tag: {this.state.group.tag})
-        </b>
-        <p>createdAt : {moment(this.state.group.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
-        <p>updatedAt : {moment(this.state.group.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
-        <p>url : {this.state.group.url}</p>
-        <p>
-          from site:{this.state.group.torrentSite.name}
-          <Link to={`/site/${this.state.group.torrentSiteId}`}>
-            View Details for {this.state.group.torrentSite.short}
-          </Link>
-        </p>
-      </div>
-    );
-  }
-}
+const Group = (props) => {
+  const id = parseInt(props.match.params.id, 10);
+  const group = props.groups.items[id] || props.fetchAllGroups();
+  if (!group) return <Loader />;
+  return (
+    <div>
+      <h1>group info</h1>
+      <b>
+        {group && group.name} (tag: {group && group.tag})
+      </b>
+      <p>createdAt : {moment(group.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+      <p>updatedAt : {moment(group.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+      <p>url : {group.url}</p>
+      <p>
+        from site:{group.torrentSite.name}
+        <Link to={`/site/${group.torrentSiteId}`}>View Details for {group.torrentSite.short}</Link>
+      </p>
+    </div>
+  );
+};
 
 const mapState = state => ({
   groups: state.groups,
   sites: state.sites,
 });
 
-const mapDispatch = dispatch => ({});
+const mapDispatch = dispatch => ({
+  fetchAllGroups: () => dispatch(fetchGroups()),
+});
 
 export default connect(mapState, mapDispatch)(Group);

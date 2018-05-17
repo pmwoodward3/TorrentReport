@@ -1,5 +1,4 @@
 import axios from 'axios';
-import history from '../history';
 import _ from 'lodash';
 import { spreadGroups } from './groups';
 
@@ -36,12 +35,12 @@ export const spreadInfos = infosArr => (dispatch) => {
     info.Group.forEach(groupItem => Groups.push(_.cloneDeep(groupItem)));
   });
   dispatch(addInfos(infosArr));
-  if (Groups.length) dispatch(spreadGroups(Groups));
+  return Groups.length ? dispatch(spreadGroups(Groups)) : false;
 };
 
 export const fetchInfoById = infoID => (dispatch) => {
   if (!infoID) return false;
-  axios.get(`/api/torrents/infos/${infoID}`).then((res) => {
+  return axios.get(`/api/torrents/infos/${infoID}`).then((res) => {
     if (res.data === null) throw Error('null data');
     const infoArr = [];
     infoArr.push(res.data);
@@ -51,7 +50,7 @@ export const fetchInfoById = infoID => (dispatch) => {
 
 export const fetchInfosById = infoIds => (dispatch) => {
   if (!infoIds) return false;
-  axios.post('/api/torrents/infos/', { infoIds }).then((res) => {
+  return axios.post('/api/torrents/infos/', { infoIds }).then((res) => {
     if (res.data === null) throw Error('null data');
     dispatch(spreadInfos(res.data));
   });
@@ -68,7 +67,7 @@ export default (state = initialState, action) => {
         newInfoObj[info.id] = info;
       });
       return {
-        ...state.items,
+        ...state,
         items: newInfoObj,
       };
     }

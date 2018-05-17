@@ -74,7 +74,7 @@ export const fetchDailyListings = days => dispatch =>
     .get(`/api/torrents/listings/new/${days}`)
     .then((res) => {
       const { data } = res;
-      if (!data.length) {
+      if (!data.length && days < 10) {
         dispatch(fetchDailyListings(days + 1));
       } else {
         dispatch(spreadListings(data));

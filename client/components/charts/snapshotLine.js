@@ -2,30 +2,43 @@ import React from 'react';
 import {
   ResponsiveContainer,
   ComposedChart,
-  AreaChart,
   Area,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   Line,
   Label,
 } from 'recharts';
 import moment from 'moment';
 
-export default (props) => {
-  const data = props.snapshots.map((snapshot) => {
-    const ratio = snapshot.seed / snapshot.leach;
-    snapshot.ratio = Math.floor(ratio * 100) / 100;
-    // snapshot.date = snapshot.createdAt;
-    snapshot.date = moment(snapshot.createdAt).format();
-    return snapshot;
+const SnapshotLine = (props) => {
+  let maxSeed = 0;
+  let maxLeach = 0;
+  const holderObj = {};
+  props.data.forEach((snap) => {
+    if (snap.seed > maxSeed) maxSeed = snap.seed;
+    if (snap.leach > maxLeach) maxLeach = snap.leach;
+    const ratio = snap.seed / snap.leach;
+    const generalDate = moment(new Date(snap.date)).format('MM/DD/YYYY');
+    if (holderObj[generalDate]) {
+      holderObj[generalDate].seed += snap.seed;
+      holderObj[generalDate].leach += snap.leach;
+      holderObj[generalDate].ratio = holderObj[generalDate].seed / holderObj[generalDate].leach;
+    } else {
+      holderObj[generalDate] = {
+        ratio: Math.floor(ratio * 100) / 100, // eslint-disable-line
+        date: generalDate,
+        seed: snap.seed,
+        leach: snap.leach,
+      };
+    }
   });
+  const newData = Object.keys(holderObj).map(key => holderObj[key]);
 
   return (
     <ResponsiveContainer height={250}>
       <ComposedChart
-        data={data}
+        data={newData}
         margin={{
           top: 0,
           right: 10,
@@ -82,3 +95,5 @@ export default (props) => {
     </ResponsiveContainer>
   );
 };
+
+export default SnapshotLine;

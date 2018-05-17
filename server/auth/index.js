@@ -8,7 +8,7 @@ module.exports = router;
 
 const cleanUser = userObj => _.pick(userObj, ['email', 'id']);
 
-const window = new JSDOM('').window;
+const { window } = new JSDOM('');
 const DOMPurify = createDOMPurify(window);
 
 router.post('/login', (req, res, next) => {

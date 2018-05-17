@@ -30,12 +30,12 @@ if (!process.env.GOOGLE_CLIENT_ID && !fs.existsSync(SECRETS_PATH)) {
 } else {
   if (fs.existsSync(SECRETS_PATH)) {
     logger.info('## OAuth - Google ## - SUCCESS! \t (SECRETS VAR)');
-    googleConfig = require(SECRETS_PATH).google;
+    googleConfig = require(SECRETS_PATH).google; // eslint-disable-line
   } else {
     logger.info('## OAuth - Google ## - SUCCESS! \t (ENV VAR)');
     googleConfig = {
       clientID: process.env.GOOGLE_CLIENT_ID,
-      consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK,
     };
   }
