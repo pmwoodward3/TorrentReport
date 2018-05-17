@@ -25,8 +25,8 @@ const Listing = (props) => {
     item.torrentSnapshots.forEach((snap) => {
       const generalDate = moment(new Date(snap.date)).format('MM/DD/YYYY');
       if (holderObj[generalDate]) {
-        holderObj[generalDate].seed += snap.seed;
-        holderObj[generalDate].leach += snap.leach;
+        if (snap.seed > holderObj[generalDate].seed) holderObj[generalDate].seed = snap.seed;
+        if (snap.leach > holderObj[generalDate].leach) holderObj[generalDate].leach = snap.leach;
       } else {
         holderObj[generalDate] = {
           date: generalDate,

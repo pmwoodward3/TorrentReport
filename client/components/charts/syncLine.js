@@ -40,9 +40,10 @@ const SyncLine = (props) => {
     const ratio = snap.seed / snap.leach;
     const generalDate = moment(new Date(snap.date)).format('MM/DD/YYYY');
     if (holderObj[generalDate]) {
-      holderObj[generalDate].seed += snap.seed;
-      holderObj[generalDate].leach += snap.leach;
-      holderObj[generalDate].ratio = holderObj[generalDate].seed / holderObj[generalDate].leach;
+      const currentRatio = holderObj[generalDate].seed / holderObj[generalDate].leach;
+      if (snap.seed > holderObj[generalDate].seed) holderObj[generalDate].seed = snap.seed;
+      if (snap.leach > holderObj[generalDate].leach) holderObj[generalDate].leach = snap.leach;
+      if (currentRatio > holderObj[generalDate].ration) holderObj[generalDate].ratio = currentRatio;
     } else {
       holderObj[generalDate] = {
         ratio: Math.floor(ratio * 100) / 100, // eslint-disable-line

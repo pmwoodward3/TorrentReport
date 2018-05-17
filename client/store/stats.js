@@ -22,6 +22,7 @@ const defaultData = {
 const LOADING_TOP_NEW_SNAPSHOTS = 'LOADING_TOP_NEW_SNAPSHOTS';
 const RECEIVE_TOP_NEW_SNAPSHOTS = 'RECEIVE_TOP_NEW_SNAPSHOTS';
 const SET_ONLINE_USERS = 'SET_ONLINE_USERS';
+const REQUEST_STATS = 'REQUEST_STATS';
 const RECEIVE_STATS = 'RECEIVE_STATS';
 const RECEIVE_DAILY_LISTINGS = 'RECEIVE_DAILY_LISTINGS';
 const SET_DAILY_LISTINGS = 'SET_DAILY_LISTINGS';
@@ -35,6 +36,7 @@ export const receiveTopNewSnapshots = snapshotsArr => ({
   snapshotsArr,
 });
 export const setOnlineUsers = userCount => ({ type: SET_ONLINE_USERS, userCount });
+export const requestStats = () => ({ type: REQUEST_STATS });
 export const receiveStats = siteStats => ({ type: RECEIVE_STATS, siteStats });
 export const recieveDailyListings = (dailyListings, days) => ({
   type: RECEIVE_DAILY_LISTINGS,
@@ -56,17 +58,20 @@ export const fetchTopNewSnapshots = (days = 1) => (dispatch) => {
     .get(`/api/torrents/snapshots/new/${days}`)
     .then((res) => {
       // const listingsArr =
-      // dispatch(spreadListings(res.data))
+      // console.log('res.data', res.data);
+      // dispatch(spreadSnapshots(res.data));
       dispatch(receiveTopNewSnapshots(res.data));
     })
     .catch(err => console.log(err));
 };
 
-export const fetchStats = () => dispatch =>
-  axios
+export const fetchStats = () => (dispatch) => {
+  dispatch(requestStats());
+  return axios
     .get('/api/torrents/stats/')
     .then(res => dispatch(receiveStats(res.data)))
     .catch(err => console.log(err));
+};
 
 // gets daily listinsg
 export const fetchDailyListings = days => dispatch =>
@@ -96,6 +101,8 @@ export default (state = defaultData, action) => {
       return { ...state, topNewSnapshots: { state: 'loading' } };
     case RECEIVE_TOP_NEW_SNAPSHOTS:
       return { ...state, topNewSnapshots: { state: 'ready', items: action.snapshotsArr } };
+    case REQUEST_STATS:
+      return { ...state, state: 'loading' };
     case RECEIVE_STATS:
       return { ...state, state: 'loaded', siteStats: action.siteStats };
     case RECEIVE_DAILY_LISTINGS: {

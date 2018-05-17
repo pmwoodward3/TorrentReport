@@ -8,7 +8,7 @@ const {
 } = require('../../db/models');
 const Sequelize = require('sequelize');
 
-const Op = Sequelize.Op;
+const { Op } = Sequelize;
 
 module.exports = router;
 
@@ -22,9 +22,11 @@ module.exports = router;
 
 // return all the snapshots for a specific infoID
 router.get('/:infoId', (req, res, next) => {
-  if (!req.params.infoId || !Number.isInteger(parseInt(req.params.infoId, 10))) { return res.sendStatus(404); }
+  if (!req.params.infoId || !Number.isInteger(parseInt(req.params.infoId, 10))) {
+    return res.sendStatus(404);
+  }
   const id = parseInt(req.params.infoId, 10);
-  TorrentSnapshot.findAll({
+  return TorrentSnapshot.findAll({
     include: [{ model: TorrentInfo, where: { id } }],
   })
     .then(data => res.json(data))
@@ -37,7 +39,8 @@ router.get('/new/:days', (req, res, next) => {
   if (!req.params.days) req.params.days = 1;
   const days = parseInt(req.params.days, 10);
   if (days > 31) res.sendStatus(403);
-  const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
+  const d = days * 24 * 60 * 60 * 1000;
+  const filterTime = new Date() - d;
   TorrentSnapshot.findAll({
     where: {
       createdAt: {
@@ -55,6 +58,14 @@ router.get('/new/:days', (req, res, next) => {
       },
     ],
   })
+    .then((data) => {
+      const seenInfoIds = new Set();
+      return data.filter((snapshot) => {
+        if (seenInfoIds.has(snapshot.torrentInfoId)) return false;
+        seenInfoIds.add(snapshot.torrentInfoId);
+        return true;
+      });
+    })
     .then(data => res.json(data))
     .catch(next);
 });
@@ -66,8 +77,9 @@ router.get('/new/:days/site/:siteId', (req, res, next) => {
   const id = parseInt(req.params.siteId, 10);
   const days = parseInt(req.params.days, 10);
   if (days > 31) res.sendStatus(403);
-  const filterTime = new Date() - days * 24 * 60 * 60 * 1000;
-  TorrentSnapshot.findAll({
+  const d = days * 24 * 60 * 60 * 1000;
+  const filterTime = new Date() - d;
+  return TorrentSnapshot.findAll({
     where: {
       createdAt: {
         [Op.gte]: new Date(filterTime),

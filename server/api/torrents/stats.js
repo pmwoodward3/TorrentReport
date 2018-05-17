@@ -1,19 +1,25 @@
 const router = require('express').Router();
-const {
-  TorrentStats, TorrentSite, TorrentGroup, TorrentCategory,
-} = require('../../db/models');
+const { TorrentStats } = require('../../db/models');
 
 module.exports = router;
 
-const maxIdDetail = () => TorrentStats.max('id').then(maxId => TorrentStats.findById(maxId));
+const maxIdDetail = () =>
+  TorrentStats.max('id')
+    .then(maxId => TorrentStats.findById(maxId))
+    .then((maxStatObj) => {
+      console.log('max', maxStatObj.active);
+      console.log('max1111', Promise.resolve(maxStatObj));
+      if (maxStatObj.active) return TorrentStats.findById(parseInt(maxStatObj.id, 10) - 1);
+      return Promise.resolve(maxStatObj);
+    });
 
 router.get('/', (req, res, next) => {
   maxIdDetail()
     .then(async (statObj) => {
       const newStatObj = statObj.toJSON();
-      newStatObj.sites = await TorrentSite.findAll();
-      newStatObj.groups = await TorrentGroup.findAll();
-      newStatObj.categories = await TorrentCategory.findAll();
+      // newStatObj.sites = await TorrentSite.findAll();
+      // newStatObj.groups = await TorrentGroup.findAll();
+      // newStatObj.categories = await TorrentCategory.findAll();
       newStatObj.fetched = new Date();
       return newStatObj;
     })

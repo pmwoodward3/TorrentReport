@@ -32,7 +32,9 @@ export const spreadInfos = infosArr => (dispatch) => {
   if (!infosArr) return false;
   const Groups = [];
   infosArr.forEach((info) => {
-    info.Group.forEach(groupItem => Groups.push(_.cloneDeep(groupItem)));
+    if (Array.isArray(info.Group)) {
+      info.Group.forEach(groupItem => Groups.push(_.cloneDeep(groupItem)));
+    }
   });
   dispatch(addInfos(infosArr));
   return Groups.length ? dispatch(spreadGroups(Groups)) : false;
