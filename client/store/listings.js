@@ -1,6 +1,4 @@
 import axios from 'axios';
-import history from '../history';
-import _ from 'lodash';
 import { spreadInfos } from './index';
 
 /**
@@ -29,7 +27,6 @@ export const updateListings = listingsToUpdateArr => ({
 /**
  * THUNK CREATORS
  */
-
 export const spreadListings = listings => (dispatch) => {
   if (!listings) return false;
   const infosArr = [];
@@ -37,7 +34,7 @@ export const spreadListings = listings => (dispatch) => {
     listing.Infos.forEach(info => infosArr.push(info));
   });
   dispatch(addListings(listings));
-  if (infosArr.length) dispatch(spreadInfos(infosArr));
+  return infosArr.length ? dispatch(spreadInfos(infosArr)) : false;
 };
 
 export const fetchListingById = infoID => (dispatch) => {

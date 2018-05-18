@@ -9,12 +9,17 @@ import StatSquare from './statSquare';
  * COMPONENT
  */
 const SiteStats = (props) => {
-  const stats = props.stats.siteStats.scrapeCount ? props.stats.siteStats : props.fetchAllStats();
+  let stats;
 
-  const nowDateObj = new Date(stats.fetched);
+  if (props.stats.siteStats.scrapeCount) {
+    stats = props.stats.siteStats;
+  } else if (props.stats.state !== 'loading') props.fetchAllStats();
+
+  let nowDateObj;
   let duration;
   let lastScrapeTime;
-  if (stats.endedAt && stats.createdAt) {
+  if (stats && stats.endedAt && stats.createdAt) {
+    nowDateObj = new Date(stats.fetched);
     const endedDateObj = moment(stats.endedAt);
     const createdDateObj = moment(stats.createdAt);
     duration = endedDateObj.diff(createdDateObj, 'minutes', true); // 1;
@@ -37,29 +42,33 @@ const SiteStats = (props) => {
         <div className="descr">
           <div className="top">TORRENT REPORT</div>
           <div className="head">STATISTICS</div>
-          <div className="date">as of {nowDateObj.toLocaleTimeString('en-us', options)}</div>
+          <div className="date">
+            {stats && stats.createdAt
+              ? `as of ${nowDateObj.toLocaleTimeString('en-us', options)}`
+              : 'hold on a second...'}
+          </div>
         </div>
         <div className="group2">
-          <StatSquare name="Scrape Runs" value={stats.scrapeCount} />
-          <StatSquare name="Sites" value={stats.siteCount} />
+          <StatSquare name="Scrape Runs" value={(stats && stats.scrapeCount) || 0} />
+          <StatSquare name="Sites" value={(stats && stats.siteCount) || 0} />
         </div>
         <div className="group2">
-          <StatSquare name="Sites Load Count" value={stats.siteLoadCount} />
-          <StatSquare name="Torrent Load Count" value={stats.torrentLoadCount} />
+          <StatSquare name="Sites Load Count" value={(stats && stats.siteLoadCount) || 0} />
+          <StatSquare name="Torrent Load Count" value={(stats && stats.torrentLoadCount) || 0} />
         </div>
       </div>
       <div className="seperator">
         <div className="group2">
-          <StatSquare name="Group Count" value={stats.groupCount} />
-          <StatSquare name="Info Count" value={stats.infoCount} />
+          <StatSquare name="Group Count" value={(stats && stats.groupCount) || 0} />
+          <StatSquare name="Info Count" value={(stats && stats.infoCount) || 0} />
         </div>
         <div className="group2">
-          <StatSquare name="Snapshot Count" value={stats.snapshotCount} />
-          <StatSquare name="Torrent Count" value={stats.torrentCount} />
+          <StatSquare name="Snapshot Count" value={(stats && stats.snapshotCount) || 0} />
+          <StatSquare name="Torrent Count" value={(stats && stats.torrentCount) || 0} />
         </div>
         <div className="group2">
-          <StatSquare name="Minute Scrape Time" value={duration} />
-          <StatSquare name="Last Scrape Run" value={lastScrapeTime} />
+          <StatSquare name="Minute Scrape Time" value={duration || 0} />
+          <StatSquare name="Last Scrape Run" value={lastScrapeTime || 0} />
         </div>
       </div>
     </div>
