@@ -7,6 +7,7 @@ const { initStat, closeStat } = require('./fetchOrMake/stats');
 const getOrMakeNestedSite = require('./fetchOrMake/siteGroupCategory');
 const sequentialPromise = require('./utils/sequentialPromise');
 const filterSkip = require('./utils/filterSkip');
+const randomNumber = require('./utils/randomNumber');
 
 function reporterAgent(inputSiteArr = sitesArray, skipSafetyCheck = false) {
   return new Promise((reporterResolve, reporterReject) => {
@@ -16,9 +17,11 @@ function reporterAgent(inputSiteArr = sitesArray, skipSafetyCheck = false) {
         if (!isSafe && !skipSafetyCheck) throw Error('not safe to run agent');
         else {
           return initStat()
-            .then(_ => sequentialPromise(inputSiteArr, getOrMakeNestedSite))
+            .then(_ =>
+              sequentialPromise(inputSiteArr, getOrMakeNestedSite, randomNumber(20000, 40000)))
             .then(filterSkip)
-            .then(siteArrWithIds => sequentialPromise(siteArrWithIds, scrapeSite))
+            .then(siteArrWithIds =>
+              sequentialPromise(siteArrWithIds, scrapeSite, randomNumber(20000, 40000)))
             .then(closeStat);
         }
       })

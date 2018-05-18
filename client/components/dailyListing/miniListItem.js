@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import Loader from '../loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown, faClock, faUpload } from '@fortawesome/fontawesome-free-solid';
 

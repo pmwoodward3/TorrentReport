@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 
 import { fetchTopNewSnapshots } from '../../store';
 import Loader from '../loader';
 import './style.scss';
+
+import InfoListItem from './infoListItem';
 
 const TopNewSnapshots = (props) => {
   const { groups, sites } = props;
@@ -23,6 +25,8 @@ const TopNewSnapshots = (props) => {
     if (props.topNewSnapshots.state !== 'loading') props.load();
     return <Loader message="random" />;
   }
+  const parsed = queryString.parse(props.location.search);
+  console.log(' -- -- -->', parsed);
   return (
     <div className="top-container">
       <div className="top-header-list">
@@ -44,20 +48,16 @@ const TopNewSnapshots = (props) => {
       top page (count: {props.topNewSnapshots.items.length})
       <hr />
       {props.topNewSnapshots.items.map(snapshot => (
-        <div key={snapshot.id}>
-          {snapshot.torrentInfo.torrentListing.name} - (<Link
-            to={`/listing/${snapshot.torrentInfo.torrentListing.id}`}
-          >
-            View Listing
-          </Link>) (<Link to={`/info/${snapshot.torrentInfo.id}`}>View Info</Link>) - uploaded by:{' '}
-          {snapshot.torrentInfo.uploadUser} -
-          {snapshot.torrentInfo.Group.reduce(
-            /* eslint-disable */
-            (accum, group) =>
-              (accum += ` (${group.name} - ${group.tag} [${group.torrentSite.name}])`),
-            '' /* eslint-enable */,
-          )}
-        </div>
+        <InfoListItem
+          listingId={snapshot.torrentInfo.torrentListing.id}
+          listingName={snapshot.torrentInfo.torrentListing.name}
+          seed={snapshot.seed}
+          leach={snapshot.leach}
+          uploadDate={snapshot.torrentInfo.uploadDate}
+          uploader={snapshot.torrentInfo.uploadUser}
+          groupsArr={snapshot.torrentInfo.Group}
+          key={snapshot.id}
+        />
       ))}
     </div>
   );
