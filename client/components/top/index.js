@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import queryString from 'query-string';
 
 import { fetchTopNewSnapshots } from '../../store';
 import Loader from '../loader';
@@ -25,8 +24,7 @@ const TopNewSnapshots = (props) => {
     if (props.topNewSnapshots.state !== 'loading') props.load();
     return <Loader message="random" />;
   }
-  const parsed = queryString.parse(props.location.search);
-  console.log(' -- -- -->', parsed);
+
   return (
     <div className="top-container">
       <div className="top-header-list">
