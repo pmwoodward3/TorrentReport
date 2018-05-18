@@ -17,6 +17,8 @@ const sessionStore = new SequelizeStore({
   db,
 });
 const PORT = process.env.PORT || 8080;
+console.log('process.env.PORT', process.env.PORT);
+console.log('PORT', PORT);
 const app = express();
 const socketio = require('socket.io');
 
