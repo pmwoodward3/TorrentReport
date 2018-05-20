@@ -26,10 +26,7 @@ const InfoListItem = ({
 
   return (
     <Link to={`/listing/${listingId}`} className="top-listing-item">
-      <div className="top-listing-item-header">
-        <div className="top-list-item-header-name">{listingName}</div>
-        <div className="top-list-item-header-uploader">{uploader}</div>
-      </div>
+      <div className="top-list-item-header-name">{listingName}</div>
 
       <div className="top-list-item-collection">
         <div className="count">
@@ -43,6 +40,10 @@ const InfoListItem = ({
         <div className="tags">
           <div className="tags-name">Uploaded</div>
           <div className="tags-item">{moment(uploadDate).format(uploadedDateFormat)}</div>
+        </div>
+        <div className="tags">
+          <div className="tags-name">User</div>
+          <div className="tags-item">{uploader}</div>
         </div>
         <div className="tags">
           <div className="tags-name">Groups</div>

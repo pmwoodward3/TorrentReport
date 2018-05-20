@@ -4,10 +4,10 @@
 /*Responsive Styles*/
 @media screen and (max-width: 767px) {
   .content {
-    padding: 1em;
+    padding: 1em !important;
   }
   .footerHolder {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 }
 

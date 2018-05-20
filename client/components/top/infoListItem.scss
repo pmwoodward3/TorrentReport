@@ -6,7 +6,7 @@
   text-decoration: none;
   margin: 5px 0 0 0;
   padding: 10px;
-  background-color: #f1f1f1;
+  background-color: #f4f4f4;
   color: black;
   &:visited {
     color: black;
@@ -17,20 +17,15 @@
 }
 
 .top-listing-item-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: space-between;
+  // align-items: center;
 }
 .top-list-item-header-name {
   font-family: $header_font_family;
   margin: 0;
   padding: 0;
-}
-
-.top-list-item-header-uploader {
-  color: gray;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .top-list-item-collection {

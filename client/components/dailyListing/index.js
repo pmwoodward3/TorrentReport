@@ -71,7 +71,8 @@ class DailyListing extends Component {
     return (
       <div id="DL" className="daily-listings">
         <div className="dl-top">
-          <div className="dl-header">TOP NEWLY LISTED TORRENTS</div>
+
+          <div className="dl-header"><Link to="/new/listings">TOP NEWLY LISTED TORRENTS</Link></div>
           <div className="dl-detail" />
         </div>
         <div className="dl-item-group">

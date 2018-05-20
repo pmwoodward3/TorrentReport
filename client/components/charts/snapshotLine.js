@@ -34,7 +34,21 @@ const SnapshotLine = (props) => {
       };
     }
   });
-  const newData = Object.keys(holderObj).map(key => holderObj[key]);
+
+  const newData = Object.keys(holderObj)
+    .map(key => holderObj[key])
+    .sort((lhs, rhs) => {
+      const leftDate = new Date(lhs.date);
+      const rightDate = new Date(rhs.date);
+      // const leftDate = moment(lhs.date, 'MM/DD/YYYY');
+      // const rightDate = moment(rhs.date, 'MM/DD/YYYY');
+      if (leftDate > rightDate) {
+        return 1;
+      } else if (leftDate < rightDate) {
+        return -1;
+      }
+      return 0;
+    });
 
   return (
     <ResponsiveContainer height={250}>

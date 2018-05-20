@@ -12,17 +12,14 @@
     "lint": "eslint ./ --ignore-path .gitignore",
     "postinstall": "",
     "seed": "node script/seed.js",
-    "seed-test":
-      "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' node script/seed-testDB.js",
+    "seed-test": "NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' node script/seed-testDB.js",
     "start": "node server",
     "start-scrape": "NODE_ENV='development' node script/reporterAgent.js",
     "start-scrape-prod": "NODE_ENV='production' node script/reporterAgent.js",
     "start-dev": "yarn run build-client-watch & yarn run start-server",
     "start-server": "NODE_ENV='development' nodemon server -e html,js,scss --ignore public",
-    "test":
-      "yarn run seed-test && NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
-    "test-server":
-      "NODE_ENV='test' DATABASE_URL='postgres://root:root@localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
+    "test": "yarn run seed-test && NODE_ENV='test' DATABASE_URL='postgres://localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
+    "test-server": "NODE_ENV='test' DATABASE_URL='postgres://root:root@localhost:5432/TorrentReport-test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --require babel-register",
     "snyk-protect": "snyk protect",
     "snyk-test": "snyk test",
     "prepare": "npm run snyk-protect",
@@ -51,6 +48,7 @@
     "helmet": "^3.12.0",
     "history": "^4.7.2",
     "jsdom": "^11.6.2",
+    "jw-react-pagination": "^1.0.6",
     "lodash": "^4.17.5",
     "magnet-uri": "^5.1.7",
     "moment": "^2.21.0",
