@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { addSites } from './sites';
+import { addSitesToTopFilter, addGroupsToTopFilter } from './topFilter';
 
 /**
  * INITIAL STATE
@@ -35,7 +36,12 @@ export const spreadGroups = groupsArr => (dispatch) => {
   });
 
   dispatch(addGroups(groupsArr));
-  return Sites.length ? dispatch(addSites(Sites)) : false;
+  dispatch(addGroupsToTopFilter(groupsArr));
+  if (Sites.length) {
+    dispatch(addSites(Sites));
+    dispatch(addSitesToTopFilter(Sites));
+  }
+  return true;
 };
 
 export const fetchGroups = () => (dispatch) => {

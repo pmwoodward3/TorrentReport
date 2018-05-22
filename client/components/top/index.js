@@ -17,20 +17,34 @@ class TopNewSnapshots extends React.Component {
     };
   }
 
-  render() {
-    console.log('state', this.state);
+  componentDidMount() {
     if (this.props.topNewSnapshots.state !== 'ready') {
       if (this.props.topNewSnapshots.state !== 'loading') this.props.load();
+    }
+  }
+
+  render() {
+    if (this.props.topNewSnapshots.state !== 'ready') {
       return <Loader message="random" />;
     }
-    console.log('location search :: ', this.props.location.search);
+    const filteredSnapshots = this.props.topNewSnapshots.items.filter((snapshot) => {
+      for (let x = 0; x < snapshot.torrentInfo.Group.length; x += 1) {
+        const currentGroup = snapshot.torrentInfo.Group[x].name;
+        const currentGroupSiteId = snapshot.torrentInfo.Group[x].torrentSite.id;
+        if (
+          this.props.topFilter.showingGroups[currentGroup] &&
+          this.props.topFilter.showingSites[currentGroupSiteId]
+        ) {
+          return true;
+        }
+        return false;
+      }
+      return false;
+    });
     return (
       <div className="top-container">
-        <Filter />
-        top page (count: {this.props.topNewSnapshots.items.length} | pages:{' '}
-        {this.props.topNewSnapshots.items.length / 30} )
-        <hr />
-        {this.props.topNewSnapshots.items.map(snapshot => (
+        <Filter count={filteredSnapshots.length} />
+        {filteredSnapshots.map(snapshot => (
           <InfoListItem
             listingId={snapshot.torrentInfo.torrentListing.id}
             listingName={snapshot.torrentInfo.torrentListing.name}
@@ -49,6 +63,7 @@ class TopNewSnapshots extends React.Component {
 
 const mapState = state => ({
   topNewSnapshots: state.stats.topNewSnapshots,
+  topFilter: state.topFilter,
 });
 
 const mapDispatch = dispatch => ({

@@ -13,7 +13,9 @@ const SiteStats = (props) => {
 
   if (props.stats.siteStats.scrapeCount) {
     stats = props.stats.siteStats;
-  } else if (props.stats.state !== 'loading') props.fetchAllStats();
+  } else if (props.stats.state !== 'loading' && props.stats.siteStats.active !== true) {
+    props.fetchAllStats();
+  }
 
   let nowDateObj;
   let duration;

@@ -8,6 +8,7 @@ import listings from './listings';
 import infos from './infos';
 import groups from './groups';
 import sites from './sites';
+import topFilter from './topFilter';
 import test from './test';
 
 const reducer = combineReducers({
@@ -18,6 +19,7 @@ const reducer = combineReducers({
   infos,
   groups,
   sites,
+  topFilter,
 });
 // eslint-disable-next-line
 const middleware = composeWithDevTools(
@@ -31,4 +33,5 @@ export * from './listings';
 export * from './infos';
 export * from './groups';
 export * from './sites';
+export * from './topFilter';
 export * from './test';

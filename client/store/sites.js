@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { addSitesToTopFilter } from './topFilter';
 
 /**
  * INITIAL STATE
@@ -30,6 +31,7 @@ export const updateSites = sitesToUpdate => ({
 export const fetchSites = () => (dispatch) => {
   axios.get('/api/torrents/sites/').then((res) => {
     if (res.data === null) throw Error('null data');
+    dispatch(addSitesToTopFilter(res.data));
     dispatch(addSites(res.data));
   });
 };

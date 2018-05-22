@@ -235,9 +235,7 @@ const Info = (props) => {
                 <Link to={`/site/${GroupItem.torrentSite.id}`}>{GroupItem.torrentSite.name}</Link>
               </div>
               <div className="group">
-                <Link to={`/group/${GroupItem.id}`}>
-                  {GroupItem.name} - {GroupItem.tag}
-                </Link>
+                <Link to={`/group/${GroupItem.id}`}>{GroupItem.tag}</Link>
               </div>
             </div>
           ))}

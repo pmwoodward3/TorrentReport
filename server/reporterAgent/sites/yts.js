@@ -92,7 +92,7 @@ const yts = {
     {
       isRss: true,
       type: 'MOVIES',
-      groupName: 'Movies',
+      groupName: 'MOVIES',
       groupTag: 'New Movies',
       resourceDomain: 'yts.am',
       webPage: 'https://yts.am/rss',
