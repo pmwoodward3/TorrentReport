@@ -5,7 +5,7 @@ const randomNumber = require('../utils/randomNumber');
 
 const scrapeSite = (siteObj) => {
   const newSiteObj = Object.assign({}, siteObj);
-  return sequentialPromise(siteObj.groups, scrape, randomNumber(60000, 100000))
+  return sequentialPromise(siteObj.groups, scrape)
     .then((groupScraped) => {
       newSiteObj.groups = groupScraped;
       RALogger.verbose(`++++created ${newSiteObj.groups.length} groups`);

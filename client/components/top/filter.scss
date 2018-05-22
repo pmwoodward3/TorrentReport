@@ -1,6 +1,10 @@
 @import '../../template/_variables';
 @import '../../template/_mixins';
 
+.top-filter-list {
+  margin: 0 0 15px 0;
+}
+
 .top-filter-site {
   display: inline-flex;
   flex-wrap: wrap;
@@ -57,4 +61,24 @@
 }
 
 .top-filter-site-groups-item {
+}
+
+.clear-top-filter-site {
+  cursor: pointer;
+  padding: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: #a3a3a3;
+  background-color: #e9e9e9;
+  &:hover {
+    background-color: lighten($primaryColor, 20%);
+    color: darken($primaryColor, 30%);
+  }
+}
+
+.count-top-filter-site {
+  padding: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  // color: #a3a3a3;
+  color: #000;
+  margin: 0 10px 0 0;
 }

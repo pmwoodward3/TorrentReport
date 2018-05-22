@@ -14,6 +14,7 @@ const sendError = (title, message) => {
 
 const sendActivationLink = (token, email) => {
   const messageObj = activateMessage(token, email);
+  if (process.env.NODE_ENV === 'test') return console.log('test envr: email not sent');
   return transporter.sendMail(messageObj);
 };
 

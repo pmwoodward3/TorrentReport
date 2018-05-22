@@ -15,7 +15,6 @@ const TorrentGroup = db.define(
     },
     url: {
       type: Sequelize.STRING,
-      allowNull: false,
     },
   },
   {

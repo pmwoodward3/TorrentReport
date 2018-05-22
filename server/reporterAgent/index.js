@@ -17,11 +17,9 @@ function reporterAgent(inputSiteArr = sitesArray, skipSafetyCheck = false) {
         if (!isSafe && !skipSafetyCheck) throw Error('not safe to run agent');
         else {
           return initStat()
-            .then(_ =>
-              sequentialPromise(inputSiteArr, getOrMakeNestedSite, randomNumber(20000, 40000)))
+            .then(_ => sequentialPromise(inputSiteArr, getOrMakeNestedSite))
             .then(filterSkip)
-            .then(siteArrWithIds =>
-              sequentialPromise(siteArrWithIds, scrapeSite, randomNumber(20000, 40000)))
+            .then(siteArrWithIds => sequentialPromise(siteArrWithIds, scrapeSite))
             .then(closeStat);
         }
       })

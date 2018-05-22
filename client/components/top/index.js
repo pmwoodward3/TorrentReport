@@ -27,20 +27,29 @@ class TopNewSnapshots extends React.Component {
     if (this.props.topNewSnapshots.state !== 'ready') {
       return <Loader message="random" />;
     }
-    const filteredSnapshots = this.props.topNewSnapshots.items.filter((snapshot) => {
-      for (let x = 0; x < snapshot.torrentInfo.Group.length; x += 1) {
-        const currentGroup = snapshot.torrentInfo.Group[x].name;
-        const currentGroupSiteId = snapshot.torrentInfo.Group[x].torrentSite.id;
-        if (
-          this.props.topFilter.showingGroups[currentGroup] &&
-          this.props.topFilter.showingSites[currentGroupSiteId]
-        ) {
-          return true;
+    const filteredSnapshots = this.props.topNewSnapshots.items
+      .filter((snapshot) => {
+        for (let x = 0; x < snapshot.torrentInfo.Group.length; x += 1) {
+          const currentGroup = snapshot.torrentInfo.Group[x].name;
+          const currentGroupSiteId = snapshot.torrentInfo.Group[x].torrentSite.id;
+          if (
+            this.props.topFilter.showingGroups[currentGroup] &&
+            this.props.topFilter.showingSites[currentGroupSiteId]
+          ) {
+            return true;
+          }
+          return false;
         }
         return false;
-      }
-      return false;
-    });
+      })
+      .sort((a, b) => {
+        const currentSortBy = this.props.topFilter.sortBy; // seed or leach
+        const currentOrder = this.props.topFilter.sortOrder; // top or bottom
+        if (currentOrder === 'top') {
+          return b[currentSortBy] - a[currentSortBy];
+        }
+        return a[currentSortBy] - b[currentSortBy];
+      });
     return (
       <div className="top-container">
         <Filter count={filteredSnapshots.length} />

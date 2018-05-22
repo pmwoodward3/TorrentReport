@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTimesCircle } from '@fortawesome/fontawesome-free-solid';
 
 import {
   enableAllSitesTopFilter,
   enableAllGroupsTopFilter,
   toggleGroupTopFilter,
   toggleSiteTopFilter,
+  sortByTopFilter,
+  sortOrderTopFilter,
 } from '../../store/topFilter';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle } from '@fortawesome/fontawesome-free-solid';
 
 import './filter.scss';
 
@@ -19,16 +21,19 @@ class Filter extends React.Component {
   }
   /* eslint-enable */
 
-  componentDidMount() {
-    this.props.resetEverything();
-  }
+  // componentDidMount() {
+  //   this.props.resetEverything();
+  // }
 
   render() {
     console.log('filter props', this.props);
     return (
       <div className="top-filter-list">
         <div className="top-filter-site">
-          <div className="top-filter-site-group-name">{this.props.count} Results</div>
+          <div onClick={() => this.props.resetEverything()} className="clear-top-filter-site">
+            Clear Filter
+          </div>
+          <div className="count-top-filter-site">{this.props.count} Results</div>
         </div>
         <div className="top-filter-site">
           <div className="top-filter-site-group-name">Groups</div>
@@ -82,6 +87,80 @@ class Filter extends React.Component {
             </div>
           ))}
         </div>
+        <div className="top-filter-site">
+          <div className="top-filter-site-group-name">Order</div>
+          <div className="top-filter-site-item">
+            <div
+              onClick={() => this.props.toggleSortBy('seed')}
+              className={
+                this.props.topFilter.sortBy === 'seed'
+                  ? 'top-filter-site-head top-filter-site-head-active'
+                  : 'top-filter-site-head'
+              }
+            >
+              <div className="top-filter-site-icon">
+                <FontAwesomeIcon
+                  icon={this.props.topFilter.sortBy === 'seed' ? faCheckCircle : faTimesCircle}
+                />
+              </div>
+              <div className="top-filter-site-name">Seed</div>
+            </div>
+          </div>
+          <div className="top-filter-site-item">
+            <div
+              onClick={() => this.props.toggleSortBy('leach')}
+              className={
+                this.props.topFilter.sortBy === 'leach'
+                  ? 'top-filter-site-head top-filter-site-head-active'
+                  : 'top-filter-site-head'
+              }
+            >
+              <div className="top-filter-site-icon">
+                <FontAwesomeIcon
+                  icon={this.props.topFilter.sortBy === 'leach' ? faCheckCircle : faTimesCircle}
+                />
+              </div>
+              <div className="top-filter-site-name">Leach</div>
+            </div>
+          </div>
+        </div>
+        <div className="top-filter-site">
+          <div className="top-filter-site-group-name">Sort by</div>
+          <div className="top-filter-site-item">
+            <div
+              onClick={() => this.props.toggleSortOrder('top')}
+              className={
+                this.props.topFilter.sortOrder === 'top'
+                  ? 'top-filter-site-head top-filter-site-head-active'
+                  : 'top-filter-site-head'
+              }
+            >
+              <div className="top-filter-site-icon">
+                <FontAwesomeIcon
+                  icon={this.props.topFilter.sortOrder === 'top' ? faCheckCircle : faTimesCircle}
+                />
+              </div>
+              <div className="top-filter-site-name">Top</div>
+            </div>
+          </div>
+          <div className="top-filter-site-item">
+            <div
+              onClick={() => this.props.toggleSortOrder('bottom')}
+              className={
+                this.props.topFilter.sortOrder === 'bottom'
+                  ? 'top-filter-site-head top-filter-site-head-active'
+                  : 'top-filter-site-head'
+              }
+            >
+              <div className="top-filter-site-icon">
+                <FontAwesomeIcon
+                  icon={this.props.topFilter.sortOrder === 'bottom' ? faCheckCircle : faTimesCircle}
+                />
+              </div>
+              <div className="top-filter-site-name">Bottom</div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -100,9 +179,17 @@ const mapDispatch = dispatch => ({
   toggleGroup(groupName) {
     return dispatch(toggleGroupTopFilter(groupName));
   },
+  toggleSortOrder(sortOrder) {
+    return dispatch(sortOrderTopFilter(sortOrder));
+  },
+  toggleSortBy(sortBy) {
+    return dispatch(sortByTopFilter(sortBy));
+  },
   resetEverything() {
-    dispatch(enableAllSitesTopFilter);
-    return dispatch(enableAllGroupsTopFilter);
+    dispatch(sortByTopFilter('seed'));
+    dispatch(sortOrderTopFilter('top'));
+    dispatch(enableAllSitesTopFilter());
+    return dispatch(enableAllGroupsTopFilter());
   },
 });
 

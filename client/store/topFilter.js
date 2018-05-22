@@ -4,6 +4,9 @@
 const initialState = {
   showingSites: {},
   showingGroups: {},
+  sortOrder: 'top',
+  sortBy: 'seed',
+  searchString: '',
 };
 
 /**
@@ -15,6 +18,8 @@ const TOGGLE_SITE_TOP_FILTER = 'TOGGLE_SITE_TOP_FILTER';
 const TOGGLE_GROUP_TOP_FILTER = 'TOGGLE_GROUP_TOP_FILTER';
 const ENABLE_ALL_SITES_TOP_FILTER = 'ENABLE_ALL_SITES_TOP_FILTER';
 const ENABLE_ALL_GROUPS_TOP_FILTER = 'ENABLE_ALL_GROUPS_TOP_FILTER';
+const SORT_ORDER_TOP_FILTER = 'SORT_ORDER_TOP_FILTER';
+const SORT_BY_TOP_FILTER = 'SORT_BY_TOP_FILTER';
 
 /**
  * ACTION CREATORS
@@ -34,6 +39,14 @@ export const enableAllSitesTopFilter = () => ({
 });
 export const enableAllGroupsTopFilter = () => ({
   type: ENABLE_ALL_GROUPS_TOP_FILTER,
+});
+export const sortOrderTopFilter = sortOrder => ({
+  type: SORT_ORDER_TOP_FILTER,
+  sortOrder,
+});
+export const sortByTopFilter = sortBy => ({
+  type: SORT_BY_TOP_FILTER,
+  sortBy,
 });
 
 /**
@@ -112,7 +125,18 @@ export default (state = initialState, action) => {
         showingGroups: newShowingGroups,
       };
     }
-
+    case SORT_ORDER_TOP_FILTER: {
+      return {
+        ...state,
+        sortOrder: action.sortOrder,
+      };
+    }
+    case SORT_BY_TOP_FILTER: {
+      return {
+        ...state,
+        sortBy: action.sortBy,
+      };
+    }
     default:
       return state;
   }

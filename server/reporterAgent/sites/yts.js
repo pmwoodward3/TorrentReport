@@ -52,7 +52,83 @@ const threeLetterMonthToNum = {
   Dec: 11,
 };
 
+const magnetCleanup = (magnetURI) => {
+  const re1 = '.*?'; // Non-greedy match on filler
+  const re2 = '((?:[a-z][a-z]*[0-9]+[a-z0-9]*))'; // Alphanum 1
+  const p = new RegExp(re1 + re2, ['i']);
+  const m = p.exec(magnetURI);
+  return m[1];
+};
+
+// eslint-disable-next-line
 const listingCheck = cleanListingObj => false;
+
+const uploadedCleanup = (uploadedString) => {
+  const cleanUploadedString = uploadedString.trim();
+  let newUploadDate;
+  const lastTwo = cleanUploadedString.slice(-2);
+  if (lastTwo === 'pm' || lastTwo === 'am') {
+    // this torrent was uploaded today. sting is a time.
+    const hourMinutesArr = cleanUploadedString
+      .slice(0, -2)
+      .split(':')
+      .map(stringNum => parseInt(stringNum, 10));
+    const hours = lastTwo === 'pm' ? hourMinutesArr[0] + 12 : hourMinutesArr[0];
+    const minutes = hourMinutesArr[1];
+    newUploadDate = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate(),
+      hours,
+      minutes,
+    );
+    RALogger.verbose(`------ if ------ newUploadDate: ${newUploadDate}`);
+    // eslint-disable-next-line
+  } else if (isNaN(parseInt(lastTwo, 10))) {
+    // uploaded this month. for example: 3am Apr. 3rd
+    const timeMonthDate = cleanUploadedString
+      .replace('.', '')
+      .replace('st', '')
+      .replace('nd', '')
+      .replace('rd', '')
+      .replace('th', '')
+      .split(' ');
+    const timeEnding = timeMonthDate[0].slice(-2);
+    const hours =
+      timeEnding === 'am'
+        ? parseInt(timeMonthDate[0].slice(0, -2), 10)
+        : parseInt(timeMonthDate[0].slice(0, -2), 10) + 12;
+    const month = threeLetterMonthToNum[timeMonthDate[1]];
+    const date = timeMonthDate[2];
+    newUploadDate = new Date(new Date().getFullYear(), month, date, hours);
+    RALogger.verbose(`------ if else ------ newUploadDate: ${newUploadDate}`);
+  } else {
+    // only other case is upload from previous month or before.
+    // for example: Mar. 13th '18
+    const monthDayYear = cleanUploadedString
+      .replace('.', '')
+      .replace("'", '')
+      .replace('st', '')
+      .replace('nd', '')
+      .replace('rd', '')
+      .replace('th', '')
+      .split(' ');
+
+    const year = 2000 + parseInt(monthDayYear[2], 10); // assuming uploads are 2000's
+    RALogger.verbose(`------ else ------ year: ${year}`);
+
+    const month = threeLetterMonthToNum[monthDayYear[0]];
+    RALogger.verbose(`------ else ------ month: ${month}`);
+    const date = monthDayYear[1];
+    RALogger.verbose(`------ else ------ date: ${date}`);
+    newUploadDate = new Date(year, month, date);
+    RALogger.verbose(`------ else ------ newUploadDate: ${newUploadDate}`);
+  }
+  const uploadDate = new Date(newUploadDate);
+  uploadDate.setHours(uploadDate.getHours() - 5);
+
+  return uploadDate;
+};
 
 const resultCleaner = (rawResult) => {
   const newResult = Object.assign({}, rawResult);
@@ -71,7 +147,6 @@ const resultCleaner = (rawResult) => {
         // RALogger.verbose('------ entering uploaded switch');
         delete newResult.uploaded;
         newResult.uploadDate = new Date(uploadedCleanup(rawResult.uploaded));
-        // RALogger.verbose(`------ exiting uploaded switch ------ newresultuploadedate: ${newResult.uploadDate}`);
 
         break;
       }
@@ -139,80 +214,6 @@ const yts = {
       listingCheck,
     },
   ],
-};
-
-const magnetCleanup = (magnetURI) => {
-  const re1 = '.*?'; // Non-greedy match on filler
-  const re2 = '((?:[a-z][a-z]*[0-9]+[a-z0-9]*))'; // Alphanum 1
-  const p = new RegExp(re1 + re2, ['i']);
-  const m = p.exec(magnetURI);
-  return m[1];
-};
-
-const uploadedCleanup = (uploadedString) => {
-  const cleanUploadedString = uploadedString.trim();
-  let newUploadDate;
-  const lastTwo = cleanUploadedString.slice(-2);
-  if (lastTwo === 'pm' || lastTwo === 'am') {
-    // this torrent was uploaded today. sting is a time.
-    const hourMinutesArr = cleanUploadedString
-      .slice(0, -2)
-      .split(':')
-      .map(stringNum => parseInt(stringNum, 10));
-    const hours = lastTwo === 'pm' ? hourMinutesArr[0] + 12 : hourMinutesArr[0];
-    const minutes = hourMinutesArr[1];
-    newUploadDate = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      new Date().getDate(),
-      hours,
-      minutes,
-    );
-    RALogger.verbose(`------ if ------ newUploadDate: ${newUploadDate}`);
-  } else if (isNaN(parseInt(lastTwo, 10))) {
-    // uploaded this month. for example: 3am Apr. 3rd
-    const timeMonthDate = cleanUploadedString
-      .replace('.', '')
-      .replace('st', '')
-      .replace('nd', '')
-      .replace('rd', '')
-      .replace('th', '')
-      .split(' ');
-    const timeEnding = timeMonthDate[0].slice(-2);
-    const hours =
-      timeEnding === 'am'
-        ? parseInt(timeMonthDate[0].slice(0, -2), 10)
-        : parseInt(timeMonthDate[0].slice(0, -2), 10) + 12;
-    const month = threeLetterMonthToNum[timeMonthDate[1]];
-    const date = timeMonthDate[2];
-    newUploadDate = new Date(new Date().getFullYear(), month, date, hours);
-    RALogger.verbose(`------ if else ------ newUploadDate: ${newUploadDate}`);
-  } else {
-    // only other case is upload from previous month or before.
-    // for example: Mar. 13th '18
-    const monthDayYear = cleanUploadedString
-      .replace('.', '')
-      .replace("'", '')
-      .replace('st', '')
-      .replace('nd', '')
-      .replace('rd', '')
-      .replace('th', '')
-      .split(' ');
-
-    const year = 2000 + parseInt(monthDayYear[2], 10); // assuming uploads are 2000's
-    RALogger.verbose(`------ else ------ year: ${year}`);
-
-    const month = threeLetterMonthToNum[monthDayYear[0]];
-    RALogger.verbose(`------ else ------ month: ${month}`);
-    const date = monthDayYear[1];
-    RALogger.verbose(`------ else ------ date: ${date}`);
-    newUploadDate = new Date(year, month, date);
-    RALogger.verbose(`------ else ------ newUploadDate: ${newUploadDate}`);
-  }
-  const uploadDate = new Date(newUploadDate);
-  uploadDate.setHours(uploadDate.getHours() - 5);
-
-  return uploadDate;
 };
 
 module.exports = yts;
