@@ -11,6 +11,8 @@ export { default as Listing } from './listing/';
 export { default as Info } from './info/';
 export { default as Site } from './site/';
 export { default as Group } from './group/';
+export { default as Faq } from './faq/';
+export { default as About } from './about/';
 export { default as NewListings } from './newListings/';
 export { default as NoMatch } from './noMatch/';
 export { default as ScrollToTop } from './ScrollToTop/';

@@ -18,10 +18,16 @@
     .dl-header {
       display: inline-flex;
       flex-wrap: wrap;
-      color: darken($primaryColor, 40%);
       letter-spacing: 2px;
       font-family: $header_font_family;
       font-size: 2em;
+      a {
+        color: darken($primaryColor, 40%);
+        text-decoration: none;
+        &:visited {
+          color: darken($primaryColor, 40%);
+        }
+      }
     }
     .dl-detail {
     }

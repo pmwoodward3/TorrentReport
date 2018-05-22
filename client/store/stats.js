@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import history from '../history';
-import { spreadListings } from './index';
+import { spreadListings, spreadGroups } from './index';
 
 /**
  * INITIAL STATE
@@ -49,17 +49,31 @@ export const setDailyListings = (dailyListings, days) => ({
   days,
 });
 
+const spreadSnapshots = snapshotStats => (dispatch) => {
+  const groups = [];
+  const groupsSeen = new Set();
+  snapshotStats.forEach((snap) => {
+    snap.torrentInfo.Group.forEach((g) => {
+      if (!groupsSeen.has(g.id)) {
+        groups.push(g);
+        groupsSeen.add(g.id);
+      }
+    });
+  });
+  dispatch(spreadGroups(groups));
+};
+
 /**
  * THUNK CREATORS
  */
 export const fetchTopNewSnapshots = (days = 1) => (dispatch) => {
   dispatch(loadingTopNewSnapshots());
-  axios
+  return axios
     .get(`/api/torrents/snapshots/new/${days}`)
     .then((res) => {
       // const listingsArr =
       // console.log('res.data', res.data);
-      // dispatch(spreadSnapshots(res.data));
+      dispatch(spreadSnapshots(res.data));
       dispatch(receiveTopNewSnapshots(res.data));
     })
     .catch(err => console.log(err));

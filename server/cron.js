@@ -4,7 +4,7 @@ const reporterAgent = require('./reporterAgent');
 const { sendError } = require('./notifier/email/emails');
 
 const scraper = new CronJob(
-  '00 17 01 * * *',
+  '00 00 01,13 * * *',
   () => {
     logger.info('starting automated scrape cron');
     reporterAgent().catch(err => sendError('automated parse scrape store catch', err));

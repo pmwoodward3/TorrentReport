@@ -5,7 +5,6 @@ const { expect } = chai;
 chai.should();
 
 // const { TorrentStats } = require('../db/models');
-const db = require('../db/db'); // db for force sync
 const reporterAgent = require('./index');
 const { initStat } = require('./fetchOrMake/stats'); // part of test
 const { siteData } = require('./testData');

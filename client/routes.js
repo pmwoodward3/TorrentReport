@@ -4,6 +4,8 @@ import { Route, Switch, Router } from 'react-router-dom';
 import history from './history';
 import Template from './template';
 import {
+  Faq,
+  About,
   Login,
   Signup,
   Home,
@@ -39,6 +41,8 @@ class Routes extends Component {
           <Template>
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route exact path="/faq" component={Faq} />
+              <Route exact path="/about" component={About} />
               <Route exact path="/listing/:id" component={Listing} />
               <Route exact path="/info/:id" component={Info} />
               <Route exact path="/group/:id" component={Group} />

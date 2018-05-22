@@ -19,6 +19,17 @@ const Info = (props) => {
   const justFullDateFormat = 'MMMM Do YYYY';
   const justDateFormat = 'MM/DD/YYYY';
   const justTimeFormat = 'h:mm:ss a';
+  const sortedSnapshots = info.torrentSnapshots.slice().sort((lhs, rhs) => {
+    const leftDate = new Date(lhs.date);
+    const rightDate = new Date(rhs.date);
+    if (leftDate > rightDate) {
+      return 1;
+    } else if (leftDate < rightDate) {
+      return -1;
+    }
+    return 0;
+  });
+
   return (
     <div>
       <div className="i-header">
@@ -191,9 +202,9 @@ const Info = (props) => {
 
       <div className="i-section-header">Snapshots</div>
       <div className="i-snapshots">
-        {info.torrentSnapshots.length > 1 && (
+        {sortedSnapshots.length > 1 && (
           <div className="chart">
-            <SnapshotLine data={info.torrentSnapshots} />
+            <SnapshotLine data={sortedSnapshots} />
           </div>
         )}
 
@@ -204,20 +215,14 @@ const Info = (props) => {
             <div className="seed i-seed">seed</div>
             <div className="leach i-leach">leach</div>
           </div>
-          {info.torrentSnapshots
-            .sort((a, b) => {
-              const aFormatted = new Date(a.date);
-              const bFormatted = new Date(b.date);
-              return aFormatted > bFormatted ? -1 : 0;
-            })
-            .map(snapshot => (
-              <div className="item" key={snapshot.id}>
-                <div className="date">{moment(snapshot.date).format(justDateFormat)}</div>
-                <div className="time">{moment(snapshot.date).format(justTimeFormat)}</div>
-                <div className="seed i-seed">{snapshot.seed}</div>
-                <div className="leach i-leach">{snapshot.leach}</div>
-              </div>
-            ))}
+          {sortedSnapshots.map(snapshot => (
+            <div className="item" key={snapshot.id}>
+              <div className="date">{moment(snapshot.date).format(justDateFormat)}</div>
+              <div className="time">{moment(snapshot.date).format(justTimeFormat)}</div>
+              <div className="seed i-seed">{snapshot.seed}</div>
+              <div className="leach i-leach">{snapshot.leach}</div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -230,9 +235,7 @@ const Info = (props) => {
                 <Link to={`/site/${GroupItem.torrentSite.id}`}>{GroupItem.torrentSite.name}</Link>
               </div>
               <div className="group">
-                <Link to={`/group/${GroupItem.id}`}>
-                  {GroupItem.name} - {GroupItem.tag}
-                </Link>
+                <Link to={`/group/${GroupItem.id}`}>{GroupItem.tag}</Link>
               </div>
             </div>
           ))}

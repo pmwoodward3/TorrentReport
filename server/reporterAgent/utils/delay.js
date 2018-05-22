@@ -11,7 +11,7 @@ const delay = (func, value, time) =>
         RALogger.verbose(` == delay resolve == ${time} ms == value: ${value}  == random time: ${randomTime}`);
         resolveDelay(func(value));
       } catch (err) {
-        RALogger.verbose(` == delay reject == ${time} ms == value: ${value}  == random time: ${randomTime}`);
+        RALogger.error(` == delay reject == ${time} ms == value: ${value}  == random time: ${randomTime}`);
         rejectDelay(err);
       }
     }, randomTime);

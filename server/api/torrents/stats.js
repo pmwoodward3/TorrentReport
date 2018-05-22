@@ -7,8 +7,6 @@ const maxIdDetail = () =>
   TorrentStats.max('id')
     .then(maxId => TorrentStats.findById(maxId))
     .then((maxStatObj) => {
-      console.log('max', maxStatObj.active);
-      console.log('max1111', Promise.resolve(maxStatObj));
       if (maxStatObj.active) return TorrentStats.findById(parseInt(maxStatObj.id, 10) - 1);
       return Promise.resolve(maxStatObj);
     });

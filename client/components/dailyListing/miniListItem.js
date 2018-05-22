@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import Loader from '../loader';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faCaretUp, faCaretDown, faClock, faUpload } from '@fortawesome/fontawesome-free-solid';
+import { faCaretUp, faCaretDown } from '@fortawesome/fontawesome-free-solid';
 
 const shorten = originalName =>
   (originalName.length > 44 ? `${originalName.slice(0, 44)}...` : originalName);
@@ -11,7 +10,7 @@ const shorten = originalName =>
 /**
  * COMPONENT
  */
-export default (props) => {
+const MiniListItem = (props) => {
   const { name, id, Infos } = props.item;
   const { active } = props;
   const seed = Infos.reduce((acc, curr) => acc + curr.seed, 0);
@@ -52,3 +51,5 @@ export default (props) => {
     </div>
   );
 };
+
+export default MiniListItem;

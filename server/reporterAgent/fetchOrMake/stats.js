@@ -1,5 +1,4 @@
 const { RALogger } = require('../../logging');
-const { sendError } = require('../../notifier/email/emails');
 const { TorrentStats, TorrentSnapshot } = require('../../db/models');
 const fullSitesToSnapshots = require('../utils/fullSitesToSnapshots');
 const {
@@ -38,18 +37,19 @@ const setCloseStat = statObj =>
       })
       .catch((err) => {
         RALogger.error(' --- ERROR IN setCloseStat -----');
-        RALogger.error(snapshotArr);
         RALogger.error(err);
         throw Error(err);
       });
   });
 
-const addSnapshots = snapshotArr =>
-  TorrentSnapshot.bulkCreate(snapshotArr).catch((err) => {
+const addSnapshots = (snapshotArr) => {
+  if (!snapshotArr.length) return Promise.resolve();
+  return TorrentSnapshot.bulkCreate(snapshotArr).catch((err) => {
     RALogger.error('----- ERR WITH BULK CREATE -----');
-    RALogger.error(snapshotArr);
+    RALogger.error('snapshotArr', snapshotArr);
     RALogger.error(err);
   });
+};
 
 const closeStat = async (fullSites) => {
   /* things done at this point to data:

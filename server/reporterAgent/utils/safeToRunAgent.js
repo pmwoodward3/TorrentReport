@@ -16,9 +16,10 @@ const safeToRunAgent = () =>
           return TorrentStats.findById(maxId).then((latestStat) => {
             const today = new Date();
             const lastDate = new Date(latestStat.createdAt);
-            const timeDiff = lastDate.getTime() - today.getTime();
-            const diffDays = timeDiff / (1000 * 3600 * 22);
-            return diffDays <= -1;
+            const timeDiff = today.getTime() - lastDate.getTime();
+            const diff = 1000 * 3600 * 11;
+            const diffDays = timeDiff / diff;
+            return diffDays >= 1;
           });
         })
         .catch((err) => {
