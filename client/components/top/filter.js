@@ -125,7 +125,7 @@ class Filter extends React.Component {
           </div>
         </div>
         <div className="top-filter-site">
-          <div className="top-filter-site-group-name">Sort by</div>
+          <div className="top-filter-site-group-name">Ordered by</div>
           <div className="top-filter-site-item">
             <div
               onClick={() => this.props.toggleSortOrder('top')}
@@ -140,7 +140,7 @@ class Filter extends React.Component {
                   icon={this.props.topFilter.sortOrder === 'top' ? faCheckCircle : faTimesCircle}
                 />
               </div>
-              <div className="top-filter-site-name">Top</div>
+              <div className="top-filter-site-name">Highest</div>
             </div>
           </div>
           <div className="top-filter-site-item">
@@ -157,7 +157,7 @@ class Filter extends React.Component {
                   icon={this.props.topFilter.sortOrder === 'bottom' ? faCheckCircle : faTimesCircle}
                 />
               </div>
-              <div className="top-filter-site-name">Bottom</div>
+              <div className="top-filter-site-name">Lowest</div>
             </div>
           </div>
         </div>

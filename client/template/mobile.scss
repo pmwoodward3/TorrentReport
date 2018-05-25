@@ -9,6 +9,14 @@
   .footerHolder {
     flex-direction: column !important;
   }
+  .i-header {
+    flex-direction: column !important;
+    .upload-user {
+      margin-top: 10px;
+      margin-left: 0px !important;
+      align-items: flex-start !important;
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {

@@ -10,15 +10,15 @@ import './style.scss';
  * COMPONENT
  */
 export const Home = (props) => {
-  const { email, isLoggedIn } = props;
+  const { isLoggedIn } = props;
 
   return (
     <div>
       {!isLoggedIn && (
         <Notification title="What is Torrent Report?" linkText="Learn More" linkURI="/about">
-          Welcome home {email}. Torrent Report is a torrent information aggregator. This site does
-          not create, host, or distribute any torrents or their files. Instead this site crawls top
-          torrent sites to get their top torrents.
+          This is a torrent information platform and aggregator. This site does not create, host, or
+          distribute any torrents or their files. Instead this site crawls and scrapes top torrent
+          sites to get their top torrents.
         </Notification>
       )}
       <div className="flex-inline">
