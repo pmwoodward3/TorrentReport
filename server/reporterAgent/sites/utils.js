@@ -1,3 +1,11 @@
+const seedOrLeachFix = (rawResult) => {
+  if (typeof rawResult === 'string') {
+    const clean = rawResult.replace(',', '');
+    return parseInt(clean, 10);
+  }
+  return parseInt(rawResult, 10);
+};
+
 const universalClean = (key, rawResult) => {
   let returnValue;
   switch (key) {
@@ -6,11 +14,11 @@ const universalClean = (key, rawResult) => {
       break;
     }
     case 'seed': {
-      returnValue = parseInt(rawResult, 10);
+      returnValue = seedOrLeachFix(rawResult);
       break;
     }
     case 'leech': {
-      returnValue = parseInt(rawResult, 10);
+      returnValue = seedOrLeachFix(rawResult);
       break;
     }
     default: {
