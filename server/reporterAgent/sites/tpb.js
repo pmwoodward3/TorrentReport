@@ -39,6 +39,47 @@ const tpb = {
   siteUrl: 'https://thepiratebay.org/',
   groups: [
     {
+      type: 'MUSIC',
+      groupName: 'MUSIC',
+      groupTag: 'Top 100 MUSIC',
+      resourceDomain: 'thepiratebay.org',
+      webPage: 'https://thepiratebay.org/top/101',
+      selectors: [
+        {
+          label: 'name',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > div > a',
+          pluck: { name: 'outerText', url: 'href' },
+        },
+        {
+          label: 'category',
+          query: '#searchResult > tbody > tr > td:nth-child(1)',
+          pluck: { category: 'outerText' },
+        },
+        {
+          label: 'magnet',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > a:nth-child(2)',
+          pluck: { magnet: 'href' },
+        },
+        {
+          label: 'uploaded',
+          query: '#searchResult > tbody > tr > td:nth-child(2) > .detDesc',
+          pluck: { uploaded: 'outerText' },
+        },
+        {
+          label: 'seed',
+          query: '#searchResult > tbody > tr > td:nth-child(3)',
+          pluck: { seed: 'outerText' },
+        },
+        {
+          label: 'leech',
+          query: '#searchResult > tbody > tr > td:nth-child(4)',
+          pluck: { leech: 'outerText' },
+        },
+      ],
+      resultCleaner,
+      listingCheck,
+    },
+    {
       type: 'TV',
       groupName: 'TV',
       groupTag: 'Top 100 HD TV',
@@ -71,9 +112,9 @@ const tpb = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query: '#searchResult > tbody > tr > td:nth-child(4)',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
       ],
       resultCleaner,
@@ -112,9 +153,9 @@ const tpb = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query: '#searchResult > tbody > tr > td:nth-child(4)',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
       ],
       resultCleaner,
@@ -153,9 +194,9 @@ const tpb = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query: '#searchResult > tbody > tr > td:nth-child(4)',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
       ],
       resultCleaner,
@@ -194,9 +235,9 @@ const tpb = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query: '#searchResult > tbody > tr > td:nth-child(4)',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
       ],
       resultCleaner,
@@ -235,9 +276,9 @@ const tpb = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query: '#searchResult > tbody > tr > td:nth-child(4)',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
       ],
       resultCleaner,

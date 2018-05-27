@@ -14,7 +14,7 @@ const MiniListItem = (props) => {
   const { name, id, Infos } = props.item;
   const { active } = props;
   const seed = Infos.reduce((acc, curr) => acc + curr.seed, 0);
-  const leach = Infos.reduce((acc, curr) => acc + curr.leach, 0);
+  const leech = Infos.reduce((acc, curr) => acc + curr.leech, 0);
   const earliestUpload = Infos.reduce(
     (earliestDate, currInfo) =>
       (new Date(currInfo.uploadDate) < earliestDate ? new Date(currInfo.uploadDate) : earliestDate),
@@ -22,11 +22,11 @@ const MiniListItem = (props) => {
   );
 
   let seedClass = 'seed';
-  let leachClass = 'leach';
+  let leechClass = 'leech';
   if (active === 'seed') {
     seedClass += ' active';
   } else {
-    leachClass += ' active';
+    leechClass += ' active';
   }
 
   return (
@@ -42,8 +42,8 @@ const MiniListItem = (props) => {
           <div className={seedClass}>
             <FontAwesomeIcon icon={faCaretUp} /> {seed}
           </div>
-          <div className={leachClass}>
-            <FontAwesomeIcon icon={faCaretDown} /> {leach}
+          <div className={leechClass}>
+            <FontAwesomeIcon icon={faCaretDown} /> {leech}
           </div>
         </div>
         <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>

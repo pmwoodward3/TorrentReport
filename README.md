@@ -2,7 +2,7 @@
 
 A source for time series reports on the top and new torrent files.
 
-Every 24 hours our site begins scraping the top torrents from a series of torrent sites. We identify unique torrents and store the count of seeders and leachers for every torrent.
+Every 24 hours our site begins scraping the top torrents from a series of torrent sites. We identify unique torrents and store the count of seeders and leechers for every torrent.
 
 _\***\*\*\*\*\*** This project is an active work in progress\***\*\*\*\*\***_
 

@@ -43,7 +43,7 @@ class TopNewSnapshots extends React.Component {
         return false;
       })
       .sort((a, b) => {
-        const currentSortBy = this.props.topFilter.sortBy; // seed or leach
+        const currentSortBy = this.props.topFilter.sortBy; // seed or leech
         const currentOrder = this.props.topFilter.sortOrder; // top or bottom
         if (currentOrder === 'top') {
           return b[currentSortBy] - a[currentSortBy];
@@ -58,7 +58,7 @@ class TopNewSnapshots extends React.Component {
             listingId={snapshot.torrentInfo.torrentListing.id}
             listingName={snapshot.torrentInfo.torrentListing.name}
             seed={snapshot.seed}
-            leach={snapshot.leach}
+            leech={snapshot.leech}
             uploadDate={snapshot.torrentInfo.uploadDate}
             uploader={snapshot.torrentInfo.uploadUser}
             groupsArr={snapshot.torrentInfo.Group}

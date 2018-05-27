@@ -89,7 +89,7 @@ const Info = (props) => {
           <div className="item">
             <div className="title">
               <div>ratio</div>
-              <BasicToolTip message="The current seed/leach ratio." />
+              <BasicToolTip message="The current seed/leech ratio." />
             </div>
             <div className="value">
               <div className="number">{info.ratio}</div>
@@ -98,7 +98,7 @@ const Info = (props) => {
           <div className="item">
             <div className="title">
               <div>lowest ratio</div>
-              <BasicToolTip message="The lowest seed/leach ratio and the date when we saw it." />
+              <BasicToolTip message="The lowest seed/leech ratio and the date when we saw it." />
             </div>
             <div className="value">
               <div className="number-date">{info.minRatio}</div>
@@ -111,7 +111,7 @@ const Info = (props) => {
           <div className="item">
             <div className="title">
               <div>highest ratio</div>
-              <BasicToolTip message="The highest seed/leach ratio and the date when we saw it." />
+              <BasicToolTip message="The highest seed/leech ratio and the date when we saw it." />
             </div>
             <div className="value">
               <div className="number-date">{info.maxRatio}</div>
@@ -164,36 +164,36 @@ const Info = (props) => {
         <div className="i-details">
           <div className="item">
             <div className="title">
-              <div>current leach</div>
+              <div>current leech</div>
               <BasicToolTip message="The current amount of users downloading this file." />
             </div>
             <div className="value">
-              <div className="number i-leach">{info.leach}</div>
+              <div className="number i-leech">{info.leech}</div>
             </div>
           </div>
           <div className="item">
             <div className="title">
-              <div>lowest leach</div>
+              <div>lowest leech</div>
               <BasicToolTip message="The lowest amount of users downloading this file and the date we saw it." />
             </div>
             <div className="value">
-              <div className="number-date">{info.minLeach}</div>
+              <div className="number-date">{info.minLeech}</div>
               <div className="date">
-                <div>{moment(info.minLeachDate).format(justDateFormat)}</div>
-                <div>{moment(info.minLeachDate).format(justTimeFormat)}</div>
+                <div>{moment(info.minLeechDate).format(justDateFormat)}</div>
+                <div>{moment(info.minLeechDate).format(justTimeFormat)}</div>
               </div>
             </div>
           </div>
           <div className="item">
             <div className="title">
-              <div>highest leach</div>
+              <div>highest leech</div>
               <BasicToolTip message="The highest amount of users downloading this file and the date we saw it." />
             </div>
             <div className="value">
-              <div className="number-date">{info.maxLeach}</div>
+              <div className="number-date">{info.maxLeech}</div>
               <div className="date">
-                <div>{moment(info.maxLeachDate).format(justDateFormat)}</div>
-                <div>{moment(info.maxLeachDate).format(justTimeFormat)}</div>
+                <div>{moment(info.maxLeechDate).format(justDateFormat)}</div>
+                <div>{moment(info.maxLeechDate).format(justTimeFormat)}</div>
               </div>
             </div>
           </div>
@@ -213,14 +213,14 @@ const Info = (props) => {
             <div className="date">Date</div>
             <div className="time">Time</div>
             <div className="seed i-seed">seed</div>
-            <div className="leach i-leach">leach</div>
+            <div className="leech i-leech">leech</div>
           </div>
           {sortedSnapshots.map(snapshot => (
             <div className="item" key={snapshot.id}>
               <div className="date">{moment(snapshot.date).format(justDateFormat)}</div>
               <div className="time">{moment(snapshot.date).format(justTimeFormat)}</div>
               <div className="seed i-seed">{snapshot.seed}</div>
-              <div className="leach i-leach">{snapshot.leach}</div>
+              <div className="leech i-leech">{snapshot.leech}</div>
             </div>
           ))}
         </div>

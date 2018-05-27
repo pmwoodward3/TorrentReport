@@ -17,11 +17,11 @@ const safeFields = {
     'minSeedDate',
     'maxSeed',
     'maxSeedDate',
-    'leach',
-    'minLeach',
-    'minLeachDate',
-    'maxLeach',
-    'maxLeachDate',
+    'leech',
+    'minLeech',
+    'minLeechDate',
+    'maxLeech',
+    'maxLeechDate',
     'ratio',
     'minRatio',
     'minRatioDate',
@@ -66,7 +66,11 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
       let foundCategory = false;
       infos.forEach((info) => {
         // check if current torrent uplaod user is already in our db.
-        if (info.uploadUser.toLowerCase() === torrentScrapeObj.uploadUser.toLowerCase()) {
+        if (
+          typeof torrentScrapeObj.uploadUser !== 'undefined' &&
+          torrentScrapeObj.uploadUser !== '' &&
+          info.uploadUser.toLowerCase() === torrentScrapeObj.uploadUser.toLowerCase()
+        ) {
           foundInfo = info;
           RALogger.verbose('... did find curr uploaduser in info!!!!');
           RALogger.verbose(`... info uploaduser ${info.uploadUser} obj uplaoduser ${torrentScrapeObj.uploadUser}`);
@@ -93,7 +97,7 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         }
       });
 
-      const rawRatio = newTorrentObj.leach === 0 ? 0 : newTorrentObj.seed / newTorrentObj.leach;
+      const rawRatio = newTorrentObj.leech === 0 ? 0 : newTorrentObj.seed / newTorrentObj.leech;
       newTorrentObj.ratio = Math.floor(rawRatio * 100) / 100;
 
       // newTorrentObj needs max and min setup
@@ -108,13 +112,13 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
           newTorrentObj.minSeed = newTorrentObj.seed;
           newTorrentObj.minSeedDate = nowDateObj;
         }
-        if (newTorrentObj.leach > foundInfo.maxLeach) {
-          newTorrentObj.maxLeach = newTorrentObj.leach;
-          newTorrentObj.maxLeachDate = nowDateObj;
+        if (newTorrentObj.leech > foundInfo.maxLeech) {
+          newTorrentObj.maxLeech = newTorrentObj.leech;
+          newTorrentObj.maxLeechDate = nowDateObj;
         }
-        if (newTorrentObj.leach < foundInfo.minLeach) {
-          newTorrentObj.minLeach = newTorrentObj.leach;
-          newTorrentObj.minLeachDate = nowDateObj;
+        if (newTorrentObj.leech < foundInfo.minLeech) {
+          newTorrentObj.minLeech = newTorrentObj.leech;
+          newTorrentObj.minLeechDate = nowDateObj;
         }
         if (newTorrentObj.ratio < foundInfo.minRatio) {
           newTorrentObj.minRatio = newTorrentObj.ratio;
@@ -128,12 +132,12 @@ const getOrMakeTorrentListing = (torrentScrapeObj) => {
         // its a newly found torrent init the max and min
         newTorrentObj.maxSeed = newTorrentObj.seed;
         newTorrentObj.maxSeedDate = nowDateObj;
-        newTorrentObj.maxLeach = newTorrentObj.leach;
-        newTorrentObj.maxLeachDate = nowDateObj;
+        newTorrentObj.maxLeech = newTorrentObj.leech;
+        newTorrentObj.maxLeechDate = nowDateObj;
         newTorrentObj.minSeed = newTorrentObj.seed;
         newTorrentObj.minSeedDate = nowDateObj;
-        newTorrentObj.minLeach = newTorrentObj.leach;
-        newTorrentObj.minLeachDate = nowDateObj;
+        newTorrentObj.minLeech = newTorrentObj.leech;
+        newTorrentObj.minLeechDate = nowDateObj;
         newTorrentObj.minRatio = newTorrentObj.ratio;
         newTorrentObj.minRatioDate = nowDateObj;
         newTorrentObj.maxRatio = newTorrentObj.ratio;

@@ -15,15 +15,15 @@ export default (props) => {
   const { active } = props;
 
   let seedClass = 'seed';
-  let leachClass = 'leach';
+  let leechClass = 'leech';
   let ratioClass = 'ratio';
 
   switch (active) {
     case 'seed':
       seedClass += ' active';
       break;
-    case 'leach':
-      leachClass += ' active';
+    case 'leech':
+      leechClass += ' active';
       break;
     case 'ratio':
       ratioClass += ' active';
@@ -39,7 +39,7 @@ export default (props) => {
       <div className="group-holder">
         <div className="group">
           <div className={seedClass}>seed</div>
-          <div className={leachClass}>leach</div>
+          <div className={leechClass}>leech</div>
         </div>
         <div className="group">
           <div className={ratioClass}>ratio</div>

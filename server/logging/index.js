@@ -75,7 +75,7 @@ const logger = new Winston.Logger({
 
 const RALogger = new Winston.Logger({
   transports: [
-    new Winston.transports.Console(consoleConfig.info),
+    new Winston.transports.Console(consoleConfig.verbose),
     // new DailyWinston(fileConfig.reporterAgent),
   ],
 });

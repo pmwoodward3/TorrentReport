@@ -129,144 +129,144 @@ const leet1337x = {
   siteShortName: '1337x',
   siteUrl: 'https://1337x.to/',
   groups: [
-    {
-      type: 'MOVIES',
-      groupName: 'MOVIES',
-      groupTag: 'Popular Movies - 24 Hours',
-      resourceDomain: '1337x.to',
-      webPage: 'https://1337x.to/popular-movies',
-      selectors: [
-        {
-          label: 'name',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-1.name > a:nth-child(2)',
-          pluck: { name: 'outerText', url: 'href' },
-        },
-        {
-          label: 'uploaded',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-date',
-          pluck: { uploaded: 'outerText' },
-        },
-        {
-          label: 'seed',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-2.seeds',
-          pluck: { seed: 'outerText' },
-        },
-        {
-          label: 'leach',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
-        },
-        {
-          label: 'size',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-4.size',
-          pluck: { size: 'outerText' },
-        },
-        {
-          label: 'uploader',
-          query: 'body > main > div > div > div > div > table > tbody > tr > td.coll-5 > a',
-          pluck: { uploadUser: 'outerText' },
-        },
-      ],
-      resultCleaner,
-      listingCheck,
-    },
-    {
-      type: 'MOVIES',
-      groupName: 'MOVIES',
-      groupTag: 'Top 100 Movies',
-      resourceDomain: '1337x.to',
-      webPage: 'https://1337x.to/top-100-movies',
-      selectors: [
-        {
-          label: 'name',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-1.name > a:nth-child(2)',
-          pluck: { name: 'outerText', url: 'href' },
-        },
-        {
-          label: 'uploaded',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-date',
-          pluck: { uploaded: 'outerText' },
-        },
-        {
-          label: 'seed',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-2.seeds',
-          pluck: { seed: 'outerText' },
-        },
-        {
-          label: 'leach',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
-        },
-        {
-          label: 'size',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-4.size',
-          pluck: { size: 'outerText' },
-        },
-        {
-          label: 'uploader',
-          query: 'body > main > div > div > div > div > table > tbody > tr > td.coll-5 > a',
-          pluck: { uploadUser: 'outerText' },
-        },
-      ],
-      resultCleaner,
-      listingCheck,
-    },
-    {
-      type: 'TV',
-      groupName: 'TV',
-      groupTag: 'Top 100 TV',
-      resourceDomain: '1337x.to',
-      webPage: 'https://1337x.to/top-100-television',
-      selectors: [
-        {
-          label: 'name',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-1.name > a:nth-child(2)',
-          pluck: { name: 'outerText', url: 'href' },
-        },
-        {
-          label: 'uploaded',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-date',
-          pluck: { uploaded: 'outerText' },
-        },
-        {
-          label: 'seed',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-2.seeds',
-          pluck: { seed: 'outerText' },
-        },
-        {
-          label: 'leach',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
-        },
-        {
-          label: 'size',
-          query:
-            'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-4.size',
-          pluck: { size: 'outerText' },
-        },
-        {
-          label: 'uploader',
-          query: 'body > main > div > div > div > div > table > tbody > tr > td.coll-5 > a',
-          pluck: { uploadUser: 'outerText' },
-        },
-      ],
-      resultCleaner,
-      listingCheck,
-    },
+    // {
+    //   type: 'MOVIES',
+    //   groupName: 'MOVIES',
+    //   groupTag: 'Popular Movies - 24 Hours',
+    //   resourceDomain: '1337x.to',
+    //   webPage: 'https://1337x.to/popular-movies',
+    //   selectors: [
+    //     {
+    //       label: 'name',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-1.name > a:nth-child(2)',
+    //       pluck: { name: 'outerText', url: 'href' },
+    //     },
+    //     {
+    //       label: 'uploaded',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-date',
+    //       pluck: { uploaded: 'outerText' },
+    //     },
+    //     {
+    //       label: 'seed',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-2.seeds',
+    //       pluck: { seed: 'outerText' },
+    //     },
+    //     {
+    //       label: 'leech',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
+    //       pluck: { leech: 'outerText' },
+    //     },
+    //     {
+    //       label: 'size',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-4.size',
+    //       pluck: { size: 'outerText' },
+    //     },
+    //     {
+    //       label: 'uploader',
+    //       query: 'body > main > div > div > div > div > table > tbody > tr > td.coll-5 > a',
+    //       pluck: { uploadUser: 'outerText' },
+    //     },
+    //   ],
+    //   resultCleaner,
+    //   listingCheck,
+    // },
+    // {
+    //   type: 'MOVIES',
+    //   groupName: 'MOVIES',
+    //   groupTag: 'Top 100 Movies',
+    //   resourceDomain: '1337x.to',
+    //   webPage: 'https://1337x.to/top-100-movies',
+    //   selectors: [
+    //     {
+    //       label: 'name',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-1.name > a:nth-child(2)',
+    //       pluck: { name: 'outerText', url: 'href' },
+    //     },
+    //     {
+    //       label: 'uploaded',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-date',
+    //       pluck: { uploaded: 'outerText' },
+    //     },
+    //     {
+    //       label: 'seed',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-2.seeds',
+    //       pluck: { seed: 'outerText' },
+    //     },
+    //     {
+    //       label: 'leech',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
+    //       pluck: { leech: 'outerText' },
+    //     },
+    //     {
+    //       label: 'size',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-4.size',
+    //       pluck: { size: 'outerText' },
+    //     },
+    //     {
+    //       label: 'uploader',
+    //       query: 'body > main > div > div > div > div > table > tbody > tr > td.coll-5 > a',
+    //       pluck: { uploadUser: 'outerText' },
+    //     },
+    //   ],
+    //   resultCleaner,
+    //   listingCheck,
+    // },
+    // {
+    //   type: 'TV',
+    //   groupName: 'TV',
+    //   groupTag: 'Top 100 TV',
+    //   resourceDomain: '1337x.to',
+    //   webPage: 'https://1337x.to/top-100-television',
+    //   selectors: [
+    //     {
+    //       label: 'name',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-1.name > a:nth-child(2)',
+    //       pluck: { name: 'outerText', url: 'href' },
+    //     },
+    //     {
+    //       label: 'uploaded',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-date',
+    //       pluck: { uploaded: 'outerText' },
+    //     },
+    //     {
+    //       label: 'seed',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-2.seeds',
+    //       pluck: { seed: 'outerText' },
+    //     },
+    //     {
+    //       label: 'leech',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
+    //       pluck: { leech: 'outerText' },
+    //     },
+    //     {
+    //       label: 'size',
+    //       query:
+    //         'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-4.size',
+    //       pluck: { size: 'outerText' },
+    //     },
+    //     {
+    //       label: 'uploader',
+    //       query: 'body > main > div > div > div > div > table > tbody > tr > td.coll-5 > a',
+    //       pluck: { uploadUser: 'outerText' },
+    //     },
+    //   ],
+    //   resultCleaner,
+    //   listingCheck,
+    // },
     {
       type: 'TV',
       groupName: 'TV',
@@ -293,10 +293,10 @@ const leet1337x = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query:
             'body > main > div > div > div > div.box-info-detail.inner-table > div.table-list-wrap > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
         {
           label: 'size',
@@ -340,10 +340,10 @@ const leet1337x = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query:
             'body > main > div > div > div > div.box-info-detail.inner-table > div.table-list-wrap > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
         {
           label: 'size',
@@ -387,10 +387,10 @@ const leet1337x = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query:
             'body > main > div > div > div > div.box-info-detail.inner-table > div.table-list-wrap > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
         {
           label: 'size',
@@ -434,10 +434,10 @@ const leet1337x = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query:
             'body > main > div > div > div.featured-list.trending-torrent > div.table-list-wrap > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
         {
           label: 'size',

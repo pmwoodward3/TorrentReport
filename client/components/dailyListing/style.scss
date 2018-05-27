@@ -59,8 +59,7 @@
         text-decoration: none;
         color: darken($primaryColor, 40%);
         &:hover {
-          color: darken($primaryColor, 25%);
-          text-decoration: underline;
+          color: darken($primaryColor, 20%);
         }
       }
       .number {
@@ -115,7 +114,7 @@
               opacity: 1;
             }
           }
-          .leach {
+          .leech {
             min-width: 4em;
             display: inline;
             // color: lighten(#ff0000, 40%);

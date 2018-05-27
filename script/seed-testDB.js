@@ -115,13 +115,13 @@ async function seed() {
       torrentInfoId: 1,
       seed: 420,
       date: new Date() - 1,
-      leach: 421,
+      leech: 421,
     }),
     TorrentSnapshot.create({
       torrentInfoId: 1,
       date: new Date() - 2,
       seed: 420,
-      leach: 421,
+      leech: 421,
     }),
   ]);
 

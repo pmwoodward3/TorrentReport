@@ -33,7 +33,7 @@ const proccessItem = (rssItem) => {
   });
   formattedItem.uploadUser = 'YTS';
   formattedItem.seed = 0;
-  formattedItem.leach = 0;
+  formattedItem.leech = 0;
   return formattedItem;
 };
 
@@ -191,10 +191,10 @@ const yts = {
           pluck: { seed: 'outerText' },
         },
         {
-          label: 'leach',
+          label: 'leech',
           query:
             'body > main > div > div > div.featured-list > div > table > tbody > tr > td.coll-3.leeches',
-          pluck: { leach: 'outerText' },
+          pluck: { leech: 'outerText' },
         },
         {
           label: 'size',

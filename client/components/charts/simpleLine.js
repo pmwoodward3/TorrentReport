@@ -5,16 +5,16 @@ import './styles.scss';
 export default function SimpleLine(props) {
   const { syncId, pluck, data } = props;
   let maxSeed = 0;
-  let maxLeach = 0;
+  let maxLeech = 0;
   const newData = data.map((snapshot) => {
     const newSnapshot = { ...snapshot };
     if (snapshot.seed > maxSeed) maxSeed = snapshot.seed;
-    if (snapshot.leach > maxLeach) maxLeach = snapshot.leach;
-    const ratio = snapshot.seed / snapshot.leach;
+    if (snapshot.leech > maxLeech) maxLeech = snapshot.leech;
+    const ratio = snapshot.seed / snapshot.leech;
     newSnapshot.ratio = Math.floor(ratio * 100) / 100;
     return snapshot;
   });
-  const yAxisKey = maxSeed >= maxLeach ? 'seed' : 'leach';
+  const yAxisKey = maxSeed >= maxLeech ? 'seed' : 'leech';
   return (
     <ResponsiveContainer height={150}>
       <LineChart

@@ -24,7 +24,7 @@ const siteData = [
         results: [
           {
             seed: 1,
-            leach: 1,
+            leech: 1,
             torrentInfoId: 1,
           },
         ],

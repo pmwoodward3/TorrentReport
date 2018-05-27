@@ -4,7 +4,7 @@ import Loader from '../loader';
 
 import { PieChart, Pie, Sector, Cell, LabelList } from 'recharts';
 
-class SeedLeachPie extends React.Component {
+class SeedLeechPie extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,12 +13,12 @@ class SeedLeachPie extends React.Component {
   }
 
   render() {
-    if (!this.props.seed || !this.props.leach) return <div />;
+    if (!this.props.seed || !this.props.leech) return <div />;
     const data = [
       { name: 'seeders', value: this.props.seed },
-      { name: 'leachers', value: this.props.leach },
+      { name: 'leechers', value: this.props.leech },
     ];
-    const COLORS = { seeders: '#008000', leachers: '#ff0000' };
+    const COLORS = { seeders: '#008000', leechers: '#ff0000' };
 
     const renderCustomizedLabel = ({
       cx,
@@ -88,4 +88,4 @@ class SeedLeachPie extends React.Component {
   }
 }
 
-export default SeedLeachPie;
+export default SeedLeechPie;

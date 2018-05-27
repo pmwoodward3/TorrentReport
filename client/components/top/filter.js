@@ -108,24 +108,24 @@ class Filter extends React.Component {
           </div>
           <div className="top-filter-site-item">
             <div
-              onClick={() => this.props.toggleSortBy('leach')}
+              onClick={() => this.props.toggleSortBy('leech')}
               className={
-                this.props.topFilter.sortBy === 'leach'
+                this.props.topFilter.sortBy === 'leech'
                   ? 'top-filter-site-head top-filter-site-head-active'
                   : 'top-filter-site-head'
               }
             >
               <div className="top-filter-site-icon">
                 <FontAwesomeIcon
-                  icon={this.props.topFilter.sortBy === 'leach' ? faCheckCircle : faTimesCircle}
+                  icon={this.props.topFilter.sortBy === 'leech' ? faCheckCircle : faTimesCircle}
                 />
               </div>
-              <div className="top-filter-site-name">Leach</div>
+              <div className="top-filter-site-name">Leech</div>
             </div>
           </div>
         </div>
         <div className="top-filter-site">
-          <div className="top-filter-site-group-name">Sort by</div>
+          <div className="top-filter-site-group-name">Ordered by</div>
           <div className="top-filter-site-item">
             <div
               onClick={() => this.props.toggleSortOrder('top')}
@@ -140,7 +140,7 @@ class Filter extends React.Component {
                   icon={this.props.topFilter.sortOrder === 'top' ? faCheckCircle : faTimesCircle}
                 />
               </div>
-              <div className="top-filter-site-name">Top</div>
+              <div className="top-filter-site-name">Highest</div>
             </div>
           </div>
           <div className="top-filter-site-item">
@@ -157,7 +157,7 @@ class Filter extends React.Component {
                   icon={this.props.topFilter.sortOrder === 'bottom' ? faCheckCircle : faTimesCircle}
                 />
               </div>
-              <div className="top-filter-site-name">Bottom</div>
+              <div className="top-filter-site-name">Lowest</div>
             </div>
           </div>
         </div>

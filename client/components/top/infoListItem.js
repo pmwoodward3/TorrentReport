@@ -6,7 +6,7 @@ import { faCaretUp, faCaretDown } from '@fortawesome/fontawesome-free-solid';
 import './infoListItem.scss';
 
 const InfoListItem = ({
-  listingName, listingId, seed, leach, uploader, groupsArr, uploadDate,
+  listingName, listingId, seed, leech, uploader, groupsArr, uploadDate,
 }) => {
   const uploadedDateFormat = 'MM/DD/YYYY';
   const groups = [];
@@ -33,8 +33,8 @@ const InfoListItem = ({
           <div className="value seed">
             <FontAwesomeIcon icon={faCaretUp} /> {`${seed}`}
           </div>
-          <div className="value leach">
-            <FontAwesomeIcon icon={faCaretDown} /> {`${leach}`}
+          <div className="value leech">
+            <FontAwesomeIcon icon={faCaretDown} /> {`${leech}`}
           </div>
         </div>
         <div className="tags">

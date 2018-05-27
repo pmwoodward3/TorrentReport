@@ -194,7 +194,7 @@
         flex-grow: 2;
       }
       .seed,
-      .leach {
+      .leech {
         min-width: 4em;
         flex-basis: 4em;
         flex-grow: 2;
@@ -206,8 +206,8 @@
 .i-seed {
   color: darken($seed_color, 1%);
 }
-.i-leach {
-  color: darken($leach_color, 1%);
+.i-leech {
+  color: darken($leech_color, 1%);
 }
 
 .i-groups {
