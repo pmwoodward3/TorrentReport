@@ -61,7 +61,7 @@ router.post('/', (req, res, next) => {
 
 router.get('/new/top/:days/:order', (req, res, next) => {
   if (!req.params.days) req.params.days = 1;
-  if (!req.params.order || !['seed', 'leach'].includes(req.params.order)) req.params.order = 'seed';
+  if (!req.params.order || !['seed', 'leech'].includes(req.params.order)) req.params.order = 'seed';
   const days = parseInt(req.params.days, 10);
   if (days > 31) return res.sendStatus(403);
   const d = days * 24 * 60 * 60 * 1000;

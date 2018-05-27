@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import Loader from '../loader';
 import './style.scss';
-import SeedLeachPie from '../charts/seedLeachPie';
+import SeedLeechPie from '../charts/seedLeechPie';
 import SyncLine from '../charts/syncLine';
 import SimpleLine from '../charts/simpleLine';
 import { fetchListingById } from '../../store';
@@ -26,12 +26,12 @@ const Listing = (props) => {
       const generalDate = moment(new Date(snap.date)).format('MM/DD/YYYY');
       if (holderObj[generalDate]) {
         if (snap.seed > holderObj[generalDate].seed) holderObj[generalDate].seed = snap.seed;
-        if (snap.leach > holderObj[generalDate].leach) holderObj[generalDate].leach = snap.leach;
+        if (snap.leech > holderObj[generalDate].leech) holderObj[generalDate].leech = snap.leech;
       } else {
         holderObj[generalDate] = {
           date: generalDate,
           seed: snap.seed,
-          leach: snap.leach,
+          leech: snap.leech,
         };
       }
     });
@@ -66,9 +66,9 @@ const Listing = (props) => {
             <div className="title">peers</div>
             <div className="value">
               <div className="center">
-                <SeedLeachPie
+                <SeedLeechPie
                   seed={infos.reduce((accum, curr) => accum + curr.seed, 0)}
-                  leach={infos.reduce((accum, curr) => accum + curr.leach, 0)}
+                  leech={infos.reduce((accum, curr) => accum + curr.leech, 0)}
                 />
               </div>
             </div>
@@ -86,7 +86,7 @@ const Listing = (props) => {
                       syncId="listings"
                       pluck={[
                         { key: 'seed', color: '#008000' },
-                        { key: 'leach', color: '#ff0000' },
+                        { key: 'leech', color: '#ff0000' },
                       ]}
                     />
                   </div>
@@ -131,11 +131,11 @@ const Listing = (props) => {
                     </div>
                     <div className="info-item">
                       <div className="label">max ratio</div>
-                      <div className="value">{info.maxLeach}</div>
+                      <div className="value">{info.maxLeech}</div>
                     </div>
                     <div className="info-item">
                       <div className="label">min ratio</div>
-                      <div className="value">{info.minLeach}</div>
+                      <div className="value">{info.minLeech}</div>
                     </div>
                   </div>
 
@@ -156,16 +156,16 @@ const Listing = (props) => {
 
                   <div className="info-group">
                     <div className="info-item">
-                      <div className="label">leachers</div>
-                      <div className="value">{info.leach}</div>
+                      <div className="label">leechers</div>
+                      <div className="value">{info.leech}</div>
                     </div>
                     <div className="info-item">
-                      <div className="label">max leachers</div>
-                      <div className="value">{info.maxLeach}</div>
+                      <div className="label">max leechers</div>
+                      <div className="value">{info.maxLeech}</div>
                     </div>
                     <div className="info-item">
-                      <div className="label">min leachers</div>
-                      <div className="value">{info.minLeach}</div>
+                      <div className="label">min leechers</div>
+                      <div className="value">{info.minLeech}</div>
                     </div>
                   </div>
                 </div>
@@ -176,7 +176,7 @@ const Listing = (props) => {
                       data={info.torrentSnapshots}
                       pluck={[
                         { key: 'seed', color: '#008000' },
-                        { key: 'leach', color: '#ff0000' },
+                        { key: 'leech', color: '#ff0000' },
                       ]}
                     />
                   </div>

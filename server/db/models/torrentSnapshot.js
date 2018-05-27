@@ -9,7 +9,7 @@ const TorrentSnapshot = db.define('torrentSnapshot', {
     type: Sequelize.INTEGER,
     allowNull: false,
   },
-  leach: {
+  leech: {
     type: Sequelize.INTEGER,
     allowNull: false,
   },

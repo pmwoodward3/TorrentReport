@@ -2,7 +2,7 @@ const data = [
   {
     question: 'What information do you collect?',
     answer:
-      "**From public torrent websites** we collect the torrent name, upload user, upload date, listed seed and leach count,category, magnetURI, hash, file size, and the files url on the website.\n\n**From trackers** we create a one-way cryptographic hash of users sharing a resource. This is used to prevent duplicate counting of users and is publicy provided to all connecting torrent users, we do not attempt not track individual users or identify them in any way. \n\n**From our website's users** we only collect email, or assosciated login info, with passwords also cryptographically hashed before being stored in our database.",
+      "**From public torrent websites** we collect the torrent name, upload user, upload date, listed seed and leech count,category, magnetURI, hash, file size, and the files url on the website.\n\n**From trackers** we create a one-way cryptographic hash of users sharing a resource. This is used to prevent duplicate counting of users and is publicy provided to all connecting torrent users, we do not attempt not track individual users or identify them in any way. \n\n**From our website's users** we only collect email, or assosciated login info, with passwords also cryptographically hashed before being stored in our database.",
   },
   {
     question: 'Why collect this information on torrents?',

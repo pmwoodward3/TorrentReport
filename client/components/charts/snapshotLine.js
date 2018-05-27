@@ -13,24 +13,24 @@ import moment from 'moment';
 
 const SnapshotLine = (props) => {
   let maxSeed = 0;
-  let maxLeach = 0;
+  let maxLeech = 0;
   const holderObj = {};
   props.data.forEach((snap) => {
     if (snap.seed > maxSeed) maxSeed = snap.seed;
-    if (snap.leach > maxLeach) maxLeach = snap.leach;
-    const ratio = snap.seed / snap.leach;
+    if (snap.leech > maxLeech) maxLeech = snap.leech;
+    const ratio = snap.seed / snap.leech;
     const generalDate = moment(new Date(snap.date)).format('MM/DD/YYYY');
     if (holderObj[generalDate]) {
-      const currentRatio = holderObj[generalDate].seed / holderObj[generalDate].leach;
+      const currentRatio = holderObj[generalDate].seed / holderObj[generalDate].leech;
       if (snap.seed > holderObj[generalDate].seed) holderObj[generalDate].seed = snap.seed;
-      if (snap.leach > holderObj[generalDate].leach) holderObj[generalDate].leach = snap.leach;
+      if (snap.leech > holderObj[generalDate].leech) holderObj[generalDate].leech = snap.leech;
       if (currentRatio > holderObj[generalDate].ration) holderObj[generalDate].ratio = currentRatio;
     } else {
       holderObj[generalDate] = {
         ratio: Math.floor(ratio * 100) / 100, // eslint-disable-line
         date: generalDate,
         seed: snap.seed,
-        leach: snap.leach,
+        leech: snap.leech,
       };
     }
   });
@@ -66,7 +66,7 @@ const SnapshotLine = (props) => {
             <stop offset="5%" stopColor="#008000" stopOpacity={0.5} />
             <stop offset="95%" stopColor="#008000" stopOpacity={0} />
           </linearGradient>
-          <linearGradient id="leachC" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="leechC" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#ff0000" stopOpacity={0.5} />
             <stop offset="95%" stopColor="#ff0000" stopOpacity={0} />
           </linearGradient>
@@ -101,10 +101,10 @@ const SnapshotLine = (props) => {
         <Area
           yAxisId="left"
           type="monotone"
-          dataKey="leach"
+          dataKey="leech"
           stroke="#ff0000"
           fillOpacity={1}
-          fill="url(#leachC)"
+          fill="url(#leechC)"
         />
       </ComposedChart>
     </ResponsiveContainer>

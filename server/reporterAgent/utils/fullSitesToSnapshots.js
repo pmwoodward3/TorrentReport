@@ -33,7 +33,7 @@ const fullSitesToSnapshots = (fullSitesArr, statId) => {
 
   const cleanItemsArr = removeDuplicates(itemArr);
 
-  const keysToKeepArr = ['torrentInfoId', 'seed', 'leach', 'torrentStatId'];
+  const keysToKeepArr = ['torrentInfoId', 'seed', 'leech', 'torrentStatId'];
   const cleanSnapshotArr = cleanItemsArr.map((snapshot) => {
     const newObj = _.pick(snapshot, keysToKeepArr);
     newObj.date = new Date();

@@ -37,14 +37,15 @@ class DailyListing extends Component {
     this.setState({ order: this.oppositeOrder(this.state.order) });
   }
   oppositeFilter(filter = this.state.filter) {
-    return filter === 'seed' ? 'leach' : 'seed';
+    return filter === 'seed' ? 'leech' : 'seed';
   }
 
   toggleFilter() {
     this.setState({ filter: this.oppositeFilter(this.state.filter) });
   }
 
-  shouldComponentUpdate(nextProps) { // eslint-disable-line class-methods-use-this
+  shouldComponentUpdate(nextProps) {
+    // eslint-disable-line class-methods-use-this
     return _.has(nextProps.dailyListings, 'days1');
   }
 
@@ -71,8 +72,9 @@ class DailyListing extends Component {
     return (
       <div id="DL" className="daily-listings">
         <div className="dl-top">
-
-          <div className="dl-header"><Link to="/new/listings">TOP NEWLY LISTED TORRENTS</Link></div>
+          <div className="dl-header">
+            <Link to="/new/listings">TOP NEWLY LISTED TORRENTS</Link>
+          </div>
           <div className="dl-detail" />
         </div>
         <div className="dl-item-group">

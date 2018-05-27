@@ -102,7 +102,7 @@ router.get('/new/:days/site/:siteId', (req, res, next) => {
 
 // need to test this. limit might be before query completion?
 router.get('/alltime/top/:order', (req, res, next) => {
-  if (!req.params.order || !['seed', 'leach'].includes(req.params.order)) req.params.order = 'seed';
+  if (!req.params.order || !['seed', 'leech'].includes(req.params.order)) req.params.order = 'seed';
 
   TorrentSnapshot.findAll({
     limit: 100,

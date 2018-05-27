@@ -108,19 +108,19 @@ class Filter extends React.Component {
           </div>
           <div className="top-filter-site-item">
             <div
-              onClick={() => this.props.toggleSortBy('leach')}
+              onClick={() => this.props.toggleSortBy('leech')}
               className={
-                this.props.topFilter.sortBy === 'leach'
+                this.props.topFilter.sortBy === 'leech'
                   ? 'top-filter-site-head top-filter-site-head-active'
                   : 'top-filter-site-head'
               }
             >
               <div className="top-filter-site-icon">
                 <FontAwesomeIcon
-                  icon={this.props.topFilter.sortBy === 'leach' ? faCheckCircle : faTimesCircle}
+                  icon={this.props.topFilter.sortBy === 'leech' ? faCheckCircle : faTimesCircle}
                 />
               </div>
-              <div className="top-filter-site-name">Leach</div>
+              <div className="top-filter-site-name">Leech</div>
             </div>
           </div>
         </div>

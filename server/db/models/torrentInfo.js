@@ -17,7 +17,7 @@ const TorrentInfo = db.define(
     seed: {
       type: Sequelize.INTEGER,
     },
-    leach: {
+    leech: {
       type: Sequelize.INTEGER,
     },
     maxSeed: {
@@ -26,10 +26,10 @@ const TorrentInfo = db.define(
     maxSeedDate: {
       type: Sequelize.DATE,
     },
-    maxLeach: {
+    maxLeech: {
       type: Sequelize.INTEGER,
     },
-    maxLeachDate: {
+    maxLeechDate: {
       type: Sequelize.DATE,
     },
     minSeed: {
@@ -38,10 +38,10 @@ const TorrentInfo = db.define(
     minSeedDate: {
       type: Sequelize.DATE,
     },
-    minLeach: {
+    minLeech: {
       type: Sequelize.INTEGER,
     },
-    minLeachDate: {
+    minLeechDate: {
       type: Sequelize.DATE,
     },
     ratio: {

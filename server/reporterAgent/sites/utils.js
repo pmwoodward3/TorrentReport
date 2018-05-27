@@ -9,7 +9,7 @@ const universalClean = (key, rawResult) => {
       returnValue = parseInt(rawResult, 10);
       break;
     }
-    case 'leach': {
+    case 'leech': {
       returnValue = parseInt(rawResult, 10);
       break;
     }
