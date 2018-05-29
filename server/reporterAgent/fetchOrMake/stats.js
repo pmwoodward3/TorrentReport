@@ -51,13 +51,19 @@ const addSnapshots = (snapshotArr) => {
   });
 };
 
+const nextStatId = () =>
+  TorrentStats.max('id')
+    .then(maxId => TorrentStats.findById(maxId))
+    .then(maxStatObj => Promise.resolve(maxStatObj.id + 1));
+
 const closeStat = async (fullSites) => {
   /* things done at this point to data:
         - created stat row with active for this scrape
         - created/found site/group/listing/info for each torrent
       */
   const gScrapeCount = await getScrapeCount();
-  const snapshotsArr = fullSitesToSnapshots(fullSites, gScrapeCount);
+  const gNextStatId = await nextStatId();
+  const snapshotsArr = fullSitesToSnapshots(fullSites, gNextStatId);
   await addSnapshots(snapshotsArr);
   const gSiteCount = await getSiteCount();
   const gGroupCount = await getGroupCount();
