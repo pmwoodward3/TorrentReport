@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import SiteStats from '../siteStats';
 import Notification from '../notification';
 import DailyListing from '../dailyListing';
+import TopSnapshotWeek from '../topSnapshotWeek';
 
 import './style.scss';
 
@@ -24,6 +25,9 @@ export const Home = (props) => {
       <div className="flex-inline">
         <SiteStats />
         <DailyListing />
+      </div>
+      <div className="flex-inline">
+        <TopSnapshotWeek />
       </div>
     </div>
   );

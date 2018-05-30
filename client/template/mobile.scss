@@ -17,6 +17,11 @@
       align-items: flex-start !important;
     }
   }
+  .col-container-list-item {
+    .top {
+      flex-direction: column !important;
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {

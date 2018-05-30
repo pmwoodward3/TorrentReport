@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const moment = require('moment');
 const {
   TorrentSite,
   TorrentInfo,
@@ -11,14 +12,6 @@ const Sequelize = require('sequelize');
 const { Op } = Sequelize;
 
 module.exports = router;
-
-// this is for testing purposes.
-// no need to ever fetch ALL snapshots
-// router.get('/', (req, res, next) => {
-//   TorrentSnapshot.findAll()
-//     .then(data => res.json(data))
-//     .catch(next);
-// });
 
 // return all the snapshots for a specific infoID
 router.get('/:infoId', (req, res, next) => {
@@ -101,19 +94,55 @@ router.get('/new/:days/site/:siteId', (req, res, next) => {
 });
 
 // need to test this. limit might be before query completion?
-router.get('/alltime/top/:order', (req, res, next) => {
-  if (!req.params.order || !['seed', 'leech'].includes(req.params.order)) req.params.order = 'seed';
+router.get('/week/top/:order/:limit', (req, res, next) => {
+  let { order } = req.params;
+  if (!order || !['seed', 'leech', 'both'].includes(order)) {
+    order = 'seed';
+  }
 
+  let limit = req.params.limit ? parseInt(req.params.limit, 10) : 5;
+  if (limit > 100) limit = 100;
+  const now = new Date();
+  const withinWeek = moment(now).subtract(1, 'week');
+
+  let both;
+  if (order === 'both') {
+    both = true;
+    order = 'seed';
+  }
+  const result = {
+    seed: [],
+    leech: [],
+  };
+
+  findWeeklyTopSnapshots(order, limit, withinWeek)
+    .then((data) => {
+      if (!both) return Promise.resolve(data);
+      result.seed = data;
+      return findWeeklyTopSnapshots('leech', limit, withinWeek);
+    })
+    .then((data) => {
+      if (!both) return Promise.resolve(data);
+      result.leech = data;
+      return Promise.resolve(result);
+    })
+    .then(data => res.json(data))
+    .catch(next);
+});
+
+const findWeeklyTopSnapshots = (order, limit, withinWeek) =>
   TorrentSnapshot.findAll({
-    limit: 100,
-    order: [[req.params.order, 'DESC']],
+    where: {
+      createdAt: {
+        [Op.gte]: new Date(withinWeek),
+      },
+    },
+    limit,
+    order: [[order, 'DESC']],
     include: [
       {
         model: TorrentInfo,
         include: [TorrentListing, { as: 'Group', model: TorrentGroup, include: [TorrentSite] }],
       },
     ],
-  })
-    .then(data => res.json(data))
-    .catch(next);
-});
+  });

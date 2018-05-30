@@ -11,6 +11,9 @@
   flex-direction: row;
   justify-content: flex-start;
   font-size: 0.9em;
+  background-color: #f4f4f4;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .top-filter-site-group-name {
@@ -20,6 +23,7 @@
   margin: 0 25px 0 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: #696969;
+  font-weight: bold;
 }
 
 .top-filter-site-item {
@@ -33,7 +37,7 @@
 .top-filter-site-name {
   padding: 0;
   margin: 0;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 .top-filter-site-head {
@@ -62,16 +66,21 @@
 
 .top-filter-site-groups-item {
 }
-
+.count-top-filter-site-fixed {
+  width: 200px;
+}
 .clear-top-filter-site {
   cursor: pointer;
   padding: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: #a3a3a3;
-  background-color: #e9e9e9;
+  color: darken($primaryColor, 30%);
+  background-color: lighten($primaryColor, 20%);
   &:hover {
-    background-color: lighten($primaryColor, 20%);
-    color: darken($primaryColor, 30%);
+    background-color: lighten($primaryColor, 30%);
+  }
+  &:active {
+    background-color: #a4a4a4;
+    color: white;
   }
 }
 

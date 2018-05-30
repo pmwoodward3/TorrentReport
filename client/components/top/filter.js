@@ -21,19 +21,25 @@ class Filter extends React.Component {
   }
   /* eslint-enable */
 
-  // componentDidMount() {
-  //   this.props.resetEverything();
-  // }
-
   render() {
     console.log('filter props', this.props);
     return (
       <div className="top-filter-list">
         <div className="top-filter-site">
-          <div onClick={() => this.props.resetEverything()} className="clear-top-filter-site">
+          <div
+            onClick={() => {
+              this.props.resetEverything();
+              this.props.onChangePage();
+            }}
+            className="clear-top-filter-site"
+          >
             Clear Filter
           </div>
-          <div className="count-top-filter-site">{this.props.count} Results</div>
+          <div className="count-top-filter-site count-top-filter-site-fixed">
+            {`${this.props.count} Results `}
+            -
+            {` ${this.props.numberOfPages} Pages  `}
+          </div>
         </div>
         <div className="top-filter-site">
           <div className="top-filter-site-group-name">Groups</div>
@@ -41,7 +47,10 @@ class Filter extends React.Component {
             <div key={`${group}thsgi`}>
               <div className="top-filter-site-item">
                 <div
-                  onClick={() => this.props.toggleGroup(group)}
+                  onClick={() => {
+                    this.props.toggleGroup(group);
+                    this.props.onChangePage();
+                  }}
                   className={
                     this.props.topFilter.showingGroups[group]
                       ? 'top-filter-site-head top-filter-site-head-active'
@@ -67,7 +76,10 @@ class Filter extends React.Component {
             <div key={`${site.id}thsi`}>
               <div className="top-filter-site-item">
                 <div
-                  onClick={() => this.props.toggleSite(site.id)}
+                  onClick={() => {
+                    this.props.toggleSite(site.id);
+                    this.props.onChangePage();
+                  }}
                   className={
                     this.props.topFilter.showingSites[site.id]
                       ? 'top-filter-site-head top-filter-site-head-active'
@@ -91,7 +103,10 @@ class Filter extends React.Component {
           <div className="top-filter-site-group-name">Order</div>
           <div className="top-filter-site-item">
             <div
-              onClick={() => this.props.toggleSortBy('seed')}
+              onClick={() => {
+                this.props.toggleSortBy('seed');
+                this.props.onChangePage();
+              }}
               className={
                 this.props.topFilter.sortBy === 'seed'
                   ? 'top-filter-site-head top-filter-site-head-active'
@@ -108,7 +123,10 @@ class Filter extends React.Component {
           </div>
           <div className="top-filter-site-item">
             <div
-              onClick={() => this.props.toggleSortBy('leech')}
+              onClick={() => {
+                this.props.toggleSortBy('leech');
+                this.props.onChangePage();
+              }}
               className={
                 this.props.topFilter.sortBy === 'leech'
                   ? 'top-filter-site-head top-filter-site-head-active'
@@ -128,7 +146,10 @@ class Filter extends React.Component {
           <div className="top-filter-site-group-name">Ordered by</div>
           <div className="top-filter-site-item">
             <div
-              onClick={() => this.props.toggleSortOrder('top')}
+              onClick={() => {
+                this.props.toggleSortOrder('top');
+                this.props.onChangePage();
+              }}
               className={
                 this.props.topFilter.sortOrder === 'top'
                   ? 'top-filter-site-head top-filter-site-head-active'
@@ -145,7 +166,10 @@ class Filter extends React.Component {
           </div>
           <div className="top-filter-site-item">
             <div
-              onClick={() => this.props.toggleSortOrder('bottom')}
+              onClick={() => {
+                this.props.toggleSortOrder('bottom');
+                this.props.onChangePage();
+              }}
               className={
                 this.props.topFilter.sortOrder === 'bottom'
                   ? 'top-filter-site-head top-filter-site-head-active'

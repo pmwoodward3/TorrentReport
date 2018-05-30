@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import JwPagination from 'jw-react-pagination';
 
 import Filter from './filter';
 import { fetchTopNewSnapshots } from '../../store';
@@ -13,21 +12,41 @@ class TopNewSnapshots extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentItems: [],
+      currentPage: 0,
+      itemsPerPage: 20,
+      intervalId: 0,
     };
   }
 
+  scrollStep() {
+    if (window.pageYOffset === 0) {
+      clearInterval(this.state.intervalId);
+    }
+    window.scroll(0, window.pageYOffset - this.props.scrollStepInPx);
+  }
+
+  scrollToTop() {
+    const intervalId = setInterval(this.scrollStep.bind(this), this.props.delayInMs);
+    this.setState({ intervalId });
+  }
+
   componentDidMount() {
-    if (this.props.topNewSnapshots.state !== 'ready') {
-      if (this.props.topNewSnapshots.state !== 'loading') this.props.load();
+    if (
+      this.props.topNewSnapshots.state !== 'ready' &&
+      this.props.topNewSnapshots.state !== 'loading'
+    ) {
+      this.props.load();
     }
   }
 
-  render() {
-    if (this.props.topNewSnapshots.state !== 'ready') {
-      return <Loader message="random" />;
-    }
-    const filteredSnapshots = this.props.topNewSnapshots.items
+  onChangePage = (currentPage) => {
+    console.log('current page change to', currentPage);
+    this.setState({ currentPage });
+    this.scrollToTop();
+  };
+
+  filterSortSnapshots = arraySnapshots =>
+    arraySnapshots
       .filter((snapshot) => {
         for (let x = 0; x < snapshot.torrentInfo.Group.length; x += 1) {
           const currentGroup = snapshot.torrentInfo.Group[x].name;
@@ -50,10 +69,39 @@ class TopNewSnapshots extends React.Component {
         }
         return a[currentSortBy] - b[currentSortBy];
       });
+
+  getArrayFromPage = (dataArray) => {
+    const begin = this.state.currentPage * this.state.itemsPerPage;
+    const end = begin + this.state.itemsPerPage;
+    return dataArray.slice(begin, end);
+  };
+
+  render() {
+    if (this.props.topNewSnapshots.state !== 'ready') {
+      return <Loader message="random" />;
+    }
+    const filteredSnapshots = this.filterSortSnapshots(this.props.topNewSnapshots.items);
+    const numberOfPages = Math.ceil(filteredSnapshots.length / this.state.itemsPerPage);
+    const currentItems = this.getArrayFromPage(filteredSnapshots);
+    const pageButtons = [];
+    for (let x = 0; x < numberOfPages; x += 1) {
+      pageButtons.push(<div
+          className={
+            x === this.state.currentPage
+              ? 'top-filter-pagination-link-active'
+              : 'top-filter-pagination-link'
+          }
+          key={`pagination${x}`}
+          onClick={() => this.onChangePage(x)}
+        >
+          {x + 1}
+        </div>);
+    }
+
     return (
       <div className="top-container">
-        <Filter count={filteredSnapshots.length} />
-        {filteredSnapshots.map(snapshot => (
+        <Filter count={filteredSnapshots.length} numberOfPages={numberOfPages} onChangePage={() => this.onChangePage(0)} />
+        {currentItems.map(snapshot => (
           <InfoListItem
             listingId={snapshot.torrentInfo.torrentListing.id}
             listingName={snapshot.torrentInfo.torrentListing.name}
@@ -65,6 +113,7 @@ class TopNewSnapshots extends React.Component {
             key={snapshot.id}
           />
         ))}
+        <div className="top-filter-pagination">{pageButtons}</div>
       </div>
     );
   }

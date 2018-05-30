@@ -48,7 +48,6 @@
     "helmet": "^3.12.0",
     "history": "^4.7.2",
     "jsdom": "^11.6.2",
-    "jw-react-pagination": "^1.0.6",
     "lodash": "^4.17.5",
     "magnet-uri": "^5.1.7",
     "moment": "^2.21.0",
