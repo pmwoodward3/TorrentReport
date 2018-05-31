@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle } from '@fortawesome/fontawesome-free-solid';
+import {
+  faCheckCircle,
+  faTimesCircle,
+  faEye,
+  faEyeSlash,
+} from '@fortawesome/fontawesome-free-solid';
 
 import {
   enableAllSitesTopFilter,
@@ -10,6 +15,8 @@ import {
   toggleSiteTopFilter,
   sortByTopFilter,
   sortOrderTopFilter,
+  toggleFilterVisibiility,
+  toggleDirtyState,
 } from '../../store/topFilter';
 
 import './filter.scss';
@@ -23,22 +30,48 @@ class Filter extends React.Component {
 
   render() {
     console.log('filter props', this.props);
+    if (!this.props.topFilter.visibility) {
+      return (
+        <div className="top-filter-list">
+          <div className="top-filter-site">
+            <div
+              onClick={() => {
+                this.props.toggleFilter();
+              }}
+              className="toggle-top-filter-site"
+            >
+              <FontAwesomeIcon icon={faEye} /> Show Filter
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="top-filter-list">
         <div className="top-filter-site">
           <div
             onClick={() => {
-              this.props.resetEverything();
-              this.props.onChangePage();
+              this.props.toggleFilter();
             }}
-            className="clear-top-filter-site"
+            className="toggle-top-filter-site"
           >
-            Clear Filter
+            <FontAwesomeIcon icon={faEyeSlash} /> Hide Filter
           </div>
+          {this.props.topFilter.dirty && (
+            <div
+              onClick={() => {
+                this.props.resetEverything();
+                this.props.onChangePage();
+              }}
+              className="clear-top-filter-site"
+            >
+              Clear Filter
+            </div>
+          )}
           <div className="count-top-filter-site count-top-filter-site-fixed">
             {`${this.props.count} Results `}
             -
-            {` ${this.props.numberOfPages} Pages  `}
+            {` Page ${this.props.currentPage} of ${this.props.numberOfPages}`}
           </div>
         </div>
         <div className="top-filter-site">
@@ -198,22 +231,30 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   toggleSite(siteId) {
+    dispatch(toggleDirtyState(true));
     return dispatch(toggleSiteTopFilter(siteId));
   },
   toggleGroup(groupName) {
+    dispatch(toggleDirtyState(true));
     return dispatch(toggleGroupTopFilter(groupName));
   },
   toggleSortOrder(sortOrder) {
+    dispatch(toggleDirtyState(true));
     return dispatch(sortOrderTopFilter(sortOrder));
   },
   toggleSortBy(sortBy) {
+    dispatch(toggleDirtyState(true));
     return dispatch(sortByTopFilter(sortBy));
   },
   resetEverything() {
+    dispatch(toggleDirtyState(false));
     dispatch(sortByTopFilter('seed'));
     dispatch(sortOrderTopFilter('top'));
     dispatch(enableAllSitesTopFilter());
     return dispatch(enableAllGroupsTopFilter());
+  },
+  toggleFilter() {
+    return dispatch(toggleFilterVisibiility());
   },
 });
 

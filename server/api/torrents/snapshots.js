@@ -5,6 +5,7 @@ const {
   TorrentInfo,
   TorrentListing,
   TorrentSnapshot,
+  TorrentCategory,
   TorrentGroup,
 } = require('../../db/models');
 const Sequelize = require('sequelize');
@@ -94,7 +95,7 @@ router.get('/new/:days/site/:siteId', (req, res, next) => {
 });
 
 // need to test this. limit might be before query completion?
-router.get('/week/top/:order/:limit', (req, res, next) => {
+router.get('/top/week/:order/:limit', (req, res, next) => {
   let { order } = req.params;
   if (!order || !['seed', 'leech', 'both'].includes(order)) {
     order = 'seed';
@@ -126,8 +127,13 @@ router.get('/week/top/:order/:limit', (req, res, next) => {
       result.leech = data;
       return Promise.resolve(result);
     })
-    .then(data => res.json(data))
-    .catch(next);
+    .catch((err) => {
+      console.log('err');
+      console.log(err);
+      return next();
+    })
+    .then(data => res.json(data));
+  // .catch(next);
 });
 
 const findWeeklyTopSnapshots = (order, limit, withinWeek) =>
@@ -137,7 +143,6 @@ const findWeeklyTopSnapshots = (order, limit, withinWeek) =>
         [Op.gte]: new Date(withinWeek),
       },
     },
-    limit,
     order: [[order, 'DESC']],
     include: [
       {
@@ -145,4 +150,16 @@ const findWeeklyTopSnapshots = (order, limit, withinWeek) =>
         include: [TorrentListing, { as: 'Group', model: TorrentGroup, include: [TorrentSite] }],
       },
     ],
+  }).then((data) => {
+    const seenInfoId = {};
+    data.forEach((snapshot) => {
+      const currentInfoId = seenInfoId[snapshot.torrentInfoId];
+      if (!currentInfoId || snapshot[order] > currentInfoId[order]) {
+        seenInfoId[snapshot.torrentInfoId] = snapshot;
+      }
+    });
+    const keys = Object.keys(seenInfoId);
+    const arr = keys.map(id => seenInfoId[id]);
+    const sorted = arr.sort((a, b) => b[order] - a[order]);
+    return Promise.resolve(sorted.slice(0, limit));
   });

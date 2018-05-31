@@ -67,7 +67,6 @@
 .top-filter-site-groups-item {
 }
 .count-top-filter-site-fixed {
-  width: 200px;
 }
 .clear-top-filter-site {
   cursor: pointer;
@@ -77,6 +76,20 @@
   background-color: lighten($primaryColor, 20%);
   &:hover {
     background-color: lighten($primaryColor, 30%);
+  }
+  &:active {
+    background-color: #a4a4a4;
+    color: white;
+  }
+}
+.toggle-top-filter-site {
+  cursor: pointer;
+  padding: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: darken($secondaryColor, 30%);
+  background-color: lighten($secondaryColor, 20%);
+  &:hover {
+    background-color: lighten($secondaryColor, 30%);
   }
   &:active {
     background-color: #a4a4a4;

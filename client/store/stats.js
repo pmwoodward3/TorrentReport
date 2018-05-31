@@ -94,7 +94,7 @@ export const fetchTopNewSnapshots = (days = 1) => (dispatch) => {
 export const fetchTopWeekNewSnapshots = () => (dispatch) => {
   dispatch(loadingTopWeekNewSnapshots());
   return axios
-    .get('/api/torrents/snapshots/week/top/both/5')
+    .get('/api/torrents/snapshots/top/week/both/5')
     .then((res) => {
       dispatch(spreadSnapshots(res.data.seed));
       dispatch(spreadSnapshots(res.data.leech));

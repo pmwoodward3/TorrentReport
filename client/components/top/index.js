@@ -100,7 +100,12 @@ class TopNewSnapshots extends React.Component {
 
     return (
       <div className="top-container">
-        <Filter count={filteredSnapshots.length} numberOfPages={numberOfPages} onChangePage={() => this.onChangePage(0)} />
+        <Filter
+          count={filteredSnapshots.length}
+          currentPage={this.state.currentPage + 1}
+          numberOfPages={numberOfPages}
+          onChangePage={() => this.onChangePage(0)}
+        />
         {currentItems.map(snapshot => (
           <InfoListItem
             listingId={snapshot.torrentInfo.torrentListing.id}

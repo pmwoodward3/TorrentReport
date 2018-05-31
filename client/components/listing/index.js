@@ -96,7 +96,7 @@ const Listing = (props) => {
           )}
       </div>
 
-      {<div className="l-section-header">uploads by users</div>}
+      {<div className="l-section-header">uploads by users (CLICK ONE FOR MORE INFO)</div>}
       <div className="listings-infos">
         {infos &&
           infos.map(info => (
