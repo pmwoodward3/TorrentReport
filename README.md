@@ -26,3 +26,14 @@ The central figure in this show is the reporterAgent (./server/reporterAgent), a
 Built using React 16 with redux, redux-thunks, and without any front-end css frameworks (custom flexbox). The application has been optimized for two screen sizes. anything less than 800 pixels wide is considered a condensed "mobile" view. Using SASS (mixins and variables),
 
 The application currently utilizes a RESTful api, but I am rewriting it using GraphQL. This will allow me to utilize Relay with React and greatly simplify the data-fetching.
+
+# SETUP
+
+## Development
+
+1.  Copy the git repo.
+2.  Run `npm install` or `yarn`.
+3.  install PostgreSQL and Redis. Launch them both.
+4.  Fill in the enviroment variables `.env`.
+5.  The scrape service runs on a schedule. If you are just installing this project and want to have some data to play with run `npm run start-scrape` or `yarn start-scrape`.
+6.  Run `npm run start-dev` or `yarn start-dev`.

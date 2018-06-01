@@ -20,6 +20,7 @@
       font-family: $header_font_family;
       font-size: 2em;
       flex-basis: auto;
+      padding: 0 0 20px 0;
     }
     .dl-detail {
       display: flex;
@@ -187,7 +188,7 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        width: 9em;
+        width: 10.5em;
         svg {
           margin-right: 10px;
         }
