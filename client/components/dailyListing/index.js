@@ -19,7 +19,7 @@ class DailyListing extends Component {
     this.state = {
       filter: 'seed',
       order: 'top',
-      max: 11,
+      max: 10,
     };
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleOrder = this.toggleOrder.bind(this);
@@ -87,23 +87,18 @@ class DailyListing extends Component {
             <Link to="/new/listings">View {hiddenResults} more results</Link>
           </div>
           <div className="dl-options">
-            <div>
-              <div className="current">sorted by {this.state.filter}ers</div>
-              <div className="try">
-                switch to{' '}
-                <a href="#DL" onClick={this.toggleFilter}>
-                  {this.oppositeFilter()}ers
-                </a>
-              </div>
+            <div className="current">
+              sorted by {this.state.order} {this.state.filter}ers
             </div>
-            <div>
-              <div className="current">ordered by {this.state.order} listings</div>
-              <div className="try">
-                switch to{' '}
-                <a href="#DL" onClick={this.toggleOrder}>
-                  {this.oppositeOrder()}
-                </a>
-              </div>
+            <div className="try">
+              switch to{' '}
+              <a href="#DL" onClick={this.toggleFilter}>
+                {this.oppositeFilter()}ers
+              </a>{' '}
+              or{' '}
+              <a href="#DL" onClick={this.toggleOrder}>
+                {this.oppositeOrder()}
+              </a>
             </div>
           </div>
         </div>

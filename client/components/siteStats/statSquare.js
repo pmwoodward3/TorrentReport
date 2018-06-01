@@ -4,14 +4,19 @@ import Loader from '../loader';
 /**
  * COMPONENT
  */
-export default (props) => {
-  const { name, value } = props;
+const StatSquare = (props) => {
+  const { name, shorten } = props;
+  let { value } = props;
+  const showLoad = !value;
+  if (shorten) {
+    const divThousand = value / 1000;
+    if (divThousand >= 1) value = `${Math.round(divThousand * 100) / 100}k`;
+  }
 
-  // if (!value) return <Loader />;
   return (
     <div className="group">
       <div className="value center">
-        {value || <Loader type="three_dots" height={50} width={50} />}
+        {showLoad ? <Loader type="three_dots" height={50} width={50} /> : value}
       </div>
       <div className="name center">
         <div className="pos">{name}</div>
@@ -19,3 +24,5 @@ export default (props) => {
     </div>
   );
 };
+
+export default StatSquare;

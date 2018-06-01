@@ -35,19 +35,19 @@ const MiniListItem = (props) => {
         <div>{props.index + 1}</div>
       </div>
       <Link alt={name} to={`/listing/${id}`}>
-        {shorten(name)}
-      </Link>
-      <div className="group">
-        <div className="sub">
-          <div className={seedClass}>
-            <FontAwesomeIcon icon={faCaretUp} /> {seed}
+        <div className="filler">{shorten(name)}</div>
+        <div className="group">
+          <div className="sub">
+            <div className={seedClass}>
+              <FontAwesomeIcon icon={faCaretUp} /> {seed}
+            </div>
+            <div className={leechClass}>
+              <FontAwesomeIcon icon={faCaretDown} /> {leech}
+            </div>
           </div>
-          <div className={leechClass}>
-            <FontAwesomeIcon icon={faCaretDown} /> {leech}
-          </div>
+          <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>
         </div>
-        <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>
-      </div>
+      </Link>
     </div>
   );
 };

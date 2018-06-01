@@ -68,7 +68,12 @@
           margin: 5px 5px 0px 5px;
           padding: 5px 0px 5px 0px;
           text-decoration: none;
+          opacity: 0.6;
           color: darken($tertiaryColor, 34%);
+          &:hover {
+            opacity: 1;
+            color: darken($tertiaryColor, 60%);
+          }
           &:visited {
             color: darken($tertiaryColor, 34%);
           }
@@ -120,7 +125,6 @@
                 font-size: 12px;
               }
             }
-
           }
         }
       }

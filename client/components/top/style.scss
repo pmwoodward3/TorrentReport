@@ -4,6 +4,14 @@
 .top-container {
 }
 
+.top-header {
+  letter-spacing: 2px;
+  font-family: $header_font_family;
+  font-size: 2em;
+  flex-basis: auto;
+  color: lighten($quinaryColor, 50%);
+}
+
 .top-filter-pagination {
   margin: 10px;
   width: 100%;

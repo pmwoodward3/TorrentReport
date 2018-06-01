@@ -23,8 +23,12 @@
   // align-items: center;
 }
 .top-list-item-header-name {
-  font-family: $header_font_family;
+  color: #545454;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  // font-family: $header_font_family;
   margin: 0;
+  // letter-spacing: 1px;
   padding: 0;
 }
 

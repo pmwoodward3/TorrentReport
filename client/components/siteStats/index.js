@@ -51,22 +51,38 @@ const SiteStats = (props) => {
           </div>
         </div>
         <div className="group2">
-          <StatSquare name="Scrape Runs" value={(stats && stats.scrapeCount) || 0} />
-          <StatSquare name="Sites" value={(stats && stats.siteCount) || 0} />
+          <StatSquare name="Scrape Runs" value={(stats && stats.scrapeCount) || 0} shorten={true} />
+          <StatSquare name="Sites" value={(stats && stats.siteCount) || 0} shorten={true} />
         </div>
         <div className="group2">
-          <StatSquare name="Sites Load Count" value={(stats && stats.siteLoadCount) || 0} />
-          <StatSquare name="Torrent Load Count" value={(stats && stats.torrentLoadCount) || 0} />
+          <StatSquare
+            name="Sites Load Count"
+            value={(stats && stats.siteLoadCount) || 0}
+            shorten={true}
+          />
+          <StatSquare
+            name="Torrent Load Count"
+            value={(stats && stats.torrentLoadCount) || 0}
+            shorten={true}
+          />
         </div>
       </div>
       <div className="seperator">
         <div className="group2">
-          <StatSquare name="Group Count" value={(stats && stats.groupCount) || 0} />
-          <StatSquare name="Info Count" value={(stats && stats.infoCount) || 0} />
+          <StatSquare name="Group Count" value={(stats && stats.groupCount) || 0} shorten={true} />
+          <StatSquare name="Info Count" value={(stats && stats.infoCount) || 0} shorten={true} />
         </div>
         <div className="group2">
-          <StatSquare name="Snapshot Count" value={(stats && stats.snapshotCount) || 0} />
-          <StatSquare name="Torrent Count" value={(stats && stats.torrentCount) || 0} />
+          <StatSquare
+            name="Snapshot Count"
+            value={(stats && stats.snapshotCount) || 0}
+            shorten={true}
+          />
+          <StatSquare
+            name="Torrent Count"
+            value={(stats && stats.torrentCount) || 0}
+            shorten={true}
+          />
         </div>
         <div className="group2">
           <StatSquare name="Minute Scrape Time" value={duration || 0} />

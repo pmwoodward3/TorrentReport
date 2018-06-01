@@ -1,11 +1,12 @@
 @import '../../template/_variables';
 @import '../../template/_mixins';
 .stats {
-  display: inline-flex;
+  display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   flex-grow: 1;
+  height: 100%;
   margin: 1em;
   @include boxRadiusNoShadow();
   background-color: $stats_background_color;

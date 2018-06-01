@@ -68,6 +68,18 @@ class Template extends Component {
               <NavLink exact activeClassName="sNav" to="/top">
                 <span>TOP TORRENTS</span>
               </NavLink>
+              <ul id="subOne">
+                <li>
+                  <NavLink exact activeClassName="sNav" to="/top">
+                    <span>ALL TORRENTS</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink exact activeClassName="sNav" to="/new/listings">
+                    <span>NEW TORRENTS</span>
+                  </NavLink>
+                </li>
+              </ul>
             </li>
 
             {isLoggedIn && (
@@ -116,14 +128,14 @@ class Template extends Component {
                 </Link>
               </div>
             ) : (
-                <div className="navButtons">
-                  <button id="navSign" className="in" onClick={handleClick}>
-                    <span>
-                      <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+              <div className="navButtons">
+                <button id="navSign" className="in" onClick={handleClick}>
+                  <span>
+                    <FontAwesomeIcon icon={faSignOutAlt} /> Logout
                   </span>
-                  </button>
-                </div>
-              )}
+                </button>
+              </div>
+            )}
           </ul>
         </nav>
 

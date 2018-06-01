@@ -100,6 +100,7 @@ class TopNewSnapshots extends React.Component {
 
     return (
       <div className="top-container">
+      <div className="top-header">TOP TORRENTS</div>
         <Filter
           count={filteredSnapshots.length}
           currentPage={this.state.currentPage + 1}

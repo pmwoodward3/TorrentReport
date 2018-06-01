@@ -86,10 +86,14 @@ const closeStat = async (fullSites) => {
   };
 
   fullSites.forEach((site) => {
-    statObj.groupLoadCount += site.groups.length;
-    site.groups.forEach((group) => {
-      statObj.torrentLoadCount += group.results.length;
-    });
+    if (Array.isArray(site.groups)) {
+      statObj.groupLoadCount += site.groups.length;
+      site.groups.forEach((group) => {
+        if (Array.isArray(group.results)) {
+          statObj.torrentLoadCount += group.results.length;
+        }
+      });
+    }
   });
   RALogger.verbose('stat OBJ', statObj);
   await setCloseStat(statObj);

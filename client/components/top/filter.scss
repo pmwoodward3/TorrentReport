@@ -5,22 +5,52 @@
   margin: 0 0 15px 0;
 }
 
+.top-filter-list-hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #e4e4e4;
+  margin: 1em 0;
+  padding: 0;
+}
+
 .top-filter-site {
   display: inline-flex;
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: flex-start;
+  font-size: 0.8em;
+  // border: 1px solid #e4e4e4;
+  margin: 10px 5px 0 5px;
+  padding: 0 10px 0 10px;
+  flex-grow: 1;
+}
+
+.top-filter-site-static {
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
   font-size: 0.9em;
-  background-color: #f4f4f4;
-  margin-right: 10px;
-  margin-top: 10px;
+  background-color: #e4e4e4;
+  color: #545454;
+}
+.top-filter-site-box {
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-right: solid 1px #e4e4e4;
+  border-left: solid 1px #e4e4e4;
+  border-bottom: solid 1px #e4e4e4;
+  padding: 0 0 5px 0;
 }
 
 .top-filter-site-group-name {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 25px 0 10px;
+  margin: 0 5px 0 0px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: #696969;
   font-weight: bold;
@@ -30,8 +60,8 @@
   letter-spacing: 1px;
   display: block;
   font-family: Arial, Helvetica, sans-serif;
-  padding: 5px;
-  margin: 5px;
+  padding: 3px;
+  margin: 3px 3px 3px 5px;
 }
 
 .top-filter-site-name {
@@ -54,7 +84,7 @@
 }
 
 .top-filter-site-icon {
-  padding: 0px 10px 0px 0px;
+  padding: 0px 5px 0px 0px;
   // font-size: 10px;
 }
 
@@ -100,7 +130,5 @@
 .count-top-filter-site {
   padding: 10px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  // color: #a3a3a3;
-  color: #000;
   margin: 0 10px 0 0;
 }

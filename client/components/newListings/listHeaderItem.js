@@ -33,18 +33,8 @@ export default (props) => {
   return (
     <div className="dl-item">
       <div className="number">#</div>
-
-      <div className="name">name</div>
-
-      <div className="group-holder">
-        <div className="group">
-          <div className={seedClass}>seed</div>
-          <div className={leechClass}>leech</div>
-        </div>
-        <div className="group">
-          <div className={ratioClass}>ratio</div>
-          <div className="uploadedDate">uploaded</div>
-        </div>
+      <div className="name-detail-spread">
+        <div className="name">name</div>
       </div>
     </div>
   );
