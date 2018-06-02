@@ -12,16 +12,6 @@
   color: lighten($quinaryColor, 50%);
   padding: 0 0 20px 0;
 }
-
-.top-filter-pagination {
-  margin: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 @mixin paginationButton() {
   min-width: 30px;
   padding: 5px;
@@ -32,19 +22,28 @@
   border-radius: 7px;
 }
 
-.top-filter-pagination-link {
-  @include paginationButton();
-  cursor: pointer;
-  color: lighten($quinaryColor, 74%);
-  border: solid 1px lighten($quinaryColor, 90%);
-  &:hover {
-    background-color: lighten($quinaryColor, 95%);
+.top-filter-pagination {
+  margin: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .pagination-link {
+    @include paginationButton();
+    cursor: pointer;
+    color: lighten($quinaryColor, 74%);
+    border: solid 1px lighten($quinaryColor, 90%);
+    &:hover {
+      background-color: lighten($quinaryColor, 95%);
+    }
   }
-}
 
-.top-filter-pagination-link-active {
-  @include paginationButton();
-  border: solid 1px lighten($primaryColor, 20%);
-  color: darken($primaryColor, 20%);
-  background-color: lighten($primaryColor, 20%);
+  .pagination-link-active {
+    @include paginationButton();
+    border: solid 1px lighten($primaryColor, 20%);
+    color: darken($primaryColor, 20%);
+    background-color: lighten($primaryColor, 20%);
+  }
 }

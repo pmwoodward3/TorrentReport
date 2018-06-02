@@ -36,6 +36,10 @@
   .dl-footer {
     flex-direction: column-reverse !important;
   }
+  .dl-more,
+  .dl-options {
+    padding: 10px;
+  }
   .name-detail-spread {
     align-items: flex-start;
     flex-direction: column !important;

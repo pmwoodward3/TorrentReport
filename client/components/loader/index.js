@@ -12,7 +12,6 @@ const Loader = (props) => {
   if (!height) height = 110;
   if (!type) type = 'ball_triangle';
   fill = 'black';
-  // if (!fill) fill = '#949494';
   if (message === 'random') message = randomString();
   return (
     <div className="holder">

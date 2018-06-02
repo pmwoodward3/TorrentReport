@@ -18,5 +18,6 @@ export { default as NoMatch } from './noMatch/';
 export { default as ScrollToTop } from './ScrollToTop/';
 export { default as BasicToolTip } from './tooltip/basic';
 export { default as ActivateAccount } from './activateAccount';
+export { default as DeleteAccount } from './account/deleteAccount';
 export { default as ResetPassword } from './resetPassword';
 export { Login, Signup } from './auth-form/';

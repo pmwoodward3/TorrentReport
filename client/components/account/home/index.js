@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
@@ -10,6 +11,7 @@ export const AccountHome = (props) => {
   return (
     <div>
       <h3>Welcome, {email}</h3>
+      <Link to="/account/delete">Delete Your Account Here</Link>
     </div>
   );
 };

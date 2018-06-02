@@ -34,6 +34,23 @@ The application currently utilizes a RESTful api, but I am rewriting it using Gr
 1.  Copy the git repo.
 2.  Run `npm install` or `yarn`.
 3.  install PostgreSQL and Redis. Launch them both.
-4.  Fill in the enviroment variables `.env`.
+4.  Fill in the enviroment variables bellow and save it as `.env` in the root project directory:
+
+````
+REDIS_URL=
+DATABASE_URL=
+EMAIL_HOST=
+EMAIL_PASS=
+EMAIL_PORT=
+EMAIL_SEC=true
+EMAIL_USER=
+GOOGLE_CALLBACK=/auth/google/callback
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+NODE_ENV=development
+SESSION_SECRET=
+
+```.
 5.  The scrape service runs on a schedule. If you are just installing this project and want to have some data to play with run `npm run start-scrape` or `yarn start-scrape`.
 6.  Run `npm run start-dev` or `yarn start-dev`.
+````
