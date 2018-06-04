@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const moment = require('moment');
+const Sequelize = require('sequelize');
 const {
   TorrentSite,
   TorrentInfo,
@@ -8,7 +9,7 @@ const {
   TorrentCategory,
   TorrentGroup,
 } = require('../../db/models');
-const Sequelize = require('sequelize');
+const redis = require('../../redis');
 
 const { Op } = Sequelize;
 
@@ -35,33 +36,42 @@ router.get('/new/:days', (req, res, next) => {
   if (days > 31) res.sendStatus(403);
   const d = days * 24 * 60 * 60 * 1000;
   const filterTime = new Date() - d;
-  TorrentSnapshot.findAll({
-    where: {
-      createdAt: {
-        [Op.gte]: new Date(filterTime),
+
+  redis.get(`api/snapshots/new/${days}`, (error, result) => {
+    if (result) {
+      return res.send(JSON.parse(result));
+    }
+    return TorrentSnapshot.findAll({
+      where: {
+        createdAt: {
+          [Op.gte]: new Date(filterTime),
+        },
       },
-    },
-    include: [
-      {
-        model: TorrentInfo,
-        group: 'id',
-        include: [
-          { model: TorrentListing },
-          { as: 'Group', model: TorrentGroup, include: [{ model: TorrentSite }] },
-        ],
-      },
-    ],
-  })
-    .then((data) => {
-      const seenInfoIds = new Set();
-      return data.filter((snapshot) => {
-        if (seenInfoIds.has(snapshot.torrentInfoId)) return false;
-        seenInfoIds.add(snapshot.torrentInfoId);
-        return true;
-      });
+      include: [
+        {
+          model: TorrentInfo,
+          group: 'id',
+          include: [
+            { model: TorrentListing },
+            { as: 'Group', model: TorrentGroup, include: [{ model: TorrentSite }] },
+          ],
+        },
+      ],
     })
-    .then(data => res.json(data))
-    .catch(next);
+      .then((data) => {
+        const seenInfoIds = new Set();
+        return data.filter((snapshot) => {
+          if (seenInfoIds.has(snapshot.torrentInfoId)) return false;
+          seenInfoIds.add(snapshot.torrentInfoId);
+          return true;
+        });
+      })
+      .then((data) => {
+        redis.setex(`api/snapshots/new/${days}`, 43200, JSON.stringify(data));
+        return res.json(data);
+      })
+      .catch(next);
+  });
 });
 
 // new snapshots from specific site for past X days
@@ -106,34 +116,39 @@ router.get('/top/week/:order/:limit', (req, res, next) => {
   const now = new Date();
   const withinWeek = moment(now).subtract(1, 'week');
 
-  let both;
-  if (order === 'both') {
-    both = true;
-    order = 'seed';
-  }
-  const result = {
-    seed: [],
-    leech: [],
-  };
-
-  findWeeklyTopSnapshots(order, limit, withinWeek)
-    .then((data) => {
-      if (!both) return Promise.resolve(data);
-      result.seed = data;
-      return findWeeklyTopSnapshots('leech', limit, withinWeek);
-    })
-    .then((data) => {
-      if (!both) return Promise.resolve(data);
-      result.leech = data;
-      return Promise.resolve(result);
-    })
-    .catch((err) => {
-      console.log('err');
-      console.log(err);
-      return next();
-    })
-    .then(data => res.json(data));
-  // .catch(next);
+  redis.get(`api/snapshots/top/week/${order}/${limit}`, (error, result) => {
+    if (result) return res.json(JSON.parse(result));
+    let both;
+    if (order === 'both') {
+      both = true;
+      order = 'seed';
+    }
+    const bothResult = {
+      seed: [],
+      leech: [],
+    };
+    findWeeklyTopSnapshots(order, limit, withinWeek)
+      .then((data) => {
+        if (!both) {
+          // 12 hour cache
+          redis.setex(`api/snapshots/top/week/${order}/${limit}`, 43200, JSON.stringify(data));
+          res.json(data);
+        }
+        bothResult.seed = data;
+        return findWeeklyTopSnapshots('leech', limit, withinWeek);
+      })
+      .then((data) => {
+        bothResult.leech = data;
+        redis.setex(`api/snapshots/top/week/both/${limit}`, 43200, JSON.stringify(bothResult));
+        return res.json(bothResult);
+      })
+      .catch((err) => {
+        console.log('err');
+        console.log(err);
+        throw Error(err);
+        return next();
+      });
+  });
 });
 
 const findWeeklyTopSnapshots = (order, limit, withinWeek) =>

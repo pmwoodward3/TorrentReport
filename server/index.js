@@ -12,6 +12,7 @@ const passport = require('passport');
 const helmet = require('helmet');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const db = require('./db');
+const redisClient = require('./redis');
 const { logger } = require('./logging');
 
 const sessionStore = new SequelizeStore({
@@ -138,6 +139,15 @@ const startListening = () => {
   require('./socket')(io);
 };
 
+const redisFlush = () =>
+  redisClient.flushdb((err, succeeded) => {
+    if (succeeded) logger.info('## Redis Server ## + Flushed!');
+    else {
+      logger.error('## Redis Server ## - NOT FLUSHED');
+      logger.error(err);
+    }
+  });
+
 const syncDb = () => db.sync();
 
 // This evaluates as true when this file is run directly from the command line,
@@ -148,6 +158,7 @@ if (require.main === module) {
   sessionStore
     .sync()
     .then(syncDb)
+    .then(redisFlush)
     .then(createApp)
     .then(startListening);
 } else {
