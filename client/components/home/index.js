@@ -10,7 +10,7 @@ import './style.scss';
 /**
  * COMPONENT
  */
-export const Home = (props) => {
+const Home = (props) => {
   const { isLoggedIn } = props;
 
   return (

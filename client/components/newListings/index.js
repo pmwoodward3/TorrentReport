@@ -80,7 +80,10 @@ class NewListings extends Component {
   };
 
   render() {
-    if (!_.has(this.props.dailyListings, 'days1')) {
+    if (
+      !_.has(this.props.dailyListings, 'days1') ||
+      this.props.dailyListings.days1.status !== 'loaded'
+    ) {
       return (
         <div id="NL" className="new-listings">
           <Loader message="random" />
@@ -89,10 +92,7 @@ class NewListings extends Component {
     }
     const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
 
-    const arrToStartWith =
-      this.state.search && !this.state.searching
-        ? this.state.searchResults
-        : this.props.dailyListings.days1;
+    const arrToStartWith = this.props.dailyListings.days1.listings;
     const finalSize = _.orderBy(
       arrToStartWith,
       (obj) => {
@@ -116,15 +116,23 @@ class NewListings extends Component {
             />
           </div>
         </div>
-        {finalSize.length ? (
+        {this.props.dailyListings.days1.status === 'loaded' &&
+          finalSize.length === 0 && (
+            <div>
+              {!this.state.search ? (
+                <div>No new items</div>
+              ) : (
+                <div>No search results for: {this.state.search}.</div>
+              )}
+            </div>
+          )}
+        {finalSize.length > 0 && (
           <div className="dl-item-group">
             <ListHeaderItem order={this.state.order} active={this.state.filter} />
             {finalSize.map((item, index) => (
               <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
             ))}
           </div>
-        ) : (
-          <div>Nothing results for: {this.state.search}.</div>
         )}
       </div>
     );

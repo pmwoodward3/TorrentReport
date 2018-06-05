@@ -117,12 +117,8 @@ export const fetchDailyListings = days => dispatch =>
     .get(`/api/torrents/listings/new/${days}`)
     .then((res) => {
       const { data } = res;
-      if (!data.length && days < 10) {
-        dispatch(fetchDailyListings(days + 1));
-      } else {
-        dispatch(spreadListings(data));
-        dispatch(recieveDailyListings(data, days));
-      }
+      dispatch(spreadListings(data));
+      dispatch(recieveDailyListings(data, days));
     })
     .catch(err => console.log(err));
 
@@ -156,8 +152,10 @@ export default (state = defaultData, action) => {
       return { ...state, state: 'loaded', siteStats: action.siteStats };
     case RECEIVE_DAILY_LISTINGS: {
       const newDailyListings = { ...state.dailyListings };
-      newDailyListings[`days${action.days}`] = action.dailyListings.map(listing => listing);
-      // newDailyListings[`days${action.days}`] = action.dailyListings.map(listing => listing.id);
+      newDailyListings[`days${action.days}`] = {
+        status: 'loaded',
+        listings: action.dailyListings.map(listing => listing),
+      };
       return { ...state, dailyListings: newDailyListings };
     }
     default:

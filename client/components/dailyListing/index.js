@@ -50,7 +50,10 @@ class DailyListing extends Component {
   }
 
   render() {
-    if (!_.has(this.props.dailyListings, 'days1')) {
+    if (
+      !_.has(this.props.dailyListings, 'days1') ||
+      this.props.dailyListings.days1.status !== 'loaded'
+    ) {
       return (
         <div id="DL" className="daily-listings">
           <Loader message="downloading data" />
@@ -58,7 +61,7 @@ class DailyListing extends Component {
       );
     }
     const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
-    const listings = this.props.dailyListings.days1;
+    const { listings } = this.props.dailyListings.days1;
     const orderedFiltered = _.orderBy(
       listings,
       (obj) => {
@@ -77,31 +80,43 @@ class DailyListing extends Component {
           </div>
           <div className="dl-detail" />
         </div>
-        <div className="dl-item-group">
-          {finalSize.map((item, index) => (
-            <MiniListItem key={item.id} active={this.state.filter} index={index} item={item} />
-          ))}
-        </div>
-        <div className="dl-footer">
-          <div className="dl-more">
-            <Link to="/new/listings">View {hiddenResults} more results</Link>
-          </div>
-          <div className="dl-options">
-            <div className="current">
-              sorted by {this.state.order} {this.state.filter}ers
+        {this.props.dailyListings.days1.status === 'loaded' &&
+          !listings.length && (
+            <div>
+              <i>no new items</i>
             </div>
-            <div className="try">
-              switch to{' '}
-              <a href="#DL" onClick={this.toggleFilter}>
-                {this.oppositeFilter()}ers
-              </a>{' '}
-              or{' '}
-              <a href="#DL" onClick={this.toggleOrder}>
-                {this.oppositeOrder()}
-              </a>
+          )}
+        {this.props.dailyListings.days1.status === 'loaded' &&
+          listings.length && (
+            <div className="dl-item-group">
+              {finalSize.map((item, index) => (
+                <MiniListItem key={item.id} active={this.state.filter} index={index} item={item} />
+              ))}
             </div>
-          </div>
-        </div>
+          )}
+        {this.props.dailyListings.days1.status === 'loaded' &&
+          listings.length && (
+            <div className="dl-footer">
+              <div className="dl-more">
+                <Link to="/new/listings">View {hiddenResults} more results</Link>
+              </div>
+              <div className="dl-options">
+                <div className="current">
+                  sorted by {this.state.order} {this.state.filter}ers
+                </div>
+                <div className="try">
+                  switch to{' '}
+                  <a href="#DL" onClick={this.toggleFilter}>
+                    {this.oppositeFilter()}ers
+                  </a>{' '}
+                  or{' '}
+                  <a href="#DL" onClick={this.toggleOrder}>
+                    {this.oppositeOrder()}
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
       </div>
     );
   }

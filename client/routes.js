@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Router } from 'react-router-dom';
+import withTracker from './withTracker';
 import history from './history';
 import Template from './template';
 import {
@@ -41,30 +42,30 @@ class Routes extends Component {
         <ScrollToTop>
           <Template>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/faq" component={Faq} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/listing/:id" component={Listing} />
-              <Route exact path="/info/:id" component={Info} />
-              <Route exact path="/group/:id" component={Group} />
-              <Route exact path="/site/:id" component={Site} />
-              <Route exact path="/new/listings" component={NewListings} />
-              <Route exact path="/test" component={Test} />
-              <Route exact path="/top" component={Top} />
+              <Route exact path="/" component={withTracker(Home)} />
+              <Route exact path="/faq" component={withTracker(Faq)} />
+              <Route exact path="/about" component={withTracker(About)} />
+              <Route exact path="/listing/:id" component={withTracker(Listing)} />
+              <Route exact path="/info/:id" component={withTracker(Info)} />
+              <Route exact path="/group/:id" component={withTracker(Group)} />
+              <Route exact path="/site/:id" component={withTracker(Site)} />
+              <Route exact path="/new/listings" component={withTracker(NewListings)} />
+              <Route exact path="/test" component={withTracker(Test)} />
+              <Route exact path="/top" component={withTracker(Top)} />
               {isLoggedIn && (
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route exact path="/account" component={AccountHome} />
-                  <Route exact path="/account/delete" component={DeleteAccount} />
+                  <Route exact path="/account" component={withTracker(AccountHome)} />
+                  <Route exact path="/account/delete" component={withTracker(DeleteAccount)} />
                 </Switch>
               )}
               {/* Routes placed here are available to all visitors */}
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={Signup} />
-              <Route path="/activate/:token" component={ActivateAccount} />
-              <Route path="/resetpassword/:token" component={ResetPassword} />
+              <Route path="/login" component={withTracker(Login)} />
+              <Route path="/signup" component={withTracker(Signup)} />
+              <Route path="/activate/:token" component={withTracker(ActivateAccount)} />
+              <Route path="/resetpassword/:token" component={withTracker(ResetPassword)} />
               {/* Displays noMatch component as a fallback */}
-              <Route path="*" component={NoMatch} status={404} />
+              <Route path="*" component={withTracker(NoMatch)} status={404} />
             </Switch>
           </Template>
         </ScrollToTop>
