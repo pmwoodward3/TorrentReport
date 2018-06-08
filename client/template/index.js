@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { faSignInAlt, faSignOutAlt, faUserPlus } from '@fortawesome/fontawesome-free-solid';
 import { withRouter, Link, NavLink } from 'react-router-dom';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import CookiesUse from '../components/cookiesUse';
 import siteConfig from '../config';
 import { logout } from '../store';
-import BuiltBy from './BuiltBy';
+import Footer from './footer';
 import './template.scss';
 import './nav.scss';
 import './mobile.scss';
@@ -29,7 +30,8 @@ class Template extends Component {
     } = this.props;
 
     return (
-      <div>
+      <div id="main-content">
+        <CookiesUse />
         <nav role="navigation" id="nav">
           <input
             checked={this.state.menuShow}
@@ -140,18 +142,7 @@ class Template extends Component {
         </nav>
 
         <div className="content">{children}</div>
-        <div className="footer">
-          <div className="footerHolder">
-            <div className="growBox">
-              <BuiltBy />
-            </div>
-            <div className="growBox">{`${userCount} users online`}</div>
-            <div className="growBox">
-              <Link to="/faq">F.A.Q</Link>
-              <Link to="/about">About</Link>
-            </div>
-          </div>
-        </div>
+        <Footer />
       </div>
     );
   }
@@ -173,4 +164,7 @@ const mapDispatch = dispatch => ({
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Template));
+export default withRouter(connect(
+  mapState,
+  mapDispatch,
+)(Template));

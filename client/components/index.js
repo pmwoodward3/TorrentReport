@@ -20,4 +20,8 @@ export { default as BasicToolTip } from './tooltip/basic';
 export { default as ActivateAccount } from './activateAccount';
 export { default as DeleteAccount } from './account/deleteAccount';
 export { default as ResetPassword } from './resetPassword';
+export { default as Privacy } from './policy/privacy';
+export { default as Cookies } from './policy/cookies';
+export { default as Terms } from './policy/terms';
+
 export { Login, Signup } from './auth-form/';

@@ -3,10 +3,8 @@
 
 .home-notification {
   @include boxRadiusNoShadow();
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-
-  width: 100%;
   background-color: lighten($secondaryColor, 30%);
   padding: 2em;
 }

@@ -5,11 +5,13 @@ GoogleAnalytics.initialize('UA-54538481-3');
 
 const withTracker = (WrappedComponent, options = {}) => {
   const trackPage = (page) => {
-    GoogleAnalytics.set({
-      page,
-      ...options,
-    });
-    GoogleAnalytics.pageview(page);
+    if (PRODUCTION) {
+      GoogleAnalytics.set({
+        page,
+        ...options,
+      });
+      GoogleAnalytics.pageview(page);
+    }
   };
 
   class HOC extends Component {

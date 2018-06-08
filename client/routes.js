@@ -23,6 +23,9 @@ import {
   ResetPassword,
   ScrollToTop,
   DeleteAccount,
+  Privacy,
+  Cookies,
+  Terms,
 } from './components/';
 import { me } from './store';
 
@@ -62,6 +65,9 @@ class Routes extends Component {
               {/* Routes placed here are available to all visitors */}
               <Route path="/login" component={withTracker(Login)} />
               <Route path="/signup" component={withTracker(Signup)} />
+              <Route path="/policy/privacy" component={withTracker(Privacy)} />
+              <Route path="/policy/cookies" component={withTracker(Cookies)} />
+              <Route path="/policy/terms-of-service" component={withTracker(Terms)} />
               <Route path="/activate/:token" component={withTracker(ActivateAccount)} />
               <Route path="/resetpassword/:token" component={withTracker(ResetPassword)} />
               {/* Displays noMatch component as a fallback */}
@@ -92,4 +98,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(Routes);
+export default connect(
+  mapState,
+  mapDispatch,
+)(Routes);

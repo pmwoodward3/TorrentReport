@@ -4,6 +4,7 @@ import { faHandPeace, faIdBadge } from '@fortawesome/fontawesome-free-solid';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { auth, clearError, clearSuccess } from '../../store';
 import { enableSubmit } from './utils';
+import AcceptTerms from './acceptTerms';
 
 import './style.scss';
 
@@ -92,6 +93,8 @@ class AuthForm extends Component {
               />
             )}
 
+            {!hideForms && name === 'signup' && <AcceptTerms />}
+
             {!hideForms && (
               <button
                 disable={isReady ? 'false' : 'true'}
@@ -152,5 +155,11 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export const Login = connect(mapLogin, mapDispatch)(AuthForm);
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
+export const Login = connect(
+  mapLogin,
+  mapDispatch,
+)(AuthForm);
+export const Signup = connect(
+  mapSignup,
+  mapDispatch,
+)(AuthForm);

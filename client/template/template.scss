@@ -1,9 +1,5 @@
 @import '_variables';
 
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -13,11 +9,9 @@ body {
 }
 
 #app,
-#app > div {
+#app > #main-content {
   flex-flow: column;
   display: flex;
-  /* flex-grow: 1; */
-  height: 100%;
 }
 
 p {
@@ -60,8 +54,8 @@ p {
   justify-content: space-between;
 }
 
-.footer a:link,
-.footer a:visited {
+.footerHolder a:link,
+.footerHolder a:visited {
   color: $footer_link_color;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.9em;
@@ -70,13 +64,13 @@ p {
   text-decoration: none;
 }
 
-.footer a:hover,
-.footer a:active {
+.footerHolder a:hover,
+.footerHolder a:active {
   text-decoration: underline;
 }
 
-.footer .growBox {
-  min-height: $footer_height_min;
+.footerHolder .growBox {
+  // min-height: $footer_height_min;
   flex-grow: 1;
   padding: 1.5em;
   display: flex;

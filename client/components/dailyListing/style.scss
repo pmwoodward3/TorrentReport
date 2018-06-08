@@ -47,19 +47,18 @@
       .number {
         opacity: 0.4;
         background-color: darken($primaryColor, 30%);
-        padding: 10px;
         color: white;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 25px;
-        height: 25px;
-        flex-basis: 25px;
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
         font-size: 12px;
         border-radius: 50%;
         border-radius: 50%;
         margin-right: 10px;
-        font-size: 1em;
+        font-size: 15px;
         font-family: monospace;
         flex-grow: 0;
       }

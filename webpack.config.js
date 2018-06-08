@@ -4,7 +4,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
-const pluginsArr = [new ExtractTextPlugin('public/style.css', { allChunks: true })];
+const pluginsArr = [
+  new ExtractTextPlugin('public/style.css', { allChunks: true }),
+  new webpack.DefinePlugin({
+    PRODUCTION: JSON.stringify(isProd),
+    BUILD_DATE: JSON.stringify(new Date()),
+  }),
+];
 
 if (isDev) {
   pluginsArr.push(new LiveReloadPlugin({ appendScriptTag: true }));
