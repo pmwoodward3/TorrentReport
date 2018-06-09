@@ -10,8 +10,9 @@ body {
 
 #app,
 #app > #main-content {
-  flex-flow: column;
   display: flex;
+  flex-flow: column;
+  flex-grow: 1;
   min-height: 100%;
 }
 
