@@ -76,7 +76,7 @@ class DailyListing extends Component {
       <div id="DL" className="daily-listings">
         <div className="dl-top">
           <div className="dl-header">
-            <Link to="/new/listings">TOP NEWLY LISTED TORRENTS</Link>
+            <Link to="/new/listings">TODAYS NEWLY DISCOVERED TORRENTS</Link>
           </div>
           <div className="dl-detail" />
         </div>
@@ -132,4 +132,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(DailyListing);
+export default connect(
+  mapState,
+  mapDispatch,
+)(DailyListing);

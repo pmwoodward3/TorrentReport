@@ -36,7 +36,7 @@
   flex-grow: 1;
   .item {
     min-width: 200px;
-    border-radius: 5px;
+    // border-radius: 5px;
     flex-grow: 1;
     padding: 0.5em;
     margin: 0.5em;
@@ -125,14 +125,16 @@
     &:hover {
       background-color: lighten($secondaryColor, 30%);
     }
-    width: 100%;
-    border-radius: 5px;
+    // border-radius: 5px;
     padding: 1em;
     margin: 0em 0em 0.5em 0em;
     .header {
       display: inline-flex;
       width: 100%;
       flex-direction: row;
+      @media (max-width: $flex_nav_breakpoint) {
+        flex-direction: column;
+      }
       justify-content: space-between;
       align-items: flex-start;
       font-size: 1.2em;
@@ -149,6 +151,9 @@
         align-items: flex-end;
         justify-content: flex-start;
         text-align: right;
+        @media (max-width: $flex_nav_breakpoint) {
+          align-items: flex-start;
+        }
       }
       .value {
         font-family: $header_font_family;
@@ -184,7 +189,7 @@
         flex-wrap: wrap;
         width: 100%;
         // align-content: space-between;
-        justify-content: space-between;
+        // justify-content: space-between;
         .info-group {
           margin-top: 1em;
           display: flex;

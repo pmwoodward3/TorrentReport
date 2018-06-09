@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const PrivacyPolicy = () => (
   <div>
-    <h1>Privacy Policy for Torrent Report</h1>
+    <h1>Privacy Policy</h1>
 
     <p>
       At Torrent Report, accessible from https://www.torrent.report, one of our main priorities is

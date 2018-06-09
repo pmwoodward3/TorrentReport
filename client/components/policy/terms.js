@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Terms = () => (
   <div>
-    <h2>
-      <strong>Terms and Conditions</strong>
-    </h2>
+    <h1>Terms and Conditions</h1>
 
     <p>Welcome to Torrent Report!</p>
 

@@ -80,7 +80,7 @@
   flex-grow: 1;
   .item {
     min-width: 200px;
-    border-radius: 5px;
+    // border-radius: 5px;
     flex-grow: 1;
     padding: 0.5em;
     margin: 0.5em;
@@ -158,13 +158,13 @@
   .chart {
     display: flex;
     flex-grow: 4;
-    flex-basis: 370px;
-    min-width: 370px;
+    flex-basis: 300px;
+    min-width: 300px;
     padding: 0.5em;
   }
   .list {
     background-color: $stats_background_color;
-    border-radius: 10px;
+    // border-radius: 10px;
     flex-basis: 300px;
     flex-grow: 1;
     padding: 0.5em;
@@ -222,7 +222,7 @@
     font-size: 1.2em;
     display: flex;
     flex-direction: column;
-    border-radius: 5px;
+    // border-radius: 5px;
     background-color: $stats_background_color;
     padding: 1em;
     justify-content: space-between;

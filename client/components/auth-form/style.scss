@@ -81,7 +81,6 @@ form div {
 .success {
   background-color: $success_message_background_color;
   padding: 2em;
-  border-radius: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
   color: $success_message_text_color;
   font-weight: bold;
@@ -94,7 +93,6 @@ form div {
 .error {
   background-color: $error_message_background_color;
   padding: 2em;
-  border-radius: 0.5em;
   font-family: Arial, Helvetica, sans-serif;
   color: $error_message_text_color;
   font-weight: bold;

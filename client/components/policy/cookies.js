@@ -2,7 +2,7 @@ import React from 'react';
 
 const CookiePolicy = () => (
   <div>
-    <h1>Cookie Policy for Torrent Report</h1>
+    <h1>Cookie Policy</h1>
 
     <p>This is the Cookie Policy for Torrent Report, accessible from https://www.torrent.report</p>
 

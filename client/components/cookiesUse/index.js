@@ -39,7 +39,6 @@ const Info = styled.div`
 
 const StyledLink = styled(Link)`
   color: ${props => darken(0.4, props.theme.colors.senary)};
-  padding: 0 5px 0 0px;
   display: inline-flex;
   &:visited {
     color: ${props => darken(0.4, props.theme.colors.senary)};
@@ -81,6 +80,11 @@ class CookiesUse extends React.Component {
       shouldHide,
     };
   }
+  componentDidMount = () => {
+    setTimeout(() => {
+      this.setState({ shouldHide: true });
+    }, 40000);
+  };
   hideAndAccept = () => {
     const { cookies } = this.props;
     cookies.set('USE_OF_COOKIES_ACCEPTED', true, { path: '/', expires: new Date(2038, 0, 1) });

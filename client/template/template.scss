@@ -12,6 +12,7 @@ body {
 #app > #main-content {
   flex-flow: column;
   display: flex;
+  min-height: 100%;
 }
 
 p {
@@ -70,7 +71,7 @@ p {
 }
 
 .footerHolder .growBox {
-  // min-height: $footer_height_min;
+  min-height: 6em;
   flex-grow: 1;
   padding: 1.5em;
   display: flex;
@@ -115,7 +116,6 @@ p {
 }
 
 .content {
-  flex-basis: 100%;
   padding: 2em;
   flex-grow: 1;
 }

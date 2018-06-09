@@ -38,14 +38,14 @@ export const me = () => dispatch =>
 export const auth = (email, password, method) => (dispatch) => {
   const r = new RegExp(/^[a-z0-9](.?[a-z0-9_-]){0,}@[a-z0-9-]+.([a-z]{1,6}.)?[a-z]{2,6}$/g);
   if (!r.exec(email)) {
-    return dispatch(setError('your email does not look valid'));
+    return dispatch(setError('The email you provided email does not look valid.'));
   }
   if (!method) return dispatch(setError('need a method'));
   if (!email || email.length <= 8) {
-    return dispatch(setError('email needs to be atleast 8 charecters long.'));
+    return dispatch(setError('The email address needs to be atleast 8 charecters long.'));
   }
   if (!password || password.length <= 2) {
-    return dispatch(setError('password needs to be longer.'));
+    return dispatch(setError('Provided password needs to be longer.'));
   }
   axios
     .post(`/auth/${method}`, { email, password })

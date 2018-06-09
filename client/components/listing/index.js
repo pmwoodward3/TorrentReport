@@ -114,14 +114,18 @@ const Listing = (props) => {
               <div className="details">
                 <div className="info">
                   <div className="info-group">
-                    <div className="info-item">
-                      <div className="label">listed as</div>
-                      <div className="value">{info.category}</div>
-                    </div>
-                    <div className="info-item">
-                      <div className="label">torrent size</div>
-                      <div className="value">{info.size}</div>
-                    </div>
+                    {info.category && (
+                      <div className="info-item">
+                        <div className="label">listed as</div>
+                        <div className="value">{info.category}</div>
+                      </div>
+                    )}
+                    {info.size && (
+                      <div className="info-item">
+                        <div className="label">torrent size</div>
+                        <div className="value">{info.size}</div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="info-group">
@@ -129,14 +133,19 @@ const Listing = (props) => {
                       <div className="label">ratio</div>
                       <div className="value">{info.ratio}</div>
                     </div>
-                    <div className="info-item">
-                      <div className="label">max ratio</div>
-                      <div className="value">{info.maxLeech}</div>
-                    </div>
-                    <div className="info-item">
-                      <div className="label">min ratio</div>
-                      <div className="value">{info.minLeech}</div>
-                    </div>
+                    {info.ratio !== info.maxRatio &&
+                      info.maxRatio !== info.minRatio && (
+                        <div>
+                          <div className="info-item">
+                            <div className="label">max ratio</div>
+                            <div className="value">{info.maxRatio}</div>
+                          </div>
+                          <div className="info-item">
+                            <div className="label">min ratio</div>
+                            <div className="value">{info.minRatio}</div>
+                          </div>
+                        </div>
+                      )}
                   </div>
 
                   <div className="info-group">
@@ -144,14 +153,19 @@ const Listing = (props) => {
                       <div className="label">seeders</div>
                       <div className="value">{info.seed}</div>
                     </div>
-                    <div className="info-item">
-                      <div className="label">max seeders</div>
-                      <div className="value">{info.maxSeed}</div>
-                    </div>
-                    <div className="info-item">
-                      <div className="label">min seeders</div>
-                      <div className="value">{info.minSeed}</div>
-                    </div>
+                    {info.seed !== info.maxSeed &&
+                      info.maxSeed !== info.minSeed && (
+                        <div>
+                          <div className="info-item">
+                            <div className="label">max seeders</div>
+                            <div className="value">{info.maxSeed}</div>
+                          </div>
+                          <div className="info-item">
+                            <div className="label">min seeders</div>
+                            <div className="value">{info.minSeed}</div>
+                          </div>
+                        </div>
+                      )}
                   </div>
 
                   <div className="info-group">
@@ -159,14 +173,19 @@ const Listing = (props) => {
                       <div className="label">leechers</div>
                       <div className="value">{info.leech}</div>
                     </div>
-                    <div className="info-item">
-                      <div className="label">max leechers</div>
-                      <div className="value">{info.maxLeech}</div>
-                    </div>
-                    <div className="info-item">
-                      <div className="label">min leechers</div>
-                      <div className="value">{info.minLeech}</div>
-                    </div>
+                    {info.leech !== info.maxLeech &&
+                      info.maxLeech !== info.minLeech && (
+                        <div>
+                          <div className="info-item">
+                            <div className="label">max leechers</div>
+                            <div className="value">{info.maxLeech}</div>
+                          </div>
+                          <div className="info-item">
+                            <div className="label">min leechers</div>
+                            <div className="value">{info.minLeech}</div>
+                          </div>
+                        </div>
+                      )}
                   </div>
                 </div>
                 {aggregateSnapshotCount.length > 1 ? (
@@ -203,4 +222,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(Listing);
+export default connect(
+  mapState,
+  mapDispatch,
+)(Listing);
