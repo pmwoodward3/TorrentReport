@@ -9,7 +9,7 @@ const pageButtonMaker = ({
         className={x === currentPage ? 'pagination-link-active' : 'pagination-link'}
         key={`pagination${x}`}
         onClick={() => {
-          funcToCall();
+          if (typeof funcToCall === 'function') funcToCall();
           return changePageFunc(x);
         }}
       >

@@ -7,7 +7,7 @@ import Loader from '../loader';
 import './style.scss';
 
 import InfoListItem from './infoListItem';
-import PageButtonMaker from '../pagination/pageButtons';
+import PageButtonMaker from '../pagination/pageButtonMaker';
 
 const scrollToTop = () => {
   window.scroll(0, 0);
@@ -117,4 +117,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(TopNewSnapshots);
+export default connect(
+  mapState,
+  mapDispatch,
+)(TopNewSnapshots);
