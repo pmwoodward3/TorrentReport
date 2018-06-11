@@ -29,7 +29,6 @@ class Filter extends React.Component {
   /* eslint-enable */
 
   render() {
-    console.log('filter props', this.props);
     return (
       <div className="top-filter-list">
         <div className="top-filter-site-static">
@@ -39,7 +38,8 @@ class Filter extends React.Component {
             }}
             className="toggle-top-filter-site"
           >
-                <FontAwesomeIcon icon={faFilter} /> {!this.props.topFilter.visibility ? 'Show Filter' : 'Hide Filter'}
+            <FontAwesomeIcon icon={faFilter} />{' '}
+            {!this.props.topFilter.visibility ? 'Show Filter' : 'Hide Filter'}
           </div>
           {this.props.topFilter.dirty && (
             <div
@@ -212,7 +212,7 @@ class Filter extends React.Component {
                 </div>
               </div>
             </div>
-            {/*<hr className="top-filter-list-hr" />*/}
+            {/* <hr className="top-filter-list-hr" /> */}
           </div>
         )}
       </div>
@@ -255,4 +255,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(Filter);
+export default connect(
+  mapState,
+  mapDispatch,
+)(Filter);

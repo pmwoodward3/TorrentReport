@@ -2,13 +2,105 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
+import styled, { withTheme } from 'styled-components';
+import { lighten, darken } from 'polished';
+
 import Loader from '../loader';
-
-import './style.scss';
-
 import { fetchDailyListings } from '../../store';
-
 import MiniListItem from './miniListItem';
+
+/**
+ * STYLEs
+ */
+const DailyListingComponent = styled.div`
+  background-color: ${props => lighten(0.35, props.theme.colors.primary)};
+  min-width: 200px;
+  min-height: 450px;
+  margin: 1em;
+  flex-grow: 1;
+  display: inline-flex;
+  flex-direction: column;
+  padding: 10px;
+`;
+const TopBar = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  padding: 0 0 10px 0;
+`;
+const Header = styled(Link)`
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-weight: 800;
+  font-family: ${props => props.theme.fonts.header};
+  font-size: 1.4em;
+  color: ${props => darken(0.3, props.theme.colors.primary)};
+  text-decoration: none;
+  &:visited {
+    color: ${props => darken(0.3, props.theme.colors.primary)};
+  }
+`;
+const ItemsContainer = styled.div`
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  flex-grow: 1;
+`;
+const Footer = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 0.7em;
+  padding: 10px 0 0 0;
+  color: ${props => darken(0.2, props.theme.colors.primary)};
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+const MoreLink = styled(Link)`
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  color: ${props => darken(0.15, props.theme.colors.primary)};
+  font-weight: lighter;
+  font-size: 1.5em;
+  text-decoration: none;
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    margin: 20px 0 0 0;
+  }
+`;
+const Options = styled.div`
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 210px;
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    justify-content: center;
+  }
+`;
+const Current = styled.div`
+  display: block;
+  font-style: italic;
+  color: ${props => darken(0.12, props.theme.colors.primary)};
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    text-align: center;
+  }
+`;
+const Try = styled.div`
+  display: block;
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    text-align: center;
+  }
+`;
+const TryLink = styled.div`
+  cursor: pointer;
+  display: inline;
+  color: ${props => darken(0.3, props.theme.colors.primary)};
+  text-decoration: underline;
+`;
 
 /**
  * COMPONENT
@@ -19,7 +111,7 @@ class DailyListing extends Component {
     this.state = {
       filter: 'seed',
       order: 'top',
-      max: 10,
+      max: 11,
     };
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleOrder = this.toggleOrder.bind(this);
@@ -44,8 +136,8 @@ class DailyListing extends Component {
     this.setState({ filter: this.oppositeFilter(this.state.filter) });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
-    // eslint-disable-line class-methods-use-this
     return _.has(nextProps.dailyListings, 'days1');
   }
 
@@ -55,9 +147,9 @@ class DailyListing extends Component {
       this.props.dailyListings.days1.status !== 'loaded'
     ) {
       return (
-        <div id="DL" className="daily-listings">
+        <DailyListingComponent>
           <Loader message="downloading data" />
-        </div>
+        </DailyListingComponent>
       );
     }
     const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
@@ -73,13 +165,10 @@ class DailyListing extends Component {
     const finalSize = orderedFiltered.slice(0, this.state.max);
     const hiddenResults = orderedFiltered.length - this.state.max;
     return (
-      <div id="DL" className="daily-listings">
-        <div className="dl-top">
-          <div className="dl-header">
-            <Link to="/new/listings">TODAYS NEWLY DISCOVERED TORRENTS</Link>
-          </div>
-          <div className="dl-detail" />
-        </div>
+      <DailyListingComponent>
+        <TopBar>
+          <Header to="/new/listings">TODAYS NEWLY DISCOVERED TORRENTS</Header>
+        </TopBar>
         {this.props.dailyListings.days1.status === 'loaded' &&
           !listings.length && (
             <div>
@@ -88,36 +177,29 @@ class DailyListing extends Component {
           )}
         {this.props.dailyListings.days1.status === 'loaded' &&
           listings.length && (
-            <div className="dl-item-group">
+            <ItemsContainer>
               {finalSize.map((item, index) => (
                 <MiniListItem key={item.id} active={this.state.filter} index={index} item={item} />
               ))}
-            </div>
+            </ItemsContainer>
           )}
         {this.props.dailyListings.days1.status === 'loaded' &&
           listings.length && (
-            <div className="dl-footer">
-              <div className="dl-more">
-                <Link to="/new/listings">View {hiddenResults} more results</Link>
-              </div>
-              <div className="dl-options">
-                <div className="current">
+            <Footer>
+              <MoreLink to="/new/listings">View {hiddenResults} more results</MoreLink>
+              <Options>
+                <Current>
                   sorted by {this.state.order} {this.state.filter}ers
-                </div>
-                <div className="try">
+                </Current>
+                <Try>
                   switch to{' '}
-                  <a href="#DL" onClick={this.toggleFilter}>
-                    {this.oppositeFilter()}ers
-                  </a>{' '}
-                  or{' '}
-                  <a href="#DL" onClick={this.toggleOrder}>
-                    {this.oppositeOrder()}
-                  </a>
-                </div>
-              </div>
-            </div>
+                  <TryLink onClick={this.toggleFilter}>{this.oppositeFilter()}ers</TryLink> or{' '}
+                  <TryLink onClick={this.toggleOrder}>{this.oppositeOrder()}</TryLink>
+                </Try>
+              </Options>
+            </Footer>
           )}
-      </div>
+      </DailyListingComponent>
     );
   }
 }
@@ -132,7 +214,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(
+export default withTheme(connect(
   mapState,
   mapDispatch,
-)(DailyListing);
+)(DailyListing));

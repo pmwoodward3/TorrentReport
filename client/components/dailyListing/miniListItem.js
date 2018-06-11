@@ -3,13 +3,106 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/fontawesome-free-solid';
+import styled, { withTheme } from 'styled-components';
+import { lighten, darken } from 'polished';
 
-const shorten = originalName =>
-  (originalName.length > 44 ? `${originalName.slice(0, 44)}...` : originalName);
+/**
+ * STYLES
+ */
+
+const Item = styled(Link)`
+  display: inline-flex;
+  border-bottom: 1px solid ${props => lighten(0.2, props.theme.colors.primary)};
+  align-items: center;
+  padding: 1px 0px 1px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9em;
+  margin: 0;
+  flex-basis: auto;
+  flex-grow: 1;
+  word-break: break-all;
+  word-wrap: break-word;
+  text-decoration: none;
+  color: ${props => darken(0.4, props.theme.colors.primary)};
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+    color: ${props => darken(0.4, props.theme.colors.primary)};
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    padding: 10px 0px 10px 0px;
+  }
+`;
+
+const FlexSwitch = styled.div`
+  display: inline-flex;
+  flex-grow: 1;
+  flex-direction: row;
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    flex-direction: column;
+  }
+`;
+
+const Number = styled.div`
+  opacity: 0.4;
+  background-color: ${props => darken(0.3, props.theme.colors.primary)};
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 26px;
+  flex-basis: 26px;
+  border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 10px;
+  font-size: 15px;
+  font-family: monospace;
+  flex-shrink: 0;
+  flex-grow: 0;
+`;
+const Name = styled.div`
+  display: inline-flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  word-break: break-word;
+`;
+const Info = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    justify-content: flex-start;
+  }
+  align-items: center;
+  flex-wrap: no-wrap;
+  font-weight: bolder;
+  flex-basis: auto;
+`;
+const SLData = styled.div`
+  min-width: 4em;
+  display: inline;
+  color: ${props => (props.type === 'seed' ? '#008000' : '#ff0000')};
+  opacity: ${props => (props.active ? 1 : 0.25)};
+`;
+const UploadDate = styled.div`
+  width: 8.1em;
+  color: black;
+  opacity: 0.3;
+  font-style: italic;
+  font-weight: lighter;
+`;
 
 /**
  * COMPONENT
  */
+
+const shorten = originalName =>
+  (originalName.length > 44 ? `${originalName.slice(0, 44)}...` : originalName);
+
 const MiniListItem = (props) => {
   const { name, id, Infos } = props.item;
   const { active } = props;
@@ -30,26 +123,22 @@ const MiniListItem = (props) => {
   }
 
   return (
-    <div className="dl-item">
-      <div className="number">
-        <div>{props.index + 1}</div>
-      </div>
-      <Link alt={name} to={`/listing/${id}`}>
-        <div className="filler">{shorten(name)}</div>
-        <div className="group">
-          <div className="sub">
-            <div className={seedClass}>
-              <FontAwesomeIcon icon={faCaretUp} /> {seed}
-            </div>
-            <div className={leechClass}>
-              <FontAwesomeIcon icon={faCaretDown} /> {leech}
-            </div>
-          </div>
-          <div className="uploadedDate">{`${moment(earliestUpload).fromNow()} `}</div>
-        </div>
-      </Link>
-    </div>
+    <Item alt={name} to={`/listing/${id}`}>
+      <Number>{props.index + 1}</Number>
+      <FlexSwitch>
+        <Name>{name}</Name>
+        <Info>
+          <SLData type="seed" active={active === 'seed'}>
+            <FontAwesomeIcon icon={faCaretUp} /> {seed}
+          </SLData>
+          <SLData type="leech" active={active === 'leech'}>
+            <FontAwesomeIcon icon={faCaretDown} /> {leech}
+          </SLData>
+          <UploadDate>{`${moment(earliestUpload).fromNow()} `}</UploadDate>
+        </Info>
+      </FlexSwitch>
+    </Item>
   );
 };
 
-export default MiniListItem;
+export default withTheme(MiniListItem);

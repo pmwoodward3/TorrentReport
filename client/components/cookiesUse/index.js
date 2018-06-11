@@ -12,7 +12,7 @@ const CookieMessage = styled.div`
   background-color: ${props => lighten(0.2, props.theme.colors.senary)};
   padding: 20px;
   margin: 0px;
-  @media (max-width: 700px) {
+  @media (max-width: ${props => props.theme.mobile.width}) {
     flex-direction: column;
   }
 `;
@@ -49,6 +49,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,7 +61,7 @@ const Button = styled.button`
   font-weight: bold;
   padding: 12px;
   margin 20px;
-  @media (max-width: 700px) {
+  @media (max-width: ${props => props.theme.mobile.width}) {
     margin 20px 0 0 0;
   }
   flex-shrink: 0;
@@ -80,18 +81,12 @@ class CookiesUse extends React.Component {
       shouldHide,
     };
   }
-  componentDidMount = () => {
-    setTimeout(() => {
-      this.setState({ shouldHide: true });
-    }, 40000);
-  };
   hideAndAccept = () => {
     const { cookies } = this.props;
     cookies.set('USE_OF_COOKIES_ACCEPTED', true, { path: '/', expires: new Date(2038, 0, 1) });
     this.setState({ shouldHide: true });
   };
   render() {
-    console.log('cookies use props', this.props);
     if (!this.state.shouldHide) {
       return (
         <CookieMessage>

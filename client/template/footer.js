@@ -28,7 +28,7 @@ const PolicyHolder = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
-  @media (max-width: 700px) {
+  @media (max-width: ${props => props.theme.mobile.width}) {
     flex-direction: column;
   }
 `;
@@ -39,7 +39,7 @@ const Build = styled.div`
   align-items: center;
   color: lightgrey;
   padding: 20px;
-  @media (max-width: 700px) {
+  @media (max-width: ${props => props.theme.mobile.width}) {
     text-align: center;
   }
 `;

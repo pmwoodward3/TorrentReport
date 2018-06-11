@@ -22,28 +22,6 @@
       flex-direction: column !important;
     }
   }
-  .dl-item {
-    a {
-      flex-direction: column;
-    }
-    .group {
-      justify-content: flex-start !important;
-      .sub {
-        padding: 0px;
-      }
-    }
-  }
-  .dl-footer {
-    flex-direction: column-reverse !important;
-  }
-  .dl-more,
-  .dl-options {
-    padding: 10px;
-  }
-  .name-detail-spread {
-    align-items: flex-start;
-    flex-direction: column !important;
-  }
 }
 
 @media screen and (max-width: 767px) {

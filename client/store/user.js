@@ -51,8 +51,6 @@ export const auth = (email, password, method) => (dispatch) => {
     .post(`/auth/${method}`, { email, password })
     .then(
       (res) => {
-        console.log('post axios here', method, '- email', email, '- password', password);
-        console.log(res);
         switch (method) {
           case 'signup': {
             dispatch(setSuccess(`You have successfully signed up. We emailed you a link that needs to clicked to activate your account. Check your email: ${

@@ -15,7 +15,7 @@ const CookiePolicy = () => (
       tiny files that are downloaded to your computer, to improve your experience. This page
       describes what information they gather, how we use it and why we sometimes need to store these
       cookies. We will also share how you can prevent these cookies from being stored however this
-      may downgrade or 'break' certain elements of the sites functionality.
+      may downgrade or {"'break'"} certain elements of the sites functionality.
     </p>
 
     <p>
@@ -158,11 +158,11 @@ const CookiePolicy = () => (
 
       <li>
         <p>
-          As we sell products it's important for us to understand statistics about how many of the
-          visitors to our site actually make a purchase and as such this is the kind of data that
-          these cookies will track. This is important to you as it means that we can accurately make
-          business predictions that allow us to monitor our advertising and product costs to ensure
-          the best possible price.
+          As we sell products it{"'"}s important for us to understand statistics about how many of
+          the visitors to our site actually make a purchase and as such this is the kind of data
+          that these cookies will track. This is important to you as it means that we can accurately
+          make business predictions that allow us to monitor our advertising and product costs to
+          ensure the best possible price.
         </p>
       </li>
 
@@ -200,8 +200,8 @@ const CookiePolicy = () => (
 
     <p>
       Hopefully that has clarified things for you and as was previously mentioned if there is
-      something that you aren't sure whether you need or not it's usually safer to leave cookies
-      enabled in case it does interact with one of the features you use on our site.{' '}
+      something that you aren{"'"}t sure whether you need or not it{"'"}s usually safer to leave
+      cookies enabled in case it does interact with one of the features you use on our site.{' '}
     </p>
   </div>
 );

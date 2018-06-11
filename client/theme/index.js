@@ -1,26 +1,16 @@
 import { lighten } from 'polished';
 import colors from './colors';
-
-const success = {
-  backgroundColor: lighten(0.3, 'green'),
-  color: colors.quinary,
-};
-
-const error = {
-  backgroundColor: lighten(0.3, colors.septenary),
-  color: colors.septenary,
-};
-
-const buttonOne = {
-  color: 'black',
-  backgroundColor: lighten(0.1, colors.primary),
-};
+import fonts from './fonts';
+import mobile from './mobile';
+import buttons from './buttons';
+import notifications from './notifications';
 
 const main = {
+  mobile,
+  fonts,
   colors,
-  success,
-  error,
-  buttonOne,
+  buttons,
+  notifications,
 };
 
 export default main;

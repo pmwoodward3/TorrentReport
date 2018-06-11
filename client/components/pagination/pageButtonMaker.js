@@ -82,7 +82,7 @@ const PageButtonMaker = (props) => {
       />);
   }
 
-  if (currentPage !== numberOfPages) {
+  if (currentPage !== numberOfPages - 1) {
     pageButtons.push(<PageButton
         key={'pagination-next-button'}
         pageNumber={currentPage + 1}

@@ -11,6 +11,8 @@ const colors = {
   octonary: '#4de893',
   nonary: '#7e4de8',
   denary: '#e8bf4d',
+  seed: '#008000',
+  leech: '#ff0000',
 };
 
 export default colors;

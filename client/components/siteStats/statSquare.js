@@ -1,5 +1,57 @@
 import React from 'react';
+import styled, { withTheme } from 'styled-components';
+import { lighten } from 'polished';
 import Loader from '../loader';
+
+const Square = styled.div`
+  background-color: ${props => lighten(0.98, props.theme.colors.quinary)};
+  min-height: 4em;
+  margin: 5px;
+  padding: 5px;
+  flex-grow: 1;
+  min-width: 140px;
+  min-height: 140px;
+  flex-basis: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Value = styled.div`
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  padding: 3px;
+  font-weight: bolder;
+  font-size: 1.6em;
+  color: ${props => lighten(0.4, props.theme.colors.quinary)};
+  text-transform: uppercase;
+  position: relative;
+  top: -0.7em;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn ease-in 1s;
+  @media screen and (max-width: 400px) {
+    font-size: 1.3em !important;
+  }
+`;
+
+const Name = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  top: 0.8em;
+  font-size: 0.9em;
+  color: ${props => lighten(0.65, props.theme.colors.quinary)};
+  text-transform: uppercase;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  @media screen and (max-width: 400px) {
+    font-size: 0.8em !important;
+  }
+`;
 
 /**
  * COMPONENT
@@ -14,15 +66,11 @@ const StatSquare = (props) => {
   }
 
   return (
-    <div className="group">
-      <div className="value center">
-        {showLoad ? <Loader type="three_dots" height={50} width={50} /> : value}
-      </div>
-      <div className="name center">
-        <div className="pos">{name}</div>
-      </div>
-    </div>
+    <Square>
+      <Value>{showLoad ? <Loader type="three_dots" height={50} width={50} /> : value}</Value>
+      <Name>{name}</Name>
+    </Square>
   );
 };
 
-export default StatSquare;
+export default withTheme(StatSquare);
