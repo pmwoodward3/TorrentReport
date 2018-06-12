@@ -35,7 +35,7 @@ export const me = () => dispatch =>
     .then(res => dispatch(getUser(res.data || defaultUser)))
     .catch(err => console.log(err));
 
-export const auth = (email, password, method) => (dispatch) => {
+export const auth = (email, password, method, terms) => (dispatch) => {
   const r = new RegExp(/^[a-z0-9](.?[a-z0-9_-]){0,}@[a-z0-9-]+.([a-z]{1,6}.)?[a-z]{2,6}$/g);
   if (!r.exec(email)) {
     return dispatch(setError('The email you provided email does not look valid.'));
@@ -46,6 +46,9 @@ export const auth = (email, password, method) => (dispatch) => {
   }
   if (!password || password.length <= 2) {
     return dispatch(setError('Provided password needs to be longer.'));
+  }
+  if (method === 'signup' && !terms) {
+    return dispatch(setError('You can not register unless you have read and accepted all of our terms.'));
   }
   axios
     .post(`/auth/${method}`, { email, password })
@@ -60,7 +63,7 @@ export const auth = (email, password, method) => (dispatch) => {
           }
           case 'login': {
             if (res.data === 'Need to activate account.') {
-              dispatch(setError('You still have not activeated your account.'));
+              dispatch(setError('You have not activated your account yet.'));
             } else {
               dispatch(getUser(res.data));
               history.push('/account');

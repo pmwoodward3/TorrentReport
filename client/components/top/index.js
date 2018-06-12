@@ -68,7 +68,7 @@ const TopNewSnapshots = (props) => {
 
   return (
     <div className="top-container">
-      <div className="top-header">TOP TORRENTS</div>
+      <div className="top-header">CURRENT TORRENTS</div>
       <Filter
         count={filteredSnapshots.length}
         currentPage={props.topFilter.currentPage + 1}
@@ -88,12 +88,14 @@ const TopNewSnapshots = (props) => {
         />
       ))}
       <div className="top-filter-pagination">
-        <PageButtonMaker
-          numberOfPages={numberOfPages}
-          currentPage={props.topFilter.currentPage}
-          changePageFunc={props.changePage}
-          funcToCall={() => props.changeFilterVisibility(false)}
-        />
+        {numberOfPages > 1 && (
+          <PageButtonMaker
+            numberOfPages={numberOfPages}
+            currentPage={props.topFilter.currentPage}
+            changePageFunc={props.changePage}
+            funcToCall={() => props.changeFilterVisibility(false)}
+          />
+        )}
       </div>
     </div>
   );

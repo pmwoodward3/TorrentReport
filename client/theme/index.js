@@ -4,6 +4,7 @@ import fonts from './fonts';
 import mobile from './mobile';
 import buttons from './buttons';
 import notifications from './notifications';
+import header from './header';
 
 const main = {
   mobile,
@@ -11,6 +12,7 @@ const main = {
   colors,
   buttons,
   notifications,
+  header,
 };
 
 export default main;

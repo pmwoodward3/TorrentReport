@@ -1,18 +1,23 @@
 // import { lighten } from 'polished';
 
 const colors = {
-  primary: '#d1e751',
-  secondary: '#4dbce9',
-  tertiary: '#26ade4',
-  quaternary: '#ffffff',
-  quinary: '#000000',
-  senary: '#e84dbc',
-  septenary: '#e84d4d',
-  octonary: '#4de893',
-  nonary: '#7e4de8',
-  denary: '#e8bf4d',
-  seed: '#008000',
-  leech: '#ff0000',
+  primary: '#d1e751', // neon green yellow-ish
+  secondary: '#4dbce9', // light blue
+  tertiary: '#26ade4', // light blue
+  quaternary: '#ffffff', // white
+  quinary: '#000000', // black
+  senary: '#e84dbc', // magenta
+  septenary: '#e84d4d', // red-ish
+  octonary: '#4de893', // green-ish
+  nonary: '#7e4de8', // purple
+  denary: '#e8bf4d', // orange yellow ish
+  seed: '#008000', // forest green ish
+  leech: '#ff0000', // horror red
+  header: {
+    background: '#252525',
+    logo: '#ffffff',
+    banner: '#d1e751',
+  },
 };
 
 export default colors;

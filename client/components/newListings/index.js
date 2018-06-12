@@ -105,7 +105,7 @@ class NewListings extends Component {
     return (
       <div id="NL" className="new-listings">
         <div className="dl-top">
-          <div className="dl-header">TOP NEWLY LISTED TORRENTS</div>
+          <div className="dl-header">NEWLY LISTED TORRENTS</div>
           <div className="dl-detail">
             {this.state.searching && 'searching'}
             <input
@@ -147,4 +147,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(mapState, mapDispatch)(NewListings);
+export default connect(
+  mapState,
+  mapDispatch,
+)(NewListings);

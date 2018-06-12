@@ -16,12 +16,11 @@ const Square = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: ${props => props.theme.fonts.header};
 `;
 
 const Value = styled.div`
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   padding: 3px;
-  font-weight: bolder;
   font-size: 1.6em;
   color: ${props => lighten(0.4, props.theme.colors.quinary)};
   text-transform: uppercase;
@@ -41,13 +40,11 @@ const Name = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
   top: 0.8em;
   font-size: 0.9em;
   color: ${props => lighten(0.65, props.theme.colors.quinary)};
   text-transform: uppercase;
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   @media screen and (max-width: 400px) {
     font-size: 0.8em !important;
   }

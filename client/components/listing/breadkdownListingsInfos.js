@@ -73,6 +73,7 @@ const Descriptor = styled.div`
 const Details = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 30px 0 0 0;
 `;
 const InfoContainer = styled.div`
   display: inline-flex;
@@ -81,7 +82,6 @@ const InfoContainer = styled.div`
   width: 100%;
 `;
 const InfoGroup = styled.div`
-  margin-top: 1em;
   display: flex;
   flex-direction: column;
   flex-basis: auto;
@@ -112,7 +112,10 @@ const Chart = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  margin: 30px 0 0 0;
   min-width: 330px;
+  left: -30px;
+  position: relative;
 `;
 
 /**

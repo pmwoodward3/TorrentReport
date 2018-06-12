@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled, { withTheme } from 'styled-components';
 // import { lighten, darken } from 'polished';
@@ -70,8 +69,4 @@ const Footer = ({ userCount }) => (
   </div>
 );
 
-const mapState = state => ({
-  userCount: state.stats.userCount,
-});
-
-export default connect(mapState)(Footer);
+export default Footer;

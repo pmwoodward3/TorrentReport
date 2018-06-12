@@ -16,7 +16,11 @@ const Home = (props) => {
   return (
     <div>
       {!isLoggedIn && (
-        <Notification title="What is Torrent Report?" linkText="Learn More" linkURI="/about">
+        <Notification
+          title="What is Torrent Report?"
+          links={[{ to: '/about', text: 'Learn More' }]}
+          type="info"
+        >
           This is a torrent information platform and aggregator. This site does not create, host, or
           distribute any torrents or their files. Instead this site crawls and scrapes top torrent
           sites to get their top torrents.

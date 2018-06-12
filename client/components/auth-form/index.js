@@ -2,11 +2,98 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { faHandPeace, faIdBadge } from '@fortawesome/fontawesome-free-solid';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { auth, clearError, clearSuccess } from '../../store';
-import { enableSubmit } from './utils';
-import AcceptTerms from './acceptTerms';
+import styled, { withTheme } from 'styled-components';
+import { lighten, darken } from 'polished';
 
-import './style.scss';
+import { auth, clearError, clearSuccess } from '../../store';
+import AcceptTerms from './acceptTerms';
+import Notification from '../notification';
+
+/**
+ * STYLED
+ */
+
+const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledAuthForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  padding: 1em;
+  align-items: center;
+`;
+
+const Header = styled.div`
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3em;
+  color: ${props => darken(0.2, props.theme.colors[props.colsol || 'quinary'])};
+  opacity: 0.7;
+  font-family: ${props => props.theme.fonts.header};
+`;
+
+const HeaderIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  font-size: 3.5em;
+`;
+
+const StyledInput = styled.input`
+  font-family: ${props => props.theme.fonts.header};
+  margin: 15px 10px 15px 10px;
+  font-size: 16px;
+  padding: 0.7em;
+  width: 100%;
+  background-color: ${props => lighten(0.9, props.theme.colors.quinary)};
+  color: ${props => lighten(0.4, props.theme.colors.quinary)};
+  border: solid 1px ${props => lighten(0.75, props.theme.colors.quinary)};
+  text-shadow: 0 -1px 0 ${props => props.theme.colors.quaternary};
+  &:focus {
+    color: black;
+    border: solid 3px ${props => props.theme.colors[props.colsol || 'primary']};
+    outline-width: 0;
+    background-color: ${props => lighten(0.96, props.theme.colors.quinary)};
+  }
+`;
+
+const SubmitButton = styled.button`
+  margin: 15px 10px 15px 10px;
+  font-size: 0.9em;
+  letter-spacing: 2px;
+  padding: 0.9em;
+  width: 100%;
+  font-family: ${props => props.theme.fonts.header};
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  color: ${props => darken(0.55, props.theme.colors[props.colsol || 'primary'])};
+  background-color: ${props => lighten(0.2, props.theme.colors[props.colsol || 'primary'])};
+  border: solid 1px ${props => darken(0.15, props.theme.colors[props.colsol || 'primary'])};
+  outline-width: 0;
+  &:focus {
+    border: solid 1px ${props => darken(0.15, props.theme.colors[props.colsol || 'primary'])};
+    outline-width: 0;
+  }
+  &:active {
+    outline-width: 0;
+    text-shadow: 0 -1px 0 white;
+
+    color: ${props => darken(0.4, props.theme.colors[props.colsol || 'primary'])};
+    background-color: ${props => darken(0.01, props.theme.colors[props.colsol || 'primary'])};
+    border: solid 1px ${props => darken(0.1, props.theme.colors[props.colsol || 'primary'])};
+  }
+`;
+
+/**
+ * COMPONENT
+ */
 
 class AuthForm extends Component {
   constructor(props) {
@@ -14,6 +101,7 @@ class AuthForm extends Component {
     this.state = {
       email: '',
       password: '',
+      terms: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -39,80 +127,84 @@ class AuthForm extends Component {
     } = this.props;
     let hideForms = true;
     if (!success) hideForms = false;
-    const isReady = enableSubmit(this.state.email, this.state.password);
     return (
-      <div className="center">
-        <div className="loginBox">
-          <form
-            className="center flexCol"
-            onSubmit={(event) => {
-              event.preventDefault();
-              removeES();
-              return handleSubmit(event);
-            }}
-            name={name}
-          >
-            {error &&
-              error.response && (
-                <div className="error fullWidth center"> {error.response.data} </div>
-              )}
-            {success &&
-              success.response && (
-                <div className="success fullWidth center"> {success.response.data} </div>
-              )}
-            <div className="authHead">
-              <div className="icon">
-                <FontAwesomeIcon icon={icon} />
-              </div>
-              {header}
-            </div>
+      <Center>
+        <StyledAuthForm
+          onSubmit={(event) => {
+            event.preventDefault();
+            removeES();
+            return handleSubmit(event, this.state.terms);
+          }}
+          name={name}
+        >
+          {error &&
+            error.response && (
+              <Notification title="We Have a Problem..." type="error">
+                {' '}
+                {error.response.data}{' '}
+              </Notification>
+            )}
+          {success &&
+            success.response && (
+              <Notification title="Great Success!" type="success">
+                {' '}
+                {success.response.data}{' '}
+              </Notification>
+            )}
+          <Header colsol={this.props.colsol}>
+            <HeaderIcon>
+              <FontAwesomeIcon icon={icon} />
+            </HeaderIcon>
+            {header}
+          </Header>
 
-            {!hideForms && (
-              <input
-                ref={(input) => {
-                  this.nameInput = input;
-                }}
-                placeholder="email"
-                className="loginInput"
-                id="email"
-                onChange={this.handleInputChange}
-                value={this.state.email}
-                name="email"
-                type="text"
+          {!hideForms && (
+            <StyledInput
+              innerRef={(input) => {
+                this.nameInput = input;
+              }}
+              placeholder="email"
+              id="email"
+              onChange={this.handleInputChange}
+              value={this.state.email}
+              name="email"
+              type="text"
+              colsol={this.props.colsol}
+            />
+          )}
+          {!hideForms && (
+            <StyledInput
+              placeholder="password"
+              id="password"
+              onChange={this.handleInputChange}
+              value={this.state.password}
+              name="password"
+              type="password"
+              colsol={this.props.colsol}
+            />
+          )}
+
+          {!hideForms &&
+            name === 'signup' && (
+              <AcceptTerms
+                value={this.state.terms}
+                toggle={() => this.setState({ terms: !this.state.terms })}
               />
             )}
-            {!hideForms && (
-              <input
-                placeholder="password"
-                className="loginInput"
-                id="password"
-                onChange={this.handleInputChange}
-                value={this.state.password}
-                name="password"
-                type="password"
-              />
-            )}
 
-            {!hideForms && name === 'signup' && <AcceptTerms />}
+          {!hideForms && (
+            <SubmitButton colsol={this.props.colsol} type="submit">
+              {displayName.toUpperCase()}
+            </SubmitButton>
+          )}
 
-            {!hideForms && (
-              <button
-                disable={isReady ? 'false' : 'true'}
-                className={isReady ? 'loginButton' : 'disabledButton'}
-                type="submit"
-              >
-                {displayName.toUpperCase()}
-              </button>
-            )}
-
-            {!hideForms && (
-              <p>
-                <a href="/auth/google">{displayName} with Google</a>
-              </p>
-            )}
-          </form>
-        </div>
-      </div>
+          {!hideForms && (
+            <p>
+              <a href="/auth/google">{displayName} with Google</a>
+            </p>
+          )}
+        </StyledAuthForm>
+      </Center>
     );
   }
 }
@@ -124,6 +216,7 @@ const mapLogin = state => ({
   displayName: 'Login',
   error: state.user.error,
   success: state.user.success,
+  colsol: 'secondary',
 });
 
 const mapSignup = state => ({
@@ -133,15 +226,16 @@ const mapSignup = state => ({
   displayName: 'Register',
   error: state.user.error,
   success: state.user.success,
+  colsol: 'primary',
 });
 
 const mapDispatch = dispatch => ({
-  handleSubmit(evt) {
+  handleSubmit(evt, terms) {
     evt.preventDefault();
     const formName = evt.target.name;
     const email = evt.target.email.value;
     const password = evt.target.password.value;
-    dispatch(auth(email, password, formName));
+    dispatch(auth(email, password, formName, terms));
   },
   removeError() {
     dispatch(clearError());
@@ -155,11 +249,12 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export const Login = connect(
+export const Login = withTheme(connect(
   mapLogin,
   mapDispatch,
-)(AuthForm);
-export const Signup = connect(
+)(AuthForm));
+
+export const Signup = withTheme(connect(
   mapSignup,
   mapDispatch,
-)(AuthForm);
+)(AuthForm));
