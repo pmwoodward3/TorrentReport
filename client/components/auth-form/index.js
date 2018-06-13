@@ -232,6 +232,7 @@ const mapSignup = state => ({
 const mapDispatch = dispatch => ({
   handleSubmit(evt, terms) {
     evt.preventDefault();
+    window.scroll(0, 0); // eslint-disable-line
     const formName = evt.target.name;
     const email = evt.target.email.value;
     const password = evt.target.password.value;

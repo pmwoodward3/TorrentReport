@@ -34,10 +34,10 @@ const ToggleContainer = styled.div`
   top: 1em;
   color: ${props => props.theme.colors.primary};
   font-family: ${props => props.theme.fonts.header};
-  padding: 0.5em 1em 0.5em 1em;
+  padding: 0.3em 0.6em 0.3em 0.6em;
   border: solid 3px ${props => props.theme.colors.primary};
   z-index: 1000;
-  font-size: 1.6em;
+  font-size: 1.3em;
   cursor: pointer;
   &:hover {
     background: white;

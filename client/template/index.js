@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 import CookiesUse from '../components/cookiesUse';
 import { getWindowWidth } from '../store';
 import Header from './header';
+import ContentRender from './content';
 import Footer from './footer';
-import './template.scss';
+
+const Main = styled.div`
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  min-height: 100%;
+`;
 
 class Template extends Component {
   // eslint-disable-next-line
@@ -24,12 +32,12 @@ class Template extends Component {
   render() {
     const { children, userCount } = this.props;
     return (
-      <div id="main-content">
+      <Main>
         <CookiesUse />
         <Header />
-        <div className="content">{children}</div>
+        <ContentRender>{children}</ContentRender>
         <Footer userCount={userCount} />
-      </div>
+      </Main>
     );
   }
 }

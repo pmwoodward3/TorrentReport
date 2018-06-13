@@ -27,7 +27,6 @@ const Button = styled.div`
 `;
 
 const PageButton = (props) => {
-  console.log(props);
   const {
     pageNumber, changePageFunc, funcToCall, active, buttonText,
   } = props;

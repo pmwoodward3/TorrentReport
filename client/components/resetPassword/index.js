@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { passwordCheck } from '../auth-form/utils';
 
-import './style.scss';
-
 export default class Test extends Component {
   constructor(props) {
     super(props);
@@ -16,8 +14,7 @@ export default class Test extends Component {
   componentDidMount() {
     const { token } = this.props.match.params;
     if (token && token.length === 32) {
-      axios
-        .post('/auth/access/reset', { token });
+      axios.post('/auth/access/reset', { token });
     }
   }
 

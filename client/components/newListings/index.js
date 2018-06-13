@@ -1,17 +1,81 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import styled, { withTheme } from 'styled-components';
+import { lighten } from 'polished';
 
-import './style.scss';
-
+import PageHeader from '../pageHeader';
 import Loader from '../loader';
 import { fetchDailyListings } from '../../store';
-
 import ListItem from './listItem';
-import ListHeaderItem from './listHeaderItem';
-
-// import searchWithinArray from '../search/searchArray';
 import worker from './filterWorker';
+
+/**
+ * STYLES
+ */
+
+const NewListingsContainer = styled.div`
+  flex-grow: 1;
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+`;
+
+const TopRow = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const TitleSide = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const SearchInput = styled.input`
+  border-radius: 3px;
+  background-color: ${props => lighten(0.8, props.theme.colors.quinary)};
+  border: solid 1px ${props => lighten(0.5, props.theme.colors.quinary)};
+  color: ${props => lighten(0.4, props.theme.colors.quinary)};
+  width: 100%;
+  font-size: 16px;
+  margin: 5px;
+  padding: 10px 20px 10px 20px;
+  &:focus {
+    border: solid 4px ${props => lighten(0.4, props.theme.colors.quinary)};
+    margin: 2px;
+    outline-width: 0;
+    outline: none;
+    background-color: ${props => lighten(0.87, props.theme.colors.quinary)};
+  }
+`;
+
+const NoResultContainer = styled.div`
+  font-size: 18px;
+  padding: 2em;
+`;
+
+const ItemListContainer = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+`;
+
+const NowSearching = styled.div`
+  display: inline-flex;
+  padding: 10px;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 2em;
+  justify-content: center;
+  align-items: center;
+`;
+
+/**
+ * COMPONENT
+ */
 
 class NewListings extends Component {
   constructor(props) {
@@ -54,7 +118,7 @@ class NewListings extends Component {
     const arrToUse =
       this.state.searchResults.length && isMoreGeneral
         ? this.state.searchResults
-        : this.props.dailyListings.days1;
+        : this.props.dailyListings.days1.listings;
     return this.sendSearchToWorker(arrToUse, searchInput);
   };
 
@@ -84,15 +148,16 @@ class NewListings extends Component {
       !_.has(this.props.dailyListings, 'days1') ||
       this.props.dailyListings.days1.status !== 'loaded'
     ) {
-      return (
-        <div id="NL" className="new-listings">
-          <Loader message="random" />
-        </div>
-      );
+      return <Loader message="random" />;
     }
     const orderArr = this.state.order === 'top' ? ['desc'] : ['asc'];
+    let arrToStartWith;
+    if (this.state.search !== '' && !this.state.searching) {
+      arrToStartWith = this.state.searchResults;
+    } else {
+      arrToStartWith = this.props.dailyListings.days1.listings;
+    }
 
-    const arrToStartWith = this.props.dailyListings.days1.listings;
     const finalSize = _.orderBy(
       arrToStartWith,
       (obj) => {
@@ -103,38 +168,39 @@ class NewListings extends Component {
     );
 
     return (
-      <div id="NL" className="new-listings">
-        <div className="dl-top">
-          <div className="dl-header">NEWLY LISTED TORRENTS</div>
-          <div className="dl-detail">
-            {this.state.searching && 'searching'}
-            <input
+      <NewListingsContainer>
+        <TopRow>
+          <PageHeader>NEWLY LISTED TORRENTS</PageHeader>
+          <TitleSide>
+            <SearchInput
               placeholder="search these listings..."
               id="nl-search"
               name="nl-search"
               onChange={this.searchChange}
             />
-          </div>
-        </div>
+          </TitleSide>
+        </TopRow>
+        {this.state.searching && (
+          <NowSearching>{`currently searching for ${this.state.search}`}</NowSearching>
+        )}
         {this.props.dailyListings.days1.status === 'loaded' &&
           finalSize.length === 0 && (
-            <div>
+            <NoResultContainer>
               {!this.state.search ? (
                 <div>No new items</div>
               ) : (
                 <div>No search results for: {this.state.search}.</div>
               )}
-            </div>
+            </NoResultContainer>
           )}
         {finalSize.length > 0 && (
-          <div className="dl-item-group">
-            <ListHeaderItem order={this.state.order} active={this.state.filter} />
+          <ItemListContainer>
             {finalSize.map((item, index) => (
               <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
             ))}
-          </div>
+          </ItemListContainer>
         )}
-      </div>
+      </NewListingsContainer>
     );
   }
 }
@@ -147,7 +213,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(
+export default withTheme(connect(
   mapState,
   mapDispatch,
-)(NewListings);
+)(NewListings));

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
+import PageHeader from '../pageHeader';
 import { fetchGroups } from '../../store';
 import Loader from '../loader';
-import './style.scss';
 
 const Group = (props) => {
   const id = parseInt(props.match.params.id, 10);
@@ -13,7 +13,7 @@ const Group = (props) => {
   if (!group) return <Loader />;
   return (
     <div>
-      <h1>group info</h1>
+      <PageHeader>group info</PageHeader>
       <b>
         {group && group.name} (tag: {group && group.tag})
       </b>
@@ -37,4 +37,7 @@ const mapDispatch = dispatch => ({
   fetchAllGroups: () => dispatch(fetchGroups()),
 });
 
-export default connect(mapState, mapDispatch)(Group);
+export default connect(
+  mapState,
+  mapDispatch,
+)(Group);

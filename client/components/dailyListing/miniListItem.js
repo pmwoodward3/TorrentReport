@@ -14,8 +14,7 @@ const Item = styled(Link)`
   display: inline-flex;
   border-bottom: 1px solid ${props => lighten(0.2, props.theme.colors.primary)};
   align-items: center;
-  padding: 1px 0px 1px 0px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ${props => props.theme.fonts.header};
   font-size: 0.9em;
   margin: 0;
   flex-basis: auto;
@@ -53,12 +52,11 @@ const Number = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 26px;
-  flex-basis: 26px;
-  border-radius: 50%;
+  height: 28px;
+  flex-basis: 28px;
   border-radius: 50%;
   margin-right: 10px;
-  font-size: 15px;
+  font-size: 14px;
   font-family: monospace;
   flex-shrink: 0;
   flex-grow: 0;

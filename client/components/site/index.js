@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import _ from 'lodash';
 
+import PageHeader from '../pageHeader';
 import { fetchGroups } from '../../store';
 import Loader from '../loader';
-import './style.scss';
 
 const Site = (props) => {
   const id = parseInt(props.match.params.id, 10);
@@ -16,7 +16,7 @@ const Site = (props) => {
   const groups = Object.keys(groupsObj).map(key => groupsObj[key]);
   return (
     <div>
-      <h1>site info</h1>
+      <PageHeader>site info</PageHeader>
       <b> {site.name}</b>
       <p> short: {site.short}</p>
       <p> url: {site.url}</p>
@@ -44,4 +44,7 @@ const mapDispatch = dispatch => ({
   fetchAllGroups: () => dispatch(fetchGroups()),
 });
 
-export default connect(mapState, mapDispatch)(Site);
+export default connect(
+  mapState,
+  mapDispatch,
+)(Site);

@@ -62,7 +62,7 @@ const Item = styled(Link)`
   display: flex;
   flex-direction: row;
   min-height: 20px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: ${props => props.theme.fonts.header};
   align-items: center;
   margin: 5px 5px 0px 5px;
   padding: 5px 0px 5px 0px;

@@ -49,9 +49,9 @@ const Footer = styled.div`
   display: inline-flex;
   flex-direction: row;
   justify-content: space-between;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: ${props => props.theme.fonts.header};
   font-size: 0.7em;
-  padding: 10px 0 0 0;
+  padding: 1px 0 0 0;
   color: ${props => darken(0.2, props.theme.colors.primary)};
   @media (max-width: ${props => props.theme.mobile.width}) {
     flex-direction: column-reverse;
@@ -66,7 +66,11 @@ const MoreLink = styled(Link)`
   color: ${props => darken(0.15, props.theme.colors.primary)};
   font-weight: lighter;
   font-size: 1.5em;
-  text-decoration: none;
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+    color: ${props => darken(0.25, props.theme.colors.primary)};
+  }
   @media (max-width: ${props => props.theme.mobile.width}) {
     margin: 20px 0 0 0;
   }
@@ -100,6 +104,10 @@ const TryLink = styled.div`
   display: inline;
   color: ${props => darken(0.3, props.theme.colors.primary)};
   text-decoration: underline;
+  &:hover {
+    color: ${props => darken(0.1, props.theme.colors.primary)};
+    text-decoration: none;
+  }
 `;
 
 /**
@@ -111,7 +119,7 @@ class DailyListing extends Component {
     this.state = {
       filter: 'seed',
       order: 'top',
-      max: 11,
+      max: 10,
     };
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleOrder = this.toggleOrder.bind(this);

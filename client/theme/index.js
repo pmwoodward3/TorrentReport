@@ -5,6 +5,7 @@ import mobile from './mobile';
 import buttons from './buttons';
 import notifications from './notifications';
 import header from './header';
+import footer from './footer';
 
 const main = {
   mobile,
@@ -13,6 +14,7 @@ const main = {
   buttons,
   notifications,
   header,
+  footer,
 };
 
 export default main;

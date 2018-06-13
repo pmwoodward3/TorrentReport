@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { getData } from '../../store';
 import Loader from '../loader';
 
-import './style.scss';
+import PageHeader from '../pageHeader';
+import Notification from '../notification';
 
 class ActivateAccount extends Component {
   constructor(props) {
@@ -34,19 +32,24 @@ class ActivateAccount extends Component {
   render() {
     return (
       <div>
+        <PageHeader>Account Activation</PageHeader>
         <div>
-          <h1>Account Activation</h1>
-        </div>
-        <div>
-          {!this.state.activated && !this.state.error && <h4>We are activating your account...</h4>}
+          {!this.state.activated &&
+            !this.state.error && (
+              <Notification type="info" title="Please Wait While We Activate Your Account">
+                <Loader message="We are activating your account..." />
+              </Notification>
+            )}
           {this.state.activated && (
-            <div className="success fullWidth center">Your account has been activated.</div>
+            <Notification type="success" title="Your Account Has Been Activated">
+              Welcome to Torrent Report!
+            </Notification>
           )}
           {this.state.error && (
-            <div className="error fullWidth center">
-              {' '}
-              We had a problem activating your account. {`${this.state.error}.`}
-            </div>
+            <Notification type="success" title="We Encountered a Problem...">
+              Sorry, we had a problem while trying to activate your account.{' '}
+              {`${this.state.error}.`}
+            </Notification>
           )}
         </div>
       </div>

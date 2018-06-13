@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import PageHeader from '../pageHeader';
+
 const PrivacyPolicy = () => (
   <div>
-    <h1>Privacy Policy</h1>
+    <PageHeader>Privacy Policy</PageHeader>
 
     <p>
       At Torrent Report, accessible from https://www.torrent.report, one of our main priorities is

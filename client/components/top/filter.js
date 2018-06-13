@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import {
-  faCheckCircle,
-  faTimesCircle,
-  faFilter,
-  faTimes,
-} from '@fortawesome/fontawesome-free-solid';
+import { faCheckCircle, faCircle, faFilter, faTimes } from '@fortawesome/fontawesome-free-solid';
+import styled, { withTheme } from 'styled-components';
+import { lighten, darken } from 'polished';
 
 import {
   enableAllSitesTopFilter,
@@ -19,7 +16,123 @@ import {
   toggleDirtyState,
 } from '../../store/topFilter';
 
-import './filter.scss';
+/**
+ * STYLES
+ */
+
+const FilterContainer = styled.div`
+  font-family: ${props => props.theme.fonts.header};
+  margin: 0 0 15px 0;
+`;
+
+const StaticBar = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 0.9em;
+  background-color: ${props => lighten(0.89, props.theme.colors.quinary)};
+  color: ${props => lighten(0.4, props.theme.colors.quinary)};
+`;
+
+const ToggleFilterButton = styled.div`
+  cursor: pointer;
+  padding: 10px;
+  color: ${props => darken(0.3, props.theme.colors.secondary)};
+  background-color: ${props => lighten(0.2, props.theme.colors.secondary)};
+  &:hover {
+    background-color: ${props => lighten(0.3, props.theme.colors.secondary)};
+  }
+  &:active {
+    background-color: ${props => lighten(0.4, props.theme.colors.quinary)};
+    color: white;
+  }
+  & svg {
+    margin: 0 10px 0 0;
+  }
+`;
+
+const ClearFilterButton = styled.div`
+  cursor: pointer;
+  padding: 10px;
+  color: ${props => darken(0.3, props.theme.colors.primary)};
+  background-color: ${props => lighten(0.2, props.theme.colors.primary)};
+  &:hover {
+    background-color: ${props => lighten(0.3, props.theme.colors.primary)};
+  }
+  &:active {
+    background-color: ${props => lighten(0.4, props.theme.colors.quinary)};
+    color: white;
+  }
+  & svg {
+    margin: 0 10px 0 0;
+  }
+`;
+
+const StaticBarInfo = styled.div`
+  padding: 10px;
+  margin: 0 10px 0 0;
+`;
+
+const FilterBox = styled.div`
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-right: solid 1px ${props => lighten(0.89, props.theme.colors.quinary)};
+  border-left: solid 1px ${props => lighten(0.89, props.theme.colors.quinary)};
+  border-bottom: solid 1px ${props => lighten(0.89, props.theme.colors.quinary)};
+  padding: 0 0 5px 0;
+`;
+
+const FilterGroup = styled.div`
+  display: inline-flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 0.8em;
+  margin: 10px 5px 0 5px;
+  padding: 0 10px 0 10px;
+  flex-grow: 1;
+`;
+
+const GroupName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px 0 0px;
+  font-size: 16px;
+  color: ${props => lighten(0.42, props.theme.colors.quinary)};
+`;
+
+const GroupItem = styled.div`
+  letter-spacing: 1px;
+  display: block;
+  padding: 3px;
+  margin: 3px 3px 3px 5px;
+`;
+
+const FilterItemToggle = styled.div`
+  color: ${props => darken(0.22, props.theme.colors[props.showing ? 'primary' : 'quaternary'])};
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FilterIcon = styled.div`
+  padding: 0px 5px 0px 0px;
+`;
+
+const FilterOption = styled.div`
+  padding: 0;
+  margin: 0;
+`;
+
+/**
+ * COMPONENT
+ */
 
 class Filter extends React.Component {
   /* eslint-disable */
@@ -30,192 +143,145 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <div className="top-filter-list">
-        <div className="top-filter-site-static">
-          <div
-            onClick={() => {
-              this.props.toggleFilter();
-            }}
-            className="toggle-top-filter-site"
-          >
+      <FilterContainer>
+        <StaticBar>
+          <ToggleFilterButton onClick={this.props.toggleFilter}>
             <FontAwesomeIcon icon={faFilter} />{' '}
             {!this.props.topFilter.visibility ? 'Show Filter' : 'Hide Filter'}
-          </div>
+          </ToggleFilterButton>
           {this.props.topFilter.dirty && (
-            <div
+            <ClearFilterButton
               onClick={() => {
                 this.props.resetEverything();
                 this.props.onChangePage();
               }}
-              className="clear-top-filter-site"
             >
               <FontAwesomeIcon icon={faTimes} /> Clear Filter
-            </div>
+            </ClearFilterButton>
           )}
-          <div className="count-top-filter-site count-top-filter-site-fixed">
+          <StaticBarInfo>
             {`${this.props.count} Results `}
             {this.props.numberOfPages > 0 &&
               ` - Page ${this.props.currentPage} of ${this.props.numberOfPages}`}
-          </div>
-        </div>
+          </StaticBarInfo>
+        </StaticBar>
         {this.props.topFilter.visibility && (
-          <div className="top-filter-site-box">
-            <div className="top-filter-site">
-              <div className="top-filter-site-group-name">Groups</div>
+          <FilterBox>
+            <FilterGroup>
+              <GroupName>Groups</GroupName>
               {this.props.groups.map(group => (
-                <div key={`${group}thsgi`}>
-                  <div className="top-filter-site-item">
-                    <div
-                      onClick={() => {
-                        this.props.toggleGroup(group);
-                        this.props.onChangePage();
-                      }}
-                      className={
-                        this.props.topFilter.showingGroups[group]
-                          ? 'top-filter-site-head top-filter-site-head-active'
-                          : 'top-filter-site-head'
-                      }
-                    >
-                      <div className="top-filter-site-icon">
-                        <FontAwesomeIcon
-                          icon={
-                            this.props.topFilter.showingGroups[group]
-                              ? faCheckCircle
-                              : faTimesCircle
-                          }
-                        />
-                      </div>
-                      <div className="top-filter-site-name">{group}</div>
-                    </div>
-                  </div>
-                </div>
+                <GroupItem key={`${group}thsgi`}>
+                  <FilterItemToggle
+                    onClick={() => {
+                      this.props.toggleGroup(group);
+                      this.props.onChangePage();
+                    }}
+                    showing={this.props.topFilter.showingGroups[group]}
+                  >
+                    <FilterIcon>
+                      <FontAwesomeIcon
+                        icon={this.props.topFilter.showingGroups[group] ? faCheckCircle : faCircle}
+                      />
+                    </FilterIcon>
+                    <FilterOption>{group}</FilterOption>
+                  </FilterItemToggle>
+                </GroupItem>
               ))}
-            </div>
-            <div className="top-filter-site">
-              <div className="top-filter-site-group-name">Sites</div>
+            </FilterGroup>
+            <FilterGroup>
+              <GroupName>Sites</GroupName>
               {this.props.sites.map(site => (
-                <div key={`${site.id}thsi`}>
-                  <div className="top-filter-site-item">
-                    <div
-                      onClick={() => {
-                        this.props.toggleSite(site.id);
-                        this.props.onChangePage();
-                      }}
-                      className={
-                        this.props.topFilter.showingSites[site.id]
-                          ? 'top-filter-site-head top-filter-site-head-active'
-                          : 'top-filter-site-head'
-                      }
-                    >
-                      <div className="top-filter-site-icon">
-                        <FontAwesomeIcon
-                          icon={
-                            this.props.topFilter.showingSites[site.id]
-                              ? faCheckCircle
-                              : faTimesCircle
-                          }
-                        />
-                      </div>
-                      <div className="top-filter-site-name">{site.name}</div>
-                    </div>
-                  </div>
-                </div>
+                <GroupItem key={`${site.id}thsi`}>
+                  <FilterItemToggle
+                    onClick={() => {
+                      this.props.toggleSite(site.id);
+                      this.props.onChangePage();
+                    }}
+                    showing={this.props.topFilter.showingSites[site.id]}
+                  >
+                    <FilterIcon>
+                      <FontAwesomeIcon
+                        icon={this.props.topFilter.showingSites[site.id] ? faCheckCircle : faCircle}
+                      />
+                    </FilterIcon>
+                    <FilterOption>{site.name}</FilterOption>
+                  </FilterItemToggle>
+                </GroupItem>
               ))}
-            </div>
-            <div className="top-filter-site">
-              <div className="top-filter-site-group-name">Order</div>
-              <div className="top-filter-site-item">
-                <div
+            </FilterGroup>
+            <FilterGroup>
+              <GroupName>Order</GroupName>
+              <GroupItem>
+                <FilterItemToggle
                   onClick={() => {
                     this.props.toggleSortBy('seed');
                     this.props.onChangePage();
                   }}
-                  className={
-                    this.props.topFilter.sortBy === 'seed'
-                      ? 'top-filter-site-head top-filter-site-head-active'
-                      : 'top-filter-site-head'
-                  }
+                  showing={this.props.topFilter.sortBy === 'seed'}
                 >
-                  <div className="top-filter-site-icon">
+                  <FilterIcon>
                     <FontAwesomeIcon
-                      icon={this.props.topFilter.sortBy === 'seed' ? faCheckCircle : faTimesCircle}
+                      icon={this.props.topFilter.sortBy === 'seed' ? faCheckCircle : faCircle}
                     />
-                  </div>
-                  <div className="top-filter-site-name">Seed</div>
-                </div>
-              </div>
-              <div className="top-filter-site-item">
-                <div
+                  </FilterIcon>
+                  <FilterOption>Seed</FilterOption>
+                </FilterItemToggle>
+              </GroupItem>
+              <GroupItem>
+                <FilterItemToggle
                   onClick={() => {
                     this.props.toggleSortBy('leech');
                     this.props.onChangePage();
                   }}
-                  className={
-                    this.props.topFilter.sortBy === 'leech'
-                      ? 'top-filter-site-head top-filter-site-head-active'
-                      : 'top-filter-site-head'
-                  }
+                  showing={this.props.topFilter.sortBy === 'leech'}
                 >
-                  <div className="top-filter-site-icon">
+                  <FilterIcon>
                     <FontAwesomeIcon
-                      icon={this.props.topFilter.sortBy === 'leech' ? faCheckCircle : faTimesCircle}
+                      icon={this.props.topFilter.sortBy === 'leech' ? faCheckCircle : faCircle}
                     />
-                  </div>
-                  <div className="top-filter-site-name">Leech</div>
-                </div>
-              </div>
-            </div>
-            <div className="top-filter-site">
-              <div className="top-filter-site-group-name">Ordered by</div>
-              <div className="top-filter-site-item">
-                <div
+                  </FilterIcon>
+                  <FilterOption>Leech</FilterOption>
+                </FilterItemToggle>
+              </GroupItem>
+            </FilterGroup>
+            <FilterGroup>
+              <GroupName>Ordered by</GroupName>
+              <GroupItem>
+                <FilterItemToggle
                   onClick={() => {
                     this.props.toggleSortOrder('top');
                     this.props.onChangePage();
                   }}
-                  className={
-                    this.props.topFilter.sortOrder === 'top'
-                      ? 'top-filter-site-head top-filter-site-head-active'
-                      : 'top-filter-site-head'
-                  }
+                  showing={this.props.topFilter.sortOrder === 'top'}
                 >
-                  <div className="top-filter-site-icon">
+                  <FilterIcon>
                     <FontAwesomeIcon
-                      icon={
-                        this.props.topFilter.sortOrder === 'top' ? faCheckCircle : faTimesCircle
-                      }
+                      icon={this.props.topFilter.sortOrder === 'top' ? faCheckCircle : faCircle}
                     />
-                  </div>
-                  <div className="top-filter-site-name">Highest</div>
-                </div>
-              </div>
-              <div className="top-filter-site-item">
-                <div
+                  </FilterIcon>
+                  <FilterOption>Highest</FilterOption>
+                </FilterItemToggle>
+              </GroupItem>
+              <GroupItem>
+                <FilterItemToggle
                   onClick={() => {
                     this.props.toggleSortOrder('bottom');
                     this.props.onChangePage();
                   }}
-                  className={
-                    this.props.topFilter.sortOrder === 'bottom'
-                      ? 'top-filter-site-head top-filter-site-head-active'
-                      : 'top-filter-site-head'
-                  }
+                  showing={this.props.topFilter.sortOrder === 'bottom'}
                 >
-                  <div className="top-filter-site-icon">
+                  <FilterIcon>
                     <FontAwesomeIcon
-                      icon={
-                        this.props.topFilter.sortOrder === 'bottom' ? faCheckCircle : faTimesCircle
-                      }
+                      icon={this.props.topFilter.sortOrder === 'bottom' ? faCheckCircle : faCircle}
                     />
-                  </div>
-                  <div className="top-filter-site-name">Lowest</div>
-                </div>
-              </div>
-            </div>
-            {/* <hr className="top-filter-list-hr" /> */}
-          </div>
+                  </FilterIcon>
+                  <FilterOption>Lowest</FilterOption>
+                </FilterItemToggle>
+              </GroupItem>
+            </FilterGroup>
+          </FilterBox>
         )}
-      </div>
+      </FilterContainer>
     );
   }
 }
@@ -255,7 +321,7 @@ const mapDispatch = dispatch => ({
   },
 });
 
-export default connect(
+export default withTheme(connect(
   mapState,
   mapDispatch,
-)(Filter);
+)(Filter));

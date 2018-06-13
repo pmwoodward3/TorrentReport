@@ -1,5 +1,3 @@
-// import { lighten } from 'polished';
-
 const colors = {
   primary: '#d1e751', // neon green yellow-ish
   secondary: '#4dbce9', // light blue

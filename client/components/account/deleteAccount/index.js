@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 
-import './style.scss';
+import PageHeader from '../../pageHeader';
+import Notification from '../../notification';
 import Loading from '../../loader';
+
+const ConfirmDelete = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  color: #68291e;
+  background-color: tomato;
+  border: solid 1px #a74130;
+`;
 
 class DeleteAccount extends Component {
   constructor(props) {
@@ -51,56 +64,60 @@ class DeleteAccount extends Component {
   render() {
     if (this.state.status === 'error') {
       return (
-        <div className="delete-account">
-          <h1>Your Account Has NOT Been Deleted. We encountered an error. </h1>
-          <p>Sorry try this again later.</p>
+        <div>
+          <PageHeader>Delete Your Account</PageHeader>
+          <Notification title="Your Account Has NOT Been Deleted." type="error">
+            Sorry we encountered an error, please try this action again later.
+          </Notification>
         </div>
       );
     }
     if (this.state.status === 'deleted') {
       const timeLeft = this.state.timeToReload / this.state.timeUpdateSeconds;
       return (
-        <div className="delete-account">
-          <h1>Your Account Has Been Deleted </h1>
-          {timeLeft >= 2 ? (
-            <p>
-              This page will roload in <b>{timeLeft}</b> seconds and you are all done!
-            </p>
-          ) : (
-            <p>Good bye my friend...</p>
-          )}
+        <div>
+          <PageHeader>Delete Your Account</PageHeader>
+          <Notification title="Your Account Has Been Deleted!" type="success">
+            {timeLeft >= 2 ? (
+              <p>
+                This page will roload in <b>{timeLeft}</b> seconds and you are all done!
+              </p>
+            ) : (
+              <p>Good bye my friend...</p>
+            )}
+          </Notification>
         </div>
       );
     }
     if (this.state.status === 'deleting') {
       return (
-        <div className="delete-account">
+        <div>
+          <PageHeader>Delete Your Account</PageHeader>
           <Loading message="Awaiting for server to confirm your acount has been deleted." />
         </div>
       );
     }
     if (this.state.status === 'confirm') {
       return (
-        <div className="delete-account">
+        <div>
+          <PageHeader>Delete Your Account</PageHeader>
           <h1>Almost There. Just Confirm.</h1>
           <p>Just a reminder that you can not undo this.</p>
           <p>It was fun while it lasted mi amigo.</p>
           <p>Thanks for coming! Come back whenever.</p>
-          <div className="delete-confirm" onClick={this.confirmedDelete}>
+          <ConfirmDelete onClick={this.confirmedDelete}>
             I AM SURE. NOW DELETE THE ACCOUNT!
-          </div>
+          </ConfirmDelete>
         </div>
       );
     }
     return (
-      <div className="delete-account">
-        <h1>Delete Your Account</h1>
+      <div>
+        <PageHeader>Delete Your Account</PageHeader>
         <p>
           This will delete all of our info associated with your account. This can not be undone.
         </p>
-        <div className="delete-confirm" onClick={this.askToConfirm}>
-          DELETE MY ACCOUNT
-        </div>
+        <ConfirmDelete onClick={this.askToConfirm}>DELETE MY ACCOUNT</ConfirmDelete>
       </div>
     );
   }

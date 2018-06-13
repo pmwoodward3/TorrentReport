@@ -1,13 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
+import PageHeader from '../pageHeader';
 import Filter from './filter';
 import { fetchTopNewSnapshots, setFilterVisibiility, changeCurrentPage } from '../../store';
 import Loader from '../loader';
-import './style.scss';
 
 import InfoListItem from './infoListItem';
 import PageButtonMaker from '../pagination/pageButtonMaker';
+
+/**
+ * STYLES
+ */
+
+const PaginationContainer = styled.div`
+  margin: 10px 0 10px 0;
+`;
+
+/**
+ *  COMPONENT
+ */
 
 const scrollToTop = () => {
   window.scroll(0, 0);
@@ -67,8 +80,8 @@ const TopNewSnapshots = (props) => {
   }
 
   return (
-    <div className="top-container">
-      <div className="top-header">CURRENT TORRENTS</div>
+    <div>
+      <PageHeader>CURRENT TORRENTS</PageHeader>
       <Filter
         count={filteredSnapshots.length}
         currentPage={props.topFilter.currentPage + 1}
@@ -87,7 +100,7 @@ const TopNewSnapshots = (props) => {
           key={snapshot.id}
         />
       ))}
-      <div className="top-filter-pagination">
+      <PaginationContainer>
         {numberOfPages > 1 && (
           <PageButtonMaker
             numberOfPages={numberOfPages}
@@ -96,7 +109,7 @@ const TopNewSnapshots = (props) => {
             funcToCall={() => props.changeFilterVisibility(false)}
           />
         )}
-      </div>
+      </PaginationContainer>
     </div>
   );
 };

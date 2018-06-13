@@ -1,11 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import SiteStats from '../siteStats';
 import Notification from '../notification';
 import DailyListing from '../dailyListing';
 import TopSnapshotWeek from '../topSnapshotWeek';
 
-import './style.scss';
+const FlexLine = styled.div`
+  display: inline-flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
 
 /**
  * COMPONENT
@@ -26,13 +33,13 @@ const Home = (props) => {
           sites to get their top torrents.
         </Notification>
       )}
-      <div className="flex-inline">
+      <FlexLine>
         <SiteStats />
         <DailyListing />
-      </div>
-      <div className="flex-inline">
+      </FlexLine>
+      <FlexLine>
         <TopSnapshotWeek />
-      </div>
+      </FlexLine>
     </div>
   );
 };

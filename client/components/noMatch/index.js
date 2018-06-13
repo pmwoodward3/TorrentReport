@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getData } from '../../store';
 import Loader from '../loader';
 
-import './style.scss';
+import PageHeader from '../pageHeader';
 
 class NoMatch extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class NoMatch extends Component {
   componentDidMount() {}
 
   render() {
-    return <div>Page Not Found</div>;
+    return <PageHeader>Page Not Found</PageHeader>;
   }
 }
 

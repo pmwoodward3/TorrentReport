@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import './style.scss';
+import PageHeader from '../pageHeader';
 
 const About = () => (
   <div className="about-page">
-    <h1>About Torrent Report</h1>
+    <PageHeader>About</PageHeader>
     <p>
       <b>Simply:</b> A place to see torrent download statistics and information.
     </p>

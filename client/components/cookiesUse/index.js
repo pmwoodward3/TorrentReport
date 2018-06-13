@@ -60,9 +60,9 @@ const Button = styled.button`
   color: ${props => darken(0.4, props.theme.colors.senary)};
   font-weight: bold;
   padding: 12px;
-  margin 20px;
+  margin: 20px;
   @media (max-width: ${props => props.theme.mobile.width}) {
-    margin 20px 0 0 0;
+    margin: 20px 0 0 0;
   }
   flex-shrink: 0;
   &:hover {
@@ -70,7 +70,7 @@ const Button = styled.button`
     border: solid 5px ${props => darken(0.4, props.theme.colors.senary)};
     color: ${props => darken(0.4, props.theme.colors.senary)};
   }
-  `;
+`;
 
 class CookiesUse extends React.Component {
   constructor(props) {

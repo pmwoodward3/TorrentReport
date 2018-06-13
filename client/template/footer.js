@@ -1,24 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { withTheme } from 'styled-components';
-// import { lighten, darken } from 'polished';
+import { lighten, darken } from 'polished';
 import moment from 'moment';
 import BuiltBy from './BuiltBy';
 
 const StyledFooter = styled.div`
-  background-color: #f2f2f2;
+  background-color: ${props => props.theme.footer.backgroundColor};
+  color: ${props => darken(0.3, props.theme.footer.backgroundColor)};
+  min-height: ${props => props.theme.footer.minHeight};
+  font-family: ${props => props.theme.fonts.header};
 `;
 
-const PolicyLink = styled(Link)`
-  color: #a7a7a7;
+const FlexRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const RowGrowBox = styled.div`
+  min-height: 6em;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FooterLink = styled(Link)`
+  color: ${props => props.theme.footer.linkColor};
   padding: 5px;
   text-decoration: none;
   &:hover {
-    color: #4d4d4d;
+    color: ${props => darken(0.25, props.theme.footer.linkColor)};
     text-decoration: underline;
   }
   &:visited {
-    color: #a7a7a7;
+    color: ${props => props.theme.footer.linkColor};
+  }
+`;
+
+const PolicyLink = styled(Link)`
+  color: ${props => lighten(0.5, props.theme.colors.quinary)};
+  padding: 5px;
+  text-decoration: none;
+  &:hover {
+    color: ${props => lighten(0.25, props.theme.colors.quinary)};
+    text-decoration: underline;
+  }
+  &:visited {
+    color: ${props => lighten(0.5, props.theme.colors.quinary)};
   }
 `;
 
@@ -42,20 +76,33 @@ const Build = styled.div`
     text-align: center;
   }
 `;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const OnlineUserCount = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: ${props => props.theme.mobile.width}) {
+    flex-direction: column;
+  }
+`;
 
 const Footer = ({ userCount }) => (
-  <div className="footer">
-    <div className="footerHolder">
-      <div className="growBox">
+  <StyledFooter>
+    <FlexRow>
+      <RowGrowBox>
         <BuiltBy />
-      </div>
-      <div className="growBox">{`${userCount} users online`}</div>
-      <div className="growBox">
-        <Link to="/faq">F.A.Q</Link>
-        <Link to="/about">About</Link>
-      </div>
-    </div>
-    <StyledFooter>
+      </RowGrowBox>
+      <RowGrowBox>
+        <FooterLink to="/faq">F.A.Q</FooterLink>
+        <FooterLink to="/about">About</FooterLink>
+      </RowGrowBox>
+    </FlexRow>
+    <Column>
+      <OnlineUserCount>{`${userCount} users online`}</OnlineUserCount>
       <PolicyHolder>
         <PolicyLink to="/policy/privacy">Privacy Policy</PolicyLink>
         <PolicyLink to="/policy/cookies">Cookie Policy</PolicyLink>
@@ -65,8 +112,8 @@ const Footer = ({ userCount }) => (
         Current Version Build Date<br />
         {moment(BUILD_DATE).format('MMMM Do YYYY, h:mm:ss a')}
       </Build>
-    </StyledFooter>
-  </div>
+    </Column>
+  </StyledFooter>
 );
 
-export default Footer;
+export default withTheme(Footer);

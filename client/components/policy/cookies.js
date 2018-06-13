@@ -1,8 +1,10 @@
 import React from 'react';
 
+import PageHeader from '../pageHeader';
+
 const CookiePolicy = () => (
   <div>
-    <h1>Cookie Policy</h1>
+    <PageHeader>Cookie Policy</PageHeader>
 
     <p>This is the Cookie Policy for Torrent Report, accessible from https://www.torrent.report</p>
 

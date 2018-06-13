@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PageHeader from '../pageHeader';
 
 const Terms = () => (
   <div>
-    <h1>Terms and Conditions</h1>
+    <PageHeader>Terms and Conditions</PageHeader>
 
     <p>Welcome to Torrent Report!</p>
 
