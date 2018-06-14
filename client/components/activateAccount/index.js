@@ -46,7 +46,7 @@ class ActivateAccount extends Component {
             </Notification>
           )}
           {this.state.error && (
-            <Notification type="success" title="We Encountered a Problem...">
+            <Notification type="error" title="We Encountered a Problem...">
               Sorry, we had a problem while trying to activate your account.{' '}
               {`${this.state.error}.`}
             </Notification>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PageButton from './pageButton';
 import { lighten } from 'polished';
+import PageButton from './pageButton';
 
 const Pagination = styled.div`
   margin: 10px;
@@ -10,7 +10,7 @@ const Pagination = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  flex-wrap: wrap;'
+  flex-wrap: wrap;
 `;
 const Spacer = styled.div`
   min-width: 30px;

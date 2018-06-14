@@ -40,8 +40,7 @@ if (
     const googleId = profile.id;
     const name = profile.displayName;
     const email = profile.emails[0].value;
-
-    User.find({ where: { googleId } })
+    return User.find({ where: { googleId } })
       .then(foundUser =>
         (foundUser
           ? done(null, foundUser)
@@ -51,7 +50,10 @@ if (
             googleId,
             activated: true,
           }).then(createdUser => done(null, createdUser))))
-      .catch(done);
+      .catch((err) => {
+        console.log('error in google strategy: ', err);
+        return done(err);
+      });
   });
 
   passport.use(strategy);

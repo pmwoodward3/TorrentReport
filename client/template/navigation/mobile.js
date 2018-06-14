@@ -40,8 +40,8 @@ const ToggleContainer = styled.div`
   font-size: 1.3em;
   cursor: pointer;
   &:hover {
-    background: white;
-    color: black;
+    color: ${props => lighten(0.2, props.theme.colors.primary)};
+    border: solid 3px ${props => lighten(0.2, props.theme.colors.primary)};
   }
 `;
 
@@ -83,10 +83,10 @@ const SubMenuLink = MenuLink.extend`
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-  color: ${props => darken(0.5, props.theme.colors.quaternary)};
+  color: ${props => darken(0.3, props.theme.colors.quaternary)};
   text-decoration: none;
   &:visited {
-    color: ${props => darken(0.5, props.theme.colors.quaternary)};
+    color: ${props => darken(0.3, props.theme.colors.quaternary)};
   }
   &:hover {
     color: ${props => darken(0.1, props.theme.colors.secondary)};

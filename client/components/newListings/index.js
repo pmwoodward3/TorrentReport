@@ -9,6 +9,7 @@ import Loader from '../loader';
 import { fetchDailyListings } from '../../store';
 import ListItem from './listItem';
 import worker from './filterWorker';
+import PageButtonMaker from '../pagination/pageButtonMaker';
 
 /**
  * STYLES
@@ -86,6 +87,8 @@ class NewListings extends Component {
       search: '',
       searchResults: [],
       searching: false,
+      itemsPerPage: 15,
+      currentPage: 0,
     };
 
     this.workerHolder = undefined;
@@ -106,6 +109,12 @@ class NewListings extends Component {
 
   toggleFilter = (filter) => {
     this.setState({ filter });
+  };
+
+  getArrayFromPage = (dataArray) => {
+    const begin = this.state.currentPage * this.state.itemsPerPage;
+    const end = begin + this.state.itemsPerPage;
+    return dataArray.slice(begin, end);
   };
 
   searchChange = (event) => {
@@ -143,6 +152,10 @@ class NewListings extends Component {
     };
   };
 
+  changePage = (pageNumber) => {
+    this.setState({ currentPage: pageNumber });
+  };
+
   render() {
     if (
       !_.has(this.props.dailyListings, 'days1') ||
@@ -167,6 +180,10 @@ class NewListings extends Component {
       orderArr,
     );
 
+    const numberOfPages = Math.ceil(finalSize.length / this.state.itemsPerPage);
+    const currentPageArr = this.getArrayFromPage(finalSize);
+    const itemNumberBase = this.state.itemsPerPage * this.state.currentPage;
+
     return (
       <NewListingsContainer>
         <TopRow>
@@ -184,7 +201,7 @@ class NewListings extends Component {
           <NowSearching>{`currently searching for ${this.state.search}`}</NowSearching>
         )}
         {this.props.dailyListings.days1.status === 'loaded' &&
-          finalSize.length === 0 && (
+          currentPageArr.length === 0 && (
             <NoResultContainer>
               {!this.state.search ? (
                 <div>No new items</div>
@@ -193,12 +210,24 @@ class NewListings extends Component {
               )}
             </NoResultContainer>
           )}
-        {finalSize.length > 0 && (
+        {currentPageArr.length > 0 && (
           <ItemListContainer>
-            {finalSize.map((item, index) => (
-              <ListItem key={item.id} active={this.state.filter} index={index} item={item} />
+            {currentPageArr.map((item, index) => (
+              <ListItem
+                key={item.id}
+                active={this.state.filter}
+                index={index + itemNumberBase}
+                item={item}
+              />
             ))}
           </ItemListContainer>
+        )}
+        {numberOfPages > 1 && (
+          <PageButtonMaker
+            numberOfPages={numberOfPages}
+            currentPage={this.state.currentPage}
+            changePageFunc={this.changePage}
+          />
         )}
       </NewListingsContainer>
     );

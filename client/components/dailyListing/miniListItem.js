@@ -5,6 +5,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faCaretUp, faCaretDown } from '@fortawesome/fontawesome-free-solid';
 import styled, { withTheme } from 'styled-components';
 import { lighten, darken } from 'polished';
+import truncate from '../truncate';
 
 /**
  * STYLES
@@ -54,7 +55,6 @@ const Number = styled.div`
   align-items: center;
   height: 28px;
   flex-basis: 28px;
-  border-radius: 50%;
   margin-right: 10px;
   font-size: 14px;
   font-family: monospace;
@@ -124,7 +124,7 @@ const MiniListItem = (props) => {
     <Item alt={name} to={`/listing/${id}`}>
       <Number>{props.index + 1}</Number>
       <FlexSwitch>
-        <Name>{name}</Name>
+        <Name>{truncate(name, 60, true)}</Name>
         <Info>
           <SLData type="seed" active={active === 'seed'}>
             <FontAwesomeIcon icon={faCaretUp} /> {seed}

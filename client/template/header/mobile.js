@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { withTheme } from 'styled-components';
 import { lighten, darken } from 'polished';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import { faBars, faTimes } from '@fortawesome/fontawesome-free-solid';
+import { faBars } from '@fortawesome/fontawesome-free-solid';
 
 import Navigation from '../navigation/mobile';
 import Logo from './logo';
@@ -36,16 +36,16 @@ const ToggleContainer = styled.div`
 
 const Header = (props) => {
   const {
-    showMenu, isLoggedIn, logoutFunc, toggleMenu,
+    showMenu, isLoggedIn, handleLogout, toggleMenu,
   } = props;
   return (
     <MobileHeaderContainer>
-      <Logo />
+      <Logo mobile="true" />
       <ToggleContainer onClick={toggleMenu}>
         {!showMenu && <FontAwesomeIcon icon={faBars} />}
       </ToggleContainer>
       {showMenu && (
-        <Navigation toggleMenu={toggleMenu} handleLogout={logoutFunc} isLoggedIn={isLoggedIn} />
+        <Navigation toggleMenu={toggleMenu} handleLogout={handleLogout} isLoggedIn={isLoggedIn} />
       )}
     </MobileHeaderContainer>
   );

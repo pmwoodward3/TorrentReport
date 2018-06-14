@@ -39,11 +39,10 @@ const Number = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   font-size: 1em;
   font-family: monospace;
-  border-radius: 50%;
   margin-right: 10px;
   flex-grow: 0;
   flex-shrink: 0;

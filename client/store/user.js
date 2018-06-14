@@ -56,7 +56,7 @@ export const auth = (email, password, method, terms) => (dispatch) => {
       (res) => {
         switch (method) {
           case 'signup': {
-            dispatch(setSuccess(`You have successfully signed up. We emailed you a link that needs to clicked to activate your account. Check your email: ${
+            dispatch(setSuccess(`You have successfully signed up. We emailed you a link that needs to clicked to activate your account. Noted that our emails are sometimes placed in your spam folder. Check your email: ${
               res.data.email
             } `));
             break;
@@ -88,7 +88,7 @@ export const logout = () => dispatch =>
     .post('/auth/logout')
     .then((_) => {
       dispatch(removeUser());
-      history.push('/login');
+      history.push('/');
     })
     .catch(err => console.log(err));
 

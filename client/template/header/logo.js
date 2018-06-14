@@ -14,6 +14,7 @@ const LogoContainer = styled.div`
   align-items: center;
   justify-content: center;
   color: ${props => props.theme.colors.header.logo};
+  ${props => props.mobile && 'transform: translate(0em, -0.3em);'};
 `;
 
 const LogoText = styled(Link)`
@@ -49,11 +50,16 @@ const BrandBar = styled.div`
  * COMPONENT
  */
 
-const Logo = props => (
-  <LogoContainer>
-    <LogoText to="/">Torrent Report</LogoText>
-    <BrandBar>{config.version.name()}</BrandBar>
-  </LogoContainer>
-);
+const Logo = (props) => {
+  const { mobile } = props;
+  return (
+    <LogoContainer mobile={mobile}>
+      <LogoText mobile={mobile} to="/">
+        Torrent Report
+      </LogoText>
+      <BrandBar mobile={mobile}>{config.version.name()}</BrandBar>
+    </LogoContainer>
+  );
+};
 
 export default withTheme(Logo);

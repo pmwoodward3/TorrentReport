@@ -9,7 +9,7 @@ import { lighten, darken } from 'polished';
 
 const ListComponent = styled.div`
   background-color: ${props => lighten(0.98, props.theme.colors.quinary)};
-  flex-basis: 300px;
+  max-width: 300px;
   flex-grow: 1;
   padding: 0.5em;
   display: inline-flex;

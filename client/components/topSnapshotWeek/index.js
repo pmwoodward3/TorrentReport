@@ -18,7 +18,7 @@ const TopWeekStats = styled.div`
   justify-content: flex-start;
   margin: 1em;
   flex-grow: 1;
-  background-color: ${props => lighten(0.45, props.theme.colors.tertiary)};
+  background-color: ${props => lighten(0.95, props.theme.colors.quinary)};
   min-width: 200px;
   min-height: 200px;
 `;
@@ -29,7 +29,7 @@ const Header = styled.div`
   font-weight: 800;
   font-size: 1.4em;
   word-wrap: break-word;
-  color: ${props => darken(0.2, props.theme.colors.tertiary)};
+  color: ${props => darken(0.6, props.theme.colors.quaternary)};
   text-transform: uppercase;
 `;
 const ColumnHolder = styled.div`
@@ -42,7 +42,7 @@ const Column = styled.div`
   flex-basis: 300px;
   flex-grow: 1;
   flex-direction: column;
-  background-color: ${props => lighten(0.41, props.theme.colors.tertiary)};
+  background-color: ${props => lighten(0.35, props.theme.colors[props.colorselected])};
   margin: 5px;
   padding: 10px;
 `;
@@ -50,7 +50,7 @@ const ColHeader = styled.div`
   font-family: ${props => props.theme.fonts.header};
   font-size: 1.2em;
   word-wrap: break-word;
-  color: ${props => lighten(0.15, props.theme.colors.tertiary)};
+  color: ${props => darken(0.2, props.theme.colors[props.colorselected])};
   text-transform: uppercase;
 `;
 const List = styled.div`
@@ -58,7 +58,7 @@ const List = styled.div`
   flex-direction: column;
 `;
 const Item = styled(Link)`
-  border-bottom: solid 1px ${props => lighten(0.35, props.theme.colors.tertiary)};
+  border-bottom: solid 1px ${props => lighten(0.1, props.theme.colors[props.colorselected])};
   display: flex;
   flex-direction: row;
   min-height: 20px;
@@ -68,13 +68,13 @@ const Item = styled(Link)`
   padding: 5px 0px 5px 0px;
   text-decoration: none;
   opacity: 0.6;
-  color: ${props => darken(0.34, props.theme.colors.tertiary)};
+  color: ${props => darken(0.4, props.theme.colors[props.colorselected])};
   &:hover {
     opacity: 1;
-    color: ${props => darken(0.6, props.theme.colors.tertiary)};
+    color: ${props => darken(0.6, props.theme.colors[props.colorselected])};
   }
   &:visited {
-    color: ${props => darken(0.34, props.theme.colors.tertiary)};
+    color: ${props => darken(0.4, props.theme.colors[props.colorselected])};
   }
   &:last-child {
     border-bottom: none;
@@ -82,15 +82,14 @@ const Item = styled(Link)`
 `;
 const Number = styled.div`
   opacity: 0.4;
-  background-color: ${props => darken(0.3, props.theme.colors.tertiary)};
+  background-color: ${props => darken(0.3, props.theme.colors[props.colorselected])};
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 25px;
-  flex-basis: 25px;
+  height: 28px;
+  flex-basis: 28px;
   font-size: 15px;
-  border-radius: 50%;
   margin-right: 10px;
   font-family: monospace;
   flex-shrink: 0;
@@ -163,16 +162,16 @@ class topSnapshotWeek extends Component {
       <TopWeekStats>
         <Header>this week</Header>
         <ColumnHolder>
-          <Column>
-            <ColHeader>Most Seeded</ColHeader>
-            <List>
+          <Column colorselected="octonary">
+            <ColHeader colorselected="octonary">Most Seeded</ColHeader>
+            <List colorselected="octonary">
               {this.props.topWeekSnapshots.seed.map((item, index) => (
                 <Item
+                  colorselected="octonary"
                   key={item.id}
                   to={`/listing/${item.torrentInfo.torrentListing.id}`}
-                  className="col-container-list-item"
                 >
-                  <Number>{index + 1}</Number>
+                  <Number colorselected="octonary">{index + 1}</Number>
                   <InfoContainer>
                     <InfoTitle>{`${item.torrentInfo.torrentListing.name}`}</InfoTitle>
                     <DataRow>
@@ -190,16 +189,16 @@ class topSnapshotWeek extends Component {
               ))}
             </List>
           </Column>
-          <Column>
-            <ColHeader>Most Leeched</ColHeader>
-            <List>
+          <Column colorselected="septenary">
+            <ColHeader colorselected="septenary">Most Leeched</ColHeader>
+            <List colorselected="septenary">
               {this.props.topWeekSnapshots.leech.map((item, index) => (
                 <Item
                   key={item.id}
                   to={`/listing/${item.torrentInfo.torrentListing.id}`}
-                  className="col-container-list-item"
+                  colorselected="septenary"
                 >
-                  <Number>{index + 1}</Number>
+                  <Number colorselected="septenary">{index + 1}</Number>
                   <InfoContainer>
                     <InfoTitle>{`${item.torrentInfo.torrentListing.name}`}</InfoTitle>
                     <DataRow>
