@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import PageHeader from '../../pageHeader';
 /**
  * COMPONENT
  */
@@ -10,7 +10,9 @@ export const AccountHome = (props) => {
 
   return (
     <div>
+      <PageHeader>Your Account</PageHeader>
       <h3>Welcome, {email}</h3>
+      <br />
       <Link to="/account/delete">Delete Your Account Here</Link>
     </div>
   );

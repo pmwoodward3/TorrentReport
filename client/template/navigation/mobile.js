@@ -170,11 +170,6 @@ const MobileNavigation = (props) => {
             <MenuLink onClick={toggleMenu} to="/account">
               Account
             </MenuLink>
-            <SubMenu>
-              <SubMenuLink onClick={toggleMenu} to="/account/settings">
-                Settings
-              </SubMenuLink>
-            </SubMenu>
           </Item>
         )}
         {!isLoggedIn ? (

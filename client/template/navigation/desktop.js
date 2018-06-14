@@ -131,9 +131,6 @@ const DesktopNavigation = (props) => {
       {isLoggedIn && (
         <Item>
           <MenuLink to="/account">Account</MenuLink>
-          <SubMenu>
-            <SubMenuLink to="/account/settings">Settings</SubMenuLink>
-          </SubMenu>
         </Item>
       )}
       {!isLoggedIn ? (

@@ -27,6 +27,10 @@ const StyledAuthForm = styled.form`
   align-items: center;
 `;
 
+const FillContainer = styled.div`
+  width: 100%;
+`;
+
 const Header = styled.div`
   flex-direction: column;
   display: flex;
@@ -139,17 +143,21 @@ class AuthForm extends Component {
         >
           {error &&
             error.response && (
-              <Notification title="We Have a Problem..." type="error">
-                {' '}
-                {error.response.data}{' '}
-              </Notification>
+              <FillContainer>
+                <Notification title="We Have a Problem..." type="error">
+                  {' '}
+                  {error.response.data}{' '}
+                </Notification>
+              </FillContainer>
             )}
           {success &&
             success.response && (
-              <Notification title="Great Success!" type="success">
-                {' '}
-                {success.response.data}{' '}
-              </Notification>
+              <FillContainer>
+                <Notification title="Great Success!" type="success">
+                  {' '}
+                  {success.response.data}{' '}
+                </Notification>
+              </FillContainer>
             )}
           <Header colsol={this.props.colsol}>
             <HeaderIcon>

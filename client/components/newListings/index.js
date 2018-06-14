@@ -120,9 +120,18 @@ class NewListings extends Component {
   searchChange = (event) => {
     const searchInput = event.target.value;
     if (!searchInput.trim().length) {
-      return this.setState({ search: '', searching: false, searchResults: [] });
+      return this.setState({
+        search: '',
+        searching: false,
+        searchResults: [],
+        currentPage: 0,
+      });
     }
-    this.setState({ search: searchInput, searching: true });
+    this.setState({
+      search: searchInput,
+      searching: true,
+      currentPage: 0,
+    });
     const isMoreGeneral = searchInput.length < this.state.search;
     const arrToUse =
       this.state.searchResults.length && isMoreGeneral

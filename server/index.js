@@ -78,10 +78,10 @@ const createApp = () => {
     saveUninitialized: true,
     secret: process.env.SESSION_SECRET || '2167SQe023713Lhr3KE349ads786asd5s62s9m3ldf3487634',
   };
-  if (app.get('env') === 'production') {
-    app.set('trust proxy', 1);
-    sessionValues.cookie.secure = true;
-  }
+  // if (app.get('env') === 'production') {
+  //   sessionValues.cookie.secure = true;
+  // }
+
   app.use(session(sessionValues));
 
   // passport auth
