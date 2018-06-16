@@ -5,9 +5,9 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import styled, { withTheme } from 'styled-components';
 import { lighten, darken } from 'polished';
 
-import { auth, clearError, clearSuccess } from '../../store';
-import AcceptTerms from './acceptTerms';
-import Notification from '../notification';
+import { auth, clearError, clearSuccess } from '../store';
+import AcceptTerms from '../components/acceptTerms';
+import Notification from '../components/notification';
 
 /**
  * STYLED
@@ -37,7 +37,7 @@ const Header = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 1.3em;
-  color: ${props => darken(0.2, props.theme.colors[props.colsol || 'quinary'])};
+  color: ${props => darken(0.2, props.theme.colors[props.colorSelected || 'quinary'])};
   opacity: 0.7;
   font-family: ${props => props.theme.fonts.header};
 `;
@@ -62,7 +62,7 @@ const StyledInput = styled.input`
   text-shadow: 0 -1px 0 ${props => props.theme.colors.quaternary};
   &:focus {
     color: black;
-    border: solid 3px ${props => props.theme.colors[props.colsol || 'primary']};
+    border: solid 3px ${props => props.theme.colors[props.colorSelected || 'primary']};
     outline-width: 0;
     background-color: ${props => lighten(0.96, props.theme.colors.quinary)};
   }
@@ -77,21 +77,34 @@ const SubmitButton = styled.button`
   font-family: ${props => props.theme.fonts.header};
   -webkit-appearance: none;
   -webkit-border-radius: 0;
-  color: ${props => darken(0.55, props.theme.colors[props.colsol || 'primary'])};
-  background-color: ${props => lighten(0.2, props.theme.colors[props.colsol || 'primary'])};
-  border: solid 1px ${props => darken(0.15, props.theme.colors[props.colsol || 'primary'])};
+  color: ${props => darken(0.55, props.theme.colors[props.colorSelected || 'primary'])};
+  background-color: ${props => lighten(0.2, props.theme.colors[props.colorSelected || 'primary'])};
+  border: solid 1px ${props => darken(0.15, props.theme.colors[props.colorSelected || 'primary'])};
   outline-width: 0;
   &:focus {
-    border: solid 1px ${props => darken(0.15, props.theme.colors[props.colsol || 'primary'])};
+    border: solid 1px ${props => darken(0.15, props.theme.colors[props.colorSelected || 'primary'])};
     outline-width: 0;
   }
   &:active {
     outline-width: 0;
     text-shadow: 0 -1px 0 white;
 
-    color: ${props => darken(0.4, props.theme.colors[props.colsol || 'primary'])};
-    background-color: ${props => darken(0.01, props.theme.colors[props.colsol || 'primary'])};
-    border: solid 1px ${props => darken(0.1, props.theme.colors[props.colsol || 'primary'])};
+    color: ${props => darken(0.4, props.theme.colors[props.colorSelected || 'primary'])};
+    background-color: ${props =>
+    darken(0.01, props.theme.colors[props.colorSelected || 'primary'])};
+    border: solid 1px ${props => darken(0.1, props.theme.colors[props.colorSelected || 'primary'])};
+  }
+`;
+
+const StyledLink = styled.a`
+  color: ${props => darken(0.3, props.theme.colors[props.colorSelected || 'primary'])};
+  font-size: 18px;
+  &:visited {
+    color: ${props => darken(0.3, props.theme.colors[props.colorSelected || 'primary'])};
+  }
+  &:hover {
+    text-decoration: none;
+    color: ${props => darken(0.5, props.theme.colors[props.colorSelected || 'primary'])};
   }
 `;
 
@@ -144,7 +157,7 @@ class AuthForm extends Component {
           {error &&
             error.response && (
               <FillContainer>
-                <Notification title="We Have a Problem..." type="error">
+                <Notification title="We have a problem..." type="error">
                   {' '}
                   {error.response.data}{' '}
                 </Notification>
@@ -159,7 +172,7 @@ class AuthForm extends Component {
                 </Notification>
               </FillContainer>
             )}
-          <Header colsol={this.props.colsol}>
+          <Header colorSelected={this.props.colorSelected}>
             <HeaderIcon>
               <FontAwesomeIcon icon={icon} />
             </HeaderIcon>
@@ -177,7 +190,7 @@ class AuthForm extends Component {
               value={this.state.email}
               name="email"
               type="text"
-              colsol={this.props.colsol}
+              colorSelected={this.props.colorSelected}
             />
           )}
           {!hideForms && (
@@ -188,7 +201,7 @@ class AuthForm extends Component {
               value={this.state.password}
               name="password"
               type="password"
-              colsol={this.props.colsol}
+              colorSelected={this.props.colorSelected}
             />
           )}
 
@@ -201,14 +214,16 @@ class AuthForm extends Component {
             )}
 
           {!hideForms && (
-            <SubmitButton colsol={this.props.colsol} type="submit">
+            <SubmitButton colorSelected={this.props.colorSelected} type="submit">
               {displayName.toUpperCase()}
             </SubmitButton>
           )}
 
           {!hideForms && (
             <p>
-              <a href="/auth/google">{displayName} with Google</a>
+              <StyledLink colorSelected={this.props.colorSelected} href="/auth/google">
+                {displayName} with Google
+              </StyledLink>
             </p>
           )}
         </StyledAuthForm>
@@ -224,7 +239,7 @@ const mapLogin = state => ({
   displayName: 'Login',
   error: state.user.error,
   success: state.user.success,
-  colsol: 'secondary',
+  colorSelected: 'secondary',
 });
 
 const mapSignup = state => ({
@@ -234,7 +249,7 @@ const mapSignup = state => ({
   displayName: 'Register',
   error: state.user.error,
   success: state.user.success,
-  colsol: 'primary',
+  colorSelected: 'primary',
 });
 
 const mapDispatch = dispatch => ({

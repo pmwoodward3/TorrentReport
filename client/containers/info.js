@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import { fetchInfoById } from '../../store';
+import { fetchInfoById } from '../store';
 
-import Loader from '../loader';
-import InfoHeader from './header';
-import Stats from './stats';
-import SectionHeader from '../sectionHeader';
-import SnapshotsGraph from './snapshotsGraph';
-import SnapshotsList from './snapshotsList';
-import Groups from './groups';
+import Loader from '../components/loader';
+import InfoHeader from '../components/info/header';
+import Stats from '../components/info/stats';
+import SectionHeader from '../components/sectionHeader';
+import SnapshotsGraph from '../components/info/snapshotsGraph';
+import SnapshotsList from '../components/info/snapshotsList';
+import Groups from '../components/info/groups';
 
 /**
  * STYLES

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import SiteStats from '../siteStats';
-import Notification from '../notification';
-import DailyListing from '../dailyListing';
-import TopSnapshotWeek from '../topSnapshotWeek';
+import SiteStats from '../components/siteStats';
+import Notification from '../components/notification';
+import DailyListing from '../components/dailyListing';
+import TopSnapshotWeek from '../components/topSnapshotWeek';
 
 const FlexLine = styled.div`
   display: inline-flex;

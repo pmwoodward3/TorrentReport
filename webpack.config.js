@@ -1,11 +1,9 @@
 const webpack = require('webpack');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 const pluginsArr = [
-  new ExtractTextPlugin('public/style.css', { allChunks: true }),
   new webpack.DefinePlugin({
     PRODUCTION: JSON.stringify(isProd),
     BUILD_DATE: JSON.stringify(new Date()),
@@ -14,11 +12,6 @@ const pluginsArr = [
 
 if (isDev) {
   pluginsArr.push(new LiveReloadPlugin({ appendScriptTag: true }));
-}
-if (isProd) {
-  pluginsArr.push(new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('production'),
-  }));
 }
 
 module.exports = {
@@ -34,37 +27,6 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
-      },
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'postcss-loader',
-            },
-          ],
-        }),
-      },
-      {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'sass-loader',
-            },
-            {
-              loader: 'postcss-loader',
-            },
-          ],
-        }),
       },
     ],
   },

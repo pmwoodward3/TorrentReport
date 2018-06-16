@@ -7,14 +7,8 @@ import Template from './template';
 import {
   Faq,
   About,
-  Login,
-  Signup,
-  Home,
   AccountHome,
   Test,
-  Top,
-  Listing,
-  Info,
   Group,
   Site,
   NewListings,
@@ -27,6 +21,11 @@ import {
   Cookies,
   Terms,
 } from './components/';
+import { Login, Signup } from './containers/auth-form';
+import Home from './containers/home';
+import Listing from './containers/listing';
+import TopCurrent from './containers/topCurrent';
+import Info from './containers/info';
 import { me } from './store';
 
 /**
@@ -54,7 +53,7 @@ class Routes extends Component {
               <Route exact path="/site/:id" component={withTracker(Site)} />
               <Route exact path="/new/listings" component={withTracker(NewListings)} />
               <Route exact path="/test" component={withTracker(Test)} />
-              <Route exact path="/top" component={withTracker(Top)} />
+              <Route exact path="/top" component={withTracker(TopCurrent)} />
               {isLoggedIn && (
                 <Switch>
                   {/* Routes placed here are only available after logging in */}

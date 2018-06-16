@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import PageHeader from '../pageHeader';
-import Filter from './filter';
-import { fetchTopNewSnapshots, setFilterVisibiility, changeCurrentPage } from '../../store';
-import Loader from '../loader';
+import PageHeader from '../components/pageHeader';
+import Filter from '../components/top/filter';
+import { fetchTopNewSnapshots, setFilterVisibiility, changeCurrentPage } from '../store';
+import Loader from '../components/loader';
 
-import InfoListItem from './infoListItem';
-import PageButtonMaker from '../pagination/pageButtonMaker';
+import InfoListItem from '../components/top/infoListItem';
+import PageButtonMaker from '../components/pagination/pageButtonMaker';
 
 /**
  * STYLES

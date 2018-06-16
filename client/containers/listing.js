@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import Loader from '../loader';
-import BreakdownListingsInfos from './breadkdownListingsInfos';
-import GeneralListingInfo from './generalListingInfo';
-import ListingHeader from './listingHeader';
-import { fetchListingById } from '../../store';
+import Loader from '../components/loader';
+import BreakdownListingsInfos from '../components/listing/breadkdownListingsInfos';
+import GeneralListingInfo from '../components/listing/generalListingInfo';
+import ListingHeader from '../components/listing/listingHeader';
+import { fetchListingById } from '../store';
 
 /**
  * COMPONENT
