@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { passwordCheck } from '../auth-form/utils';
+import { passwordCheck } from '../utilities/auth';
 
 export default class Test extends Component {
   constructor(props) {

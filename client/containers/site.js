@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import _ from 'lodash';
 
-import PageHeader from '../pageHeader';
-import { fetchGroups } from '../../store';
-import Loader from '../loader';
+import PageHeader from '../components/pageHeader';
+import { fetchGroups } from '../store';
+import Loader from '../components/loader';
 
 const Site = (props) => {
   const id = parseInt(props.match.params.id, 10);

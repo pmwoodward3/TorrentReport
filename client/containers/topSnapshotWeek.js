@@ -6,8 +6,8 @@ import { faCaretUp, faCaretDown } from '@fortawesome/fontawesome-free-solid';
 import styled, { withTheme } from 'styled-components';
 import { lighten, darken } from 'polished';
 
-import Loader from '../loader';
-import { fetchTopWeekNewSnapshots } from '../../store';
+import Loader from '../components/loader';
+import { fetchTopWeekNewSnapshots } from '../store';
 
 /**
  * STYLES

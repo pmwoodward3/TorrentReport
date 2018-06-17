@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import PageHeader from '../../pageHeader';
+import PageHeader from '../pageHeader';
 /**
  * COMPONENT
  */

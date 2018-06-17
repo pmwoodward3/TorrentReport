@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Loader from '../loader';
 
-import PageHeader from '../pageHeader';
-import Notification from '../notification';
+import Loader from '../components/loader';
+import PageHeader from '../components/pageHeader';
+import Notification from '../components/notification';
 
 class ActivateAccount extends Component {
   constructor(props) {
@@ -23,7 +23,10 @@ class ActivateAccount extends Component {
           if (res.data === 'activated') this.setState({ activated: true });
           else this.setState({ error: res.data });
         })
-        .catch(err => this.setState({ error: 'Supplied token rejected' }));
+        .catch((err) => {
+          console.log('error in confirming account componet', err);
+          return this.setState({ error: 'Supplied token rejected' });
+        });
     } else {
       this.setState({ error: 'Invalid token supplied' });
     }

@@ -4,8 +4,8 @@ import moment from 'moment';
 import styled, { withTheme } from 'styled-components';
 import { lighten } from 'polished';
 
-import { fetchStats } from '../../store';
-import StatSquare from './statSquare';
+import { fetchStats } from '../store';
+import StatSquare from '../components/siteStats/statSquare';
 
 const StatsContainer = styled.div`
   display: flex;

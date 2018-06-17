@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import PageHeader from '../pageHeader';
+import PageHeader from './pageHeader';
 
 const About = () => (
   <div className="about-page">

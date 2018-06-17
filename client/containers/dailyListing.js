@@ -5,9 +5,9 @@ import _ from 'lodash';
 import styled, { withTheme } from 'styled-components';
 import { lighten, darken } from 'polished';
 
-import Loader from '../loader';
-import { fetchDailyListings } from '../../store';
-import MiniListItem from './miniListItem';
+import Loader from '../components/loader';
+import { fetchDailyListings } from '../store';
+import MiniListItem from '../components/dailyListing/miniListItem';
 
 /**
  * STYLEs

@@ -9,23 +9,28 @@ import {
   About,
   AccountHome,
   Test,
-  Group,
-  Site,
-  NewListings,
   NoMatch,
-  ActivateAccount,
-  ResetPassword,
   ScrollToTop,
-  DeleteAccount,
   Privacy,
   Cookies,
   Terms,
 } from './components/';
-import { Login, Signup } from './containers/auth-form';
-import Home from './containers/home';
-import Listing from './containers/listing';
-import TopCurrent from './containers/topCurrent';
-import Info from './containers/info';
+
+import {
+  Login,
+  Signup,
+  Home,
+  Listing,
+  TopCurrent,
+  Info,
+  Site,
+  Group,
+  ActivateAccount,
+  DeleteAccount,
+  NewListings,
+  ResetPassword,
+} from './containers';
+
 import { me } from './store';
 
 /**

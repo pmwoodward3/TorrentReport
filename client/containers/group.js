@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import PageHeader from '../pageHeader';
-import { fetchGroups } from '../../store';
-import Loader from '../loader';
+import { fetchGroups } from '../store';
+import PageHeader from '../components/pageHeader';
+import Loader from '../components/loader';
 
 const Group = (props) => {
   const id = parseInt(props.match.params.id, 10);

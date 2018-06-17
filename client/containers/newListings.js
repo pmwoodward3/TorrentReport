@@ -4,12 +4,14 @@ import _ from 'lodash';
 import styled, { withTheme } from 'styled-components';
 import { lighten } from 'polished';
 
-import PageHeader from '../pageHeader';
-import Loader from '../loader';
-import { fetchDailyListings } from '../../store';
-import ListItem from './listItem';
-import worker from './filterWorker';
-import PageButtonMaker from '../pagination/pageButtonMaker';
+import scrollToTopFunc from '../utilities/scrollToTopFunc';
+import worker from '../utilities/filterWorker';
+
+import PageHeader from '../components/pageHeader';
+import Loader from '../components/loader';
+import { fetchDailyListings } from '../store';
+import ListItem from '../components/newListings/listItem';
+import PageButtonMaker from '../components/pagination/pageButtonMaker';
 
 /**
  * STYLES
@@ -162,6 +164,7 @@ class NewListings extends Component {
   };
 
   changePage = (pageNumber) => {
+    scrollToTopFunc();
     this.setState({ currentPage: pageNumber });
   };
 

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import PageHeader from '../../pageHeader';
-import Notification from '../../notification';
-import Loading from '../../loader';
+import PageHeader from '../components/pageHeader';
+import Notification from '../components/notification';
+import Loading from '../components/loader';
 
 const ConfirmDelete = styled.button`
   display: flex;
@@ -36,7 +36,7 @@ class DeleteAccount extends Component {
   timerUpdater = () => {
     if (this.state.timeToReload <= 0) {
       clearInterval(this.state.intervalHolder);
-      window.location.href = '../';
+      window.location.href = '../'; // eslint-disable-line
     }
     const newTime = this.state.timeToReload - this.state.timeUpdateSeconds;
     return this.setState({ timeToReload: newTime });
@@ -54,7 +54,10 @@ class DeleteAccount extends Component {
         }
         return this.setState({ status: 'error' });
       })
-      .catch(err => this.setState({ status: 'error' }));
+      .catch((err) => {
+        console.log('error in confirm delete', err);
+        return this.setState({ status: 'error' });
+      });
   };
 
   askToConfirm = () => {

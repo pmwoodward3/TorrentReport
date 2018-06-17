@@ -6,7 +6,7 @@ import PageHeader from '../components/pageHeader';
 import Filter from '../components/top/filter';
 import { fetchTopNewSnapshots, setFilterVisibiility, changeCurrentPage } from '../store';
 import Loader from '../components/loader';
-
+import scrollToTopFunc from '../utilities/scrollToTopFunc';
 import InfoListItem from '../components/top/infoListItem';
 import PageButtonMaker from '../components/pagination/pageButtonMaker';
 
@@ -21,10 +21,6 @@ const PaginationContainer = styled.div`
 /**
  *  COMPONENT
  */
-
-const scrollToTop = () => {
-  window.scroll(0, 0);
-};
 
 const filterSortSnapshots = (arraySnapshots, topFilter) =>
   arraySnapshots
@@ -121,7 +117,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   changePage(pageNumber) {
-    scrollToTop();
+    scrollToTopFunc();
     return dispatch(changeCurrentPage(pageNumber));
   },
   changeFilterVisibility(visibility) {
