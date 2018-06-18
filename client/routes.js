@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch, Router } from 'react-router-dom';
-import withTracker from './withTracker';
 import history from './history';
 import Template from './template';
 import {
@@ -14,6 +13,7 @@ import {
   Privacy,
   Cookies,
   Terms,
+  WithTracker,
 } from './components/';
 
 import {
@@ -49,33 +49,32 @@ class Routes extends Component {
         <ScrollToTop>
           <Template>
             <Switch>
-              <Route exact path="/" component={withTracker(Home)} />
-              <Route exact path="/faq" component={withTracker(Faq)} />
-              <Route exact path="/about" component={withTracker(About)} />
-              <Route exact path="/listing/:id" component={withTracker(Listing)} />
-              <Route exact path="/info/:id" component={withTracker(Info)} />
-              <Route exact path="/group/:id" component={withTracker(Group)} />
-              <Route exact path="/site/:id" component={withTracker(Site)} />
-              <Route exact path="/new/listings" component={withTracker(NewListings)} />
-              <Route exact path="/test" component={withTracker(Test)} />
-              <Route exact path="/top" component={withTracker(TopCurrent)} />
+              <Route exact path="/" component={WithTracker(Home)} />
+              <Route exact path="/faq" component={WithTracker(Faq)} />
+              <Route exact path="/about" component={WithTracker(About)} />
+              <Route exact path="/listing/:id" component={WithTracker(Listing)} />
+              <Route exact path="/info/:id" component={WithTracker(Info)} />
+              <Route exact path="/group/:id" component={WithTracker(Group)} />
+              <Route exact path="/site/:id" component={WithTracker(Site)} />
+              <Route exact path="/new/listings" component={WithTracker(NewListings)} />
+              <Route exact path="/test" component={WithTracker(Test)} />
+              <Route exact path="/top" component={WithTracker(TopCurrent)} />
+              <Route exact path="/login" component={WithTracker(Login)} />
+              <Route exact path="/signup" component={WithTracker(Signup)} />
+              <Route exact path="/policy/privacy" component={WithTracker(Privacy)} />
+              <Route exact path="/policy/cookies" component={WithTracker(Cookies)} />
+              <Route exact path="/policy/terms-of-service" component={WithTracker(Terms)} />
+              <Route path="/activate/:token" component={WithTracker(ActivateAccount)} />
+              <Route path="/resetpassword/:token" component={WithTracker(ResetPassword)} />
               {isLoggedIn && (
                 <Switch>
                   {/* Routes placed here are only available after logging in */}
-                  <Route exact path="/account" component={withTracker(AccountHome)} />
-                  <Route exact path="/account/delete" component={withTracker(DeleteAccount)} />
+                  <Route exact path="/account" component={WithTracker(AccountHome)} />
+                  <Route exact path="/account/delete" component={WithTracker(DeleteAccount)} />
+                  <Route path="*" component={WithTracker(NoMatch)} status={404} />
                 </Switch>
               )}
-              {/* Routes placed here are available to all visitors */}
-              <Route path="/login" component={withTracker(Login)} />
-              <Route path="/signup" component={withTracker(Signup)} />
-              <Route path="/policy/privacy" component={withTracker(Privacy)} />
-              <Route path="/policy/cookies" component={withTracker(Cookies)} />
-              <Route path="/policy/terms-of-service" component={withTracker(Terms)} />
-              <Route path="/activate/:token" component={withTracker(ActivateAccount)} />
-              <Route path="/resetpassword/:token" component={withTracker(ResetPassword)} />
-              {/* Displays noMatch component as a fallback */}
-              <Route path="*" component={withTracker(NoMatch)} status={404} />
+              <Route path="*" component={WithTracker(NoMatch)} status={404} />
             </Switch>
           </Template>
         </ScrollToTop>

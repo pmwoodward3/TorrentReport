@@ -46,6 +46,7 @@ const FooterLink = styled(Link)`
 const PolicyLink = styled(Link)`
   color: ${props => lighten(0.5, props.theme.colors.quinary)};
   padding: 5px;
+  margin: 2px 5px 2px 5px;
   text-decoration: none;
   &:hover {
     color: ${props => lighten(0.25, props.theme.colors.quinary)};
@@ -110,7 +111,7 @@ const Footer = ({ userCount }) => (
       </PolicyHolder>
       <Build>
         Current Version Build Date<br />
-        {moment(BUILD_DATE).format('MMMM Do YYYY, h:mm:ss a')}
+        {moment(BUILD_DATE).format('MMMM Do YYYY, h:mm:ss a') /* eslint-disable-line */}
       </Build>
     </Column>
   </StyledFooter>

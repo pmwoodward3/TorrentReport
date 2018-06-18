@@ -71,7 +71,7 @@ const NowSearching = styled.div`
   padding: 10px;
   font-weight: bold;
   font-style: italic;
-  font-size: 2em;
+  font-size: 1.1em;
   justify-content: center;
   align-items: center;
 `;

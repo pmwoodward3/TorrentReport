@@ -5,6 +5,7 @@ GoogleAnalytics.initialize('UA-54538481-3');
 
 const withTracker = (WrappedComponent, options = {}) => {
   const trackPage = (page) => {
+    // eslint-disable-next-line
     if (PRODUCTION) {
       GoogleAnalytics.set({
         page,

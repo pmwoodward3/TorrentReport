@@ -6,16 +6,26 @@ Every 24 hours our site begins scraping the top torrents from a series of torren
 
 _\***\*\*\*\*\*** This project is an active work in progress\***\*\*\*\*\***_
 
+## Frontend
+
+- React 16
+- Redux
+- React router
+- Web Workers
+- Axios
+- _**New Addition!**_ Styled-Components
+- _**Formerly**_ SASS with post-css
+
 ## Backend
 
 Using Node.js with express, sequelize, postgres, and puppeteer (the headless chrome utility) in our scraping. we can have our application serve up database queries and perform our information gathering.
 
 #### Technologies & Frameworks
 
-* Server: Express, body-parser
-* Persistance: GraphQL _planned_ , Sequelize, Postgres
-* Authentication: Passport, Passport-Google
-* Testing: Mocha, Chai
+- Server: Express, body-parser
+- Persistance: GraphQL _planned_ , Sequelize, Postgres
+- Authentication: Passport, Passport-Google
+- Testing: Mocha, Chai
 
 ### Information Gathering (aka reporterAgent)
 

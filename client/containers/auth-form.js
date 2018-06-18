@@ -64,6 +64,7 @@ const StyledInput = styled.input`
     color: black;
     border: solid 3px ${props => props.theme.colors[props.colorSelected || 'primary']};
     outline-width: 0;
+    outline: none;
     background-color: ${props => lighten(0.96, props.theme.colors.quinary)};
   }
 `;
@@ -81,9 +82,12 @@ const SubmitButton = styled.button`
   background-color: ${props => lighten(0.2, props.theme.colors[props.colorSelected || 'primary'])};
   border: solid 1px ${props => darken(0.15, props.theme.colors[props.colorSelected || 'primary'])};
   outline-width: 0;
-  &:focus {
-    border: solid 1px ${props => darken(0.15, props.theme.colors[props.colorSelected || 'primary'])};
+  &:focus, &:hover {
+    border: solid 1px ${props => darken(0.2, props.theme.colors[props.colorSelected || 'primary'])};
+    background-color: ${props => lighten(0.07, props.theme.colors[props.colorSelected || 'primary'])};
+    cursor: pointer;
     outline-width: 0;
+    outline: none;
   }
   &:active {
     outline-width: 0;

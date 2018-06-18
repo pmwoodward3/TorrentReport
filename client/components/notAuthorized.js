@@ -9,11 +9,14 @@ const Message = styled.div`
 `;
 
 // eslint-disable-next-line
-const NoMatch = props => (
+const NotAuthorized = props => (
   <div>
-    <PageHeader>Page Not Found</PageHeader>
-    <Message>We could not find your requested page.</Message>
+    <PageHeader>You Are Not NotAuthorized</PageHeader>
+    <Message>
+      Sorry buddy, looks like your account permissions are not what they need to be to access this
+      page.
+    </Message>
   </div>
 );
 
-export default withTheme(NoMatch);
+export default withTheme(NotAuthorized);
