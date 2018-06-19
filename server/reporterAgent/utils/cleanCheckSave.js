@@ -2,6 +2,13 @@ const { RALogger } = require('../../logging');
 const getOrMakeTorrentListing = require('../fetchOrMake/torrentListing');
 const addOrSetUser = require('../fetchOrMake/torrentUser');
 
+/**
+ * Cleans and checks listing object. Then finds or makes new torrentListing,
+ * then finds or makes uploading user and attaches to listing object.
+ * @param {Function} resultCleaner Invoked on listObj to stanardise input.
+ * @param {Function} listingCheck Invoked on listObj to check if we should keep it.
+ * @param {Object} listObj Listing object to check and make.
+ */
 const cleanCheckSave = (resultCleaner, listingCheck, listObj) => {
   const cleanObject = resultCleaner(listObj);
   const shouldSkip = listingCheck(cleanObject);

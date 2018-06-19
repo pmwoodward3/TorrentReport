@@ -52,6 +52,14 @@ const SnapshotList = (props) => {
   const justDateFormat = 'MM/DD/YYYY';
   const justTimeFormat = 'h:mm:ss a';
 
+  let sortedSnapshots;
+  if (props.sortedSnapshots.length > 16) {
+    sortedSnapshots = props.sortedSnapshots.slice(-16);
+  } else {
+    // eslint-disable-next-line
+    sortedSnapshots = props.sortedSnapshots;
+  }
+
   return (
     <ListComponent>
       <Item>
@@ -60,7 +68,7 @@ const SnapshotList = (props) => {
         <SeedLeach type="seed">seed</SeedLeach>
         <SeedLeach type="leech">leech</SeedLeach>
       </Item>
-      {props.sortedSnapshots.map(snapshot => (
+      {sortedSnapshots.map(snapshot => (
         <Item key={snapshot.id}>
           <Date>{moment(snapshot.date).format(justDateFormat)}</Date>
           <Time>{moment(snapshot.date).format(justTimeFormat)}</Time>

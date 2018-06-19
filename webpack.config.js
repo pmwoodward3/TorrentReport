@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const isProd = process.env.NODE_ENV === 'production';
 const pluginsArr = [
   new webpack.DefinePlugin({
-    PRODUCTION: JSON.stringify(isProd),
+    PRODUCTION: isProd,
     BUILD_DATE: JSON.stringify(new Date()),
   }),
 ];
