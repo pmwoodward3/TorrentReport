@@ -41,26 +41,35 @@ The application currently utilizes a RESTful api, but I am rewriting it using Gr
 
 ## Development
 
-1.  Copy the git repo.
+1.  Copy or clone this git repository.
 2.  Run `npm install` or `yarn`.
-3.  install PostgreSQL and Redis. Launch them both.
+3.  install PostgreSQL and Redis. Launch them both or the application will crach.
 4.  Fill in the enviroment variables bellow and save it as `.env` in the root project directory:
 
-````
-REDIS_URL=
-DATABASE_URL=
+```env
+REDIS_URL=redis://localhost:6379
+DATABASE_URL=postgres://localhost:5432/TorrentReport
 EMAIL_HOST=
 EMAIL_PASS=
 EMAIL_PORT=
 EMAIL_SEC=true
 EMAIL_USER=
+ADMIN_EMAIL=
 GOOGLE_CALLBACK=/auth/google/callback
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
 NODE_ENV=development
 SESSION_SECRET=
+```
 
-```.
-5.  The scrape service runs on a schedule. If you are just installing this project and want to have some data to play with run `npm run start-scrape` or `yarn start-scrape`.
-6.  Run `npm run start-dev` or `yarn start-dev`.
-````
+`EMAIL_HOST` is the SMTP domain of your provider.
+
+`EMAIL_PASS` is your passowrd to be used with the email provider.
+
+`EMAIL_USER` is your email to be used with the email provider.
+
+`ADMIN_EMAIL` is the email which will be notified of errors and from where site emails will be sent.
+
+5.  The scrape service runs on a schedule, but will not run more than once every 12 hours on its own. If you are just installing this project and want to have some data to play with run `npm run start-scrape` or `yarn start-scrape`.
+
+6.  To launch the project run `npm run start-dev` or `yarn start-dev` and navigate to http://localhost:8080. **NOTE** You can set an enviroment variable `PORT=` for any port number and use that port. I have omitted it as it defaults to port 8080.
